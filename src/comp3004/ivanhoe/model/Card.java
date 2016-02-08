@@ -2,8 +2,8 @@ package comp3004.ivanhoe.model;
 
 public abstract class Card {
 
-	String name;
-	int value;
+	protected String name;
+	protected int value;
 	
 	
 	public String getName(){

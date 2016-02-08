@@ -6,24 +6,21 @@ import java.util.List;
 
 public class Tournament {
 
-	Token token;
-	List<Player> currentPlayers;
-	int highestDisplay;
+	private Token token;
+	private List<Player> currentPlayers;
 	
-	List<Card> deck;
-	List<Card> discardPile;
+	private List<Card> deck;
+	private List<Card> discardPile;
 	
 	public Tournament(){
 		currentPlayers = new ArrayList<Player>();
 		discardPile = new ArrayList<Card>();
-		highestDisplay = 0;
 		buildDeck();
 	}
 	
 	public Tournament(List<Player> players){
 		currentPlayers=players;
 		discardPile = new ArrayList<Card>();
-		highestDisplay = 0;
 		buildDeck();
 	}
 	
@@ -36,7 +33,7 @@ public class Tournament {
 	}
 	
 	/**
-	 * This function removes a player from the tornament
+	 * This function removes a player from the tournament
 	 * @param player
 	 * @return
 	 */
@@ -53,6 +50,17 @@ public class Tournament {
 		deck.addAll(ColourCard.getColourDeck());
 		deck.addAll(SupporterCard.getSupporterDeck());
 		shuffle();
+	}
+	
+	/**
+	 * This function sets the hands of all players and removes those cards from the deck
+	 **/
+	public void dealStartingHands(){
+		for(int i = 0; i < 8; i++){
+			for(Player p: currentPlayers){
+				p.addHandCard(drawCard());
+			}
+		}
 	}
 	
 	/**
@@ -85,8 +93,21 @@ public class Tournament {
 	/**
 	 * This function uses Collections.shuffle to shuffle the deck
 	 */
-	public void shuffle(){
+	private void shuffle(){
 		Collections.shuffle(deck);
+	}
+	
+	/**
+	 * This function returns the player with the highest display
+	 * @return
+	 */
+	public Player getPlayerWithHighestDisplay(){
+		Player temp = currentPlayers.get(0);
+		for(Player p: currentPlayers){
+			if(p.getDisplayTotal()>temp.getDisplayTotal())
+				temp = p;
+		}
+		return temp;
 	}
 	
 	/**
