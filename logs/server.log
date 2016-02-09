@@ -1,0 +1,857 @@
+2016-02-07 15:20:24 ERROR StartServer:27 - No System Console; use IDE Console
+2016-02-07 15:20:31 INFO  StartServer:43 - Starting server ...
+2016-02-07 15:20:32 INFO  StartServer:42 - Server: 0.0.0.0/0.0.0.0: 10000: port started
+2016-02-07 15:20:47 INFO  ServerThread:49 - SENT Message to Client [127.0.0.1:64098] : CONNECTION ACCEPTED
+2016-02-07 15:20:47 INFO  ServerThread:49 - SENT Message to Client [127.0.0.1:64098] : ---WELCOME TO THE GAME ENGINE---
+2016-02-07 15:20:47 INFO  ServerThread:49 - SENT Message to Client [127.0.0.1:64098] : Please enter your name: 
+2016-02-07 15:20:47 INFO  StartServer:133 - Client:/127.0.0.1:64098: port connected
+2016-02-07 15:20:53 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:53 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:53 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:53 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:53 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:53 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:53 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:53 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:53 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:53 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:53 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:53 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:53 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:53 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:20:54 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64098] : null
+2016-02-07 15:21:48 ERROR StartServer:27 - No System Console; use IDE Console
+2016-02-07 15:21:53 INFO  StartServer:43 - Starting server ...
+2016-02-07 15:21:53 INFO  StartServer:42 - Server: 0.0.0.0/0.0.0.0: 10000: port started
+2016-02-07 15:21:59 INFO  ServerThread:49 - SENT Message to Client [127.0.0.1:64099] : CONNECTION ACCEPTED
+2016-02-07 15:21:59 INFO  ServerThread:49 - SENT Message to Client [127.0.0.1:64099] : ---WELCOME TO IVANHOE---
+2016-02-07 15:21:59 INFO  ServerThread:49 - SENT Message to Client [127.0.0.1:64099] : Please enter your name: 
+2016-02-07 15:21:59 INFO  StartServer:133 - Client:/127.0.0.1:64099: port connected
+2016-02-07 15:22:07 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64099] : Mary
+2016-02-07 15:25:37 INFO  ServerThread:67 - RECEIVED Message from Client [127.0.0.1:64099] : Sup
+2016-02-07 15:28:00 INFO  StartServer:42 - Server: 0.0.0.0/0.0.0.0: 10006: port started
+2016-02-07 15:28:01 INFO  ServerThread:49 - SENT Message to Client [127.0.0.1:64143] : CONNECTION ACCEPTED
+2016-02-07 15:28:01 INFO  ServerThread:49 - SENT Message to Client [127.0.0.1:64143] : ---WELCOME TO IVANHOE---
+2016-02-07 15:28:01 INFO  ServerThread:49 - SENT Message to Client [127.0.0.1:64143] : Please enter your name: 
+2016-02-07 15:28:01 INFO  StartServer:133 - Client:/127.0.0.1:64143: port connected
+2016-02-07 15:28:01 INFO  StartServer:150 - Client Tried to connect: Socket[addr=/127.0.0.1,port=64144,localport=10006]
+2016-02-07 15:28:01 INFO  StartServer:151 - Client refused: maximum number of clients reached: 1
+2016-02-07 15:28:01 ERROR AppClient:78 - Server refused the connection; too many clients
+2016-02-07 15:28:01 INFO  StartServer:42 - Server: 0.0.0.0/0.0.0.0: 10004: port started
+2016-02-07 15:28:01 INFO  ServerThread:49 - SENT Message to Client [127.0.0.1:64145] : CONNECTION ACCEPTED
+2016-02-07 15:28:01 INFO  ServerThread:49 - SENT Message to Client [127.0.0.1:64145] : ---WELCOME TO IVANHOE---
+2016-02-07 15:28:01 INFO  ServerThread:49 - SENT Message to Client [127.0.0.1:64145] : Please enter your name: 
+2016-02-07 15:28:01 INFO  StartServer:133 - Client:/127.0.0.1:64145: port connected
+2016-02-07 15:28:01 INFO  ServerThread:49 - SENT Message to Client [127.0.0.1:64146] : CONNECTION ACCEPTED
+2016-02-07 15:28:01 INFO  ServerThread:49 - SENT Message to Client [127.0.0.1:64146] : ---WELCOME TO IVANHOE---
+2016-02-07 15:28:02 INFO  ServerThread:49 - SENT Message to Client [127.0.0.1:64146] : Please enter your name: 
+2016-02-07 15:28:02 INFO  StartServer:133 - Client:/127.0.0.1:64146: port connected
+2016-02-07 15:28:02 INFO  ServerThread:49 - SENT Message to Client [127.0.0.1:64147] : CONNECTION ACCEPTED
+2016-02-07 15:28:02 INFO  ServerThread:49 - SENT Message to Client [127.0.0.1:64147] : ---WELCOME TO IVANHOE---
+2016-02-07 15:28:02 INFO  ServerThread:49 - SENT Message to Client [127.0.0.1:64147] : Please enter your name: 
+2016-02-07 15:28:02 INFO  StartServer:133 - Client:/127.0.0.1:64147: port connected
+2016-02-07 15:28:02 INFO  ServerThread:49 - SENT Message to Client [127.0.0.1:64148] : CONNECTION ACCEPTED
+2016-02-07 15:28:02 INFO  ServerThread:49 - SENT Message to Client [127.0.0.1:64148] : ---WELCOME TO IVANHOE---
+2016-02-07 15:28:02 INFO  ServerThread:49 - SENT Message to Client [127.0.0.1:64148] : Please enter your name: 
+2016-02-07 15:28:02 INFO  StartServer:133 - Client:/127.0.0.1:64148: port connected
+2016-02-07 15:28:02 INFO  StartServer:42 - Server: 0.0.0.0/0.0.0.0: 10000: port started
+2016-02-07 15:28:02 INFO  ServerThread:49 - SENT Message to Client [127.0.0.1:64149] : CONNECTION ACCEPTED
+2016-02-07 15:28:02 INFO  ServerThread:49 - SENT Message to Client [127.0.0.1:64149] : ---WELCOME TO IVANHOE---
+2016-02-07 15:28:02 INFO  ServerThread:49 - SENT Message to Client [127.0.0.1:64149] : Please enter your name: 
+2016-02-07 15:28:02 INFO  StartServer:133 - Client:/127.0.0.1:64149: port connected
+2016-02-07 15:28:02 INFO  StartServer:42 - Server: 0.0.0.0/0.0.0.0: 10002: port started
+2016-02-07 15:28:02 INFO  ServerThread:49 - SENT Message to Client [127.0.0.1:64150] : CONNECTION ACCEPTED
+2016-02-07 15:28:02 INFO  ServerThread:49 - SENT Message to Client [127.0.0.1:64150] : ---WELCOME TO IVANHOE---
+2016-02-07 15:28:02 INFO  ServerThread:49 - SENT Message to Client [127.0.0.1:64150] : Please enter your name: 
+2016-02-07 15:28:02 INFO  StartServer:133 - Client:/127.0.0.1:64150: port connected
+2016-02-07 15:28:02 INFO  ServerThread:49 - SENT Message to Client [127.0.0.1:64151] : CONNECTION ACCEPTED
+2016-02-07 15:28:02 INFO  ServerThread:49 - SENT Message to Client [127.0.0.1:64151] : ---WELCOME TO IVANHOE---
+2016-02-07 15:28:02 INFO  ServerThread:49 - SENT Message to Client [127.0.0.1:64151] : Please enter your name: 
+2016-02-07 15:28:02 INFO  StartServer:133 - Client:/127.0.0.1:64151: port connected
+2016-02-07 15:28:02 INFO  StartServer:42 - Server: 0.0.0.0/0.0.0.0: 10001: port started
+2016-02-07 15:28:03 INFO  ServerThread:49 - SENT Message to Client [127.0.0.1:64152] : CONNECTION ACCEPTED
+2016-02-07 15:28:03 INFO  ServerThread:49 - SENT Message to Client [127.0.0.1:64152] : ---WELCOME TO IVANHOE---
+2016-02-07 15:28:03 INFO  ServerThread:49 - SENT Message to Client [127.0.0.1:64152] : Please enter your name: 
+2016-02-07 15:28:03 INFO  StartServer:133 - Client:/127.0.0.1:64152: port connected
+2016-02-07 15:28:03 INFO  ServerThread:49 - SENT Message to Client [127.0.0.1:64153] : CONNECTION ACCEPTED
+2016-02-07 15:28:03 INFO  ServerThread:49 - SENT Message to Client [127.0.0.1:64153] : ---WELCOME TO IVANHOE---
+2016-02-07 15:28:03 INFO  ServerThread:49 - SENT Message to Client [127.0.0.1:64153] : Please enter your name: 
+2016-02-07 15:28:03 INFO  StartServer:133 - Client:/127.0.0.1:64153: port connected
+2016-02-07 15:28:03 INFO  ServerThread:49 - SENT Message to Client [127.0.0.1:64154] : CONNECTION ACCEPTED
+2016-02-07 15:28:03 INFO  ServerThread:49 - SENT Message to Client [127.0.0.1:64154] : ---WELCOME TO IVANHOE---
+2016-02-07 15:28:03 INFO  ServerThread:49 - SENT Message to Client [127.0.0.1:64154] : Please enter your name: 
+2016-02-07 15:28:03 INFO  StartServer:133 - Client:/127.0.0.1:64154: port connected
+2016-02-07 15:28:03 INFO  StartServer:42 - Server: 0.0.0.0/0.0.0.0: 10003: port started
+2016-02-07 15:28:03 INFO  ServerThread:49 - SENT Message to Client [127.0.0.1:64155] : CONNECTION ACCEPTED
+2016-02-07 15:28:03 INFO  ServerThread:49 - SENT Message to Client [127.0.0.1:64155] : ---WELCOME TO IVANHOE---
+2016-02-07 15:28:03 INFO  ServerThread:49 - SENT Message to Client [127.0.0.1:64155] : Please enter your name: 
+2016-02-07 15:28:03 INFO  StartServer:133 - Client:/127.0.0.1:64155: port connected
+2016-02-07 15:28:03 INFO  ServerThread:49 - SENT Message to Client [127.0.0.1:64156] : CONNECTION ACCEPTED
+2016-02-07 15:28:03 INFO  ServerThread:49 - SENT Message to Client [127.0.0.1:64156] : ---WELCOME TO IVANHOE---
+2016-02-07 15:28:03 INFO  ServerThread:49 - SENT Message to Client [127.0.0.1:64156] : Please enter your name: 
+2016-02-07 15:28:03 INFO  StartServer:133 - Client:/127.0.0.1:64156: port connected
+2016-02-07 15:28:03 INFO  ServerThread:49 - SENT Message to Client [127.0.0.1:64157] : CONNECTION ACCEPTED
+2016-02-07 15:28:03 INFO  ServerThread:49 - SENT Message to Client [127.0.0.1:64157] : ---WELCOME TO IVANHOE---
+2016-02-07 15:28:03 INFO  ServerThread:49 - SENT Message to Client [127.0.0.1:64157] : Please enter your name: 
+2016-02-07 15:28:03 INFO  StartServer:133 - Client:/127.0.0.1:64157: port connected
+2016-02-07 15:28:58 INFO  StartServer:42 - Server: 0.0.0.0/0.0.0.0: 10006: port started
+2016-02-07 15:28:58 INFO  ServerThread:49 - SENT Message to Client [127.0.0.1:64160] : CONNECTION ACCEPTED
+2016-02-07 15:28:58 INFO  ServerThread:49 - SENT Message to Client [127.0.0.1:64160] : ---WELCOME TO IVANHOE---
+2016-02-07 15:28:58 INFO  ServerThread:49 - SENT Message to Client [127.0.0.1:64160] : Please enter your name: 
+2016-02-07 15:28:58 INFO  StartServer:133 - Client:/127.0.0.1:64160: port connected
+2016-02-07 15:28:58 INFO  StartServer:150 - Client Tried to connect: Socket[addr=/127.0.0.1,port=64161,localport=10006]
+2016-02-07 15:28:58 INFO  StartServer:151 - Client refused: maximum number of clients reached: 1
+2016-02-07 15:28:58 ERROR AppClient:78 - Server refused the connection; too many clients
+2016-02-07 15:28:58 INFO  StartServer:42 - Server: 0.0.0.0/0.0.0.0: 10004: port started
+2016-02-07 15:28:58 INFO  ServerThread:49 - SENT Message to Client [127.0.0.1:64162] : CONNECTION ACCEPTED
+2016-02-07 15:28:58 INFO  ServerThread:49 - SENT Message to Client [127.0.0.1:64162] : ---WELCOME TO IVANHOE---
+2016-02-07 15:28:58 INFO  ServerThread:49 - SENT Message to Client [127.0.0.1:64162] : Please enter your name: 
+2016-02-07 15:28:58 INFO  StartServer:133 - Client:/127.0.0.1:64162: port connected
+2016-02-07 15:28:58 INFO  ServerThread:49 - SENT Message to Client [127.0.0.1:64163] : CONNECTION ACCEPTED
+2016-02-07 15:28:58 INFO  ServerThread:49 - SENT Message to Client [127.0.0.1:64163] : ---WELCOME TO IVANHOE---
+2016-02-07 15:28:58 INFO  ServerThread:49 - SENT Message to Client [127.0.0.1:64163] : Please enter your name: 
+2016-02-07 15:28:58 INFO  StartServer:133 - Client:/127.0.0.1:64163: port connected
+2016-02-07 15:28:58 INFO  ServerThread:49 - SENT Message to Client [127.0.0.1:64164] : CONNECTION ACCEPTED
+2016-02-07 15:28:58 INFO  ServerThread:49 - SENT Message to Client [127.0.0.1:64164] : ---WELCOME TO IVANHOE---
+2016-02-07 15:28:58 INFO  ServerThread:49 - SENT Message to Client [127.0.0.1:64164] : Please enter your name: 
+2016-02-07 15:28:58 INFO  StartServer:133 - Client:/127.0.0.1:64164: port connected
+2016-02-07 15:28:58 INFO  ServerThread:49 - SENT Message to Client [127.0.0.1:64165] : CONNECTION ACCEPTED
+2016-02-07 15:28:58 INFO  ServerThread:49 - SENT Message to Client [127.0.0.1:64165] : ---WELCOME TO IVANHOE---
+2016-02-07 15:28:58 INFO  ServerThread:49 - SENT Message to Client [127.0.0.1:64165] : Please enter your name: 
+2016-02-07 15:28:58 INFO  StartServer:133 - Client:/127.0.0.1:64165: port connected
+2016-02-07 15:28:58 INFO  StartServer:42 - Server: 0.0.0.0/0.0.0.0: 10000: port started
+2016-02-07 15:28:58 INFO  ServerThread:49 - SENT Message to Client [127.0.0.1:64166] : CONNECTION ACCEPTED
+2016-02-07 15:28:58 INFO  ServerThread:49 - SENT Message to Client [127.0.0.1:64166] : ---WELCOME TO IVANHOE---
+2016-02-07 15:28:58 INFO  ServerThread:49 - SENT Message to Client [127.0.0.1:64166] : Please enter your name: 
+2016-02-07 15:28:58 INFO  StartServer:133 - Client:/127.0.0.1:64166: port connected
+2016-02-07 15:28:59 INFO  StartServer:42 - Server: 0.0.0.0/0.0.0.0: 10002: port started
+2016-02-07 15:28:59 INFO  ServerThread:49 - SENT Message to Client [127.0.0.1:64167] : CONNECTION ACCEPTED
+2016-02-07 15:28:59 INFO  ServerThread:49 - SENT Message to Client [127.0.0.1:64167] : ---WELCOME TO IVANHOE---
+2016-02-07 15:28:59 INFO  ServerThread:49 - SENT Message to Client [127.0.0.1:64167] : Please enter your name: 
+2016-02-07 15:28:59 INFO  StartServer:133 - Client:/127.0.0.1:64167: port connected
+2016-02-07 15:28:59 INFO  ServerThread:49 - SENT Message to Client [127.0.0.1:64168] : CONNECTION ACCEPTED
+2016-02-07 15:28:59 INFO  ServerThread:49 - SENT Message to Client [127.0.0.1:64168] : ---WELCOME TO IVANHOE---
+2016-02-07 15:28:59 INFO  ServerThread:49 - SENT Message to Client [127.0.0.1:64168] : Please enter your name: 
+2016-02-07 15:28:59 INFO  StartServer:133 - Client:/127.0.0.1:64168: port connected
+2016-02-07 15:28:59 INFO  StartServer:42 - Server: 0.0.0.0/0.0.0.0: 10001: port started
+2016-02-07 15:28:59 INFO  ServerThread:49 - SENT Message to Client [127.0.0.1:64169] : CONNECTION ACCEPTED
+2016-02-07 15:28:59 INFO  ServerThread:49 - SENT Message to Client [127.0.0.1:64169] : ---WELCOME TO IVANHOE---
+2016-02-07 15:28:59 INFO  ServerThread:49 - SENT Message to Client [127.0.0.1:64169] : Please enter your name: 
+2016-02-07 15:28:59 INFO  StartServer:133 - Client:/127.0.0.1:64169: port connected
+2016-02-07 15:28:59 INFO  ServerThread:49 - SENT Message to Client [127.0.0.1:64170] : CONNECTION ACCEPTED
+2016-02-07 15:28:59 INFO  ServerThread:49 - SENT Message to Client [127.0.0.1:64170] : ---WELCOME TO IVANHOE---
+2016-02-07 15:28:59 INFO  ServerThread:49 - SENT Message to Client [127.0.0.1:64170] : Please enter your name: 
+2016-02-07 15:28:59 INFO  StartServer:133 - Client:/127.0.0.1:64170: port connected
+2016-02-07 15:28:59 INFO  ServerThread:49 - SENT Message to Client [127.0.0.1:64171] : CONNECTION ACCEPTED
+2016-02-07 15:28:59 INFO  ServerThread:49 - SENT Message to Client [127.0.0.1:64171] : ---WELCOME TO IVANHOE---
+2016-02-07 15:28:59 INFO  ServerThread:49 - SENT Message to Client [127.0.0.1:64171] : Please enter your name: 
+2016-02-07 15:28:59 INFO  StartServer:133 - Client:/127.0.0.1:64171: port connected
+2016-02-07 15:28:59 INFO  StartServer:42 - Server: 0.0.0.0/0.0.0.0: 10003: port started
+2016-02-07 15:28:59 INFO  ServerThread:49 - SENT Message to Client [127.0.0.1:64172] : CONNECTION ACCEPTED
+2016-02-07 15:28:59 INFO  ServerThread:49 - SENT Message to Client [127.0.0.1:64172] : ---WELCOME TO IVANHOE---
+2016-02-07 15:28:59 INFO  ServerThread:49 - SENT Message to Client [127.0.0.1:64172] : Please enter your name: 
+2016-02-07 15:28:59 INFO  StartServer:133 - Client:/127.0.0.1:64172: port connected
+2016-02-07 15:28:59 INFO  ServerThread:49 - SENT Message to Client [127.0.0.1:64173] : CONNECTION ACCEPTED
+2016-02-07 15:28:59 INFO  ServerThread:49 - SENT Message to Client [127.0.0.1:64173] : ---WELCOME TO IVANHOE---
+2016-02-07 15:28:59 INFO  ServerThread:49 - SENT Message to Client [127.0.0.1:64173] : Please enter your name: 
+2016-02-07 15:28:59 INFO  StartServer:133 - Client:/127.0.0.1:64173: port connected
+2016-02-07 15:28:59 INFO  ServerThread:49 - SENT Message to Client [127.0.0.1:64174] : CONNECTION ACCEPTED
+2016-02-07 15:28:59 INFO  ServerThread:49 - SENT Message to Client [127.0.0.1:64174] : ---WELCOME TO IVANHOE---
+2016-02-07 15:28:59 INFO  ServerThread:49 - SENT Message to Client [127.0.0.1:64174] : Please enter your name: 
+2016-02-07 15:28:59 INFO  StartServer:133 - Client:/127.0.0.1:64174: port connected
