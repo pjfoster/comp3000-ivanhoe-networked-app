@@ -1,0 +1,14 @@
+{
+  \"response_type\" : \"connection_accepted\",
+  \"game_status\" : \"waiting\"
+}
+
+{
+  \"response_type\" : \"connection_accepted\",
+  \"game_status\" : \"ready\"
+}
+
+{
+  \"response_type\" : \"connection_rejected\",
+  \"rejection_reason\" : \"max_players\"
+}

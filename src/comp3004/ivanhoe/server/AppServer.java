@@ -128,7 +128,7 @@ public class AppServer implements Runnable {
 				this.clientCount++;
 				
 				serverThread.send("CONNECTION ACCEPTED");
-				serverThread.send("---WELCOME TO THE GAME ENGINE---");
+				serverThread.send("---WELCOME TO IVANHOE---");
 				serverThread.send("Please enter your name: ");
 				logger.info(String.format("Client:%s:%d: port connected", 
 										   socket.getInetAddress(), serverThread.getID()));
