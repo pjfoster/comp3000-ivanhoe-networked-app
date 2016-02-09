@@ -6,6 +6,6 @@ package comp3004.ivanhoe.view;
  * @author PJF
  *
  */
-public interface TournamentDisplay {
+public class TournamentDisplay {
 
 }

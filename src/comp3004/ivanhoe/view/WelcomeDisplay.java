@@ -6,6 +6,6 @@ package comp3004.ivanhoe.view;
  * @author PJF
  *
  */
-public interface WelcomeDisplay {
+public class WelcomeDisplay {
 
 }
