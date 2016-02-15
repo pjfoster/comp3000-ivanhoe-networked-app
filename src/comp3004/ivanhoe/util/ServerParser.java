@@ -22,11 +22,12 @@ public class ServerParser {
 		JSONParser parser = new JSONParser();
 		
 		String test = "{\"test\":\"test_value\"}";
+		String str = null;
 		
 		try {
 			JSONObject obj = (JSONObject)parser.parse(test);
 			
-			System.out.println(obj);
+			System.out.println(obj.toString().replace('"', '\"'));
 			System.out.println(obj.get("test"));
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block

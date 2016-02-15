@@ -10,16 +10,22 @@ import java.util.Set;
 
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
-import comp3004.ivanhoe.controller.IvanhoeGame;
+import comp3004.ivanhoe.controller.IvanhoeController;
+import comp3004.ivanhoe.util.Config.ResponseType;
+import comp3004.ivanhoe.util.ServerResponseBuilder;
 
 public class AppServer implements Runnable {
 	int clientCount = 0;
 	private Thread thread = null;
 	private ServerSocket server = null;
 	private HashMap<Integer, ServerThread> clients;
-	private IvanhoeGame game;
-	
+	private IvanhoeController game;
+	private JSONParser parser;
+	private ServerResponseBuilder responseBuilder;
 	int maxPlayers;
 	
 	final static Logger logger = Logger.getLogger(StartServer.class);
@@ -31,7 +37,9 @@ public class AppServer implements Runnable {
 		try {
 			/** Set up game object */
 			this.maxPlayers = maxPlayers;
-			game = new IvanhoeGame(maxPlayers, numRounds);	
+			game = new IvanhoeController(maxPlayers, numRounds);	
+			parser = new JSONParser();
+			responseBuilder = new ServerResponseBuilder();
 			
 			logger.debug("Binding to port " + port + ", please wait  ...");
 	
@@ -65,23 +73,51 @@ public class AppServer implements Runnable {
 	 * 	client's message
 	 */
 	public synchronized void handle(int id, String input) {
-		// will call Game.processInput
 		
 		if (input == null) { return; }
-		if (input.equals("quit!")) 
-		{
-			logger.info(String.format("Removing Client: %d", id));
-			if (clients.containsKey(id)) {
-				clients.get(id).send("quit!" + "\n");
-				remove(id);
+		else {
+			try {
+				JSONObject client_request = (JSONObject)parser.parse(input);
+				
+				// handle different types of client requests
+				if (client_request.get("request_type").equals("quit")) {
+					logger.info(String.format("Removing Client: %d", id));
+					if (clients.containsKey(id)) {
+						clients.get(id).send("quit!" + "\n");
+						remove(id);
+					}
+				}
+				else if (client_request.get("request_type").equals("register_player")) {
+					
+				} 
+				else if (client_request.get("request_type").equals("make_move")) {
+					// call game controller
+				}
+				// TODO: should we keep this?
+				else if (client_request.get("request_type").equals("shutdown")) {
+					shutdown(); 
+				}
+				else {
+					logger.error(String.format("%d: Invalid request from client", id));
+				}
+				
 			}
-		}
-		else if (input.equals("shutdown!")) { shutdown(); }
-		else 
-		{
-			// TOOD: parse the command, process input
-		}
-			
+			catch (ParseException e) {
+				logger.error(String.format("%d: Error parsing client message", id));
+			}
+		}		
+	}
+	
+	/**
+	 * Relay JSONified message to client
+	 * @param id
+	 * 	id of client thread
+	 * @param message
+	 * 	in JSON format
+	 */
+	public void sendToClient(int id, String message) {
+		ServerThread clientThread = clients.get(id);
+		clientThread.send(message);
 	}
 	
 	/**
@@ -113,12 +149,12 @@ public class AppServer implements Runnable {
 	 **/
 	public void addThread(Socket socket) {
 
+		JSONObject connectionResponse = null;
+		
 		if (clientCount < maxPlayers) {
 			logger.debug("Client accepted");
 			try {
-				
-				// TODO: Modify what is sent back to the client
-				
+	
 				/** Create a separate server thread for each client */
 				ServerThread serverThread = new ServerThread(this, socket);
 				/** Open and start the thread */
@@ -127,9 +163,7 @@ public class AppServer implements Runnable {
 				clients.put(serverThread.getID(), serverThread);
 				this.clientCount++;
 				
-				serverThread.send("CONNECTION ACCEPTED");
-				serverThread.send("---WELCOME TO IVANHOE---");
-				serverThread.send("Please enter your name: ");
+				connectionResponse = responseBuilder.buildResponse(ResponseType.CONNECTION_ACCEPTED);
 				logger.info(String.format("Client:%s:%d: port connected", 
 										   socket.getInetAddress(), serverThread.getID()));
 				logger.debug(clientCount + " clients are now connected");
@@ -138,19 +172,12 @@ public class AppServer implements Runnable {
 				logger.error("Error registering client. " + e.getMessage());
 			}
 		} else {
-			
-			try {
-				BufferedWriter streamOut = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
-				streamOut.write("MAX CLIENTS\n");
-				streamOut.flush();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			
+				
+			connectionResponse = responseBuilder.buildResponse(ResponseType.CONNECTION_REJECTED);
 			logger.info(String.format("Client Tried to connect: %s", socket));
 			logger.info(String.format("Client refused: maximum number of clients reached: %d", maxPlayers));
-				
 		}
+		
 	}
 	
 	/** Try and shutdown the client cleanly */

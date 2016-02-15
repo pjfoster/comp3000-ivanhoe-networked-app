@@ -15,7 +15,6 @@ public class Player {
 
 	private String name;
 	private List<Token> tokens;
-	
 	private List<Card> hand;
 	private List<Card> display;
 	private int displayTotal;

@@ -44,7 +44,7 @@ public class ClientTest {
 			e.printStackTrace();
 		}
 		
-		Mockito.verify(spy).handle("CONNECTION ACCEPTED");
+		Mockito.verify(spy).handleServerResponse("CONNECTION ACCEPTED");
 		
 	}
 	
@@ -71,9 +71,9 @@ public class ClientTest {
 			e.printStackTrace();
 		}
 		
-		Mockito.verify(spy1).handle("CONNECTION ACCEPTED");
-		Mockito.verify(spy2).handle("CONNECTION ACCEPTED");
-		Mockito.verify(spy3).handle("CONNECTION ACCEPTED");
+		Mockito.verify(spy1).handleServerResponse("CONNECTION ACCEPTED");
+		Mockito.verify(spy2).handleServerResponse("CONNECTION ACCEPTED");
+		Mockito.verify(spy3).handleServerResponse("CONNECTION ACCEPTED");
 		
 	}
 	
@@ -97,14 +97,14 @@ public class ClientTest {
 			e.printStackTrace();
 		}
 		
-		Mockito.verify(spy1).handle("---WELCOME TO IVANHOE---");
-		Mockito.verify(spy1).handle("Please enter your name: ");
+		Mockito.verify(spy1).handleServerResponse("---WELCOME TO IVANHOE---");
+		Mockito.verify(spy1).handleServerResponse("Please enter your name: ");
 		
-		Mockito.verify(spy2).handle("---WELCOME TO IVANHOE---");
-		Mockito.verify(spy2).handle("Please enter your name: ");
+		Mockito.verify(spy2).handleServerResponse("---WELCOME TO IVANHOE---");
+		Mockito.verify(spy2).handleServerResponse("Please enter your name: ");
 		
 		// verify that client1 did not receive more communications
-		Mockito.verify(spy1, Mockito.atMost(3)).handle(Mockito.anyString());
+		Mockito.verify(spy1, Mockito.atMost(3)).handleServerResponse(Mockito.anyString());
 		
 	}
 	
@@ -131,18 +131,18 @@ public class ClientTest {
 			e.printStackTrace();
 		}
 		
-		Mockito.verify(spy1).handle("---WELCOME TO IVANHOE---");
-		Mockito.verify(spy1).handle("Please enter your name: ");
+		Mockito.verify(spy1).handleServerResponse("---WELCOME TO IVANHOE---");
+		Mockito.verify(spy1).handleServerResponse("Please enter your name: ");
 		
-		Mockito.verify(spy2).handle("---WELCOME TO IVANHOE---");
-		Mockito.verify(spy2).handle("Please enter your name: ");
+		Mockito.verify(spy2).handleServerResponse("---WELCOME TO IVANHOE---");
+		Mockito.verify(spy2).handleServerResponse("Please enter your name: ");
 		
-		Mockito.verify(spy3).handle("---WELCOME TO IVANHOE---");
-		Mockito.verify(spy3).handle("Please enter your name: ");
+		Mockito.verify(spy3).handleServerResponse("---WELCOME TO IVANHOE---");
+		Mockito.verify(spy3).handleServerResponse("Please enter your name: ");
 		
 		// verify that client1 did not receive more communications
-		Mockito.verify(spy1, Mockito.atMost(3)).handle(Mockito.anyString());
-		Mockito.verify(spy2, Mockito.atMost(3)).handle(Mockito.anyString());
+		Mockito.verify(spy1, Mockito.atMost(3)).handleServerResponse(Mockito.anyString());
+		Mockito.verify(spy2, Mockito.atMost(3)).handleServerResponse(Mockito.anyString());
 	}
 	
 	@Test
@@ -172,22 +172,22 @@ public class ClientTest {
 			e.printStackTrace();
 		}
 		
-		Mockito.verify(spy1).handle("---WELCOME TO IVANHOE---");
-		Mockito.verify(spy1).handle("Please enter your name: ");
+		Mockito.verify(spy1).handleServerResponse("---WELCOME TO IVANHOE---");
+		Mockito.verify(spy1).handleServerResponse("Please enter your name: ");
 		
-		Mockito.verify(spy2).handle("---WELCOME TO IVANHOE---");
-		Mockito.verify(spy2).handle("Please enter your name: ");
+		Mockito.verify(spy2).handleServerResponse("---WELCOME TO IVANHOE---");
+		Mockito.verify(spy2).handleServerResponse("Please enter your name: ");
 		
-		Mockito.verify(spy3).handle("---WELCOME TO IVANHOE---");
-		Mockito.verify(spy3).handle("Please enter your name: ");
+		Mockito.verify(spy3).handleServerResponse("---WELCOME TO IVANHOE---");
+		Mockito.verify(spy3).handleServerResponse("Please enter your name: ");
 		
-		Mockito.verify(spy4).handle("---WELCOME TO IVANHOE---");
-		Mockito.verify(spy4).handle("Please enter your name: ");
+		Mockito.verify(spy4).handleServerResponse("---WELCOME TO IVANHOE---");
+		Mockito.verify(spy4).handleServerResponse("Please enter your name: ");
 		
 		// verify that client1 did not receive more communications
-		Mockito.verify(spy1, Mockito.atMost(3)).handle(Mockito.anyString());
-		Mockito.verify(spy2, Mockito.atMost(3)).handle(Mockito.anyString());
-		Mockito.verify(spy3, Mockito.atMost(3)).handle(Mockito.anyString());
+		Mockito.verify(spy1, Mockito.atMost(3)).handleServerResponse(Mockito.anyString());
+		Mockito.verify(spy2, Mockito.atMost(3)).handleServerResponse(Mockito.anyString());
+		Mockito.verify(spy3, Mockito.atMost(3)).handleServerResponse(Mockito.anyString());
 	}
 	
 	@Test
@@ -208,8 +208,8 @@ public class ClientTest {
 			e.printStackTrace();
 		}
 		
-		Mockito.verify(spy1).handle("CONNECTION ACCEPTED");
-		Mockito.verify(spy2).handle("MAX CLIENTS");
+		Mockito.verify(spy1).handleServerResponse("CONNECTION ACCEPTED");
+		Mockito.verify(spy2).handleServerResponse("MAX CLIENTS");
 	}
 
 }

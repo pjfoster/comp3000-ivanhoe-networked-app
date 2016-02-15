@@ -11,9 +11,22 @@ import java.util.Random;
 
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 import comp3004.ivanhoe.util.ClientParser;
+import comp3004.ivanhoe.util.ClientRequestBuilder;
+import comp3004.ivanhoe.util.Config;
+import comp3004.ivanhoe.util.Config.RequestType;
+import comp3004.ivanhoe.view.View;
+import comp3004.ivanhoe.view.ViewImpl;
 
+/**
+ * Relays messages from server and controls 
+ * @author PJF
+ *
+ */
 public class AppClient implements Runnable {
 
 	private String serverAddress;
@@ -27,13 +40,22 @@ public class AppClient implements Runnable {
 	private BufferedReader streamIn  = null;
 	private BufferedWriter streamOut = null;
 	
-	private ClientParser parser = new ClientParser();
+	private View view;
+	private JSONParser parser;
+	private ClientRequestBuilder requestBuilder;
+	
 	static Logger logger = Logger.getLogger(AppClient.class);
 	
 	public AppClient(String ipAddress, int port) {
 		PropertyConfigurator.configure("resources/log4j.client.properties");
 		this.serverAddress = ipAddress;
-		this.serverPort = port;
+		this.serverPort = port;	
+		parser = new JSONParser();
+		requestBuilder = new ClientRequestBuilder();
+		
+		// TODO: client shouldn't know what type of view it is.
+		// Could change this to a factory?
+		view = new ViewImpl(this);
 	}
 	
 	/**
@@ -42,19 +64,12 @@ public class AppClient implements Runnable {
 	 */
 	public void run() {
 		logger.debug(ID + " Client is running");
+		
+		// display view to client
+		view.launch();
+		
 		while (thread != null) {  
-			try {  
-				if (streamOut != null) {
-					String txt = console.readLine();
-					sendMessageToServer(txt);
-				} else {
-					logger.info(ID + ": Stream Closed");
-				}
-			}
-	         catch(IOException e) {  
-	         	logger.error(ID + " Error processing messages: " + e.getMessage());
-	         	stop();
-	         }
+			// TODO: obsolete method?
 		}
 	}
 	
@@ -63,12 +78,44 @@ public class AppClient implements Runnable {
 	 * and relay it to the view
 	 * @param input
 	 */
-	public void handle(String input) {
-		
-		// TODO: Create specific commands for things like quitting, connection refused, and connection
-		// accepted. There will be a lot more options depending on the type of the command
+	public void handleServerResponse(String input) {
 		
 		if (input == null) { return ; }
+		
+		try {
+			JSONObject server_response = (JSONObject)parser.parse(input);
+			
+			if (server_response.get("response_type").equals("connection_rejected")) {
+				// TODO: pass in parameters
+				stop();
+			}
+			else if (server_response.get("response_type").equals("connection_accepted")) {
+				// TODO: "waiting for other players screen"
+			}
+			else if (server_response.get("response_type").equals("start_player_turn")) {
+				// TODO: pass in parameters
+				view.displayTurnView();
+			}
+			else if (server_response.get("response_type").equals("begin_game")) {
+				// TODO: pass in parameters
+				view.displayTournamentView();
+			}
+			else if (server_response.get("response_type").equals("update_view")) {
+				// TODO: pass in parameters - or add updateTournamentView() method?
+				view.displayTournamentView();
+			}
+			else if (server_response.get("response_type").equals("make_move")) {
+				// TODO: client may require a back and forth with the server (for example when playing
+				// action cards)
+			}
+			else if (server_response.get("response_type").equals("quit")) { stop(); }
+			else {
+				logger.error(String.format("Invalid server response"));
+			}
+		}
+		catch (ParseException e) {
+			logger.error(String.format("Error parsing server response"));
+		}
 		
 		if (input.equalsIgnoreCase("quit!")) {  
 			System.out.println(ID + " Disconnecting...");
@@ -82,12 +129,21 @@ public class AppClient implements Runnable {
 		} else if (input.equalsIgnoreCase("CONNECTION ACCEPTED")) {
 			logger.debug(ID + ": Client connected to server");
 			
-			System.out.println(ID + ": Connected to server: " + socket.getInetAddress());
-	    	System.out.println(ID + ": Connected to portid: " + socket.getLocalPort());
 		}
 		else {
-			System.out.println(input);
+			logger.error("Invalid response from server");
 		}
+	}
+	
+	/**
+	 * Called by view; constructs JSON request and sends it to server
+	 * TODO: Currently dummy method!
+	 * @param obj
+	 */
+	public void handleClientRequest(RequestType requestType) throws IOException {
+		
+		JSONObject request = requestBuilder.buildResponse(requestType);
+		sendMessageToServer(request.toString());
 	}
 	
 	public boolean connect() {
