@@ -47,4 +47,11 @@ public class ClientRequestBuilder {
 		
 	}
 	
+	public JSONObject buildRegisterPlayer(String username) { return null; };
+	
+	public JSONObject buildColorCardMove() { return null; };
+	public JSONObject buildSupporterCardMove() { return null; };
+	public JSONObject buildActionCardMove() { return null; };
+	public JSONObject buildWithdrawMove() { return null; };
+	
 }

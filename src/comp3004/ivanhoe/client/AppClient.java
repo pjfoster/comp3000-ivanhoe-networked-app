@@ -80,6 +80,8 @@ public class AppClient implements Runnable {
 	 */
 	public void handleServerResponse(String input) {
 		
+		System.out.println(input);
+		
 		if (input == null) { return ; }
 		
 		try {
@@ -90,6 +92,7 @@ public class AppClient implements Runnable {
 				stop();
 			}
 			else if (server_response.get("response_type").equals("connection_accepted")) {
+				System.out.println("Connection accepted!"); // test
 				// TODO: "waiting for other players screen"
 			}
 			else if (server_response.get("response_type").equals("start_player_turn")) {
@@ -115,23 +118,6 @@ public class AppClient implements Runnable {
 		}
 		catch (ParseException e) {
 			logger.error(String.format("Error parsing server response"));
-		}
-		
-		if (input.equalsIgnoreCase("quit!")) {  
-			System.out.println(ID + " Disconnecting...");
-			stop();
-			
-		} else if (input.equalsIgnoreCase("MAX CLIENTS")) {
-			logger.error("Server refused the connection; too many clients");
-			System.out.println(ID + " Disconnecting...");
-			stop();
-			
-		} else if (input.equalsIgnoreCase("CONNECTION ACCEPTED")) {
-			logger.debug(ID + ": Client connected to server");
-			
-		}
-		else {
-			logger.error("Invalid response from server");
 		}
 	}
 	

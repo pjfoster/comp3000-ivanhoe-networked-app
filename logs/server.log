@@ -855,3 +855,21 @@
 2016-02-07 15:28:59 INFO  ServerThread:49 - SENT Message to Client [127.0.0.1:64174] : ---WELCOME TO IVANHOE---
 2016-02-07 15:28:59 INFO  ServerThread:49 - SENT Message to Client [127.0.0.1:64174] : Please enter your name: 
 2016-02-07 15:28:59 INFO  StartServer:133 - Client:/127.0.0.1:64174: port connected
+2016-02-15 06:00:09 ERROR StartServer:27 - No System Console; use IDE Console
+2016-02-15 06:00:16 INFO  StartServer:43 - Starting server ...
+2016-02-15 06:00:16 INFO  StartServer:50 - Server: 0.0.0.0/0.0.0.0: 10000: port started
+2016-02-15 06:00:21 INFO  ServerThread:49 - SENT Message to Client [127.0.0.1:53128] : {"response_type":"connection_accepted"}
+2016-02-15 06:00:21 INFO  StartServer:169 - Client:/127.0.0.1:53128: port connected
+2016-02-15 06:00:21 ERROR AppClient:135 - Invalid response from server
+2016-02-15 06:01:31 ERROR StartServer:27 - No System Console; use IDE Console
+2016-02-15 06:01:34 INFO  StartServer:43 - Starting server ...
+2016-02-15 06:01:34 INFO  StartServer:50 - Server: 0.0.0.0/0.0.0.0: 10000: port started
+2016-02-15 06:01:40 INFO  ServerThread:49 - SENT Message to Client [127.0.0.1:53130] : {"response_type":"connection_accepted"}
+2016-02-15 06:01:40 INFO  StartServer:169 - Client:/127.0.0.1:53130: port connected
+2016-02-15 06:01:40 ERROR AppClient:137 - Invalid response from server
+2016-02-15 06:02:18 ERROR StartServer:27 - No System Console; use IDE Console
+2016-02-15 06:02:27 INFO  StartServer:43 - Starting server ...
+2016-02-15 06:02:27 INFO  StartServer:50 - Server: 0.0.0.0/0.0.0.0: 10000: port started
+2016-02-15 06:02:30 ERROR StartServer:27 - No System Console; use IDE Console
+2016-02-15 06:02:38 INFO  ServerThread:49 - SENT Message to Client [127.0.0.1:53133] : {"response_type":"connection_accepted"}
+2016-02-15 06:02:38 INFO  StartServer:169 - Client:/127.0.0.1:53133: port connected

@@ -164,6 +164,8 @@ public class AppServer implements Runnable {
 				this.clientCount++;
 				
 				connectionResponse = responseBuilder.buildResponse(ResponseType.CONNECTION_ACCEPTED);
+				serverThread.send(connectionResponse.toJSONString());
+				
 				logger.info(String.format("Client:%s:%d: port connected", 
 										   socket.getInetAddress(), serverThread.getID()));
 				logger.debug(clientCount + " clients are now connected");
@@ -172,8 +174,16 @@ public class AppServer implements Runnable {
 				logger.error("Error registering client. " + e.getMessage());
 			}
 		} else {
-				
-			connectionResponse = responseBuilder.buildResponse(ResponseType.CONNECTION_REJECTED);
+			
+			try {
+				BufferedWriter streamOut = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+				connectionResponse = responseBuilder.buildResponse(ResponseType.CONNECTION_REJECTED);
+				streamOut.write(connectionResponse.toJSONString() + "\n");
+				streamOut.flush();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
 			logger.info(String.format("Client Tried to connect: %s", socket));
 			logger.info(String.format("Client refused: maximum number of clients reached: %d", maxPlayers));
 		}
