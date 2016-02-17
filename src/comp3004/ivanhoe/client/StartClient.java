@@ -6,10 +6,6 @@ public class StartClient {
 	
 	public static void main(String[] argv) {
 		AppClient client = new AppClient(Config.DEFAULT_SERVER_ADDRESS, Config.DEFAULT_SERVER_PORT); 
-		boolean success = client.connect();
-		
-		if (!success) {
-			// Log an error
-		}
+		//boolean success = client.connect();
 	}
 }

@@ -14,6 +14,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import comp3004.ivanhoe.util.ClientRequestBuilder;
 import comp3004.ivanhoe.view.TextViewImpl;
 import comp3004.ivanhoe.view.View;
 
@@ -35,8 +36,10 @@ public class AppClient implements Runnable {
 	private BufferedReader streamIn  = null;
 	private BufferedWriter streamOut = null;
 	
+	private String username = "";
 	private View view;
 	private JSONParser parser;
+	private ClientRequestBuilder requestBuilder;
 	
 	static Logger logger = Logger.getLogger(AppClient.class);
 	
@@ -45,8 +48,10 @@ public class AppClient implements Runnable {
 		this.serverAddress = ipAddress;
 		this.serverPort = port;	
 		parser = new JSONParser();
+		requestBuilder = new ClientRequestBuilder();
 		
-		this.view = new TextViewImpl(this);
+		this.view = new TextViewImpl(this, requestBuilder);
+		view.launch();
 	}
 	
 	/**
@@ -54,11 +59,7 @@ public class AppClient implements Runnable {
 	 * Will build commands based on input from the UI
 	 */
 	public void run() {
-		logger.debug(ID + " Client is running");
-		
-		// display view to client
-		view.launch();
-		
+		logger.debug(ID + " Client is connected and running");
 		while (thread != null) {  
 			// TODO: obsolete method?
 		}
@@ -68,8 +69,9 @@ public class AppClient implements Runnable {
 	 * Listens for input coming from the server side; must parse command
 	 * and relay it to the view
 	 * @param input
+	 * @throws IOException 
 	 */
-	public void handleServerResponse(String input) {
+	public void handleServerResponse(String input) throws IOException {
 		
 		System.out.println("AppClient : " + input);
 		
@@ -87,26 +89,32 @@ public class AppClient implements Runnable {
 				view.stop();
 				stop();
 			}
+			
 			else if (server_response.get("response_type").equals("connection_accepted")) {
 				System.out.println("Connection accepted!"); // test
-				// TODO: "waiting for other players screen"
+				handleClientRequest(requestBuilder.buildRegisterPlayer(username));
+				view.displayWaitingMessage();
 			}
+			
 			else if (server_response.get("response_type").equals("start_player_turn")) {
 				// TODO: pass in parameters
 				view.displayTurnView();
 			}
-			else if (server_response.get("response_type").equals("begin_game")) {
-				// TODO: pass in parameters
-				view.displayTournamentView();
+			
+			else if (server_response.get("response_type").equals("start_game")) {
+				view.displayStartScreen();
 			}
+			
 			else if (server_response.get("response_type").equals("update_view")) {
 				// TODO: pass in parameters - or add updateTournamentView() method?
 				view.displayTournamentView();
 			}
+			
 			else if (server_response.get("response_type").equals("make_move")) {
 				// TODO: client may require a back and forth with the server (for example when playing
 				// action cards)
 			}
+			
 			else {
 				logger.error(String.format("Invalid server response"));
 			}
@@ -187,4 +195,8 @@ public class AppClient implements Runnable {
 	}
 	
 	public int getID() { return ID; }
+	
+	public void setUsername(String username) {
+		this.username = username;
+	}
 }

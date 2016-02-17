@@ -21,6 +21,12 @@ public class ServerResponseBuilder {
 		return new JSONObject(responseMap);
 	}
 	
+	public JSONObject buildStartGame() {
+		HashMap<String, String> responseMap = new HashMap<String, String>();
+		responseMap.put("response_type", "start_game");
+		return new JSONObject(responseMap);
+	}
+	
 	public JSONObject buildStartTournament() {
 		HashMap<String, String> responseMap = new HashMap<String, String>();
 		responseMap.put("response_type", "start_tournament");

@@ -2,6 +2,8 @@ package comp3004.ivanhoe.controller;
 
 import java.util.HashMap;
 
+import org.json.simple.JSONObject;
+
 import comp3004.ivanhoe.model.Player;
 import comp3004.ivanhoe.server.AppServer;
 import comp3004.ivanhoe.util.ServerResponseBuilder;
@@ -31,12 +33,26 @@ public class IvanhoeController {
 		
 		if (players.size() >= maxPlayers) {
 			// Too many players; can't add any more
+			return;
 		}
 		
 		if (!players.containsKey(playerId)) {
 			Player newPlayer = new Player(playerName);
 			players.put(playerId, newPlayer);
 		}
+		
+		if (players.size() == maxPlayers) {
+			startGame();
+		}
+	
+	}
+	
+	/**
+	 * Controls order and sequence of the game
+	 */
+	public void startGame() {
+		JSONObject startGameMessage = responseBuilder.buildStartGame();
+		server.broadcast(startGameMessage);
 	}
 	
 }

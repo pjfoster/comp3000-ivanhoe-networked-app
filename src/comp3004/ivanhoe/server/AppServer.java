@@ -22,7 +22,7 @@ public class AppServer implements Runnable {
 	private Thread thread = null;
 	private ServerSocket server = null;
 	private HashMap<Integer, ServerThread> clients;
-	private IvanhoeController game;
+	private IvanhoeController controller;
 	private JSONParser parser;
 	private ServerResponseBuilder responseBuilder;
 	int maxPlayers;
@@ -35,10 +35,10 @@ public class AppServer implements Runnable {
 		
 		try {
 			/** Set up game object */
-			this.maxPlayers = maxPlayers;
-			game = new IvanhoeController(this, responseBuilder, maxPlayers, numRounds);	
+			this.maxPlayers = maxPlayers;	
 			parser = new JSONParser();
 			responseBuilder = new ServerResponseBuilder();
+			controller = new IvanhoeController(this, responseBuilder, maxPlayers, numRounds);
 			
 			logger.debug("Binding to port " + port + ", please wait  ...");
 	
@@ -46,6 +46,7 @@ public class AppServer implements Runnable {
 			server = new ServerSocket(port);
 			server.setReuseAddress(true);
 			start();
+			
 			logger.info(String.format("Server: %s: %d: port started", server.getInetAddress(), port));
 			
 		} 
@@ -86,16 +87,21 @@ public class AppServer implements Runnable {
 						remove(id);
 					}
 				}
+				
 				else if (client_request.get("request_type").equals("register_player")) {
-					
+					controller.addPlayer(id, (String)client_request.get("username"));
+					logger.info("Registering " + client_request.get("username"));
 				} 
+				
 				else if (client_request.get("request_type").equals("make_move")) {
 					// call game controller
 				}
+				
 				// TODO: should we keep this?
 				else if (client_request.get("request_type").equals("shutdown")) {
 					shutdown(); 
 				}
+				
 				else {
 					logger.error(String.format("%d: Invalid request from client", id));
 				}
@@ -108,24 +114,24 @@ public class AppServer implements Runnable {
 	}
 	
 	/**
-	 * Relay JSONified message to client
+	 * Relay message to client
 	 * @param id
 	 * 	id of client thread
 	 * @param message
 	 * 	in JSON format
 	 */
-	public void sendToClient(int id, String message) {
+	public void sendToClient(int id, JSONObject message) {
 		ServerThread clientThread = clients.get(id);
-		clientThread.send(message);
+		clientThread.send(message.toJSONString());
 	}
 	
 	/**
 	 * Broadcast message to all clients
 	 * @param message
 	 */
-	public void broadcast(String message) {
+	public void broadcast(JSONObject message) {
 		for (ServerThread client: clients.values()) {
-			client.send(message);
+			client.send(message.toJSONString());
 		}
 	}
 	

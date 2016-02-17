@@ -43,6 +43,18 @@ public class ViewImpl implements View {
 		
 	}
 
+	@Override
+	public void displayWaitingMessage() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void displayStartScreen() {
+		// TODO Auto-generated method stub
+		
+	}
+
 	
 	
 }

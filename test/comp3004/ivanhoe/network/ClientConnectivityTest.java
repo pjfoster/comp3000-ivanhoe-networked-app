@@ -2,6 +2,8 @@ package comp3004.ivanhoe.network;
 
 import static org.junit.Assert.*;
 
+import java.io.IOException;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -28,7 +30,7 @@ public class ClientConnectivityTest {
 	/**
 	 * Tests that the client can connect to the server
 	 */
-	public void testUniqueConnection() {
+	public void testUniqueConnection() throws IOException {
 		
 		// create & start the server
 		server = new AppServer(10000, 1, 1);
@@ -49,7 +51,7 @@ public class ClientConnectivityTest {
 	}
 	
 	@Test
-	public void testMultipleConnections() {
+	public void testMultipleConnections() throws IOException {
 		// create & start the server
 		server = new AppServer(10001, 4, 1);
 		
@@ -79,7 +81,7 @@ public class ClientConnectivityTest {
 	}
 	
 	@Test
-	public void testCommunication2Clients() {
+	public void testCommunication2Clients() throws IOException {
 		// create & start the server
 		// TODO: how to test the server?
 		server = new AppServer(10002, 3, 1);
@@ -108,7 +110,7 @@ public class ClientConnectivityTest {
 	}
 	
 	@Test
-	public void testMaxConnections() {
+	public void testMaxConnections() throws IOException {
 		// create & start the server
 		server = new AppServer(10006, 1, 1);
 		

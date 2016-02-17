@@ -12,8 +12,10 @@ public interface View {
 	 */
 	public void stop();
 	
+	public void displayWaitingMessage();
 	public void displayTournamentView();
 	public void displayTurnView();
 	public void displayWelcome();
+	public void displayStartScreen();
 	
 }

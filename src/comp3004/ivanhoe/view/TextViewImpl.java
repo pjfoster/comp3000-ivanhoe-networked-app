@@ -19,19 +19,30 @@ public class TextViewImpl implements View, Runnable {
 	BufferedReader console;
 	boolean running = false;
 	
-	public TextViewImpl (AppClient client) {
+	public TextViewImpl (AppClient client, ClientRequestBuilder requestBuilder) {
 		this.client = client;
-		requestBuilder = new ClientRequestBuilder();
+		this.requestBuilder = requestBuilder;
 		
 		console = new BufferedReader(new InputStreamReader(System.in));
 	}
 	
 	@Override
+	public void displayWaitingMessage() {
+		System.out.println("Please wait for other players to connect...");
+	}
+	
+	@Override
 	public void launch() {
 		running = true;
+		System.out.println("Launching view... Pretend a window is opening");
 		run();
 	}
 
+	@Override
+	public void displayStartScreen() {
+		System.out.println("The Game is beginning!");
+	}
+	
 	@Override
 	public void displayTournamentView() {
 		// TODO Auto-generated method stub
@@ -56,12 +67,23 @@ public class TextViewImpl implements View, Runnable {
 		while (running) {
 			try {
 				String text = console.readLine();
-				System.out.println(text);
+				
+				if (text.contains("start_connect")) { // ex: start_connect Alexi
+					client.setUsername(text.split(" ")[1]);
+					client.connect();
+				}
+				
+				else {
+					System.out.println(text);
+				}
 			}
-			catch(IOException e) {  
+			catch (IOException e) {  
 	         	System.out.println("ERROR reading console input");
 	         	running = false;
 	         }
+			catch (NullPointerException np) {
+				System.out.println("Accidentally tried to read null...");
+			}
 		}
 		
 	}
