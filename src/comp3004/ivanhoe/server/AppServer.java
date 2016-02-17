@@ -15,7 +15,6 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import comp3004.ivanhoe.controller.IvanhoeController;
-import comp3004.ivanhoe.util.Config.ResponseType;
 import comp3004.ivanhoe.util.ServerResponseBuilder;
 
 public class AppServer implements Runnable {
@@ -37,7 +36,7 @@ public class AppServer implements Runnable {
 		try {
 			/** Set up game object */
 			this.maxPlayers = maxPlayers;
-			game = new IvanhoeController(maxPlayers, numRounds);	
+			game = new IvanhoeController(this, responseBuilder, maxPlayers, numRounds);	
 			parser = new JSONParser();
 			responseBuilder = new ServerResponseBuilder();
 			
@@ -163,7 +162,7 @@ public class AppServer implements Runnable {
 				clients.put(serverThread.getID(), serverThread);
 				this.clientCount++;
 				
-				connectionResponse = responseBuilder.buildResponse(ResponseType.CONNECTION_ACCEPTED);
+				connectionResponse = responseBuilder.buildConnectionAccepted();
 				serverThread.send(connectionResponse.toJSONString());
 				
 				logger.info(String.format("Client:%s:%d: port connected", 
@@ -177,7 +176,7 @@ public class AppServer implements Runnable {
 			
 			try {
 				BufferedWriter streamOut = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
-				connectionResponse = responseBuilder.buildResponse(ResponseType.CONNECTION_REJECTED);
+				connectionResponse = responseBuilder.buildConnectionRejected();
 				streamOut.write(connectionResponse.toJSONString() + "\n");
 				streamOut.flush();
 			} catch (IOException e) {

@@ -3,14 +3,20 @@ package comp3004.ivanhoe.controller;
 import java.util.HashMap;
 
 import comp3004.ivanhoe.model.Player;
+import comp3004.ivanhoe.server.AppServer;
+import comp3004.ivanhoe.util.ServerResponseBuilder;
 
 public class IvanhoeController {
 
 	int maxPlayers;
 	int numRounds;
 	private HashMap<Integer, Player> players;
+	private ServerResponseBuilder responseBuilder;
+	private AppServer server;
 	
-	public IvanhoeController(int maxPlayers, int numRounds) {
+	public IvanhoeController(AppServer server, ServerResponseBuilder responseBuilder, int maxPlayers, int numRounds) {
+		this.server = server;
+		this.responseBuilder = responseBuilder;
 		this.maxPlayers = maxPlayers;
 		this.numRounds = numRounds;
 		players = new HashMap<Integer, Player>();

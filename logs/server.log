@@ -873,3 +873,24 @@
 2016-02-15 06:02:30 ERROR StartServer:27 - No System Console; use IDE Console
 2016-02-15 06:02:38 INFO  ServerThread:49 - SENT Message to Client [127.0.0.1:53133] : {"response_type":"connection_accepted"}
 2016-02-15 06:02:38 INFO  StartServer:169 - Client:/127.0.0.1:53133: port connected
+2016-02-17 11:09:43 ERROR StartServer:27 - No System Console; use IDE Console
+2016-02-17 11:09:49 INFO  StartServer:43 - Starting server ...
+2016-02-17 11:09:49 INFO  StartServer:49 - Server: 0.0.0.0/0.0.0.0: 10000: port started
+2016-02-17 11:09:53 INFO  ServerThread:49 - SENT Message to Client [127.0.0.1:58097] : {"response_type":"client_accepted"}
+2016-02-17 11:09:53 INFO  StartServer:168 - Client:/127.0.0.1:58097: port connected
+2016-02-17 11:09:53 ERROR AppClient:108 - Invalid server response
+2016-02-17 11:11:25 ERROR AppClient:142 - Error connecting to server. Connection refused
+2016-02-17 11:11:31 ERROR StartServer:27 - No System Console; use IDE Console
+2016-02-17 11:11:37 INFO  StartServer:43 - Starting server ...
+2016-02-17 11:11:37 INFO  StartServer:49 - Server: 0.0.0.0/0.0.0.0: 10000: port started
+2016-02-17 11:11:41 INFO  ServerThread:49 - SENT Message to Client [127.0.0.1:58099] : {"response_type":"connection_accepted"}
+2016-02-17 11:11:41 INFO  StartServer:168 - Client:/127.0.0.1:58099: port connected
+2016-02-17 11:15:29 ERROR StartServer:27 - No System Console; use IDE Console
+2016-02-17 11:15:34 INFO  StartServer:43 - Starting server ...
+2016-02-17 11:15:34 INFO  StartServer:49 - Server: 0.0.0.0/0.0.0.0: 10000: port started
+2016-02-17 11:15:40 INFO  ServerThread:49 - SENT Message to Client [127.0.0.1:58102] : {"response_type":"connection_accepted"}
+2016-02-17 11:15:40 INFO  StartServer:168 - Client:/127.0.0.1:58102: port connected
+2016-02-17 11:15:49 INFO  ServerThread:49 - SENT Message to Client [127.0.0.1:58103] : {"response_type":"connection_accepted"}
+2016-02-17 11:15:49 INFO  StartServer:168 - Client:/127.0.0.1:58103: port connected
+2016-02-17 11:15:54 INFO  StartServer:186 - Client Tried to connect: Socket[addr=/127.0.0.1,port=58104,localport=10000]
+2016-02-17 11:15:54 INFO  StartServer:187 - Client refused: maximum number of clients reached: 2

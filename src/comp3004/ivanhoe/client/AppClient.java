@@ -7,7 +7,6 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
-import java.util.Random;
 
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
@@ -15,12 +14,8 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import comp3004.ivanhoe.util.ClientParser;
-import comp3004.ivanhoe.util.ClientRequestBuilder;
-import comp3004.ivanhoe.util.Config;
-import comp3004.ivanhoe.util.Config.RequestType;
+import comp3004.ivanhoe.view.TextViewImpl;
 import comp3004.ivanhoe.view.View;
-import comp3004.ivanhoe.view.ViewImpl;
 
 /**
  * Relays messages from server and controls 
@@ -42,7 +37,6 @@ public class AppClient implements Runnable {
 	
 	private View view;
 	private JSONParser parser;
-	private ClientRequestBuilder requestBuilder;
 	
 	static Logger logger = Logger.getLogger(AppClient.class);
 	
@@ -51,11 +45,8 @@ public class AppClient implements Runnable {
 		this.serverAddress = ipAddress;
 		this.serverPort = port;	
 		parser = new JSONParser();
-		requestBuilder = new ClientRequestBuilder();
 		
-		// TODO: client shouldn't know what type of view it is.
-		// Could change this to a factory?
-		view = new ViewImpl(this);
+		this.view = new TextViewImpl(this);
 	}
 	
 	/**
@@ -80,15 +71,20 @@ public class AppClient implements Runnable {
 	 */
 	public void handleServerResponse(String input) {
 		
-		System.out.println(input);
+		System.out.println("AppClient : " + input);
 		
-		if (input == null) { return ; }
+		if (input == null) // case where server dies unexpectedly 
+		{ 
+			System.out.println("AppClient : " + input);
+			return ; 
+		}
 		
 		try {
 			JSONObject server_response = (JSONObject)parser.parse(input);
 			
-			if (server_response.get("response_type").equals("connection_rejected")) {
-				// TODO: pass in parameters
+			if (server_response.get("response_type").equals("connection_rejected") ||
+				server_response.get("response_type").equals("quit")) {
+				view.stop();
 				stop();
 			}
 			else if (server_response.get("response_type").equals("connection_accepted")) {
@@ -111,7 +107,6 @@ public class AppClient implements Runnable {
 				// TODO: client may require a back and forth with the server (for example when playing
 				// action cards)
 			}
-			else if (server_response.get("response_type").equals("quit")) { stop(); }
 			else {
 				logger.error(String.format("Invalid server response"));
 			}
@@ -122,14 +117,14 @@ public class AppClient implements Runnable {
 	}
 	
 	/**
-	 * Called by view; constructs JSON request and sends it to server
-	 * TODO: Currently dummy method!
-	 * @param obj
+	 * Sends request to server
+	 * @param request
+	 * 	JSONobject constructed by the view containing the client request
+	 * @throws IOException
 	 */
-	public void handleClientRequest(RequestType requestType) throws IOException {
-		
-		JSONObject request = requestBuilder.buildResponse(requestType);
-		sendMessageToServer(request.toString());
+	public void handleClientRequest(JSONObject request) throws IOException {
+		streamOut.write(request.toJSONString() + "\n");
+		streamOut.flush();
 	}
 	
 	public boolean connect() {
@@ -189,11 +184,6 @@ public class AppClient implements Runnable {
 	    	  logger.error("Error stopping client. " + ioe.getMessage());
 	      }
 	      client.close(); 
-	}
-	
-	public void sendMessageToServer(String txt) throws IOException {
-		streamOut.write(txt + "\n");
-		streamOut.flush();
 	}
 	
 	public int getID() { return ID; }
