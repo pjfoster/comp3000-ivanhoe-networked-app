@@ -121,7 +121,6 @@ public class AppServer implements Runnable {
 	
 	/**
 	 * Broadcast message to all clients
-	 * TODO: Do we still need this?
 	 * @param message
 	 */
 	public void broadcast(String message) {
