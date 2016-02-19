@@ -54,35 +54,35 @@ public class ColourCard extends Card {
 	public static List<ColourCard> getColourDeck(){
 		List<ColourCard> output = new ArrayList<ColourCard>();
 		for(int i = 0; i < 4; i++){
-			output.add(new ColourCard("Purple",3));
-			output.add(new ColourCard("Purple",4));
-			output.add(new ColourCard("Purple",5));
+			output.add(new ColourCard("purple",3));
+			output.add(new ColourCard("purple",4));
+			output.add(new ColourCard("purple",5));
 			
-			output.add(new ColourCard("Blue",2));
-			output.add(new ColourCard("Blue",3));
-			output.add(new ColourCard("Blue",4));
+			output.add(new ColourCard("blue",2));
+			output.add(new ColourCard("blue",3));
+			output.add(new ColourCard("blue",4));
 			
-			output.add(new ColourCard("Yellow",2));
+			output.add(new ColourCard("yellow",2));
 		}
 		
 		for(int i = 0; i<6; i++){
-			output.add(new ColourCard("Red",3));
-			output.add(new ColourCard("Red",4));
+			output.add(new ColourCard("red",3));
+			output.add(new ColourCard("red",4));
 		}
 		
 		for(int i = 0; i<2; i++){
-			output.add(new ColourCard("Purple",7));
-			output.add(new ColourCard("Red",5));
-			output.add(new ColourCard("Blue",5));
-			output.add(new ColourCard("Yellow",4));
+			output.add(new ColourCard("purple",7));
+			output.add(new ColourCard("red",5));
+			output.add(new ColourCard("blue",5));
+			output.add(new ColourCard("yellow",4));
 		}
 		
 		for(int i = 0; i<8; i++){
-			output.add(new ColourCard("Yellow",3));
+			output.add(new ColourCard("yellow",3));
 		}
 
 		for(int i = 0; i<14; i++){
-			output.add(new ColourCard("Green",1));
+			output.add(new ColourCard("green",1));
 		}
 		return output;
 	}
