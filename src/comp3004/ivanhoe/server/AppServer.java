@@ -29,7 +29,7 @@ public class AppServer implements Runnable {
 	
 	final static Logger logger = Logger.getLogger(StartServer.class);
 	
-	public AppServer(int port, int maxPlayers, int numRounds) {
+	public AppServer(int port, int maxPlayers) {
 		
 		PropertyConfigurator.configure("resources/log4j.server.properties");
 		
@@ -38,7 +38,7 @@ public class AppServer implements Runnable {
 			this.maxPlayers = maxPlayers;	
 			parser = new JSONParser();
 			responseBuilder = new ServerResponseBuilder();
-			controller = new IvanhoeController(this, responseBuilder, maxPlayers, numRounds);
+			controller = new IvanhoeController(this, responseBuilder, maxPlayers);
 			
 			logger.debug("Binding to port " + port + ", please wait  ...");
 	
@@ -92,6 +92,10 @@ public class AppServer implements Runnable {
 					controller.addPlayer(id, (String)client_request.get("username"));
 					logger.info("Registering " + client_request.get("username"));
 				} 
+				
+				else if (client_request.get("request_type").equals("choose_token")) {
+					controller.processPlayerMove(id, client_request);
+				}
 				
 				else if (client_request.get("request_type").equals("make_move")) {
 					// call game controller

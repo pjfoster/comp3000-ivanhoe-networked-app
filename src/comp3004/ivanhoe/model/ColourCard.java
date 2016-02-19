@@ -47,6 +47,10 @@ public class ColourCard extends Card {
 		return value;
 	}
 	
+	public String toString() {
+		return "" + name.charAt(0) + value;
+	}
+	
 	public static List<ColourCard> getColourDeck(){
 		List<ColourCard> output = new ArrayList<ColourCard>();
 		for(int i = 0; i < 4; i++){

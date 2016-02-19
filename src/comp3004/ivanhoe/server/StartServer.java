@@ -37,11 +37,9 @@ public class StartServer {
 				
 				System.out.println("Enter the number of players: ");
 				int numPlayers = sc.nextInt();
-				System.out.println("Enter the number of rounds: ");
-				int numRounds = sc.nextInt();
 				
 				logger.info("Starting server ...");
-				appServer = new AppServer(Config.DEFAULT_SERVER_PORT, numPlayers, numRounds);
+				appServer = new AppServer(Config.DEFAULT_SERVER_PORT, numPlayers);
 				started = Boolean.TRUE;
 			}
 			

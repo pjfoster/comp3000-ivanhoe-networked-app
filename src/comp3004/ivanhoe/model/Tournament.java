@@ -2,34 +2,41 @@ package comp3004.ivanhoe.model;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 public class Tournament {
 
+	private final int STARTING_HAND_SIZE = 8;
+	
 	private Token token;
-	private List<Player> currentPlayers;
+	private HashMap<Integer, Player> currentPlayers;
+	//private List<Player> currentPlayers;
 	
 	private List<Card> deck;
 	private List<Card> discardPile;
 	
 	public Tournament(){
-		currentPlayers = new ArrayList<Player>();
+		currentPlayers = new HashMap<Integer, Player>();
 		discardPile = new ArrayList<Card>();
 		buildDeck();
+		dealStartingHands();
 	}
 	
-	public Tournament(List<Player> players){
-		currentPlayers=players;
+	public Tournament(HashMap<Integer, Player> players, String tokenColor){
+		currentPlayers = players;
+		token = Token.fromString(tokenColor);
 		discardPile = new ArrayList<Card>();
 		buildDeck();
+		dealStartingHands();
 	}
 	
 	/**
 	 * This function adds a player to the tournament
 	 * @param player
 	 */
-	public void addPlayer(Player player){
-		currentPlayers.add(player);
+	public void addPlayer(int id, Player player){
+		currentPlayers.put(id, player);
 	}
 	
 	/**
@@ -37,14 +44,18 @@ public class Tournament {
 	 * @param player
 	 * @return
 	 */
-	public boolean removePlayer(Player player){
-		return currentPlayers.remove(player);
+	public boolean removePlayer(int id){
+		if (currentPlayers.containsKey(id)) {
+			currentPlayers.remove(id);
+			return true;
+		}
+		return false;
 	}
 
 	/**
 	 * This function builds the deck from the Card subclasses
 	 */
-	public void buildDeck(){
+	private void buildDeck(){
 		deck = new ArrayList<Card>();
 		deck.addAll(ActionCard.getActionDeck());
 		deck.addAll(ColourCard.getColourDeck());
@@ -55,9 +66,9 @@ public class Tournament {
 	/**
 	 * This function sets the hands of all players and removes those cards from the deck
 	 **/
-	public void dealStartingHands(){
-		for(int i = 0; i < 8; i++){
-			for(Player p: currentPlayers){
+	private void dealStartingHands(){
+		for (int i = 0; i < STARTING_HAND_SIZE; i++){
+			for (Player p: currentPlayers.values()) {
 				p.addHandCard(drawCard());
 			}
 		}
@@ -68,7 +79,7 @@ public class Tournament {
 	 * @return
 	 */
 	public Card drawCard(){
-		if(deck.size()==0)
+		if (deck.size() == 0)
 			resetDiscardtoDeck();
 		return deck.remove(0);
 	}
@@ -103,11 +114,19 @@ public class Tournament {
 	 */
 	public Player getPlayerWithHighestDisplay(){
 		Player temp = currentPlayers.get(0);
-		for(Player p: currentPlayers){
-			if(p.getDisplayTotal()>temp.getDisplayTotal())
+		for (Player p: currentPlayers.values()){
+			if (p.getDisplayTotal() > temp.getDisplayTotal())
 				temp = p;
 		}
 		return temp;
+	}
+	
+	public HashMap<Integer, Player> getPlayers() {
+		return currentPlayers;
+	}
+	
+	public List<Card> getDeck() {
+		return deck;
 	}
 	
 	/**

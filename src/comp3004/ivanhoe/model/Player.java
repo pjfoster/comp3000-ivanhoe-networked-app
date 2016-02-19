@@ -25,6 +25,7 @@ public class Player {
 	public Player(){
 		name = "Default Dan";
 		hand = new ArrayList<Card>();
+		tokens = new ArrayList<Token>();
 		display = new ArrayList<Card>();
 		displayTotal = 0;
 	}
@@ -36,6 +37,7 @@ public class Player {
 	public Player(String nm){
 		name = nm;
 		hand = new ArrayList<Card>();
+		tokens = new ArrayList<Token>();
 		display = new ArrayList<Card>();
 		displayTotal = 0;
 	}

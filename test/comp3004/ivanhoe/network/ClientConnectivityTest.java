@@ -33,7 +33,7 @@ public class ClientConnectivityTest {
 	public void testUniqueConnection() throws IOException {
 		
 		// create & start the server
-		server = new AppServer(10000, 1, 1);
+		server = new AppServer(10000, 1);
 		AppClient client = new AppClient(Config.DEFAULT_SERVER_ADDRESS, 10000);
 		AppClient spy = Mockito.spy(client);
 		
@@ -53,7 +53,7 @@ public class ClientConnectivityTest {
 	@Test
 	public void testMultipleConnections() throws IOException {
 		// create & start the server
-		server = new AppServer(10001, 4, 1);
+		server = new AppServer(10001, 4);
 		
 		// create clients
 		AppClient client1 = new AppClient(Config.DEFAULT_SERVER_ADDRESS, 10001);
@@ -84,7 +84,7 @@ public class ClientConnectivityTest {
 	public void testCommunication2Clients() throws IOException {
 		// create & start the server
 		// TODO: how to test the server?
-		server = new AppServer(10002, 3, 1);
+		server = new AppServer(10002, 3);
 		AppServer serverSpy = Mockito.spy(server);
 		
 		AppClient client1 = new AppClient(Config.DEFAULT_SERVER_ADDRESS, 10002);
@@ -112,7 +112,7 @@ public class ClientConnectivityTest {
 	@Test
 	public void testMaxConnections() throws IOException {
 		// create & start the server
-		server = new AppServer(10006, 1, 1);
+		server = new AppServer(10006, 1);
 		
 		AppClient client1 = new AppClient(Config.DEFAULT_SERVER_ADDRESS, 10006);
 		AppClient spy1 = Mockito.spy(client1);

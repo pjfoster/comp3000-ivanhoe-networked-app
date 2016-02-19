@@ -55,6 +55,12 @@ public class ViewImpl implements View {
 		
 	}
 
+	@Override
+	public void displayChooseColor() {
+		// TODO Auto-generated method stub
+		
+	}
+
 	
 	
 }

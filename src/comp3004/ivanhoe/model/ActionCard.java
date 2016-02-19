@@ -34,6 +34,10 @@ public class ActionCard extends Card {
 		value = 0;
 	}
 	
+	public String toString() {
+		return name;
+	}
+	
 	public static List<ActionCard> getActionDeck(){
 		List<ActionCard> output = new ArrayList<ActionCard>();
 		output.add(new ActionCard("Unhorse"));

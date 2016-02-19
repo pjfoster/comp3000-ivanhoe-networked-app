@@ -17,5 +17,6 @@ public interface View {
 	public void displayTurnView();
 	public void displayWelcome();
 	public void displayStartScreen();
+	public void displayChooseColor();
 	
 }

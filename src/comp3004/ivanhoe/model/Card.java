@@ -5,12 +5,13 @@ public abstract class Card {
 	protected String name;
 	protected int value;
 	
-	
-	public String getName(){
+	public String getName() {
 		return name;
 	}
 	
-	public int getValue(){
+	public int getValue() {
 		return value;
 	}
+	
+	public abstract String toString();
 }

@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import org.json.simple.JSONObject;
+
 import comp3004.ivanhoe.client.AppClient;
 import comp3004.ivanhoe.util.ClientRequestBuilder;
 
@@ -44,6 +46,11 @@ public class TextViewImpl implements View, Runnable {
 	}
 	
 	@Override
+	public void displayChooseColor() {
+		System.out.println("Choose the color of the next tournament: ");
+	}
+	
+	@Override
 	public void displayTournamentView() {
 		// TODO Auto-generated method stub
 		
@@ -71,6 +78,11 @@ public class TextViewImpl implements View, Runnable {
 				if (text.contains("start_connect")) { // ex: start_connect Alexi
 					client.setUsername(text.split(" ")[1]);
 					client.connect();
+				}
+				
+				else if (text.contains("choose_color")) { // ex: choose_color red
+					JSONObject request = requestBuilder.buildChooseToken(text.split(" ")[1]);
+					client.handleClientRequest(request);
 				}
 				
 				else {

@@ -96,13 +96,17 @@ public class AppClient implements Runnable {
 				view.displayWaitingMessage();
 			}
 			
+			else if (server_response.get("response_type").equals("start_game")) {
+				view.displayStartScreen();
+			}
+			
+			else if (server_response.get("response_type").equals("choose_color")) {
+				view.displayChooseColor();
+			}
+			
 			else if (server_response.get("response_type").equals("start_player_turn")) {
 				// TODO: pass in parameters
 				view.displayTurnView();
-			}
-			
-			else if (server_response.get("response_type").equals("start_game")) {
-				view.displayStartScreen();
 			}
 			
 			else if (server_response.get("response_type").equals("update_view")) {
