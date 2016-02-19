@@ -7,13 +7,13 @@ import org.json.simple.JSONObject;
 public class ClientParser {
 
 	@SuppressWarnings("unchecked")
-	public ArrayList<Object> getPlayerList(Object snapshot) {
-		return (ArrayList<Object>)((JSONObject)snapshot).get("players");
+	public ArrayList<Object> getPlayerList(JSONObject snapshot) {
+		return (ArrayList<Object>)snapshot.get("players");
 	}
 	
 	@SuppressWarnings("unchecked")
-	public ArrayList<String> getDeck(Object snapshot) {
-		return (ArrayList<String>)((JSONObject)snapshot).get("deck");
+	public ArrayList<String> getDeck(JSONObject snapshot) {
+		return (ArrayList<String>)snapshot.get("deck");
 	}
 	
 	@SuppressWarnings("unchecked")
