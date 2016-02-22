@@ -23,6 +23,15 @@ public class SupporterCard extends Card {
 		value = val;
 	}
 	
+	public String toString() {
+		if (name.equals("Squire")) {
+			return "s" + value;
+		}
+		else {
+			return "m" + value;
+		}
+	}
+	
 	public static List<SupporterCard> getSupporterDeck(){
 		List<SupporterCard> output = new ArrayList<SupporterCard>();
 		for(int i = 0; i < 8; i++){

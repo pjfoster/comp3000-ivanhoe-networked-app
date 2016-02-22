@@ -33,7 +33,7 @@ public class ClientThread extends Thread {
 			{  
 				String txt = streamIn.readLine();
 				logger.debug(client.getID() + " Received message: " + txt);
-				client.handle(txt);
+				client.handleServerResponse(txt);
 			} 
 			catch(IOException ioe) 
 			{  

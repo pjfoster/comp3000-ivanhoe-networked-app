@@ -7,13 +7,22 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
-import java.util.Random;
 
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
-import comp3004.ivanhoe.util.ClientParser;
+import comp3004.ivanhoe.util.ClientRequestBuilder;
+import comp3004.ivanhoe.view.TextViewImpl;
+import comp3004.ivanhoe.view.View;
 
+/**
+ * Relays messages from server and controls 
+ * @author PJF
+ *
+ */
 public class AppClient implements Runnable {
 
 	private String serverAddress;
@@ -27,13 +36,22 @@ public class AppClient implements Runnable {
 	private BufferedReader streamIn  = null;
 	private BufferedWriter streamOut = null;
 	
-	private ClientParser parser = new ClientParser();
+	private String username = "";
+	private View view;
+	private JSONParser parser;
+	private ClientRequestBuilder requestBuilder;
+	
 	static Logger logger = Logger.getLogger(AppClient.class);
 	
 	public AppClient(String ipAddress, int port) {
 		PropertyConfigurator.configure("resources/log4j.client.properties");
 		this.serverAddress = ipAddress;
-		this.serverPort = port;
+		this.serverPort = port;	
+		parser = new JSONParser();
+		requestBuilder = new ClientRequestBuilder();
+		
+		this.view = new TextViewImpl(this, requestBuilder);
+		view.launch();
 	}
 	
 	/**
@@ -41,20 +59,9 @@ public class AppClient implements Runnable {
 	 * Will build commands based on input from the UI
 	 */
 	public void run() {
-		logger.debug(ID + " Client is running");
+		logger.debug(ID + " Client is connected and running");
 		while (thread != null) {  
-			try {  
-				if (streamOut != null) {
-					String txt = console.readLine();
-					sendMessageToServer(txt);
-				} else {
-					logger.info(ID + ": Stream Closed");
-				}
-			}
-	         catch(IOException e) {  
-	         	logger.error(ID + " Error processing messages: " + e.getMessage());
-	         	stop();
-	         }
+			// TODO: obsolete method?
 		}
 	}
 	
@@ -62,32 +69,74 @@ public class AppClient implements Runnable {
 	 * Listens for input coming from the server side; must parse command
 	 * and relay it to the view
 	 * @param input
+	 * @throws IOException 
 	 */
-	public void handle(String input) {
+	public void handleServerResponse(String input) throws IOException {
 		
-		// TODO: Create specific commands for things like quitting, connection refused, and connection
-		// accepted. There will be a lot more options depending on the type of the command
+		System.out.println("AppClient : " + input);
 		
-		if (input == null) { return ; }
-		
-		if (input.equalsIgnoreCase("quit!")) {  
-			System.out.println(ID + " Disconnecting...");
-			stop();
-			
-		} else if (input.equalsIgnoreCase("MAX CLIENTS")) {
-			logger.error("Server refused the connection; too many clients");
-			System.out.println(ID + " Disconnecting...");
-			stop();
-			
-		} else if (input.equalsIgnoreCase("CONNECTION ACCEPTED")) {
-			logger.debug(ID + ": Client connected to server");
-			
-			System.out.println(ID + ": Connected to server: " + socket.getInetAddress());
-	    	System.out.println(ID + ": Connected to portid: " + socket.getLocalPort());
+		if (input == null) // case where server dies unexpectedly 
+		{ 
+			System.out.println("AppClient : " + input);
+			return ; 
 		}
-		else {
-			System.out.println(input);
+		
+		try {
+			JSONObject server_response = (JSONObject)parser.parse(input);
+			
+			if (server_response.get("response_type").equals("connection_rejected") ||
+				server_response.get("response_type").equals("quit")) {
+				view.stop();
+				stop();
+			}
+			
+			else if (server_response.get("response_type").equals("connection_accepted")) {
+				System.out.println("Connection accepted!"); // test
+				handleClientRequest(requestBuilder.buildRegisterPlayer(username));
+				view.displayWaitingMessage();
+			}
+			
+			else if (server_response.get("response_type").equals("start_game")) {
+				view.displayStartScreen();
+			}
+			
+			else if (server_response.get("response_type").equals("choose_color")) {
+				view.displayChooseColor();
+			}
+			
+			else if (server_response.get("response_type").equals("start_player_turn")) {
+				// TODO: pass in parameters
+				view.displayTurnView();
+			}
+			
+			else if (server_response.get("response_type").equals("update_view")) {
+				// TODO: pass in parameters - or add updateTournamentView() method?
+				view.displayTournamentView();
+			}
+			
+			else if (server_response.get("response_type").equals("make_move")) {
+				// TODO: client may require a back and forth with the server (for example when playing
+				// action cards)
+			}
+			
+			else {
+				logger.error(String.format("Invalid server response"));
+			}
 		}
+		catch (ParseException e) {
+			logger.error(String.format("Error parsing server response"));
+		}
+	}
+	
+	/**
+	 * Sends request to server
+	 * @param request
+	 * 	JSONobject constructed by the view containing the client request
+	 * @throws IOException
+	 */
+	public void handleClientRequest(JSONObject request) throws IOException {
+		streamOut.write(request.toJSONString() + "\n");
+		streamOut.flush();
 	}
 	
 	public boolean connect() {
@@ -149,10 +198,9 @@ public class AppClient implements Runnable {
 	      client.close(); 
 	}
 	
-	public void sendMessageToServer(String txt) throws IOException {
-		streamOut.write(txt + "\n");
-		streamOut.flush();
-	}
-	
 	public int getID() { return ID; }
+	
+	public void setUsername(String username) {
+		this.username = username;
+	}
 }
