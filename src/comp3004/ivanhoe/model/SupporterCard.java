@@ -24,7 +24,7 @@ public class SupporterCard extends Card {
 	}
 	
 	public String toString() {
-		if (name.equals("Squire")) {
+		if (name.equals("squire")) {
 			return "s" + value;
 		}
 		else {
@@ -35,11 +35,11 @@ public class SupporterCard extends Card {
 	public static List<SupporterCard> getSupporterDeck(){
 		List<SupporterCard> output = new ArrayList<SupporterCard>();
 		for(int i = 0; i < 8; i++){
-			output.add(new SupporterCard("Squire",2));
-			output.add(new SupporterCard("Squire",3));
+			output.add(new SupporterCard("squire",2));
+			output.add(new SupporterCard("squire",3));
 		}
 		for(int i = 0; i < 4; i++){
-			output.add(new SupporterCard("Maiden",6));
+			output.add(new SupporterCard("maiden",6));
 		}
 		return output;
 	}
