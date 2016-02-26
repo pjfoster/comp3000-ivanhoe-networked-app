@@ -8,48 +8,49 @@ public class ViewImpl implements View {
 	AppClient client;
 	ClientRequestBuilder requestBuilder;
 	
+	TournamentDisplay tournament;
+	
+	
 	public ViewImpl (AppClient client) {
 		this.client = client;
 		requestBuilder = new ClientRequestBuilder();
 	}
 	
-	@Override
 	public void displayTournamentView() {
-		// TODO Auto-generated method stub
-		
+		int players = 0; // replace with num players
+		if(players == 2)
+			tournament = new TwoPlayerTournament(this);
+		if(players == 3)
+			tournament = new ThreePlayerTournament(this);
+		else if(players == 4)
+			tournament = new FourPlayerTournament(this);
+		else
+			tournament = new FivePlayerTournament(this);
 	}
 
-	@Override
 	public void displayTurnView() {
-		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
 	public void displayWelcome() {
-		// TODO Auto-generated method stub
+		new WelcomeDisplay(this);
 		
 	}
 
-	@Override
 	public void launch() {
-		// TODO Auto-generated method stub
+		displayWelcome();
 		
 	}
 
-	@Override
 	public void stop() {
-		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
 	public void displayWaitingMessage() {
 		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
 	public void displayStartScreen() {
 		// TODO Auto-generated method stub
 		
@@ -59,8 +60,5 @@ public class ViewImpl implements View {
 	public void displayChooseColor() {
 		// TODO Auto-generated method stub
 		
-	}
-
-	
-	
+	}	
 }
