@@ -7,27 +7,29 @@ import java.util.Random;
 import org.json.simple.JSONObject;
 
 import comp3004.ivanhoe.model.Player;
+import comp3004.ivanhoe.model.Token;
 import comp3004.ivanhoe.model.Tournament;
 import comp3004.ivanhoe.server.AppServer;
 import comp3004.ivanhoe.util.ServerResponseBuilder;
 
 public class IvanhoeController {
 	
-	private final int WAITING_FOR_MORE_PLAYERS = 	1;
-	private final int WAITING_FOR_COLOR = 			2;
-	private final int WAITING_FOR_PLAYER_MOVE = 	3;
+	protected final int WAITING_FOR_MORE_PLAYERS = 	1;
+	protected final int WAITING_FOR_COLOR = 			2;
+	protected final int WAITING_FOR_PLAYER_MOVE = 	3;
 	
-	private int maxPlayers;
-	private HashMap<Integer, Player> players;
-	private ArrayList<Integer> playerTurns;
-	private ServerResponseBuilder responseBuilder;
-	private AppServer server;
-	private Random rnd = new Random();
+	protected int maxPlayers;
+	protected HashMap<Integer, Player> players;
+	protected ArrayList<Integer> playerTurns;
+	protected ServerResponseBuilder responseBuilder;
+	protected AppServer server;
+	protected Random rnd = new Random();
 	
-	private Tournament currentTournament;
-	private int currentTurn;
-	private boolean gameWon;
-	private int state;
+	protected Tournament currentTournament;
+	protected Token previousTournament;
+	protected int currentTurn;
+	protected boolean gameWon;
+	protected int state;
 	
 	public IvanhoeController(AppServer server, ServerResponseBuilder responseBuilder, int maxPlayers) {
 		this.server = server;
@@ -38,6 +40,7 @@ public class IvanhoeController {
 		gameWon = false;
 		state = WAITING_FOR_MORE_PLAYERS;
 		currentTournament = null;
+		previousTournament = null;
 		currentTurn = -1;
 	}
 	
@@ -117,6 +120,10 @@ public class IvanhoeController {
 		else {
 			return false;
 		}
+	}
+	
+	public boolean withdraw(int playerId) {
+		return false;
 	}
 	
 	public int nextPlayerTurn(int r) {

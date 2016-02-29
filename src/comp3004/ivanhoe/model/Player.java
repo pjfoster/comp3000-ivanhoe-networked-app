@@ -103,7 +103,7 @@ public class Player {
 	 * @return
 	 */
 	public boolean playCard(Card card) {
-		if(hand.contains(card)){
+		if (hand.contains(card)){
 			display.add(card);
 			hand.remove(card);
 			displayTotal+=card.getValue();

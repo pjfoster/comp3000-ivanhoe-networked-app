@@ -11,13 +11,14 @@ import org.mockito.Mockito;
 
 import comp3004.ivanhoe.client.AppClient;
 import comp3004.ivanhoe.server.AppServer;
+import comp3004.ivanhoe.server.MockServer;
 import comp3004.ivanhoe.util.Config;
 import comp3004.ivanhoe.view.MockViewFactory;
 import comp3004.ivanhoe.view.ViewFactory;
 
 public class ClientConnectivityTest {
 
-	private AppServer server;
+	private MockServer server;
 	private ViewFactory viewFactory;
 	
 	@Before
@@ -38,7 +39,7 @@ public class ClientConnectivityTest {
 	public void testUniqueConnection() throws IOException {
 		
 		// create & start the server
-		server = new AppServer(10000, 1);
+		server = new MockServer(10000, 1);
 		AppClient client = new AppClient(viewFactory, Config.DEFAULT_SERVER_ADDRESS, 10000);
 		AppClient spy = Mockito.spy(client);
 		
@@ -58,7 +59,7 @@ public class ClientConnectivityTest {
 	@Test
 	public void testMultipleConnections() throws IOException {
 		// create & start the server
-		server = new AppServer(10001, 4);
+		server = new MockServer(10001, 4);
 		
 		// create clients
 		AppClient client1 = new AppClient(viewFactory, Config.DEFAULT_SERVER_ADDRESS, 10001);
@@ -88,7 +89,7 @@ public class ClientConnectivityTest {
 	@Test
 	public void testMaxConnections() throws IOException {
 		// create & start the server
-		server = new AppServer(10006, 1);
+		server = new MockServer(10006, 1);
 		
 		AppClient client1 = new AppClient(viewFactory, Config.DEFAULT_SERVER_ADDRESS, 10006);
 		AppClient spy1 = Mockito.spy(client1);

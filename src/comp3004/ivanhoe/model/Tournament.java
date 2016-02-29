@@ -11,16 +11,15 @@ public class Tournament {
 	
 	private Token token;
 	private HashMap<Integer, Player> currentPlayers;
-	//private List<Player> currentPlayers;
 	
 	private List<Card> deck;
 	private List<Card> discardPile;
 	
-	public Tournament(){
+	public Tournament() {
 		currentPlayers = new HashMap<Integer, Player>();
 		discardPile = new ArrayList<Card>();
-		buildDeck();
-		dealStartingHands();
+		deck = new ArrayList<Card>();
+		discardPile = new ArrayList<Card>();
 	}
 	
 	public Tournament(HashMap<Integer, Player> players, String tokenColor){
@@ -113,10 +112,12 @@ public class Tournament {
 	 * @return
 	 */
 	public Player getPlayerWithHighestDisplay(){
-		Player temp = currentPlayers.get(0);
+		Player temp = null;
+		int highestTotal = 0;
 		for (Player p: currentPlayers.values()){
-			if (p.getDisplayTotal() > temp.getDisplayTotal())
+			if (p.getDisplayTotal() > highestTotal)
 				temp = p;
+				highestTotal = p.getDisplayTotal();
 		}
 		return temp;
 	}
@@ -144,4 +145,9 @@ public class Tournament {
 	public void setToken(Token tkn){
 		token  = tkn;
 	}
+	
+	public void setPlayers(HashMap<Integer, Player> players) {
+		currentPlayers = players;
+	}
+
 }

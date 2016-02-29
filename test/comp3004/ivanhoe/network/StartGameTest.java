@@ -11,6 +11,7 @@ import org.mockito.Mockito;
 
 import comp3004.ivanhoe.client.AppClient;
 import comp3004.ivanhoe.server.AppServer;
+import comp3004.ivanhoe.server.MockServer;
 import comp3004.ivanhoe.util.ClientRequestBuilder;
 import comp3004.ivanhoe.util.Config;
 import comp3004.ivanhoe.view.MockViewFactory;
@@ -26,7 +27,7 @@ public class StartGameTest {
 	public static final int WAIT_TIME_MILLIS = 300;
 	
 	private ViewFactory viewFactory;
-	private AppServer server;
+	private MockServer server;
 	
 	@Before
 	public void setUp() throws Exception {
@@ -47,13 +48,13 @@ public class StartGameTest {
 	@Test
 	public void test3Players() throws IOException, InterruptedException {
 		// create & start the server
-		server = new AppServer(10001, 3);
+		server = new MockServer(10012, 3);
 
 		// create clients
-		AppClient client1 = new AppClient(viewFactory, Config.DEFAULT_SERVER_ADDRESS, 10001);
+		AppClient client1 = new AppClient(viewFactory, Config.DEFAULT_SERVER_ADDRESS, 10012);
 		AppClient spy1 = Mockito.spy(client1);
 		spy1.setUsername("Alexei");
-		AppClient client2 = new AppClient(viewFactory, Config.DEFAULT_SERVER_ADDRESS, 10001);
+		AppClient client2 = new AppClient(viewFactory, Config.DEFAULT_SERVER_ADDRESS, 10012);
 		AppClient spy2 = Mockito.spy(client2);
 		spy2.setUsername("Luke");
 
@@ -72,7 +73,7 @@ public class StartGameTest {
 		Mockito.verify(spy1, Mockito.atMost(1)).handleServerResponse(Mockito.anyString());
 		Mockito.verify(spy2, Mockito.atMost(1)).handleServerResponse(Mockito.anyString());
 		
-		AppClient client3 = new AppClient(viewFactory, Config.DEFAULT_SERVER_ADDRESS, 10001);
+		AppClient client3 = new AppClient(viewFactory, Config.DEFAULT_SERVER_ADDRESS, 10012);
 		AppClient spy3 = Mockito.spy(client3);
 		spy3.setUsername("Emma");
 		assertTrue(spy3.connect());

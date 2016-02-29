@@ -19,14 +19,14 @@ import comp3004.ivanhoe.model.Player;
 import comp3004.ivanhoe.util.ServerResponseBuilder;
 
 public class AppServer implements Runnable {
-	int clientCount = 0;
+	protected int clientCount = 0;
 	private Thread thread = null;
 	private ServerSocket server = null;
-	private HashMap<Integer, ServerThread> clients;
-	private IvanhoeController controller;
-	private JSONParser parser;
-	private ServerResponseBuilder responseBuilder;
-	int maxPlayers;
+	protected HashMap<Integer, ServerThread> clients;
+	protected IvanhoeController controller;
+	protected JSONParser parser;
+	protected ServerResponseBuilder responseBuilder;
+	protected int maxPlayers;
 	
 	final static Logger logger = Logger.getLogger(StartServer.class);
 	
@@ -232,27 +232,5 @@ public class AppServer implements Runnable {
 		logger.info(String.format("Server Shutdown cleanly %s\n", server));
 	}
 	
-	/** Primarily for testing purposes. Returns number of clients. */
-	public int getNumClients() {
-		return clients.size();
-	}
-
-	// METHOD FOR TESTING
-
-	/**
-	 * Verifies that the user was correctly registered
-	 * @param id
-	 * @param username
-	 * @return
-	 */
-	public boolean isPlayerRegistered(String username) {
-		for (Player p: controller.getPlayers().values()) {
-			if (p.getName().toLowerCase().equals(username.toLowerCase())) {
-				return true;
-			}
-		}
-		return false;
-	}
-
 
 }

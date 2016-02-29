@@ -1,6 +1,0 @@
-{
-  \"request_type\" : \"turn\",
-  \"turn_action\" : \"play_card\",
-  \"card_type\": \"action_card\",
-  \"card_name\": \"drop_weapons\"
-}
