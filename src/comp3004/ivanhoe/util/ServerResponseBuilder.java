@@ -1,6 +1,5 @@
 package comp3004.ivanhoe.util;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.json.simple.JSONArray;
@@ -59,7 +58,8 @@ public class ServerResponseBuilder {
 	public JSONObject buildUpdateView(Player player, Tournament tournament) {
 		HashMap<String, String> responseMap = new HashMap<String, String>();
 		responseMap.put("response_type", "update_view");
-		return new JSONObject(responseMap);
+		responseMap.put("player_name", player.getName());
+		return createGameSnapshot(responseMap, tournament);
 	}
 	
 	public JSONObject buildTournamentOverWin() {
@@ -85,6 +85,7 @@ public class ServerResponseBuilder {
 	 * @param responseMap
 	 * @param tournament
 	 */
+	@SuppressWarnings("unchecked")
 	public JSONObject createGameSnapshot(HashMap<String, String> responseMap, Tournament tournament) {
 		
 		JSONObject snapshot = new JSONObject(responseMap);

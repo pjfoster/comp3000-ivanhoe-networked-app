@@ -17,6 +17,7 @@ import org.json.simple.parser.ParseException;
 import comp3004.ivanhoe.util.ClientRequestBuilder;
 import comp3004.ivanhoe.view.TextViewImpl;
 import comp3004.ivanhoe.view.View;
+import comp3004.ivanhoe.view.ViewFactory;
 
 /**
  * Relays messages from server and controls 
@@ -43,14 +44,14 @@ public class AppClient implements Runnable {
 	
 	static Logger logger = Logger.getLogger(AppClient.class);
 	
-	public AppClient(String ipAddress, int port) {
+	public AppClient(ViewFactory viewFactory, String ipAddress, int port) {
 		PropertyConfigurator.configure("resources/log4j.client.properties");
 		this.serverAddress = ipAddress;
 		this.serverPort = port;	
 		parser = new JSONParser();
 		requestBuilder = new ClientRequestBuilder();
 		
-		this.view = new TextViewImpl(this, requestBuilder);
+		this.view = viewFactory.createView(this);
 		view.launch();
 	}
 	

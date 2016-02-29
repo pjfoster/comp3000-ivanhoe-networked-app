@@ -6,6 +6,10 @@ import org.json.simple.JSONObject;
 
 public class ClientParser {
 
+	public String getColor(JSONObject snapshot) {
+		return (String)snapshot.get("tournament_color");
+	}
+	
 	@SuppressWarnings("unchecked")
 	public ArrayList<Object> getPlayerList(JSONObject snapshot) {
 		return (ArrayList<Object>)snapshot.get("players");

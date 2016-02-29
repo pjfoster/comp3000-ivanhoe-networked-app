@@ -15,6 +15,7 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import comp3004.ivanhoe.controller.IvanhoeController;
+import comp3004.ivanhoe.model.Player;
 import comp3004.ivanhoe.util.ServerResponseBuilder;
 
 public class AppServer implements Runnable {
@@ -235,6 +236,23 @@ public class AppServer implements Runnable {
 	public int getNumClients() {
 		return clients.size();
 	}
-	
-	
+
+	// METHOD FOR TESTING
+
+	/**
+	 * Verifies that the user was correctly registered
+	 * @param id
+	 * @param username
+	 * @return
+	 */
+	public boolean isPlayerRegistered(String username) {
+		for (Player p: controller.getPlayers().values()) {
+			if (p.getName().toLowerCase().equals(username.toLowerCase())) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+
 }

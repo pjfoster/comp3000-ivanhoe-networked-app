@@ -7,7 +7,8 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses({
    ClientConnectivityTest.class,
    RequestBuilderTest.class,
-   ResponseBuilderTest.class
+   ResponseBuilderTest.class,
+   StartGameTest.class
 })
 
 public class NetworkTestSuite {   

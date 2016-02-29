@@ -41,6 +41,8 @@ public class IvanhoeController {
 		currentTurn = -1;
 	}
 	
+	public HashMap<Integer, Player> getPlayers() { return players; }
+	
 	/**
 	 * Registers user as a player
 	 * @param playerId: id of player thread, used to identify them
