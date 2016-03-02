@@ -99,6 +99,10 @@ public class AppClient implements Runnable {
 				view.displayWaitingMessage();
 			}
 			
+			else if (server_response.get("response_type").equals("indicate_turn")) {
+				view.displayTurnPlayer((String)server_response.get("player_name"));
+			}
+			
 			else if (server_response.get("response_type").equals("invalid_choice")) {
 				view.displayInvalidMove();
 			}

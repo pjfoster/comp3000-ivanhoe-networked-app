@@ -22,5 +22,6 @@ public interface View {
 	public void displayStartScreen(JSONObject snapshot);
 	public void displayChooseColor();
 	public void displayInvalidMove();
+	public void displayTurnPlayer(String playerName);
 	
 }

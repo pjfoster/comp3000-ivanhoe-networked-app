@@ -75,6 +75,12 @@ public class ViewImpl implements View {
 		
 	}
 
+	@Override
+	public void displayTurnPlayer(String playerName) {
+		// TODO Auto-generated method stub
+		
+	}
+
 	
 	
 }

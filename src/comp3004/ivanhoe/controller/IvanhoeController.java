@@ -176,6 +176,10 @@ public class IvanhoeController {
 		
 	}
 	
+	public boolean checkTournamentWon() {
+		return false;
+	}
+	
 	/**
 	 * Returns true if one of the players has won the game, false otherwise
 	 * @return
@@ -291,6 +295,13 @@ public class IvanhoeController {
 		
 		JSONObject playerTurn = responseBuilder.buildStartPlayerTurn(drawnCard);
 		server.sendToClient(getCurrentTurnId(), playerTurn);
+		
+		JSONObject turn = responseBuilder.buildIndicateTurn(getCurrentTurnPlayer().getName());
+		for (int key: players.keySet()) {
+			if (key != getCurrentTurnId()) {
+				server.sendToClient(key, turn);
+			}
+		}
 	}
 	
 	public int nextPlayerTurn() {

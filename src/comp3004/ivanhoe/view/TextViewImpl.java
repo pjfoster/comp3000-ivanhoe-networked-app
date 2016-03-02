@@ -60,7 +60,6 @@ public class TextViewImpl implements View, Runnable {
 		
 		else {
 			for (Object p: parser.getPlayerList(snapshot)) {
-				System.out.println(parser.getPlayerId(p) + " vs " + turnId);
 				if (parser.getPlayerId(p).toString().equals(turnId.toString())) {
 					System.out.println("Current turn: " + parser.getPlayerName(p));
 				}
@@ -192,6 +191,11 @@ public class TextViewImpl implements View, Runnable {
 	public void stop() {
 		System.out.println("Closing client!");
 		running = false;
+	}
+
+	@Override
+	public void displayTurnPlayer(String playerName) {
+		System.out.println("It is " + playerName + "'s turn");
 	}
 
 }

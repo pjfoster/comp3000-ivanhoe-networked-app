@@ -63,6 +63,13 @@ public class ServerResponseBuilder {
 		return new JSONObject(responseMap);
 	}
 	
+	public JSONObject buildIndicateTurn(String playerName) {
+		HashMap<String, String> responseMap = new HashMap<String, String>();
+		responseMap.put("response_type", "indicate_turn");
+		responseMap.put("player_name", playerName);
+		return new JSONObject(responseMap);
+	}
+	
 	public JSONObject buildUpdateView(Tournament tournament) {
 		HashMap<String, String> responseMap = new HashMap<String, String>();
 		responseMap.put("response_type", "update_view");
