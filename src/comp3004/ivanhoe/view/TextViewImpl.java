@@ -61,7 +61,7 @@ public class TextViewImpl implements View, Runnable {
 		else {
 			for (Object p: parser.getPlayerList(snapshot)) {
 				System.out.println(parser.getPlayerId(p) + " vs " + turnId);
-				if (parser.getPlayerId(p).equals(turnId)) {
+				if (parser.getPlayerId(p).toString().equals(turnId.toString())) {
 					System.out.println("Current turn: " + parser.getPlayerName(p));
 				}
 			}
@@ -84,13 +84,15 @@ public class TextViewImpl implements View, Runnable {
 	public void displayTournamentView(JSONObject snapshot) {
 		System.out.println();
 		System.out.println("TOURNAMENT COLOR: " + parser.getColor(snapshot));
+		System.out.println("Highest Display: " + parser.getHighestDisplay(snapshot));
 		System.out.println("- - - - - ");
 		
 		ArrayList<Object> players = parser.getPlayerList(snapshot);
 		for (Object p: players) {
 			if (parser.getPlayerId(p) != client.getID()) {
 				System.out.println(parser.getPlayerName(p));
-				System.out.println("Display: " + parser.getPlayerDisplay(p));
+				System.out.println("Display: " + parser.getPlayerDisplay(p) + " -- Total: " + 
+												 parser.getPlayerDisplayTotal(p));
 				System.out.println();
 				break;
 			}
@@ -99,6 +101,7 @@ public class TextViewImpl implements View, Runnable {
 			if (parser.getPlayerId(p) == client.getID()) {
 				System.out.println("Your hand: " + parser.getPlayerHand(p));
 				System.out.println("Your display: " + parser.getPlayerDisplay(p));
+				System.out.println("Your display total: " + parser.getPlayerDisplayTotal(p));
 				System.out.println("Your tokens: " + parser.getPlayerTokens(p));
 				break;
 			}

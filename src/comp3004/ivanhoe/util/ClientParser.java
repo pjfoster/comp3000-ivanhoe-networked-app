@@ -10,6 +10,10 @@ public class ClientParser {
 		return (String)snapshot.get("tournament_color");
 	}
 	
+	public String getHighestDisplay(JSONObject snapshot) {
+		return (String)snapshot.get("highest_display");
+	}
+	
 	@SuppressWarnings("unchecked")
 	public ArrayList<Object> getPlayerList(JSONObject snapshot) {
 		return (ArrayList<Object>)snapshot.get("players");
@@ -37,6 +41,10 @@ public class ClientParser {
 	
 	public String getPlayerName(Object player) {
 		return (String)((JSONObject)player).get("username");
+	}
+	
+	public String getPlayerDisplayTotal(Object player) {
+		return (String)((JSONObject)player).get("display_total");
 	}
 	
 	public Long getPlayerId(Object player) {

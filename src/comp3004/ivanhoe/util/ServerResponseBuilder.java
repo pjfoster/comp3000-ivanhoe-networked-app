@@ -103,6 +103,7 @@ public class ServerResponseBuilder {
 		
 		JSONObject snapshot = new JSONObject(responseMap);
 		snapshot.put("tournament_color", tournament.getToken().toString());
+		snapshot.put("highest_display", "" + tournament.getHighestDisplayTotal());
 
 		// Create a list of players
 		JSONArray players = new JSONArray();
@@ -112,6 +113,7 @@ public class ServerResponseBuilder {
 			
 			player.put("username", p.getName());
 			player.put("id", key);
+			player.put("display_total", "" + p.getDisplayTotal());
 			
 			// create hand
 			JSONArray hand = new JSONArray();
