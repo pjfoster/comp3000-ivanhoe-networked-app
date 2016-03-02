@@ -4,6 +4,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import comp3004.ivanhoe.model.Card;
 import comp3004.ivanhoe.model.ColourCard;
 import comp3004.ivanhoe.model.Tournament;
 
@@ -30,9 +31,9 @@ public class ServerParser {
 		return (String)request.get("move_type");
 	}
 	
-	public ColourCard getColourCard(JSONObject request, Tournament tournament) {
-		String colour = (String)request.get("card_color");
-		return null;
+	public Card getCard(JSONObject request, Tournament tournament) {
+		String cardCode = (String)request.get("card_code");
+		return tournament.getCard(cardCode);
 	}
 	
 }

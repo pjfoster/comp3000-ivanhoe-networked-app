@@ -52,37 +52,34 @@ public class RequestBuilderTest {
 	@Test
 	public void testBuildColorCardMove() throws ParseException {
 		
-		String testMoveString = requestBuilder.buildColorCardMove("red", "6").toJSONString();
+		String testMoveString = requestBuilder.buildColorCardMove("r6").toJSONString();
 		JSONObject testMove = (JSONObject)parser.parse(testMoveString);
 		
-		assertEquals(testMove.size(), 4);
+		assertEquals(testMove.size(), 3);
 		assertEquals(testMove.get("request_type"), "turn_move");
 		assertEquals(testMove.get("move_type"), "color_card");
-		assertEquals(testMove.get("card_color"), "red");
-		assertEquals(Integer.parseInt((String)testMove.get("card_value")), 6);
+		assertEquals(testMove.get("card_code"), "r6");
 		
 	}
 	
 	@Test
 	public void testBuildSupporterCardMove() throws ParseException {
 		
-		String testMoveString = requestBuilder.buildSupporterCardMove("squire", "3").toJSONString();
+		String testMoveString = requestBuilder.buildSupporterCardMove("s3").toJSONString();
 		JSONObject testMove = (JSONObject)parser.parse(testMoveString);
 		
-		assertEquals(testMove.size(), 4);
+		assertEquals(testMove.size(), 3);
 		assertEquals(testMove.get("request_type"), "turn_move");
 		assertEquals(testMove.get("move_type"), "supporter_card");
-		assertEquals(testMove.get("supporter_type"), "squire");
-		assertEquals(Integer.parseInt((String)testMove.get("supporter_value")), 3);
+		assertEquals(testMove.get("card_code"), "s3");
 		
-		testMoveString = requestBuilder.buildSupporterCardMove("maiden", "6").toJSONString();
+		testMoveString = requestBuilder.buildSupporterCardMove("m6").toJSONString();
 		testMove = (JSONObject)parser.parse(testMoveString);
 		
-		assertEquals(testMove.size(), 4);
+		assertEquals(testMove.size(), 3);
 		assertEquals(testMove.get("request_type"), "turn_move");
 		assertEquals(testMove.get("move_type"), "supporter_card");
-		assertEquals(testMove.get("supporter_type"), "maiden");
-		assertEquals(Integer.parseInt((String)testMove.get("supporter_value")), 6);
+		assertEquals(testMove.get("card_code"), "m6");
 		
 	}
 	

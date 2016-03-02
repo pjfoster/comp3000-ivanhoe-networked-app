@@ -18,6 +18,7 @@ public class Tournament {
 	
 	public Tournament() {
 		currentPlayers = new HashMap<Integer, Player>();
+		cardLookup = new HashMap<String, Card>();
 		discardPile = new ArrayList<Card>();
 		deck = new ArrayList<Card>();
 		discardPile = new ArrayList<Card>();
@@ -25,6 +26,7 @@ public class Tournament {
 	
 	public Tournament(HashMap<Integer, Player> players, String tokenColor){
 		currentPlayers = players;
+		cardLookup = new HashMap<String, Card>();
 		token = Token.fromString(tokenColor);
 		discardPile = new ArrayList<Card>();
 		buildDeck();

@@ -6,6 +6,7 @@ import java.util.Random;
 
 import org.json.simple.JSONObject;
 
+import comp3004.ivanhoe.model.Card;
 import comp3004.ivanhoe.model.Player;
 import comp3004.ivanhoe.model.Token;
 import comp3004.ivanhoe.model.Tournament;
@@ -97,7 +98,7 @@ public class IvanhoeController {
 				state = WAITING_FOR_PLAYER_MOVE;
 				currentTournament = new Tournament(players, (String)playerMove.get("token_color"));
 				
-				JSONObject response = responseBuilder.buildStartTournament(currentTournament, playerTurns.get(currentTurn));
+				JSONObject response = responseBuilder.buildStartTournament(currentTournament, getCurrentTurnId());
 				server.broadcast(response);
 				
 				JSONObject startTurnResponse = responseBuilder.buildStartPlayerTurn();
@@ -117,12 +118,18 @@ public class IvanhoeController {
 					}
 					else if (moveType.equals("color_card")) {
 						System.out.println("COLOR CARD MOVE");
+						Card card = parser.getCard(playerMove, currentTournament);
+						System.out.println("Card: " + card);
 					}
 					else if (moveType.equals("supporter_card")) {
 						System.out.println("SUPPORTER MOVE");
+						Card card = parser.getCard(playerMove, currentTournament);
+						System.out.println("Card: " + card);
 					}		
 					else if (moveType.equals("action_card")) {
 						System.out.println("ACTION MOVE");
+						Card card = parser.getCard(playerMove, currentTournament);
+						System.out.println("Card: " + card);
 					}
 				}
 			}
@@ -149,8 +156,6 @@ public class IvanhoeController {
 	}
 	
 	public boolean playColorCard(JSONObject playerMove) {
-		
-		// check that player has card
 		
 		
 		return false;

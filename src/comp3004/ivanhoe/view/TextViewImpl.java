@@ -122,14 +122,14 @@ public class TextViewImpl implements View, Runnable {
 						request = requestBuilder.buildWithdrawMove();
 					}
 					else if (move.charAt(0) == 's') {
-						request = requestBuilder.buildSupporterCardMove("squire", ""+move.charAt(1));
+						request = requestBuilder.buildSupporterCardMove(move);
 					}
 					else if (move.charAt(0) == 'm') {
-						request = requestBuilder.buildSupporterCardMove("maiden", "6");
+						request = requestBuilder.buildSupporterCardMove(move);
 					}
 					else if (move.charAt(0) == 'r' || move.charAt(0) == 'b' || move.charAt(0) == 'g' ||
 							 move.charAt(0) == 'y' || move.charAt(0) == 'p') {
-						request = requestBuilder.buildColorCardMove(""+move.charAt(0), ""+move.charAt(1));
+						request = requestBuilder.buildColorCardMove(move);
 					}
 					else {
 						request = requestBuilder.buildActionCardMove(move);

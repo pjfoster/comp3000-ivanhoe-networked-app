@@ -46,13 +46,12 @@ public class ClientRequestBuilder {
 	 * 	Expecting an integer value (as a string)
 	 * @return
 	 */
-	public JSONObject buildColorCardMove(String cardColor, String cardValue)
+	public JSONObject buildColorCardMove(String cardCode)
 	{ 
 		HashMap<String, String> requestMap = new HashMap<String, String>();
 		requestMap.put("request_type", "turn_move"); 
 		requestMap.put("move_type", "color_card");
-		requestMap.put("card_color", cardColor);
-		requestMap.put("card_value", cardValue);
+		requestMap.put("card_code", cardCode);
 		return new JSONObject(requestMap); 
 	}
 	
@@ -64,13 +63,12 @@ public class ClientRequestBuilder {
 	 * 	Expected value of card - 2,3 for squire, 6 for maiden
 	 * @return
 	 */
-	public JSONObject buildSupporterCardMove(String supporterType, String supporterValue)
+	public JSONObject buildSupporterCardMove(String cardCode)
 	{ 
 		HashMap<String, String> requestMap = new HashMap<String, String>();
 		requestMap.put("request_type", "turn_move"); 
 		requestMap.put("move_type", "supporter_card");
-		requestMap.put("supporter_type", supporterType);
-		requestMap.put("supporter_value", supporterValue);
+		requestMap.put("card_code", cardCode);
 		return new JSONObject(requestMap); 
 	}
 	
