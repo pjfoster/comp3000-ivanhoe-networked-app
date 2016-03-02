@@ -60,6 +60,7 @@ public class TextViewImpl implements View, Runnable {
 		
 		else {
 			for (Object p: parser.getPlayerList(snapshot)) {
+				System.out.println(parser.getPlayerId(p) + " vs " + turnId);
 				if (parser.getPlayerId(p).equals(turnId)) {
 					System.out.println("Current turn: " + parser.getPlayerName(p));
 				}
@@ -69,8 +70,13 @@ public class TextViewImpl implements View, Runnable {
 	}
 	
 	@Override
+	public void displayInvalidMove() {
+		System.out.println("INVALID MOVE - try again");
+	}
+	
+	@Override
 	public void displayChooseColor() {
-		System.out.println("Choose the color of the next tournament: ");
+		System.out.println("Choose the color of the tournament: ");
 		System.out.println("Write choose_color <color> to start: ");
 	}
 	
@@ -102,10 +108,16 @@ public class TextViewImpl implements View, Runnable {
 	}
 
 	@Override
+	public void displayTurnView(String drawnCard) {
+		System.out.println("You drew " + drawnCard);
+		displayTurnView();
+	}
+	
+	@Override
 	public void displayTurnView() {
 		System.out.println("It's your turn!");
-		System.out.println("Write make_move <card> to play a card");
-		System.out.println("Write make_move <card> to withdraw");
+		System.out.println("Write \"make_move <card>\" to play a card");
+		System.out.println("Write \"make_move withdraw\" to withdraw");
 	}
 
 	@Override

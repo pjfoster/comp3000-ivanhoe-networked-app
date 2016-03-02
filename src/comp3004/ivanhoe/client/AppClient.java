@@ -100,7 +100,7 @@ public class AppClient implements Runnable {
 			}
 			
 			else if (server_response.get("response_type").equals("invalid_choice")) {
-				view.displayTurnView();
+				view.displayInvalidMove();
 			}
 			
 			else if (server_response.get("response_type").equals("choose_color")) {
@@ -112,7 +112,7 @@ public class AppClient implements Runnable {
 			}
 			
 			else if (server_response.get("response_type").equals("start_player_turn")) {
-				view.displayTurnView();
+				view.displayTurnView((String)server_response.get("drawn_card"));
 			}
 			
 			else if (server_response.get("response_type").equals("update_view")) {

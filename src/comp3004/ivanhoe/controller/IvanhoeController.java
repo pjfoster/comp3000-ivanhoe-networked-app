@@ -19,9 +19,9 @@ import comp3004.ivanhoe.util.ServerResponseBuilder;
 
 public class IvanhoeController {
 	
-	protected final int WAITING_FOR_MORE_PLAYERS = 	1;
+	protected final int WAITING_FOR_MORE_PLAYERS = 		1;
 	protected final int WAITING_FOR_COLOR = 			2;
-	protected final int WAITING_FOR_PLAYER_MOVE = 	3;
+	protected final int WAITING_FOR_PLAYER_MOVE = 		3;
 	
 	protected int maxPlayers;
 	protected HashMap<Integer, Player> players;
@@ -37,6 +37,8 @@ public class IvanhoeController {
 	protected boolean gameWon;
 	protected int state;
 	
+	private ArrayList<Card> lastPlayed;
+	
 	public IvanhoeController(AppServer server, ServerResponseBuilder responseBuilder, int maxPlayers) {
 		this.server = server;
 		this.responseBuilder = responseBuilder;
@@ -49,9 +51,8 @@ public class IvanhoeController {
 		currentTournament = null;
 		previousTournament = null;
 		currentTurn = -1;
+		lastPlayed = new ArrayList<Card>();
 	}
-	
-	public HashMap<Integer, Player> getPlayers() { return players; }
 	
 	/**
 	 * Registers user as a player
@@ -101,6 +102,19 @@ public class IvanhoeController {
 		case WAITING_FOR_COLOR:
 			if (getCurrentTurnId() == id) {
 				
+				if (parser.getRequestType(playerMove).equals("choose_token") && !lastPlayed.isEmpty()) {
+					
+					String color = (String)playerMove.get("token_color");
+					currentTournament.setToken(Token.fromString(color));
+					
+					playCard(lastPlayed);
+					lastPlayed = new ArrayList<Card>();
+					
+					state = WAITING_FOR_PLAYER_MOVE;
+					finishTurn();
+					return;
+					
+				}
 				if (parser.getRequestType(playerMove).equals("turn_move")) {
 					
 					if (parser.getMoveType(playerMove).equals("withdraw")) {
@@ -108,34 +122,29 @@ public class IvanhoeController {
 					}
 					else if (parser.getMoveType(playerMove).equals("play_card")) {
 						ArrayList<Card> card = parser.getCard(playerMove, currentTournament);
+						
+						if (card.get(0) instanceof SupporterCard) {
+							lastPlayed = card;
+							JSONObject chooseColor = responseBuilder.buildChooseColor();
+							server.sendToClient(getCurrentTurnId(), chooseColor);
+							return;
+						}
+						
 						if (playCard(card)) {
 							
 							state = WAITING_FOR_PLAYER_MOVE;
-							
-							JSONObject newSnapshot = responseBuilder.buildUpdateView(currentTournament);
-							server.broadcast(newSnapshot);
-							
-							nextPlayerTurn();
-							JSONObject playerTurn = responseBuilder.buildStartPlayerTurn();
-							server.sendToClient(getCurrentTurnId(), playerTurn);
+							finishTurn();
+							return;
 						}
-						else {
-							JSONObject invalidResponse = responseBuilder.buildInvalidResponse();
-							server.sendToClient(getCurrentTurnId(), invalidResponse);
-						}
+						else { invalidMove(); return; }
 					}
 		
 				}
-				else {
-					JSONObject invalidResponse = responseBuilder.buildInvalidResponse();
-					server.sendToClient(getCurrentTurnId(), invalidResponse);
-				}
+				else { invalidMove(); return; }
 			}
 			break;
 		case WAITING_FOR_PLAYER_MOVE:
 			if (getCurrentTurnId() == id) {
-				
-				System.out.println("MOVE: " + playerMove);
 				
 				if (((String)playerMove.get("request_type")).equals("turn_move")) {
 					String moveType = (String)playerMove.get("move_type");
@@ -147,23 +156,18 @@ public class IvanhoeController {
 						System.out.println("CARD MOVE");
 						ArrayList<Card> card = parser.getCard(playerMove, currentTournament);
 						System.out.println("Card: " + card);
+						
 						boolean success = playCard(card);
+						if (success) { 
+							finishTurn(); 
+							return; 
+						} else {
+							invalidMove();
+							return;
+						}
+						
 					}
-					else if (moveType.equals("color_card")) {
-						System.out.println("COLOR CARD MOVE");
-						ArrayList<Card> card = parser.getCard(playerMove, currentTournament);
-						System.out.println("Card: " + card);
-					}
-					else if (moveType.equals("supporter_card")) {
-						System.out.println("SUPPORTER MOVE");
-						ArrayList<Card> card = parser.getCard(playerMove, currentTournament);
-						System.out.println("Card: " + card);
-					}		
-					else if (moveType.equals("action_card")) {
-						System.out.println("ACTION MOVE");
-						ArrayList<Card> card = parser.getCard(playerMove, currentTournament);
-						System.out.println("Card: " + card);
-					}
+
 				}
 			}
 			break;
@@ -218,18 +222,45 @@ public class IvanhoeController {
 			// Play the card
 			getCurrentTurnPlayer().playCard(card);
 			return true;
-			
+
 		}
 		else if (c.get(0) instanceof SupporterCard) {
 			System.out.println("It's a supporter card!");
+
+			// Check that the player has the card in their hand
+			SupporterCard card = null;
+			for (Card colourCard: c) {
+				if (getCurrentTurnPlayer().hasCardInHand(colourCard)) {
+					card = (SupporterCard)colourCard;
+					break;
+				}
+			}
+			if (card == null) { return false; }
+
+			// check that the player doesn't already have a maiden
+			if (card.getName().equals("maiden")) {
+				if (getCurrentTurnPlayer().hasPlayedMaiden()) { return false; }
+			}
+			
+			// Handle Green Tournaments
+			int newDisplayTotal;
+			if (currentTournament.getToken().equals(Token.GREEN)) {
+				newDisplayTotal = getCurrentTurnPlayer().getDisplayTotal() + 1;
+			}
+			else {
+				newDisplayTotal = getCurrentTurnPlayer().getDisplayTotal() + card.getValue();	
+			}
+			if (newDisplayTotal <= currentTournament.getHighestDisplayTotal()) { return false; }
+			
+			// Play the card
+			getCurrentTurnPlayer().playCard(card);
+			return true;
+			
 		} 
+		
 		else if (c.get(0) instanceof ActionCard) {
 			System.out.println("It's an action card!");
 		}
-		return false;
-	}
-	
-	public boolean playActionCard(Card c) {
 		return false;
 	}
 	
@@ -237,10 +268,37 @@ public class IvanhoeController {
 		return false;
 	}
 	
+	public void invalidMove() {
+		JSONObject invalidResponse = responseBuilder.buildInvalidResponse();
+		server.sendToClient(getCurrentTurnId(), invalidResponse);
+	}
+	
+	/**
+	 * Sends a snapshot of the new turn to all players
+	 * Increments the turn, and sends a message to the player
+	 * whose turn it now is
+	 */
+	public void finishTurn() {
+		
+		// TODO: check if a player has won
+		
+		nextPlayerTurn();
+		Card drawnCard = currentTournament.drawCard();
+		getCurrentTurnPlayer().addHandCard(drawnCard);
+		
+		JSONObject newSnapshot = responseBuilder.buildUpdateView(currentTournament);
+		server.broadcast(newSnapshot);
+		
+		JSONObject playerTurn = responseBuilder.buildStartPlayerTurn(drawnCard);
+		server.sendToClient(getCurrentTurnId(), playerTurn);
+	}
+	
 	public int nextPlayerTurn() {
 		currentTurn = (currentTurn + 1) % playerTurns.size();
 		return currentTurn;
 	}
+	
+	public HashMap<Integer, Player> getPlayers() { return players; }
 	
 	/**
 	 * Returns ID of the player whose turn it is

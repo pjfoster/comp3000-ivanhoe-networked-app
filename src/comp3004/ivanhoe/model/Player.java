@@ -55,6 +55,13 @@ public class Player {
 		return false;
 	}
 	
+	public boolean hasPlayedMaiden() {
+		for (Card c: display) {
+			if (c.getName().equals("maiden")) { return true; }
+		}
+		return false;
+	}
+	
 	/**
 	 * Should not be used for normal play. Use playCard for normal play instead
 	 * @param card

@@ -36,4 +36,16 @@ public class MockView implements View {
 	public void displayChooseColor() {
 	}
 
+	@Override
+	public void displayInvalidMove() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void displayTurnView(String drawnCard) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

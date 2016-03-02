@@ -56,9 +56,10 @@ public class ServerResponseBuilder {
 		return createGameSnapshot(responseMap, tournament);
 	}
 	
-	public JSONObject buildStartPlayerTurn() {
+	public JSONObject buildStartPlayerTurn(Card c) {
 		HashMap<String, String> responseMap = new HashMap<String, String>();
 		responseMap.put("response_type", "start_player_turn");
+		responseMap.put("drawn_card", c.toString());
 		return new JSONObject(responseMap);
 	}
 	

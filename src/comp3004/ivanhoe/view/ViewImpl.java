@@ -63,6 +63,18 @@ public class ViewImpl implements View {
 		
 	}
 
+	@Override
+	public void displayInvalidMove() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void displayTurnView(String drawnCard) {
+		// TODO Auto-generated method stub
+		
+	}
+
 	
 	
 }

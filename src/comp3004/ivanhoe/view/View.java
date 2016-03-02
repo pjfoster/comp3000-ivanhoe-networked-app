@@ -17,8 +17,10 @@ public interface View {
 	public void displayWaitingMessage();
 	public void displayTournamentView(JSONObject snapshot);
 	public void displayTurnView();
+	public void displayTurnView(String drawnCard);
 	public void displayWelcome();
 	public void displayStartScreen(JSONObject snapshot);
 	public void displayChooseColor();
+	public void displayInvalidMove();
 	
 }

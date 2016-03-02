@@ -12,6 +12,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import comp3004.ivanhoe.model.Card;
+import comp3004.ivanhoe.model.ColourCard;
 import comp3004.ivanhoe.model.Player;
 import comp3004.ivanhoe.model.Token;
 import comp3004.ivanhoe.model.Tournament;
@@ -114,11 +116,13 @@ public class ResponseBuilderTest {
 	
 	@Test
 	public void testStartPlayerTurn() throws ParseException {
-		String testMoveString = responseBuilder.buildStartPlayerTurn().toJSONString();
+		Card r3 = new ColourCard("red", 3);
+		String testMoveString = responseBuilder.buildStartPlayerTurn(r3).toJSONString();
 		JSONObject testMove = (JSONObject)parser.parse(testMoveString);
 		
-		assertEquals(testMove.size(), 1);
+		assertEquals(testMove.size(), 2);
 		assertEquals(testMove.get("response_type"), "start_player_turn");
+		assertEquals(testMove.get("drawn_card"), "r3");
 	}
 	
 	@Test
