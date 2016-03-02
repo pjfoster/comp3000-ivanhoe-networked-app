@@ -1,5 +1,7 @@
 package comp3004.ivanhoe.view;
 
+import org.json.simple.JSONObject;
+
 import comp3004.ivanhoe.client.AppClient;
 import comp3004.ivanhoe.util.ClientRequestBuilder;
 
@@ -14,7 +16,7 @@ public class ViewImpl implements View {
 	}
 	
 	@Override
-	public void displayTournamentView() {
+	public void displayTournamentView(JSONObject snapshot) {
 		// TODO Auto-generated method stub
 		
 	}

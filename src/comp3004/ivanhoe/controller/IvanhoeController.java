@@ -10,6 +10,7 @@ import comp3004.ivanhoe.model.Player;
 import comp3004.ivanhoe.model.Token;
 import comp3004.ivanhoe.model.Tournament;
 import comp3004.ivanhoe.server.AppServer;
+import comp3004.ivanhoe.util.ServerParser;
 import comp3004.ivanhoe.util.ServerResponseBuilder;
 
 public class IvanhoeController {
@@ -22,6 +23,7 @@ public class IvanhoeController {
 	protected HashMap<Integer, Player> players;
 	protected ArrayList<Integer> playerTurns;
 	protected ServerResponseBuilder responseBuilder;
+	protected ServerParser parser;
 	protected AppServer server;
 	protected Random rnd = new Random();
 	
@@ -34,6 +36,7 @@ public class IvanhoeController {
 	public IvanhoeController(AppServer server, ServerResponseBuilder responseBuilder, int maxPlayers) {
 		this.server = server;
 		this.responseBuilder = responseBuilder;
+		this.parser = new ServerParser();
 		this.maxPlayers = maxPlayers;
 		players = new HashMap<Integer, Player>();
 		
@@ -89,17 +92,40 @@ public class IvanhoeController {
 		
 		switch (state) {
 		case WAITING_FOR_COLOR:
-			if (playerTurns.get(currentTurn) == id) {
-				System.out.println("The tournament shall be " + playerMove.get("token_color") + "!");
+			if (getCurrentTurnId() == id) {
 				
 				state = WAITING_FOR_PLAYER_MOVE;
 				currentTournament = new Tournament(players, (String)playerMove.get("token_color"));
 				
 				JSONObject response = responseBuilder.buildStartTournament(currentTournament, playerTurns.get(currentTurn));
 				server.broadcast(response);
+				
+				JSONObject startTurnResponse = responseBuilder.buildStartPlayerTurn();
+				server.sendToClient(getCurrentTurnId(), startTurnResponse);
 			}
 			break;
 		case WAITING_FOR_PLAYER_MOVE:
+			if (getCurrentTurnId() == id) {
+				
+				System.out.println("MOVE: " + playerMove);
+				
+				if (((String)playerMove.get("request_type")).equals("turn_move")) {
+					String moveType = (String)playerMove.get("move_type");
+					
+					if (moveType.equals("withdraw")) {
+						System.out.println("WITHDRAW MOVE");
+					}
+					else if (moveType.equals("color_card")) {
+						System.out.println("COLOR CARD MOVE");
+					}
+					else if (moveType.equals("supporter_card")) {
+						System.out.println("SUPPORTER MOVE");
+					}		
+					else if (moveType.equals("action_card")) {
+						System.out.println("ACTION MOVE");
+					}
+				}
+			}
 			break;
 		default:
 		}
@@ -122,13 +148,45 @@ public class IvanhoeController {
 		}
 	}
 	
+	public boolean playColorCard(JSONObject playerMove) {
+		
+		// check that player has card
+		
+		
+		return false;
+	}
+	
+	public boolean playSupporterCard(JSONObject playerMove) {
+		return false;
+	}
+	
+	public boolean playActionCard(JSONObject playerMove) {
+		return false;
+	}
+	
 	public boolean withdraw(int playerId) {
 		return false;
 	}
 	
-	public int nextPlayerTurn(int r) {
+	public int nextPlayerTurn() {
 		currentTurn = (currentTurn + 1) % playerTurns.size();
 		return currentTurn;
+	}
+	
+	/**
+	 * Returns ID of the player whose turn it is
+	 * @return
+	 */
+	public int getCurrentTurnId() {
+		return playerTurns.get(currentTurn);
+	}
+	
+	/**
+	 * Returns player whose turn it is
+	 * @return
+	 */
+	public Player getCurrentTurnPlayer() { 
+		return players.get(playerTurns.get(currentTurn));			
 	}
 	
 }

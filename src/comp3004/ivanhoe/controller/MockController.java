@@ -15,6 +15,7 @@ public class MockController extends IvanhoeController {
 	}
 	
 	public Tournament getTournament() { return currentTournament; }
+	public int getCurrentTurn() { return currentTurn; }
 	
 	public void setPlayers(HashMap<Integer, Player> players) {
 		this.players = players;

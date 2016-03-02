@@ -98,8 +98,8 @@ public class AppServer implements Runnable {
 					controller.processPlayerMove(id, client_request);
 				}
 				
-				else if (client_request.get("request_type").equals("make_move")) {
-					// call game controller
+				else if (client_request.get("request_type").equals("turn_move")) {
+					controller.processPlayerMove(id, client_request);
 				}
 				
 				// TODO: should we keep this?

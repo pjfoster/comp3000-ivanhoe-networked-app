@@ -11,6 +11,7 @@ public class Tournament {
 	
 	private Token token;
 	private HashMap<Integer, Player> currentPlayers;
+	private HashMap<String, Card> cardLookup;
 	
 	private List<Card> deck;
 	private List<Card> discardPile;
@@ -60,6 +61,10 @@ public class Tournament {
 		deck.addAll(ColourCard.getColourDeck());
 		deck.addAll(SupporterCard.getSupporterDeck());
 		shuffle();
+		
+		for (Card c: deck) {
+			cardLookup.put(c.toString(), c);
+		}
 	}
 	
 	/**
@@ -148,6 +153,10 @@ public class Tournament {
 	
 	public void setPlayers(HashMap<Integer, Player> players) {
 		currentPlayers = players;
+	}
+	
+	public Card getCard(String code) {
+		return cardLookup.get(code);
 	}
 
 }

@@ -1,5 +1,7 @@
 package comp3004.ivanhoe.server;
 
+import org.json.simple.JSONObject;
+
 import comp3004.ivanhoe.model.Player;
 
 /**
@@ -9,9 +11,19 @@ import comp3004.ivanhoe.model.Player;
  */
 public class MockServer extends AppServer {
 
+	public MockServer() {
+		super(0, 0);
+	}
+	
 	public MockServer(int port, int maxPlayers) {
 		super(port, maxPlayers);
 	}
+	
+	@Override
+	public void broadcast(JSONObject s) { return; }
+	
+	@Override
+	public void sendToClient(int id, JSONObject s) { return; }
 	
 	// METHOD FOR TESTING
 	

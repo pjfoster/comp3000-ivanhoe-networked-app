@@ -1,5 +1,7 @@
 package comp3004.ivanhoe.view;
 
+import org.json.simple.JSONObject;
+
 public class MockView implements View {
 
 	@Override
@@ -15,7 +17,7 @@ public class MockView implements View {
 	}
 
 	@Override
-	public void displayTournamentView() {
+	public void displayTournamentView(JSONObject snapshot) {
 	}
 
 	@Override

@@ -74,13 +74,8 @@ public class AppClient implements Runnable {
 	 */
 	public void handleServerResponse(String input) throws IOException {
 		
-		System.out.println("AppClient : " + input);
-		
 		if (input == null) // case where server dies unexpectedly 
-		{ 
-			System.out.println("AppClient : " + input);
-			return ; 
-		}
+		{ return ; }
 		
 		try {
 			JSONObject server_response = (JSONObject)parser.parse(input);
@@ -105,14 +100,17 @@ public class AppClient implements Runnable {
 				view.displayChooseColor();
 			}
 			
+			else if (server_response.get("response_type").equals("start_tournament")) {
+				view.displayTournamentView(server_response);
+			}
+			
 			else if (server_response.get("response_type").equals("start_player_turn")) {
-				// TODO: pass in parameters
 				view.displayTurnView();
 			}
 			
 			else if (server_response.get("response_type").equals("update_view")) {
 				// TODO: pass in parameters - or add updateTournamentView() method?
-				view.displayTournamentView();
+				view.displayTournamentView(server_response);
 			}
 			
 			else if (server_response.get("response_type").equals("make_move")) {
