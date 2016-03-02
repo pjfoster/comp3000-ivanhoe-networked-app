@@ -13,6 +13,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import comp3004.ivanhoe.model.Player;
+import comp3004.ivanhoe.model.Token;
 import comp3004.ivanhoe.model.Tournament;
 import comp3004.ivanhoe.util.ClientParser;
 import comp3004.ivanhoe.util.ServerResponseBuilder;
@@ -32,7 +33,7 @@ public class ResponseBuilderTest {
 		players.put(60001, new Player("Alexei"));
 		players.put(60002, new Player("Luke"));
 		
-		tournament = new Tournament(players, "red");
+		tournament = new Tournament(players, Token.RED);
 		
 	}
 
@@ -90,15 +91,6 @@ public class ResponseBuilderTest {
 	}
 	
 	@Test
-	public void testStartGame() throws ParseException {
-		String testMoveString = responseBuilder.buildStartGame().toJSONString();
-		JSONObject testMove = (JSONObject)parser.parse(testMoveString);
-		
-		assertEquals(testMove.size(), 1);
-		assertEquals(testMove.get("response_type"), "start_game");
-	}
-	
-	@Test
 	public void testChooseColor() throws ParseException {
 		String testMoveString = responseBuilder.buildChooseColor().toJSONString();
 		JSONObject testMove = (JSONObject)parser.parse(testMoveString);
@@ -131,12 +123,11 @@ public class ResponseBuilderTest {
 	
 	@Test
 	public void testUpdateView() throws ParseException {
-		String testMoveString = responseBuilder.buildUpdateView(players.get(60001), tournament).toJSONString();
+		String testMoveString = responseBuilder.buildUpdateView(tournament).toJSONString();
 		JSONObject testMove = (JSONObject)parser.parse(testMoveString);
 		
-		assertEquals(testMove.size(), 5);
+		assertEquals(testMove.size(), 4);
 		assertEquals(testMove.get("response_type"), "update_view");
-		assertEquals(testMove.get("player_name"), "Alexei");
 		assertNotNull(testMove.get("players"));
 		assertNotNull(testMove.get("tournament_color"));
 		assertNotNull(testMove.get("deck"));

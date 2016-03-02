@@ -18,7 +18,7 @@ public interface View {
 	public void displayTournamentView(JSONObject snapshot);
 	public void displayTurnView();
 	public void displayWelcome();
-	public void displayStartScreen();
+	public void displayStartScreen(JSONObject snapshot);
 	public void displayChooseColor();
 	
 }

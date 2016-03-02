@@ -52,7 +52,7 @@ public class ViewImpl implements View {
 	}
 
 	@Override
-	public void displayStartScreen() {
+	public void displayStartScreen(JSONObject snapshot) {
 		// TODO Auto-generated method stub
 		
 	}

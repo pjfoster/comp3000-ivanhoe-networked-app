@@ -24,9 +24,16 @@ public class ServerResponseBuilder {
 		return new JSONObject(responseMap);
 	}
 	
-	public JSONObject buildStartGame() {
+	public JSONObject buildStartGame(Tournament tournament, int playerId) {
 		HashMap<String, String> responseMap = new HashMap<String, String>();
 		responseMap.put("response_type", "start_game");
+		responseMap.put("current_turn", ""+playerId);
+		return createGameSnapshot(responseMap, tournament);
+	}
+	
+	public JSONObject buildInvalidResponse() {
+		HashMap<String, String> responseMap = new HashMap<String, String>();
+		responseMap.put("response_type", "invalid_choice");
 		return new JSONObject(responseMap);
 	}
 	
@@ -55,10 +62,9 @@ public class ServerResponseBuilder {
 		return new JSONObject(responseMap);
 	}
 	
-	public JSONObject buildUpdateView(Player player, Tournament tournament) {
+	public JSONObject buildUpdateView(Tournament tournament) {
 		HashMap<String, String> responseMap = new HashMap<String, String>();
 		responseMap.put("response_type", "update_view");
-		responseMap.put("player_name", player.getName());
 		return createGameSnapshot(responseMap, tournament);
 	}
 	
@@ -71,6 +77,12 @@ public class ServerResponseBuilder {
 	public JSONObject buildTournamentOverLoss() {
 		HashMap<String, String> responseMap = new HashMap<String, String>();
 		responseMap.put("response_type", "tournament_over_loss");
+		return new JSONObject(responseMap);
+	}
+	
+	public JSONObject buildWaiting() {
+		HashMap<String, String> responseMap = new HashMap<String, String>();
+		responseMap.put("response_type", "waiting");
 		return new JSONObject(responseMap);
 	}
 	

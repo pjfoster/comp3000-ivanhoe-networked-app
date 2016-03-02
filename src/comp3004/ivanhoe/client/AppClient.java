@@ -89,11 +89,18 @@ public class AppClient implements Runnable {
 			else if (server_response.get("response_type").equals("connection_accepted")) {
 				System.out.println("Connection accepted!"); // test
 				handleClientRequest(requestBuilder.buildRegisterPlayer(username));
-				view.displayWaitingMessage();
 			}
 			
 			else if (server_response.get("response_type").equals("start_game")) {
-				view.displayStartScreen();
+				view.displayStartScreen(server_response);
+			}
+			
+			else if (server_response.get("response_type").equals("waiting")) {
+				view.displayWaitingMessage();
+			}
+			
+			else if (server_response.get("response_type").equals("invalid_choice")) {
+				view.displayTurnView();
 			}
 			
 			else if (server_response.get("response_type").equals("choose_color")) {
@@ -120,6 +127,7 @@ public class AppClient implements Runnable {
 			
 			else {
 				logger.error(String.format("Invalid server response"));
+				System.out.println(server_response);
 			}
 		}
 		catch (ParseException e) {

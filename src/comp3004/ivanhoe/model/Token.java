@@ -5,7 +5,8 @@ public enum Token {
 	YELLOW, 
 	RED, 
 	BLUE, 
-	PURPLE;
+	PURPLE,
+	UNDECIDED;
 	
 	public static Token fromString(String color) {
 		if (color.equals("red") || color.equals("r")) {

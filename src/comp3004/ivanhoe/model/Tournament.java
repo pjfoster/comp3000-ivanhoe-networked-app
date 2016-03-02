@@ -11,23 +11,23 @@ public class Tournament {
 	
 	private Token token;
 	private HashMap<Integer, Player> currentPlayers;
-	private HashMap<String, Card> cardLookup;
+	private HashMap<String, ArrayList<Card>> cardLookup;
 	
 	private List<Card> deck;
 	private List<Card> discardPile;
 	
 	public Tournament() {
 		currentPlayers = new HashMap<Integer, Player>();
-		cardLookup = new HashMap<String, Card>();
+		cardLookup = new HashMap<String, ArrayList<Card>>();
 		discardPile = new ArrayList<Card>();
 		deck = new ArrayList<Card>();
 		discardPile = new ArrayList<Card>();
 	}
 	
-	public Tournament(HashMap<Integer, Player> players, String tokenColor){
+	public Tournament(HashMap<Integer, Player> players, Token token){
 		currentPlayers = players;
-		cardLookup = new HashMap<String, Card>();
-		token = Token.fromString(tokenColor);
+		cardLookup = new HashMap<String, ArrayList<Card>>();
+		this.token = token;
 		discardPile = new ArrayList<Card>();
 		buildDeck();
 		dealStartingHands();
@@ -65,7 +65,14 @@ public class Tournament {
 		shuffle();
 		
 		for (Card c: deck) {
-			cardLookup.put(c.toString(), c);
+			if (cardLookup.containsKey(c.toString())) {
+				cardLookup.get(c.toString()).add(c);
+			}
+			else {
+				ArrayList<Card> newArr = new ArrayList<Card>();
+				newArr.add(c);
+				cardLookup.put(c.toString(), newArr);
+			}
 		}
 	}
 	
@@ -166,7 +173,7 @@ public class Tournament {
 		currentPlayers = players;
 	}
 	
-	public Card getCard(String code) {
+	public ArrayList<Card> getCard(String code) {
 		return cardLookup.get(code);
 	}
 

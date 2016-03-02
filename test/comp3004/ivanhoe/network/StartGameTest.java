@@ -70,15 +70,19 @@ public class StartGameTest {
 		
 		Mockito.verify(spy1).handleServerResponse(Mockito.matches(".*connection_accepted.*"));
 		Mockito.verify(spy2).handleServerResponse(Mockito.matches(".*connection_accepted.*"));
-		Mockito.verify(spy1, Mockito.atMost(1)).handleServerResponse(Mockito.anyString());
-		Mockito.verify(spy2, Mockito.atMost(1)).handleServerResponse(Mockito.anyString());
+		
+		Thread.sleep(WAIT_TIME_MILLIS);
+		//Mockito.verify(spy1).handleServerResponse(Mockito.matches(".*waiting.*"));
+		//Mockito.verify(spy2).handleServerResponse(Mockito.matches(".*waiting.*"));
+		Mockito.verify(spy1, Mockito.atMost(2)).handleServerResponse(Mockito.anyString());
+		Mockito.verify(spy2, Mockito.atMost(2)).handleServerResponse(Mockito.anyString());
 		
 		AppClient client3 = new AppClient(viewFactory, Config.DEFAULT_SERVER_ADDRESS, 10012);
 		AppClient spy3 = Mockito.spy(client3);
 		spy3.setUsername("Emma");
 		assertTrue(spy3.connect());
 		
-		Thread.sleep(WAIT_TIME_MILLIS);
+		Thread.sleep(WAIT_TIME_MILLIS*2);
 		assertTrue(server.isPlayerRegistered("Emma"));
 		
 		Mockito.verify(spy1).handleServerResponse(Mockito.matches(".*start_game.*"));

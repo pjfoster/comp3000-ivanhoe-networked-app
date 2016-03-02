@@ -46,8 +46,26 @@ public class TextViewImpl implements View, Runnable {
 	}
 
 	@Override
-	public void displayStartScreen() {
+	public void displayStartScreen(JSONObject snapshot) {
 		System.out.println("The Game is beginning!");
+		
+		displayTournamentView(snapshot);
+		Integer turnId = Integer.parseInt((String)snapshot.get("current_turn"));
+		
+		if (turnId == client.getID()) {
+			System.out.println("You get to go first!");
+			System.out.println("That means whatever card you play will determine the color of the tournament...");
+			displayTurnView();
+		}
+		
+		else {
+			for (Object p: parser.getPlayerList(snapshot)) {
+				if (parser.getPlayerId(p).equals(turnId)) {
+					System.out.println("Current turn: " + parser.getPlayerName(p));
+				}
+			}
+		}
+		
 	}
 	
 	@Override

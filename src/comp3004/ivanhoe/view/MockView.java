@@ -29,7 +29,7 @@ public class MockView implements View {
 	}
 
 	@Override
-	public void displayStartScreen() {
+	public void displayStartScreen(JSONObject snapshot) {
 	}
 
 	@Override

@@ -2,6 +2,7 @@ package comp3004.ivanhoe.game_logic;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.junit.After;
@@ -23,6 +24,8 @@ public class ColourCardTest {
 	Tournament tournament;
 	MockController controller;
 	Player alexei, luke;
+	ColourCard r3, r5, p5;
+	ArrayList<Card> r3Wrapper, r5Wrapper, p5Wrapper;
 	
 	@Before
 	public void setUp() throws Exception {
@@ -41,6 +44,18 @@ public class ColourCardTest {
 		tournament.setToken(Token.RED);
 		tournament.setPlayers(players);
 		controller.setTournament(tournament);
+		
+		r3 = new ColourCard("red", 3);
+		r3Wrapper = new ArrayList<Card>();
+		r3Wrapper.add(r3);
+		
+		r5 = new ColourCard("red", 5);
+		r5Wrapper = new ArrayList<Card>();
+		r5Wrapper.add(r5);
+		
+		p5 = new ColourCard("purple", 5);
+		p5Wrapper = new ArrayList<Card>();
+		p5Wrapper.add(p5);
 	}
 
 	@After
@@ -53,17 +68,15 @@ public class ColourCardTest {
 		controller.setTurn(60001);
 		assertEquals(alexei.getDisplayTotal(), 0);
 		
-		ColourCard r3 = new ColourCard("red", 3);
 		alexei.addHandCard(r3);
-		assertTrue(controller.playCard(r3));
+		assertTrue(controller.playCard(r3Wrapper));
 		
 		assertEquals(alexei.getDisplayTotal(), 3);
 		assertEquals(tournament.getPlayerWithHighestDisplay(), alexei);
 		assertEquals(tournament.getHighestDisplayTotal(), 3);
 		
-		ColourCard r5 = new ColourCard("red", 5);
 		alexei.addHandCard(r5);
-		assertTrue(controller.playCard(r5));
+		assertTrue(controller.playCard(r5Wrapper));
 		
 		assertEquals(alexei.getDisplayTotal(), 8);
 		assertEquals(tournament.getPlayerWithHighestDisplay(), alexei);
@@ -73,37 +86,33 @@ public class ColourCardTest {
 	@Test 
 	public void testPlayCardNotInHand() {
 		controller.setTurn(60001);
-		ColourCard r5 = new ColourCard("red", 5);
-		assertFalse(controller.playCard(r5));
+		assertFalse(controller.playCard(r5Wrapper));
 	}
 	
 	@Test
 	public void testPlayCardWrongColor() {
 		controller.setTurn(60001);
-		ColourCard p3 = new ColourCard("purple", 3);
-		alexei.addHandCard(p3);
-		assertFalse(controller.playCard(p3));
+		alexei.addHandCard(p5);
+		assertFalse(controller.playCard(p5Wrapper));
 	}
 	
 	@Test
 	public void testPlayCardTooSmall() {
-		ColourCard r5 = new ColourCard("red", 5);
-		ColourCard r3 = new ColourCard("red", 3);
 		
 		alexei.addHandCard(r3);
 		alexei.addHandCard(r5);
 		luke.addHandCard(r5);
 		
 		controller.setTurn(60002);
-		assertTrue(controller.playCard(r5));
+		assertTrue(controller.playCard(r5Wrapper));
 		assertEquals(tournament.getPlayerWithHighestDisplay(), luke);
 		
 		controller.setTurn(60001);
 		// Check that player can't play card of lesser value
-		assertFalse(controller.playCard(r3));
+		assertFalse(controller.playCard(r3Wrapper));
 		
 		// Check that player can't play card of equal value
-		assertFalse(controller.playCard(r5));
+		assertFalse(controller.playCard(r5Wrapper));
 	}
 
 }
