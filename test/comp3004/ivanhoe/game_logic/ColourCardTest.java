@@ -21,6 +21,7 @@ public class ColourCardTest {
 	HashMap<Integer, Player> players;
 	ServerResponseBuilder responseBuilder = new ServerResponseBuilder();
 	Tournament tournament;
+	MockController controller;
 	Player alexei, luke;
 	
 	@Before
@@ -33,7 +34,7 @@ public class ColourCardTest {
 		players.put(60001, alexei);
 		players.put(60002, luke);
 		
-		MockController controller = new MockController(null, responseBuilder, 2);
+		controller = new MockController(null, responseBuilder, 2);
 		controller.setPlayers(players);
 		
 		tournament = new Tournament();
@@ -49,18 +50,20 @@ public class ColourCardTest {
 	@Test
 	public void testPlayCardBasic() {
 		
+		controller.setTurn(60001);
 		assertEquals(alexei.getDisplayTotal(), 0);
 		
 		ColourCard r3 = new ColourCard("red", 3);
 		alexei.addHandCard(r3);
-		assertTrue(alexei.playCard(r3));
+		assertTrue(controller.playCard(r3));
 		
 		assertEquals(alexei.getDisplayTotal(), 3);
 		assertEquals(tournament.getPlayerWithHighestDisplay(), alexei);
+		assertEquals(tournament.getHighestDisplayTotal(), 3);
 		
 		ColourCard r5 = new ColourCard("red", 5);
 		alexei.addHandCard(r5);
-		assertTrue(alexei.playCard(r5));
+		assertTrue(controller.playCard(r5));
 		
 		assertEquals(alexei.getDisplayTotal(), 8);
 		assertEquals(tournament.getPlayerWithHighestDisplay(), alexei);
@@ -69,15 +72,17 @@ public class ColourCardTest {
 	
 	@Test 
 	public void testPlayCardNotInHand() {
+		controller.setTurn(60001);
 		ColourCard r5 = new ColourCard("red", 5);
-		assertFalse(alexei.playCard(r5));
+		assertFalse(controller.playCard(r5));
 	}
 	
 	@Test
 	public void testPlayCardWrongColor() {
+		controller.setTurn(60001);
 		ColourCard p3 = new ColourCard("purple", 3);
 		alexei.addHandCard(p3);
-		assertFalse(alexei.playCard(p3));
+		assertFalse(controller.playCard(p3));
 	}
 	
 	@Test
@@ -89,14 +94,16 @@ public class ColourCardTest {
 		alexei.addHandCard(r5);
 		luke.addHandCard(r5);
 		
-		assertTrue(luke.playCard(r5));
+		controller.setTurn(60002);
+		assertTrue(controller.playCard(r5));
 		assertEquals(tournament.getPlayerWithHighestDisplay(), luke);
 		
+		controller.setTurn(60001);
 		// Check that player can't play card of lesser value
-		assertFalse(alexei.playCard(r3));
+		assertFalse(controller.playCard(r3));
 		
 		// Check that player can't play card of equal value
-		assertFalse(alexei.playCard(r5));
+		assertFalse(controller.playCard(r5));
 	}
 
 }

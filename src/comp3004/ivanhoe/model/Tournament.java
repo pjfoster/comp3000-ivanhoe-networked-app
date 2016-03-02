@@ -129,6 +129,15 @@ public class Tournament {
 		return temp;
 	}
 	
+	public int getHighestDisplayTotal() {
+		int highestTotal = 0;
+		for (Player p: currentPlayers.values()){
+			if (p.getDisplayTotal() > highestTotal)
+				highestTotal = p.getDisplayTotal();
+		}
+		return highestTotal;
+	}
+	
 	public HashMap<Integer, Player> getPlayers() {
 		return currentPlayers;
 	}

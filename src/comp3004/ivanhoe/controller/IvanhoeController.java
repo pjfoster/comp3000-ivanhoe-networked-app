@@ -6,8 +6,11 @@ import java.util.Random;
 
 import org.json.simple.JSONObject;
 
+import comp3004.ivanhoe.model.ActionCard;
 import comp3004.ivanhoe.model.Card;
+import comp3004.ivanhoe.model.ColourCard;
 import comp3004.ivanhoe.model.Player;
+import comp3004.ivanhoe.model.SupporterCard;
 import comp3004.ivanhoe.model.Token;
 import comp3004.ivanhoe.model.Tournament;
 import comp3004.ivanhoe.server.AppServer;
@@ -116,6 +119,12 @@ public class IvanhoeController {
 					if (moveType.equals("withdraw")) {
 						System.out.println("WITHDRAW MOVE");
 					}
+					else if (moveType.equals("play_card")) {
+						System.out.println("CARD MOVE");
+						Card card = parser.getCard(playerMove, currentTournament);
+						System.out.println("Card: " + card);
+						boolean success = playCard(card);
+					}
 					else if (moveType.equals("color_card")) {
 						System.out.println("COLOR CARD MOVE");
 						Card card = parser.getCard(playerMove, currentTournament);
@@ -155,17 +164,34 @@ public class IvanhoeController {
 		}
 	}
 	
-	public boolean playColorCard(JSONObject playerMove) {
-		
-		
+	public boolean playCard(Card c)
+	{
+		if (c instanceof ColourCard) {
+			System.out.println("It's a color card!");
+			
+			// Check that the move is valid
+			ColourCard card = (ColourCard)c;
+			if (!card.getColour().toLowerCase().equals(currentTournament.getToken().toString().toLowerCase())) { return false; }
+			if (!getCurrentTurnPlayer().hasCardInHand(card)) { return false; }
+			
+			int newDisplayTotal = getCurrentTurnPlayer().getDisplayTotal() + card.getValue();
+			if (newDisplayTotal <= currentTournament.getHighestDisplayTotal()) { return false; }
+			
+			// Play the card
+			getCurrentTurnPlayer().playCard(card);
+			return true;
+			
+		}
+		else if (c instanceof SupporterCard) {
+			System.out.println("It's a supporter card!");
+		} 
+		else if (c instanceof ActionCard) {
+			System.out.println("It's an action card!");
+		}
 		return false;
 	}
 	
-	public boolean playSupporterCard(JSONObject playerMove) {
-		return false;
-	}
-	
-	public boolean playActionCard(JSONObject playerMove) {
+	public boolean playActionCard(Card c) {
 		return false;
 	}
 	

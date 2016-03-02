@@ -20,6 +20,7 @@ public class SupporterCardTest {
 	HashMap<Integer, Player> players;
 	ServerResponseBuilder responseBuilder = new ServerResponseBuilder();
 	Tournament tournament;
+	MockController controller;
 	Player alexei, luke;
 	
 	@Before
@@ -32,7 +33,7 @@ public class SupporterCardTest {
 		players.put(60001, alexei);
 		players.put(60002, luke);
 		
-		MockController controller = new MockController(null, responseBuilder, 2);
+		controller = new MockController(null, responseBuilder, 2);
 		controller.setPlayers(players);
 		
 		tournament = new Tournament();
@@ -54,12 +55,14 @@ public class SupporterCardTest {
 		SupporterCard s2 = new SupporterCard("squire", 2);
 		SupporterCard s3 = new SupporterCard("squire", 3);
 		
+		controller.setTurn(60001);
 		alexei.addHandCard(s2);
-		assertTrue(alexei.playCard(s2));
+		assertTrue(controller.playCard(s2));
 		assertEquals(alexei.getDisplayTotal(), 2);
 		
+		controller.setTurn(60002);
 		luke.addHandCard(s3);
-		assertTrue(luke.playCard(s3));
+		assertTrue(controller.playCard(s3));
 		assertEquals(luke.getDisplayTotal(), 3);
 		
 	}
@@ -75,12 +78,14 @@ public class SupporterCardTest {
 		SupporterCard s2 = new SupporterCard("squire", 2);
 		SupporterCard s3 = new SupporterCard("squire", 3);
 		
+		controller.setTurn(60001);
 		alexei.addHandCard(s2);
-		assertTrue(alexei.playCard(s2));
+		assertTrue(controller.playCard(s2));
 		assertEquals(alexei.getDisplayTotal(), 1);
 		
+		controller.setTurn(60002);
 		luke.addHandCard(s3);
-		assertTrue(luke.playCard(s3));
+		assertTrue(controller.playCard(s3));
 		assertEquals(luke.getDisplayTotal(), 1);
 		
 	}
@@ -92,8 +97,9 @@ public class SupporterCardTest {
 		
 		SupporterCard m6 = new SupporterCard("maiden", 6);
 		
+		controller.setTurn(60001);
 		alexei.addHandCard(m6);
-		assertTrue(alexei.playCard(m6));
+		assertTrue(controller.playCard(m6));
 		assertEquals(alexei.getDisplayTotal(), 6);
 		
 	}
@@ -107,8 +113,9 @@ public class SupporterCardTest {
 		
 		SupporterCard m6 = new SupporterCard("maiden", 6);
 		
+		controller.setTurn(60001);
 		alexei.addHandCard(m6);
-		assertTrue(alexei.playCard(m6));
+		assertTrue(controller.playCard(m6));
 		assertEquals(alexei.getDisplayTotal(), 1);
 		
 	}

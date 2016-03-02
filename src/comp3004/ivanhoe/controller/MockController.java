@@ -1,5 +1,6 @@
 package comp3004.ivanhoe.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import comp3004.ivanhoe.model.Player;
@@ -31,6 +32,20 @@ public class MockController extends IvanhoeController {
 	
 	public void givePlayerToken(int playerId, Token token) {
 		players.get(playerId).addToken(token);
+	}
+	
+	public void setTurn(int playerId) {
+		
+		if (playerTurns == null) {
+			playerTurns = new ArrayList<Integer>(players.keySet());
+		}
+		
+		for (int i = 0; i < playerTurns.size(); ++i) {
+			if (playerTurns.get(i) == playerId) {
+				currentTurn = i;
+			}
+		}
+		
 	}
 	
 }

@@ -50,6 +50,11 @@ public class Player {
 		return hand.add(card);
 	}
 	
+	public boolean hasCardInHand(Card card) {
+		if (hand.contains(card)) { return true; }
+		return false;
+	}
+	
 	/**
 	 * Should not be used for normal play. Use playCard for normal play instead
 	 * @param card

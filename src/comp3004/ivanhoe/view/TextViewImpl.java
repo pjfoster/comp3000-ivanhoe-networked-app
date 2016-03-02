@@ -121,7 +121,10 @@ public class TextViewImpl implements View, Runnable {
 					if (move.equals("withdraw")) {
 						request = requestBuilder.buildWithdrawMove();
 					}
-					else if (move.charAt(0) == 's') {
+					else {
+						request = requestBuilder.buildCardMove(move);
+					}
+					/*else if (move.charAt(0) == 's') {
 						request = requestBuilder.buildSupporterCardMove(move);
 					}
 					else if (move.charAt(0) == 'm') {
@@ -133,7 +136,7 @@ public class TextViewImpl implements View, Runnable {
 					}
 					else {
 						request = requestBuilder.buildActionCardMove(move);
-					}
+					}*/
 					client.handleClientRequest(request);
 				}
 				

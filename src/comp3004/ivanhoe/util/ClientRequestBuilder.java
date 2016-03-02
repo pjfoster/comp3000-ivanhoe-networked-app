@@ -38,6 +38,14 @@ public class ClientRequestBuilder {
 		return new JSONObject(requestMap); 
 	}
 	
+	public JSONObject buildCardMove(String cardCode) {
+		HashMap<String, String> requestMap = new HashMap<String, String>();
+		requestMap.put("request_type", "turn_move"); 
+		requestMap.put("move_type", "play_card");
+		requestMap.put("card_code", cardCode);
+		return new JSONObject(requestMap); 
+	}
+	
 	/**
 	 * Play a color card
 	 * @param cardColor
