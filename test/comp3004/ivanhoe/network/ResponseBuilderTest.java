@@ -139,7 +139,7 @@ public class ResponseBuilderTest {
 	
 	@Test
 	public void testTournamentOverWin() throws ParseException {
-		String testMoveString = responseBuilder.buildTournamentOverWin().toJSONString();
+		String testMoveString = responseBuilder.buildTournamentOverWin("red").toJSONString();
 		JSONObject testMove = (JSONObject)parser.parse(testMoveString);
 		
 		assertEquals(testMove.size(), 1);
@@ -148,7 +148,7 @@ public class ResponseBuilderTest {
 	
 	@Test
 	public void testTournamentOverLoss() throws ParseException {
-		String testMoveString = responseBuilder.buildTournamentOverLoss().toJSONString();
+		String testMoveString = responseBuilder.buildTournamentOverLoss("Jayson").toJSONString();
 		JSONObject testMove = (JSONObject)parser.parse(testMoveString);
 		
 		assertEquals(testMove.size(), 1);

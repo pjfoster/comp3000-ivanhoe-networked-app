@@ -25,7 +25,7 @@ public class Tournament {
 	}
 	
 	public Tournament(HashMap<Integer, Player> players, Token token){
-		currentPlayers = players;
+		currentPlayers = new HashMap<Integer, Player>(players);
 		cardLookup = new HashMap<String, ArrayList<Card>>();
 		this.token = token;
 		discardPile = new ArrayList<Card>();

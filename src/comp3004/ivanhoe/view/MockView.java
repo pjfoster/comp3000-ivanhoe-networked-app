@@ -38,18 +38,28 @@ public class MockView implements View {
 
 	@Override
 	public void displayInvalidMove() {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void displayTurnView(String drawnCard) {
+	}
+
+	@Override
+	public void displayTurnPlayer(String playerName) {
+	}
+
+	@Override
+	public void announceWithdrawal(String string) {
+	}
+
+	@Override
+	public void displayTournamentWonMessage(String tokenColor) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void displayTurnPlayer(String playerName) {
+	public void displayTournamentLossMessage(String winnerName) {
 		// TODO Auto-generated method stub
 		
 	}

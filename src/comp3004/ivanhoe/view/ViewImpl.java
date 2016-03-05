@@ -81,6 +81,24 @@ public class ViewImpl implements View {
 		
 	}
 
+	@Override
+	public void announceWithdrawal(String string) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void displayTournamentWonMessage(String tokenColor) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void displayTournamentLossMessage(String winnerName) {
+		// TODO Auto-generated method stub
+		
+	}
+
 	
 	
 }

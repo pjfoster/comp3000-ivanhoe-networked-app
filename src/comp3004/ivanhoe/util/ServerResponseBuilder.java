@@ -52,7 +52,7 @@ public class ServerResponseBuilder {
 	public JSONObject buildStartTournament(Tournament tournament, int playerTurn) {
 		HashMap<String, String> responseMap = new HashMap<String, String>();
 		responseMap.put("response_type", "start_tournament");
-		responseMap.put("turn", playerTurn + "");
+		responseMap.put("current_turn", playerTurn + "");
 		return createGameSnapshot(responseMap, tournament);
 	}
 	
@@ -76,21 +76,30 @@ public class ServerResponseBuilder {
 		return createGameSnapshot(responseMap, tournament);
 	}
 	
-	public JSONObject buildTournamentOverWin() {
+	public JSONObject buildTournamentOverWin(String tokenColor) {
 		HashMap<String, String> responseMap = new HashMap<String, String>();
 		responseMap.put("response_type", "tournament_over_win");
+		responseMap.put("token_color", tokenColor);
 		return new JSONObject(responseMap);
 	}
 	
-	public JSONObject buildTournamentOverLoss() {
+	public JSONObject buildTournamentOverLoss(String winnerName) {
 		HashMap<String, String> responseMap = new HashMap<String, String>();
 		responseMap.put("response_type", "tournament_over_loss");
+		responseMap.put("winner", winnerName);
 		return new JSONObject(responseMap);
 	}
 	
 	public JSONObject buildWaiting() {
 		HashMap<String, String> responseMap = new HashMap<String, String>();
 		responseMap.put("response_type", "waiting");
+		return new JSONObject(responseMap);
+	}
+	
+	public JSONObject buildWithdraw(String playerName) {
+		HashMap<String, String> responseMap = new HashMap<String, String>();
+		responseMap.put("response_type", "withdraw");
+		responseMap.put("player_name", playerName);
 		return new JSONObject(responseMap);
 	}
 	

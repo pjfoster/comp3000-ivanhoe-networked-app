@@ -121,11 +121,15 @@ public class TextViewImpl implements View, Runnable {
 		System.out.println("Write \"make_move <card>\" to play a card");
 		System.out.println("Write \"make_move withdraw\" to withdraw");
 	}
+	
+	@Override
+	public void announceWithdrawal(String playerName) {
+		System.out.println(playerName + " has withdrawn from the game");
+	}
 
 	@Override
 	public void displayWelcome() {
-		// TODO Auto-generated method stub
-		
+		System.out.println("Welcome to IVANHOE!");
 	}
 
 	@Override
@@ -135,7 +139,7 @@ public class TextViewImpl implements View, Runnable {
 			try {
 				String text = console.readLine();
 				
-				if (text.contains("start_connect")) { // ex: start_connect Alexi
+				if (text.contains("start_connect")) { // ex: start_connect Alexei
 					client.setUsername(text.split(" ")[1]);
 					client.connect();
 				}
@@ -156,19 +160,7 @@ public class TextViewImpl implements View, Runnable {
 					else {
 						request = requestBuilder.buildCardMove(move);
 					}
-					/*else if (move.charAt(0) == 's') {
-						request = requestBuilder.buildSupporterCardMove(move);
-					}
-					else if (move.charAt(0) == 'm') {
-						request = requestBuilder.buildSupporterCardMove(move);
-					}
-					else if (move.charAt(0) == 'r' || move.charAt(0) == 'b' || move.charAt(0) == 'g' ||
-							 move.charAt(0) == 'y' || move.charAt(0) == 'p') {
-						request = requestBuilder.buildColorCardMove(move);
-					}
-					else {
-						request = requestBuilder.buildActionCardMove(move);
-					}*/
+					
 					client.handleClientRequest(request);
 				}
 				
@@ -196,6 +188,17 @@ public class TextViewImpl implements View, Runnable {
 	@Override
 	public void displayTurnPlayer(String playerName) {
 		System.out.println("It is " + playerName + "'s turn");
+	}
+
+	@Override
+	public void displayTournamentWonMessage(String tokenColor) {
+		System.out.println("YOU WIN!!!");
+		System.out.println("You get a " + tokenColor.toUpperCase() + " token!");
+	}
+
+	@Override
+	public void displayTournamentLossMessage(String winnerName) {
+		System.out.println("The winner of the tournament is " + winnerName);
 	}
 
 }

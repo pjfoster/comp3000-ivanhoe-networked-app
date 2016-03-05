@@ -68,5 +68,26 @@ public class TurnTest {
 		}
 		
 	}
+	
+	@Test
+	public void testTurnsRemovedPlayer() {
+		controller.startGame();
+		ArrayList<Player> processedPlayers = new ArrayList<Player>();
+		tournament.removePlayer(60001);
+		
+		for (int i = 0; i < 8; ++i) {
+			assertTrue(controller.getCurrentTurn() < 3);
+			processedPlayers.add(controller.getCurrentTurnPlayer());
+			controller.nextPlayerTurn();
+		}
+		
+		for (int i = 0; i < 2; ++i) {
+			Player p = processedPlayers.get(i);
+			assertTrue(!p.equals(alexei));
+			assertEquals(p, processedPlayers.get(2+i));
+			assertEquals(p, processedPlayers.get(4+i));
+			assertEquals(p, processedPlayers.get(6+i));
+		}
+	}
 
 }

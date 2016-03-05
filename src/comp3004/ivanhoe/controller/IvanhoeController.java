@@ -20,8 +20,9 @@ import comp3004.ivanhoe.util.ServerResponseBuilder;
 public class IvanhoeController {
 	
 	protected final int WAITING_FOR_MORE_PLAYERS = 		1;
-	protected final int WAITING_FOR_COLOR = 			2;
+	protected final int WAITING_FOR_TOURNAMENT_COLOR = 	2;
 	protected final int WAITING_FOR_PLAYER_MOVE = 		3;
+	protected final int WAITING_FOR_WITHDRAW_TOKEN = 	4;
 	
 	protected int maxPlayers;
 	protected HashMap<Integer, Player> players;
@@ -83,7 +84,7 @@ public class IvanhoeController {
 	
 	public void startGame() {
 		
-		state = WAITING_FOR_COLOR;	
+		state = WAITING_FOR_TOURNAMENT_COLOR;	
 		
 		// since there is no dealer, pick a random person to choose the first color
 		playerTurns = new ArrayList<Integer>(players.keySet());
@@ -99,7 +100,7 @@ public class IvanhoeController {
 	public void processPlayerMove(int id, JSONObject playerMove) {
 		
 		switch (state) {
-		case WAITING_FOR_COLOR:
+		case WAITING_FOR_TOURNAMENT_COLOR:
 			if (getCurrentTurnId() == id) {
 				
 				if (parser.getRequestType(playerMove).equals("choose_token") && !lastPlayed.isEmpty()) {
@@ -118,7 +119,7 @@ public class IvanhoeController {
 				if (parser.getRequestType(playerMove).equals("turn_move")) {
 					
 					if (parser.getMoveType(playerMove).equals("withdraw")) {
-						// TODO: handle this
+						withdraw();
 					}
 					else if (parser.getMoveType(playerMove).equals("play_card")) {
 						ArrayList<Card> card = parser.getCard(playerMove, currentTournament);
@@ -151,6 +152,7 @@ public class IvanhoeController {
 					
 					if (moveType.equals("withdraw")) {
 						System.out.println("WITHDRAW MOVE");
+						withdraw();
 					}
 					else if (moveType.equals("play_card")) {
 						System.out.println("CARD MOVE");
@@ -176,8 +178,29 @@ public class IvanhoeController {
 		
 	}
 	
-	public boolean checkTournamentWon() {
-		return false;
+	public void processTournamentWon() {
+		
+		if (checkGameWon()) {
+			// TODO: end the game
+		}
+		
+		Player winner = getCurrentTurnPlayer();
+		
+		winner.addToken(currentTournament.getToken());
+		previousTournament = currentTournament.getToken();
+		
+		JSONObject tournamentWon = responseBuilder.buildTournamentOverWin(currentTournament.getToken().toString());
+		server.sendToClient(getCurrentTurnId(), tournamentWon);
+		
+		JSONObject tournamentLoss = responseBuilder.buildTournamentOverLoss(winner.getName());
+		for (int key: players.keySet()) {
+			if (key != getCurrentTurnId()) {
+				server.sendToClient(key, tournamentLoss);
+			}
+		}
+		
+		resetTournament(getCurrentTurnId());
+		
 	}
 	
 	/**
@@ -268,8 +291,20 @@ public class IvanhoeController {
 		return false;
 	}
 	
-	public boolean withdraw(int playerId) {
-		return false;
+	public void withdraw() {
+		
+		// TODO: check if player has a maiden in their display
+		
+		JSONObject announceWithdraw = responseBuilder.buildWithdraw(getCurrentTurnPlayer().getName());
+		server.broadcast(announceWithdraw);
+		
+		currentTournament.removePlayer(getCurrentTurnId());
+		playerTurns.remove(currentTurn);
+		
+		if (currentTurn == 0) { currentTurn = playerTurns.size() - 1; }
+		else { currentTurn -= 1; }
+		
+		finishTurn();
 	}
 	
 	public void invalidMove() {
@@ -284,7 +319,10 @@ public class IvanhoeController {
 	 */
 	public void finishTurn() {
 		
-		// TODO: check if a player has won
+		if (currentTournament.getPlayers().size() == 1) {
+			processTournamentWon();
+			return;
+		}
 		
 		nextPlayerTurn();
 		Card drawnCard = currentTournament.drawCard();
@@ -304,8 +342,23 @@ public class IvanhoeController {
 		}
 	}
 	
+	public void resetTournament(int winnerId) {
+		state = WAITING_FOR_TOURNAMENT_COLOR;	
+		
+		// since there is no dealer, pick a random person to choose the first color
+		playerTurns = new ArrayList<Integer>(players.keySet());
+		currentTurn = playerTurns.indexOf(winnerId);
+		
+		currentTournament = new Tournament(players, Token.UNDECIDED);
+		
+		JSONObject startGameMessage = responseBuilder.buildStartTournament(currentTournament, getCurrentTurnId());
+		server.broadcast(startGameMessage);
+	}
+	
 	public int nextPlayerTurn() {
-		currentTurn = (currentTurn + 1) % playerTurns.size();
+		do {
+			currentTurn = (currentTurn + 1) % playerTurns.size();
+		} while (!currentTournament.getPlayers().containsKey(getCurrentTurnId()));
 		return currentTurn;
 	}
 	

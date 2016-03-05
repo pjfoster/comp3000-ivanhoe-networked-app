@@ -111,8 +111,12 @@ public class AppClient implements Runnable {
 				view.displayChooseColor();
 			}
 			
+			else if (server_response.get("response_type").equals("withdraw")) {
+				view.announceWithdrawal((String)server_response.get("player_name"));
+			}
+			
 			else if (server_response.get("response_type").equals("start_tournament")) {
-				view.displayTournamentView(server_response);
+				view.displayStartScreen(server_response);
 			}
 			
 			else if (server_response.get("response_type").equals("start_player_turn")) {
@@ -120,13 +124,15 @@ public class AppClient implements Runnable {
 			}
 			
 			else if (server_response.get("response_type").equals("update_view")) {
-				// TODO: pass in parameters - or add updateTournamentView() method?
 				view.displayTournamentView(server_response);
 			}
 			
-			else if (server_response.get("response_type").equals("make_move")) {
-				// TODO: client may require a back and forth with the server (for example when playing
-				// action cards)
+			else if (server_response.get("response_type").equals("tournament_over_win")) {
+				view.displayTournamentWonMessage((String)server_response.get("token_color"));
+			}
+			
+			else if (server_response.get("response_type").equals("tournament_over_loss")) {
+				view.displayTournamentLossMessage((String)server_response.get("winner"));
 			}
 			
 			else {
