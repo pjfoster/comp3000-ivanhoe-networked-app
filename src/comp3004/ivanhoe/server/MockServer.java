@@ -39,11 +39,6 @@ public class MockServer extends AppServer {
 	 * @return
 	 */
 	public boolean isPlayerRegistered(String username) {
-		for (Player p: controller.getPlayers().values()) {
-			if (p.getName().toLowerCase().equals(username.toLowerCase())) {
-				return true;
-			}
-		}
-		return false;
+		return controller.isPlayerRegistered(username);
 	}
 }

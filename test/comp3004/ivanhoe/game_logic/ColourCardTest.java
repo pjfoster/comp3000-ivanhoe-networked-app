@@ -62,33 +62,43 @@ public class ColourCardTest {
 	public void tearDown() throws Exception {
 	}
 
+	/**
+	 * Test that users can play colour cards under the right conditions and
+	 * that the value of the card is added to their display
+	 */
 	@Test
 	public void testPlayCardBasic() {
 		
 		controller.setTurn(60001);
-		assertEquals(alexei.getDisplayTotal(), 0);
+		assertEquals(alexei.getDisplayTotal(Token.RED), 0);
 		
 		alexei.addHandCard(r3);
 		assertTrue(controller.playCard(r3Wrapper));
 		
-		assertEquals(alexei.getDisplayTotal(), 3);
+		assertEquals(alexei.getDisplayTotal(Token.RED), 3);
 		assertEquals(tournament.getPlayerWithHighestDisplay(), alexei);
 		assertEquals(tournament.getHighestDisplayTotal(), 3);
 		
 		alexei.addHandCard(r5);
 		assertTrue(controller.playCard(r5Wrapper));
 		
-		assertEquals(alexei.getDisplayTotal(), 8);
+		assertEquals(alexei.getDisplayTotal(Token.RED), 8);
 		assertEquals(tournament.getPlayerWithHighestDisplay(), alexei);
 		
 	}
 	
+	/**
+	 * Test that a player can't play a card that isn't in their hand
+	 */
 	@Test 
 	public void testPlayCardNotInHand() {
 		controller.setTurn(60001);
 		assertFalse(controller.playCard(r5Wrapper));
 	}
 	
+	/**
+	 * Test that a player can't play a card that isn't the tournament color
+	 */
 	@Test
 	public void testPlayCardWrongColor() {
 		controller.setTurn(60001);
@@ -96,6 +106,9 @@ public class ColourCardTest {
 		assertFalse(controller.playCard(p5Wrapper));
 	}
 	
+	/**
+	 * Test that a player can't play a card if the value is too small
+	 */
 	@Test
 	public void testPlayCardTooSmall() {
 		

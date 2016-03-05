@@ -22,6 +22,7 @@ public class Tournament {
 		discardPile = new ArrayList<Card>();
 		deck = new ArrayList<Card>();
 		discardPile = new ArrayList<Card>();
+		buildDeck();
 	}
 	
 	public Tournament(HashMap<Integer, Player> players, Token token){
@@ -129,9 +130,9 @@ public class Tournament {
 		Player temp = null;
 		int highestTotal = 0;
 		for (Player p: currentPlayers.values()){
-			if (p.getDisplayTotal() > highestTotal)
+			if (p.getDisplayTotal(token) > highestTotal)
 				temp = p;
-				highestTotal = p.getDisplayTotal();
+				highestTotal = p.getDisplayTotal(token);
 		}
 		return temp;
 	}
@@ -139,8 +140,8 @@ public class Tournament {
 	public int getHighestDisplayTotal() {
 		int highestTotal = 0;
 		for (Player p: currentPlayers.values()){
-			if (p.getDisplayTotal() > highestTotal)
-				highestTotal = p.getDisplayTotal();
+			if (p.getDisplayTotal(token) > highestTotal)
+				highestTotal = p.getDisplayTotal(token);
 		}
 		return highestTotal;
 	}
@@ -170,7 +171,7 @@ public class Tournament {
 	}
 	
 	public void setPlayers(HashMap<Integer, Player> players) {
-		currentPlayers = players;
+		currentPlayers = new HashMap<Integer, Player>(players);
 	}
 	
 	public ArrayList<Card> getCard(String code) {

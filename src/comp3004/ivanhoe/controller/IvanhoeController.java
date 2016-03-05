@@ -151,13 +151,10 @@ public class IvanhoeController {
 					String moveType = (String)playerMove.get("move_type");
 					
 					if (moveType.equals("withdraw")) {
-						System.out.println("WITHDRAW MOVE");
 						withdraw();
 					}
 					else if (moveType.equals("play_card")) {
-						System.out.println("CARD MOVE");
 						ArrayList<Card> card = parser.getCard(playerMove, currentTournament);
-						System.out.println("Card: " + card);
 						
 						boolean success = playCard(card);
 						if (success) { 
@@ -223,7 +220,6 @@ public class IvanhoeController {
 	{
 		
 		if (c.get(0) instanceof ColourCard) {
-			System.out.println("It's a color card!");
 			
 			// Check that the player has the card in their hand
 			ColourCard card = null;
@@ -243,7 +239,7 @@ public class IvanhoeController {
 				return false; 
 			}
 			
-			int newDisplayTotal = getCurrentTurnPlayer().getDisplayTotal() + card.getValue();
+			int newDisplayTotal = getCurrentTurnPlayer().getDisplayTotal(currentTournament.getToken()) + card.getValue();
 			if (newDisplayTotal <= currentTournament.getHighestDisplayTotal()) { return false; }
 			
 			// Play the card
@@ -252,13 +248,12 @@ public class IvanhoeController {
 
 		}
 		else if (c.get(0) instanceof SupporterCard) {
-			System.out.println("It's a supporter card!");
 
 			// Check that the player has the card in their hand
 			SupporterCard card = null;
-			for (Card colourCard: c) {
-				if (getCurrentTurnPlayer().hasCardInHand(colourCard)) {
-					card = (SupporterCard)colourCard;
+			for (Card supporterCard: c) {
+				if (getCurrentTurnPlayer().hasCardInHand(supporterCard)) {
+					card = (SupporterCard)supporterCard;
 					break;
 				}
 			}
@@ -272,10 +267,10 @@ public class IvanhoeController {
 			// Handle Green Tournaments
 			int newDisplayTotal;
 			if (currentTournament.getToken().equals(Token.GREEN)) {
-				newDisplayTotal = getCurrentTurnPlayer().getDisplayTotal() + 1;
+				newDisplayTotal = getCurrentTurnPlayer().getDisplayTotal(currentTournament.getToken()) + 1;
 			}
 			else {
-				newDisplayTotal = getCurrentTurnPlayer().getDisplayTotal() + card.getValue();	
+				newDisplayTotal = getCurrentTurnPlayer().getDisplayTotal(currentTournament.getToken()) + card.getValue();	
 			}
 			if (newDisplayTotal <= currentTournament.getHighestDisplayTotal()) { return false; }
 			
@@ -362,8 +357,6 @@ public class IvanhoeController {
 		return currentTurn;
 	}
 	
-	public HashMap<Integer, Player> getPlayers() { return players; }
-	
 	/**
 	 * Returns ID of the player whose turn it is
 	 * @return
@@ -378,6 +371,15 @@ public class IvanhoeController {
 	 */
 	public Player getCurrentTurnPlayer() { 
 		return players.get(playerTurns.get(currentTurn));			
+	}
+	
+	public boolean isPlayerRegistered(String username) {
+		for (Player p: players.values()) {
+			if (p.getName().toLowerCase().equals(username.toLowerCase())) {
+				return true;
+			}
+		}
+		return false;
 	}
 	
 }

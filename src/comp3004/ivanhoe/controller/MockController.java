@@ -3,6 +3,7 @@ package comp3004.ivanhoe.controller;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import comp3004.ivanhoe.model.Card;
 import comp3004.ivanhoe.model.Player;
 import comp3004.ivanhoe.model.Token;
 import comp3004.ivanhoe.model.Tournament;
@@ -46,6 +47,34 @@ public class MockController extends IvanhoeController {
 			}
 		}
 		
+	}
+	
+	public void setState(int state) {
+		this.state = state;
+	}
+	
+	public int getState() {
+		return state;
+	}
+	
+	public Card getCardFromDeck(String cardCode) {
+		for (Card c: currentTournament.getDeck()) {
+			if (c.toString().equals(cardCode)) {
+				return c;
+			}
+		}
+		return null;
+	}
+	
+	public ArrayList<Integer> getPlayerTurns() {
+		return playerTurns;
+	}
+	
+	public HashMap<Integer, Player> getPlayers() { 
+		for (Integer key: players.keySet()) {
+			System.out.println(key + ": " + players.get(key));
+		}
+		return players;
 	}
 	
 }

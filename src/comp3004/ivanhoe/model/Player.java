@@ -17,7 +17,6 @@ public class Player {
 	private List<Token> tokens;
 	private List<Card> hand;
 	private List<Card> display;
-	private int displayTotal;
 	
 	/**
 	 * Default for testing
@@ -27,7 +26,6 @@ public class Player {
 		hand = new ArrayList<Card>();
 		tokens = new ArrayList<Token>();
 		display = new ArrayList<Card>();
-		displayTotal = 0;
 	}
 	
 	/**
@@ -39,7 +37,6 @@ public class Player {
 		hand = new ArrayList<Card>();
 		tokens = new ArrayList<Token>();
 		display = new ArrayList<Card>();
-		displayTotal = 0;
 	}
 	
 	/**
@@ -81,7 +78,6 @@ public class Player {
 		// if statement checks if card is not an action card
 		if(card.getValue()!=0){
 			hand.add(card);
-			displayTotal+=card.getValue();
 			return true;
 		}
 		return false;
@@ -94,7 +90,6 @@ public class Player {
 	 */
 	public boolean removeDisplayCard(Card card){
 		if(card.getValue()!=0 && display.contains(card)){
-			displayTotal-=card.getValue();
 			return display.remove(card);
 		}
 		return false;
@@ -118,7 +113,6 @@ public class Player {
 		if (hand.contains(card)){
 			display.add(card);
 			hand.remove(card);
-			displayTotal+=card.getValue();
 			return true;
 		}
 		return false;
@@ -130,7 +124,6 @@ public class Player {
 	public void resetRound(){
 		hand = new ArrayList<Card>();
 		display = new ArrayList<Card>();
-		displayTotal = 0;
 	}
 	
 	/**
@@ -177,7 +170,19 @@ public class Player {
 	 * Returns player display total
 	 * @return
 	 */
-	public int getDisplayTotal(){
+	public int getDisplayTotal(Token color){
+		
+		int displayTotal = 0;
+		for (Card c: display) {
+			if (c instanceof SupporterCard && color.equals(Token.GREEN)) {
+				displayTotal += 1;
+			}
+			else {
+				displayTotal += c.getValue();
+			}
+		}
+		
 		return displayTotal;
+
 	}
 }

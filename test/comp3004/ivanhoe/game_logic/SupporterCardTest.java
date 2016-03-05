@@ -66,18 +66,18 @@ public class SupporterCardTest {
 	@Test
 	public void testSquire() {
 		
-		assertEquals(alexei.getDisplayTotal(), 0);
-		assertEquals(luke.getDisplayTotal(), 0);
+		assertEquals(alexei.getDisplayTotal(tournament.getToken()), 0);
+		assertEquals(luke.getDisplayTotal(tournament.getToken()), 0);
 		
 		controller.setTurn(60001);
 		alexei.addHandCard(s2);
 		assertTrue(controller.playCard(s2Wrapper));
-		assertEquals(alexei.getDisplayTotal(), 2);
+		assertEquals(alexei.getDisplayTotal(tournament.getToken()), 2);
 		
 		controller.setTurn(60002);
 		luke.addHandCard(s3);
 		assertTrue(controller.playCard(s3Wrapper));
-		assertEquals(luke.getDisplayTotal(), 3);
+		assertEquals(luke.getDisplayTotal(tournament.getToken()), 3);
 		
 	}
 	
@@ -86,30 +86,29 @@ public class SupporterCardTest {
 		
 		tournament.setToken(Token.GREEN);
 		
-		assertEquals(alexei.getDisplayTotal(), 0);
-		assertEquals(luke.getDisplayTotal(), 0);
+		assertEquals(alexei.getDisplayTotal(tournament.getToken()), 0);
+		assertEquals(luke.getDisplayTotal(tournament.getToken()), 0);
 		
 		controller.setTurn(60001);
 		alexei.addHandCard(s2);
 		assertTrue(controller.playCard(s2Wrapper));
-		assertEquals(alexei.getDisplayTotal(), 1);
+		assertEquals(alexei.getDisplayTotal(tournament.getToken()), 1);
 		
-		controller.setTurn(60002);
-		luke.addHandCard(s3);
+		alexei.addHandCard(s3);
 		assertTrue(controller.playCard(s3Wrapper));
-		assertEquals(luke.getDisplayTotal(), 1);
+		assertEquals(alexei.getDisplayTotal(tournament.getToken()), 2);
 		
 	}
 	
 	@Test
 	public void testMaiden() {
 		
-		assertEquals(alexei.getDisplayTotal(), 0);
+		assertEquals(alexei.getDisplayTotal(tournament.getToken()), 0);
 		
 		controller.setTurn(60001);
 		alexei.addHandCard(m6);
 		assertTrue(controller.playCard(m6Wrapper));
-		assertEquals(alexei.getDisplayTotal(), 6);
+		assertEquals(alexei.getDisplayTotal(tournament.getToken()), 6);
 		
 	}
 	
@@ -118,12 +117,12 @@ public class SupporterCardTest {
 		
 		tournament.setToken(Token.GREEN);
 		
-		assertEquals(alexei.getDisplayTotal(), 0);
+		assertEquals(alexei.getDisplayTotal(tournament.getToken()), 0);
 		
 		controller.setTurn(60001);
 		alexei.addHandCard(m6);
 		assertTrue(controller.playCard(m6Wrapper));
-		assertEquals(alexei.getDisplayTotal(), 1);
+		assertEquals(alexei.getDisplayTotal(tournament.getToken()), 1);
 		
 	}
 

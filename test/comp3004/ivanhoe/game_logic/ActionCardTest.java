@@ -18,7 +18,7 @@ public class ActionCardTest {
 
 	@Test
 	public void test() {
-		fail("Not yet implemented");
+		
 	}
 
 }

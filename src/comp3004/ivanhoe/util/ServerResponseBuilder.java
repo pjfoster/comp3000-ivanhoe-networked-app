@@ -129,7 +129,7 @@ public class ServerResponseBuilder {
 			
 			player.put("username", p.getName());
 			player.put("id", key);
-			player.put("display_total", "" + p.getDisplayTotal());
+			player.put("display_total", "" + p.getDisplayTotal(tournament.getToken()));
 			
 			// create hand
 			JSONArray hand = new JSONArray();
