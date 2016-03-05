@@ -76,8 +76,8 @@ public class Player {
 	 */
 	public boolean addDisplayCard(Card card){
 		// if statement checks if card is not an action card
-		if(card.getValue()!=0){
-			hand.add(card);
+		if (card.getValue() != 0) {
+			display.add(card);
 			return true;
 		}
 		return false;
@@ -89,7 +89,7 @@ public class Player {
 	 * @return
 	 */
 	public boolean removeDisplayCard(Card card){
-		if(card.getValue()!=0 && display.contains(card)){
+		if (card.getValue() != 0 && display.contains(card)){
 			return display.remove(card);
 		}
 		return false;
@@ -102,6 +102,10 @@ public class Player {
 	 */
 	public boolean addToken(Token token){
 		return tokens.add(token);
+	}
+	
+	public boolean removeToken(Token token) {
+		return tokens.remove(token);
 	}
 	
 	/**

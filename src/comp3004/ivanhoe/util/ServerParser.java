@@ -8,6 +8,7 @@ import org.json.simple.parser.ParseException;
 
 import comp3004.ivanhoe.model.Card;
 import comp3004.ivanhoe.model.ColourCard;
+import comp3004.ivanhoe.model.Token;
 import comp3004.ivanhoe.model.Tournament;
 
 public class ServerParser {
@@ -36,6 +37,11 @@ public class ServerParser {
 	public ArrayList<Card> getCard(JSONObject request, Tournament tournament) {
 		String cardCode = (String)request.get("card_code");
 		return tournament.getCard(cardCode);
+	}
+	
+	public Token getToken(JSONObject request) {
+		String colorString = (String)request.get("token_color");
+		return Token.fromString(colorString);
 	}
 	
 }

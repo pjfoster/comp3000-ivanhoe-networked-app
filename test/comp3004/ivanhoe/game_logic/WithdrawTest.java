@@ -69,6 +69,7 @@ public class WithdrawTest {
 	public void testBasicWithdraw() {
 
 		controller.setTurn(60003);
+		controller.setState(3);
 		assertEquals(tournament.getPlayers().size(), 3);
 
 		controller.withdraw();
@@ -93,6 +94,7 @@ public class WithdrawTest {
 	public void testWithdrawMaidenNoToken() {
 
 		controller.setTurn(60003);
+		controller.setState(3);
 		assertEquals(tournament.getPlayers().size(), 3);
 		jayson.addDisplayCard(m6);
 
@@ -118,9 +120,9 @@ public class WithdrawTest {
 	public void testWithdrawMaidenWithSingleToken() {
 
 		controller.setTurn(60003);
+		controller.setState(3);
 		assertEquals(tournament.getPlayers().size(), 3);
 
-		SupporterCard m6 = new SupporterCard("maiden", 6);
 		jayson.addDisplayCard(m6);
 		jayson.addToken(Token.BLUE);
 		assertEquals(jayson.getTokens().size(), 1);
@@ -155,9 +157,9 @@ public class WithdrawTest {
 	@Test
 	public void testWithdrawMaidenWithMultipleTokens() {
 		controller.setTurn(60003);
+		controller.setState(3);
 		assertEquals(tournament.getPlayers().size(), 3);
 
-		SupporterCard m6 = new SupporterCard("maiden", 6);
 		jayson.addDisplayCard(m6);
 		jayson.addToken(Token.BLUE);
 		jayson.addToken(Token.RED);
@@ -196,9 +198,9 @@ public class WithdrawTest {
 	@Test
 	public void testWithdrawMaidenWithMultipleTokensRepeatColor() {
 		controller.setTurn(60003);
+		controller.setState(3);
 		assertEquals(tournament.getPlayers().size(), 3);
 
-		SupporterCard m6 = new SupporterCard("maiden", 6);
 		jayson.addDisplayCard(m6);
 		jayson.addToken(Token.BLUE);
 		jayson.addToken(Token.BLUE);

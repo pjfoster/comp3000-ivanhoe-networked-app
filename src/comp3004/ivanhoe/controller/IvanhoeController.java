@@ -82,21 +82,6 @@ public class IvanhoeController {
 	
 	}
 	
-	public void startGame() {
-		
-		state = WAITING_FOR_TOURNAMENT_COLOR;	
-		
-		// since there is no dealer, pick a random person to choose the first color
-		playerTurns = new ArrayList<Integer>(players.keySet());
-		int r = rnd.nextInt(players.size());
-		currentTurn = r;
-		
-		currentTournament = new Tournament(players, Token.UNDECIDED);
-		
-		JSONObject startGameMessage = responseBuilder.buildStartGame(currentTournament, getCurrentTurnId());
-		server.broadcast(startGameMessage);
-	}
-	
 	public void processPlayerMove(int id, JSONObject playerMove) {
 		
 		switch (state) {
@@ -124,6 +109,7 @@ public class IvanhoeController {
 					else if (parser.getMoveType(playerMove).equals("play_card")) {
 						ArrayList<Card> card = parser.getCard(playerMove, currentTournament);
 						
+						// if the first card played is a Supporter Card, prompt the user to choose a color
 						if (card.get(0) instanceof SupporterCard) {
 							lastPlayed = card;
 							JSONObject chooseColor = responseBuilder.buildChooseColor();
@@ -131,8 +117,7 @@ public class IvanhoeController {
 							return;
 						}
 						
-						if (playCard(card)) {
-							
+						if (playCard(card)) {	
 							state = WAITING_FOR_PLAYER_MOVE;
 							finishTurn();
 							return;
@@ -144,6 +129,7 @@ public class IvanhoeController {
 				else { invalidMove(); return; }
 			}
 			break;
+			
 		case WAITING_FOR_PLAYER_MOVE:
 			if (getCurrentTurnId() == id) {
 				
@@ -170,9 +156,36 @@ public class IvanhoeController {
 				}
 			}
 			break;
+			
+		case WAITING_FOR_WITHDRAW_TOKEN:
+			if (getCurrentTurnId() == id) {
+				if (parser.getRequestType(playerMove).equals("choose_token")) {
+					Token token = parser.getToken(playerMove);
+					if (!withdraw(token)) { invalidMove(); return; } ;
+				}
+				else {
+					invalidMove(); return;
+				}
+			}
+			break;
 		default:
 		}
 		
+	}
+	
+	public void startGame() {
+		
+		state = WAITING_FOR_TOURNAMENT_COLOR;	
+		
+		// since there is no dealer, pick a random person to choose the first color
+		playerTurns = new ArrayList<Integer>(players.keySet());
+		int r = rnd.nextInt(players.size());
+		currentTurn = r;
+		
+		currentTournament = new Tournament(players, Token.UNDECIDED);
+		
+		JSONObject startGameMessage = responseBuilder.buildStartGame(currentTournament, getCurrentTurnId());
+		server.broadcast(startGameMessage);
 	}
 	
 	public void processTournamentWon() {
@@ -216,6 +229,11 @@ public class IvanhoeController {
 		}
 	}
 	
+	/**
+	 * Plays the card given
+	 * @param c
+	 * @return
+	 */
 	public boolean playCard(ArrayList<Card> c)
 	{
 		
@@ -281,15 +299,50 @@ public class IvanhoeController {
 		} 
 		
 		else if (c.get(0) instanceof ActionCard) {
-			System.out.println("It's an action card!");
+			
 		}
 		return false;
 	}
 	
+	/**
+	 * Checks if a player has a maiden in their display; if not,
+	 * withdraws them from tournament
+	 */
 	public void withdraw() {
 		
-		// TODO: check if player has a maiden in their display
+		// Check if player has a maiden in their display (and they have tokens)
+		if (getCurrentTurnPlayer().getTokens().size() > 0) {
+			for (Card c: getCurrentTurnPlayer().getDisplay()) {
+				if (c.toString().equals("m6")) {
+					state = WAITING_FOR_WITHDRAW_TOKEN;
+					return;
+				}
+			}
+		}
 		
+		handleWithdraw();
+	}
+	
+	/**
+	 * Removes token from player then withdraws them from tournament
+	 * @param token
+	 * @return
+	 */
+	private boolean withdraw(Token token) {
+		
+		if (getCurrentTurnPlayer().removeToken(token)) {
+			handleWithdraw();
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	
+	/**
+	 * Handles the mechanics of withdrawing a player from a tournament
+	 */
+	private void handleWithdraw() {
 		JSONObject announceWithdraw = responseBuilder.buildWithdraw(getCurrentTurnPlayer().getName());
 		server.broadcast(announceWithdraw);
 		
@@ -301,12 +354,7 @@ public class IvanhoeController {
 		
 		finishTurn();
 	}
-	
-	public void invalidMove() {
-		JSONObject invalidResponse = responseBuilder.buildInvalidResponse();
-		server.sendToClient(getCurrentTurnId(), invalidResponse);
-	}
-	
+	 
 	/**
 	 * Sends a snapshot of the new turn to all players
 	 * Increments the turn, and sends a message to the player
@@ -337,6 +385,20 @@ public class IvanhoeController {
 		}
 	}
 	
+	/**
+	 * Indicates to the current player that their move is invalid (and that
+	 * they should try again)
+	 */
+	public void invalidMove() {
+		JSONObject invalidResponse = responseBuilder.buildInvalidResponse();
+		server.sendToClient(getCurrentTurnId(), invalidResponse);
+	}
+	
+	/**
+	 * Create a new tournament, with the first turn going to the winner
+	 * of the previous tournament
+	 * @param winnerId
+	 */
 	public void resetTournament(int winnerId) {
 		state = WAITING_FOR_TOURNAMENT_COLOR;	
 		
@@ -350,6 +412,10 @@ public class IvanhoeController {
 		server.broadcast(startGameMessage);
 	}
 	
+	/**
+	 * Changes whose turn it is
+	 * @return
+	 */
 	public int nextPlayerTurn() {
 		do {
 			currentTurn = (currentTurn + 1) % playerTurns.size();
@@ -373,6 +439,11 @@ public class IvanhoeController {
 		return players.get(playerTurns.get(currentTurn));			
 	}
 	
+	/**
+	 * Checks if the player with a given username is registered
+	 * @param username
+	 * @return
+	 */
 	public boolean isPlayerRegistered(String username) {
 		for (Player p: players.values()) {
 			if (p.getName().toLowerCase().equals(username.toLowerCase())) {
