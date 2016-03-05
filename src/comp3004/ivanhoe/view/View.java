@@ -19,4 +19,6 @@ public interface View {
 	public void displayStartScreen();
 	public void displayChooseColor();
 	
+	public void update();
+	
 }

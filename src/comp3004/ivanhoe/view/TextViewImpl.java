@@ -106,4 +106,10 @@ public class TextViewImpl implements View, Runnable {
 		running = false;
 	}
 
+	@Override
+	public void update() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
