@@ -64,4 +64,16 @@ public class MockView implements View {
 		
 	}
 
+	@Override
+	public void displayGameWonMessage() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void displayGameLossMessage(String string) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

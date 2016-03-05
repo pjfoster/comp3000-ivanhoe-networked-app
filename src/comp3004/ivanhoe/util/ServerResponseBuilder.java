@@ -90,6 +90,19 @@ public class ServerResponseBuilder {
 		return new JSONObject(responseMap);
 	}
 	
+	public JSONObject buildGameOverWin() {
+		HashMap<String, String> responseMap = new HashMap<String, String>();
+		responseMap.put("response_type", "game_over_win");
+		return new JSONObject(responseMap);
+	}
+	
+	public JSONObject buildGameOverLoss(String winnerName) {
+		HashMap<String, String> responseMap = new HashMap<String, String>();
+		responseMap.put("response_type", "game_over_loss");
+		responseMap.put("winner", winnerName);
+		return new JSONObject(responseMap);
+	}
+	
 	public JSONObject buildWaiting() {
 		HashMap<String, String> responseMap = new HashMap<String, String>();
 		responseMap.put("response_type", "waiting");

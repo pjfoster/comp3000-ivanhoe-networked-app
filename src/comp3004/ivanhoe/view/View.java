@@ -26,5 +26,7 @@ public interface View {
 	public void announceWithdrawal(String playerName);
 	public void displayTournamentWonMessage(String tokenColor);
 	public void displayTournamentLossMessage(String winnerName);
+	public void displayGameWonMessage();
+	public void displayGameLossMessage(String winnerName);
 	
 }

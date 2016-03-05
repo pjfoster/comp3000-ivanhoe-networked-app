@@ -201,4 +201,17 @@ public class TextViewImpl implements View, Runnable {
 		System.out.println("The winner of the tournament is " + winnerName);
 	}
 
+	@Override
+	public void displayGameWonMessage() {
+		System.out.println("***** CONGRATULATIONS ****");
+		System.out.println("You won the game!");
+		
+	}
+
+	@Override
+	public void displayGameLossMessage(String winnerName) {
+		System.out.println("***** GAME OVER ****");
+		System.out.println("The winner of the game is: " + winnerName);
+	}
+
 }

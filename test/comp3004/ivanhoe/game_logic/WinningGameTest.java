@@ -42,7 +42,7 @@ public class WinningGameTest {
 		controller.givePlayerToken(60001, Token.RED);
 		controller.givePlayerToken(60001, Token.BLUE);
 		controller.givePlayerToken(60001, Token.GREEN);
-		controller.givePlayerToken(60001, Token.RED);
+		controller.givePlayerToken(60001, Token.PURPLE);
 		
 		assertFalse(controller.checkGameWon());
 		
@@ -59,14 +59,14 @@ public class WinningGameTest {
 		assertFalse(controller.checkGameWon());
 		
 		// Correct number of tokens, but not enough colors
-		controller.givePlayerToken(60001, Token.PURPLE);
-		controller.givePlayerToken(60001, Token.BLUE);
-		controller.givePlayerToken(60001, Token.YELLOW);
-		controller.givePlayerToken(60001, Token.BLUE);
+		controller.givePlayerToken(60003, Token.PURPLE);
+		controller.givePlayerToken(60003, Token.BLUE);
+		controller.givePlayerToken(60003, Token.YELLOW);
+		controller.givePlayerToken(60003, Token.RED);
 		
 		assertFalse(controller.checkGameWon());
 		
-		controller.givePlayerToken(60001, Token.GREEN);
+		controller.givePlayerToken(60003, Token.GREEN);
 		
 		assertTrue(controller.checkGameWon());
 		
@@ -95,10 +95,6 @@ public class WinningGameTest {
 		assertFalse(controller.checkGameWon());
 		
 		controller.givePlayerToken(60001, Token.YELLOW);
-		
-		assertFalse(controller.checkGameWon());
-		
-		controller.givePlayerToken(60001, Token.PURPLE);
 		
 		assertTrue(controller.checkGameWon());
 	}

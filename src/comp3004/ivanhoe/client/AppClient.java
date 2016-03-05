@@ -135,6 +135,15 @@ public class AppClient implements Runnable {
 				view.displayTournamentLossMessage((String)server_response.get("winner"));
 			}
 			
+			else if (server_response.get("response_type").equals("game_over_win")) {
+				view.displayGameWonMessage();
+			}
+			
+			else if (server_response.get("response_type").equals("game_over_loss")) {
+				view.displayGameLossMessage((String)server_response.get("winner"));
+			}
+			
+			
 			else {
 				logger.error(String.format("Invalid server response"));
 				System.out.println(server_response);

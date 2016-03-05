@@ -10,6 +10,13 @@ import comp3004.ivanhoe.model.Tournament;
 import comp3004.ivanhoe.server.AppServer;
 import comp3004.ivanhoe.util.ServerResponseBuilder;
 
+/**
+ * Extension of controller with testing capabilities. Mostly contains getters and setters
+ * to data members you typically wouldn't want accessed, but that are necessary for setting
+ * up test cases
+ * @author PJF
+ *
+ */
 public class MockController extends IvanhoeController {
 
 	public MockController(AppServer server, ServerResponseBuilder responseBuilder, int maxPlayers) {

@@ -2,6 +2,7 @@ package comp3004.ivanhoe.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Random;
 
 import org.json.simple.JSONObject;
@@ -91,6 +92,12 @@ public class IvanhoeController {
 				if (parser.getRequestType(playerMove).equals("choose_token") && !lastPlayed.isEmpty()) {
 					
 					String color = (String)playerMove.get("token_color");
+					
+					if (previousTournament == Token.PURPLE && color.equals("purple")) {
+						invalidMove();
+						return;
+					}
+					
 					currentTournament.setToken(Token.fromString(color));
 					
 					playCard(lastPlayed);
@@ -190,14 +197,14 @@ public class IvanhoeController {
 	
 	public void processTournamentWon() {
 		
-		if (checkGameWon()) {
-			// TODO: end the game
-		}
-		
 		Player winner = getCurrentTurnPlayer();
 		
 		winner.addToken(currentTournament.getToken());
 		previousTournament = currentTournament.getToken();
+		
+		if (checkGameWon()) {
+			processGameWon();
+		}
 		
 		JSONObject tournamentWon = responseBuilder.buildTournamentOverWin(currentTournament.getToken().toString());
 		server.sendToClient(getCurrentTurnId(), tournamentWon);
@@ -213,6 +220,24 @@ public class IvanhoeController {
 		
 	}
 	
+	public void processGameWon() {
+		Player winner = getCurrentTurnPlayer();
+		
+		JSONObject gameWon = responseBuilder.buildGameOverWin();
+		server.sendToClient(getCurrentTurnId(), gameWon);
+		
+		JSONObject gameLoss = responseBuilder.buildGameOverLoss(winner.getName());
+		for (int key: players.keySet()) {
+			if (key != getCurrentTurnId()) {
+				server.sendToClient(key, gameLoss);
+			}
+		}
+		
+		JSONObject quit = responseBuilder.buildQuit();
+		server.broadcast(quit);
+		
+	}
+	
 	/**
 	 * Returns true if one of the players has won the game, false otherwise
 	 * @return
@@ -220,11 +245,27 @@ public class IvanhoeController {
 	public boolean checkGameWon() {
 		// conditions for 2-3 players
 		if (players.size() < 4) {
+			
+			for (Player p: players.values()) {
+				HashSet<Token> tokens = new HashSet<Token>(p.getTokens());
+				if (tokens.size() >= 5) {
+					return true;
+				}
+			}
+			
 			return false;
 		}
 		
 		// conditions for 4-5 players
 		else {
+			
+			for (Player p: players.values()) {
+				HashSet<Token> tokens = new HashSet<Token>(p.getTokens());
+				if (tokens.size() >= 4) {
+					return true;
+				}
+			}
+			
 			return false;
 		}
 	}

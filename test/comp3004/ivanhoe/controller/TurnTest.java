@@ -73,7 +73,8 @@ public class TurnTest {
 	public void testTurnsRemovedPlayer() {
 		controller.startGame();
 		ArrayList<Player> processedPlayers = new ArrayList<Player>();
-		tournament.removePlayer(60001);
+		controller.setTurn(60001);
+		controller.withdraw();
 		
 		for (int i = 0; i < 8; ++i) {
 			assertTrue(controller.getCurrentTurn() < 3);
