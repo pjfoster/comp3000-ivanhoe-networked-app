@@ -8,9 +8,15 @@ package comp3004.ivanhoe.view;
  *
  */
 public interface TournamentDisplay{
+	public void withdrawAction();
+	public void selectCardAction(String player, String card);
+	public void setActiveTurn(boolean isActive);
 	
-	public void addCard(String player, String card);
-	public void removeCard(String player, String card);
-	public void withdraw(String player);
-	public void selectCard(String player, String card);
+	/** obsolete with snapshots
+	public void addDisplayCard(String player, String card);
+	public void removeDisplayCard(String player, String card);
+	
+	public void addHandCard(String card);
+	public void removeHandCard(String card);
+	*/
 }

@@ -112,4 +112,16 @@ public class TextViewImpl implements View, Runnable {
 		
 	}
 
+	@Override
+	public void withdraw() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void selectCard(String player, String card) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

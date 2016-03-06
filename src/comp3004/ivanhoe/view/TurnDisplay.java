@@ -8,5 +8,5 @@ package comp3004.ivanhoe.view;
  *
  */
 public interface TurnDisplay {
-	
+	//
 }

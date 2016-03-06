@@ -2,8 +2,10 @@ package comp3004.ivanhoe.view;
 
 import org.json.simple.JSONObject;
 
-public interface View {
+import comp3004.ivanhoe.client.AppClient;
 
+public interface View {
+	
 	/**
 	 * Opens view
 	 */
@@ -22,5 +24,7 @@ public interface View {
 	
 	public void update(JSONObject snapshot);
 	public void exit();
-	
+
+	public void withdraw();
+	public void selectCard(String player, String card);
 }

@@ -1,6 +1,9 @@
 package comp3004.ivanhoe.view;
 
 import javax.swing.*;
+
+import org.json.simple.JSONObject;
+
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,7 +15,7 @@ import java.awt.event.ActionListener;
  *
  */
 @SuppressWarnings("serial")
-public class StartDisplay extends JFrame{
+public class StartDisplay extends IvanhoeFrame{
 	private ViewImpl view;
 	
 	private JLabel title, authors;
@@ -24,6 +27,7 @@ public class StartDisplay extends JFrame{
 		setSize(800,600);
 		setBackground(Color.GREEN);
 		setLayout(null);
+		setResizable(false);
 		
 		title = new JLabel("Ivanhoe");
 		title.setBounds(300,50,200,100);
@@ -46,7 +50,7 @@ public class StartDisplay extends JFrame{
 		add(start);
 		
 		exit = new JButton("Exit");
-		exit.setBounds(300, 450, 200, 100);
+		exit.setBounds(300, 400, 200, 100);
 		exit.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				exitAction();			
@@ -64,5 +68,10 @@ public class StartDisplay extends JFrame{
 	
 	public void exitAction(){
 		view.exit();
+	}
+
+	@Override
+	public void refresh(JSONObject snapshot) {
+		// Nothing to update
 	}
 }

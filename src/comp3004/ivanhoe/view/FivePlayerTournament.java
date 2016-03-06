@@ -2,30 +2,29 @@ package comp3004.ivanhoe.view;
 
 import javax.swing.JFrame;
 
-public class FivePlayerTournament extends JFrame implements TournamentDisplay{
+import org.json.simple.JSONObject;
 
-	public FivePlayerTournament(View view){
+public class FivePlayerTournament extends IvanhoeFrame implements TournamentDisplay{
+
+	public FivePlayerTournament(ViewImpl view){
 		
 	}
-	@Override
-	public void addCard(String player, String card) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void removeCard(String player, String card) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void withdraw(String player) {
+	public void refresh(JSONObject snapshot) {
 		// TODO Auto-generated method stub
 		
 	}
 	@Override
-	public void selectCard(String player, String card) {
+	public void withdrawAction() {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void selectCardAction(String player, String card) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void setActiveTurn(boolean isActive) {
 		// TODO Auto-generated method stub
 		
 	}

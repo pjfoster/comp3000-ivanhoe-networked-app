@@ -1,6 +1,8 @@
 package comp3004.ivanhoe.view;
 
-import javax.swing.JFrame;
+import java.io.IOException;
+
+import javax.swing.*;
 
 import org.json.simple.JSONObject;
 
@@ -12,15 +14,17 @@ public class ViewImpl implements View{
 	AppClient client;
 	ClientRequestBuilder requestBuilder;
 	boolean running = false;
+	String username;
 	
-	JFrame currentWindow;
+	IvanhoeFrame currentWindow;
 	
 	JSONObject snapshot;
 	
-	public ViewImpl(AppClient client, ClientRequestBuilder requestBuilder, JSONObject snapshot){
+	public ViewImpl(AppClient client, ClientRequestBuilder requestBuilder, JSONObject snapshot, String username){
 		this.client = client;
 		this.requestBuilder = requestBuilder;
 		this.snapshot = snapshot;
+		this.username = username;
 	}
 	
 	public void displayWaitingMessage() {
@@ -68,8 +72,7 @@ public class ViewImpl implements View{
 
 	
 	public void displayTurnView() {
-		if(currentWindow!=null)
-			currentWindow.dispose();
+			((TournamentDisplay)currentWindow).setActiveTurn(true);
 	}
 
 
@@ -80,6 +83,7 @@ public class ViewImpl implements View{
 
 	public void update(JSONObject snapshot) {
 		this.snapshot = snapshot;
+		currentWindow.refresh(snapshot);
 	}
 
 	public void exit() {
@@ -96,6 +100,39 @@ public class ViewImpl implements View{
 	public void connect(String username){
 		client.setUsername(username);
 		client.connect();
+	}
+	
+	public void withdraw(){
+		JSONObject request = requestBuilder.buildWithdrawMove();
+		try {
+			client.handleClientRequest(request);
+		} catch (IOException e) {
+			JOptionPane.showMessageDialog(currentWindow, "Failed Move or Action");
+		}
+	}
+	
+	public void selectCard(String player, String card){
+		JSONObject request;
+		if(0==0){ //actionCard
+			request = requestBuilder.buildActionCardMove(card);
+		}
+		
+		else if(0==0){ // supporterCard
+			request = requestBuilder.buildSupporterCardMove("", "");
+		} 
+		
+		else if(0==0){ // colour card
+			request = requestBuilder.buildColorCardMove("", "");
+		}
+		
+		
+		try {
+			client.handleClientRequest(request);
+			((TournamentDisplay)currentWindow).setActiveTurn(false);
+			
+		} catch (IOException e) {
+			JOptionPane.showMessageDialog(currentWindow, "Failed Move or Action");
+		}
 	}
 
 }
