@@ -12,4 +12,5 @@ public interface TournamentDisplay{
 	public void addCard(String player, String card);
 	public void removeCard(String player, String card);
 	public void withdraw(String player);
+	public void selectCard(String player, String card);
 }

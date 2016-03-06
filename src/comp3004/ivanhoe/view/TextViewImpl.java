@@ -62,11 +62,6 @@ public class TextViewImpl implements View, Runnable {
 		
 	}
 
-	@Override
-	public void displayWelcome() {
-		// TODO Auto-generated method stub
-		
-	}
 
 	@Override
 	public void run() {
@@ -107,14 +102,14 @@ public class TextViewImpl implements View, Runnable {
 	}
 
 	@Override
-	public void update() {
-		System.out.println("update");
-		
+	public void exit() {
+		System.out.println("Closing");
 	}
 
 	@Override
-	public void exit() {
-		System.out.println("Closing");
+	public void update(JSONObject snapshot) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

@@ -1,5 +1,7 @@
 package comp3004.ivanhoe.view;
 
+import org.json.simple.JSONObject;
+
 public interface View {
 
 	/**
@@ -15,11 +17,10 @@ public interface View {
 	public void displayWaitingMessage();
 	public void displayTournamentView();
 	public void displayTurnView();
-	public void displayWelcome();
 	public void displayStartScreen();
 	public void displayChooseColor();
 	
-	public void update();
+	public void update(JSONObject snapshot);
 	public void exit();
 	
 }

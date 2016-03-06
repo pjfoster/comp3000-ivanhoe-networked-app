@@ -12,13 +12,13 @@ import java.awt.event.ActionListener;
  *
  */
 @SuppressWarnings("serial")
-public class WelcomeDisplay extends JFrame{
+public class StartDisplay extends JFrame{
 	private ViewImpl view;
 	
 	private JLabel title, authors;
 	private JButton start, exit;
 	
-	public WelcomeDisplay(ViewImpl v){
+	public StartDisplay(ViewImpl v){
 		this.view = v;
 		
 		setSize(800,600);

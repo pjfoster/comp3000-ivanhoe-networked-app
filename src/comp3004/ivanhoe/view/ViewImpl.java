@@ -1,68 +1,101 @@
 package comp3004.ivanhoe.view;
 
-import comp3004.ivanhoe.client.AppClient;
-import comp3004.ivanhoe.model.Tournament;
-import comp3004.ivanhoe.util.ClientRequestBuilder;
+import javax.swing.JFrame;
 
-public class ViewImpl implements View {
+import org.json.simple.JSONObject;
+
+import comp3004.ivanhoe.client.*;
+import comp3004.ivanhoe.model.*;
+import comp3004.ivanhoe.util.*;
+
+public class ViewImpl implements View{	
 	AppClient client;
+	ClientRequestBuilder requestBuilder;
+	boolean running = false;
 	
-	ClientRequestBuilder builder;
+	JFrame currentWindow;
 	
-	TournamentDisplay tournament;
+	JSONObject snapshot;
 	
-	public ViewImpl (AppClient client) {
+	public ViewImpl(AppClient client, ClientRequestBuilder requestBuilder, JSONObject snapshot){
 		this.client = client;
-		builder = new ClientRequestBuilder();
+		this.requestBuilder = requestBuilder;
+		this.snapshot = snapshot;
 	}
 	
-	public void displayTournamentView() {
-		int players = 0; // replace with num players
-		if(players == 2)
-			tournament = new TwoPlayerTournament(this);
-		if(players == 3)
-			tournament = new ThreePlayerTournament(this);
-		else if(players == 4)
-			tournament = new FourPlayerTournament(this);
-		else
-			tournament = new FivePlayerTournament(this);
-	}
-
-	public void displayTurnView() {
-		
-	}
-
-	public void displayWelcome() {
-		new WelcomeDisplay(this);
-	}
-
-	public void launch() {
-		displayWelcome();
-		
-	}
-
-	public void stop() {
-		
-	}
-
 	public void displayWaitingMessage() {
-		
+		if(currentWindow!=null)
+			currentWindow.dispose();
+		currentWindow = new WaitingDisplay(this);
+	}
+	
+	
+	public void launch() {
+		running = true;
+		displayStartScreen();
 	}
 
 	public void displayStartScreen() {
-		System.out.println("Start");
+		if(currentWindow!=null)
+			currentWindow.dispose();
+		currentWindow = new StartDisplay(this);
 	}
-
+	
+	
 	public void displayChooseColor() {
+		System.out.println("Choose the color of the next tournament: ");
+		if(currentWindow!=null)
+			currentWindow.dispose();
+		currentWindow = new ChooseColorDisplay();
+	}
+	
+	
+	public void displayTournamentView() {
+		if(currentWindow!=null)
+			currentWindow.dispose();
+
+		int players = ClientParser.getPlayerList(snapshot).size(); // replace with num players
+		if(players == 2)
+			currentWindow = new TwoPlayerTournament(this);
+		if(players == 3)
+			currentWindow = new ThreePlayerTournament(this);
+		else if(players == 4)
+			currentWindow = new FourPlayerTournament(this);
+		else
+			currentWindow = new FivePlayerTournament(this);
 		
 	}
 
-	public void update() {
-		
+	
+	public void displayTurnView() {
+		if(currentWindow!=null)
+			currentWindow.dispose();
+	}
+
+
+	public void stop() {
+		currentWindow.dispose();
+		running = false;
+	}
+
+	public void update(JSONObject snapshot) {
+		this.snapshot = snapshot;
 	}
 
 	public void exit() {
+		currentWindow.dispose();
+		System.exit(0);
+	}
+	
+	
+	public void chooseColor(){
+		//JSONObject request = requestBuilder.buildChooseToken();
+		//client.handleClientRequest(request);
+	}
+	
+	public void connect(String username){
+		client.setUsername(username);
+		client.connect();
+	}
 
-		System.out.println("Exit");
-	}	
 }

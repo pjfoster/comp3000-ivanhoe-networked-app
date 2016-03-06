@@ -26,4 +26,10 @@ public class ThreePlayerTournament extends JFrame implements TournamentDisplay{
 		
 	}
 
+	@Override
+	public void selectCard(String player, String card) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
