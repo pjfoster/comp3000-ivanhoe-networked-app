@@ -51,4 +51,9 @@ public class ClientParser {
 		return (Long)((JSONObject)player).get("id");
 	}
 	
+	@SuppressWarnings("unchecked")
+	public ArrayList<String> getTokensFromSnapshot(Object snapshot) {
+		return (ArrayList<String>)((JSONObject)snapshot).get("tokens");
+	}
+	
 }

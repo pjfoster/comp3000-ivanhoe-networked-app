@@ -9,6 +9,9 @@ public enum Token {
 	UNDECIDED;
 	
 	public static Token fromString(String color) {
+		
+		color = color.toLowerCase();
+		
 		if (color.equals("red") || color.equals("r")) {
 			return RED;
 		}

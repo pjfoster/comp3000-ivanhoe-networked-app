@@ -28,5 +28,7 @@ public interface View {
 	public void displayTournamentLossMessage(String winnerName);
 	public void displayGameWonMessage();
 	public void displayGameLossMessage(String winnerName);
+	public void displayPurpleTournamentWonMessage();
+	public void displayChooseToken(JSONObject server_response);
 	
 }

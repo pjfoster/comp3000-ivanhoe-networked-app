@@ -24,6 +24,7 @@ public class IvanhoeController {
 	protected final int WAITING_FOR_TOURNAMENT_COLOR = 	2;
 	protected final int WAITING_FOR_PLAYER_MOVE = 		3;
 	protected final int WAITING_FOR_WITHDRAW_TOKEN = 	4;
+	protected final int WAITING_FOR_WINNING_TOKEN = 	5;
 	
 	protected int maxPlayers;
 	protected HashMap<Integer, Player> players;
@@ -175,6 +176,22 @@ public class IvanhoeController {
 				}
 			}
 			break;
+			
+		case WAITING_FOR_WINNING_TOKEN:
+			if (getCurrentTurnId() == id) {
+				if (parser.getRequestType(playerMove).equals("choose_token")) {
+					Token token = Token.fromString((String)playerMove.get("token_color"));
+					
+					if (token == null) {
+						invalidMove();
+						return;
+					}
+					
+					getCurrentTurnPlayer().addToken(token);
+					resetTournament(getCurrentTurnId());
+				}
+			}
+			break;
 		default:
 		}
 		
@@ -199,7 +216,6 @@ public class IvanhoeController {
 		
 		Player winner = getCurrentTurnPlayer();
 		
-		winner.addToken(currentTournament.getToken());
 		previousTournament = currentTournament.getToken();
 		
 		if (checkGameWon()) {
@@ -216,9 +232,15 @@ public class IvanhoeController {
 			}
 		}
 		
-		resetTournament(getCurrentTurnId());
+		if (currentTournament.getToken().equals(Token.PURPLE)) {
+			state = WAITING_FOR_WINNING_TOKEN;
+		} else {
+			winner.addToken(currentTournament.getToken());
+			resetTournament(getCurrentTurnId());
+		}
 		
 	}
+	
 	
 	public void processGameWon() {
 		Player winner = getCurrentTurnPlayer();

@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import org.json.simple.JSONObject;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -98,6 +99,41 @@ public class WinningTournamentTest {
 		
 	}
 	
+	@Test
+	public void testJoustingTournamentWin() {
+		
+		assertEquals(alexei.getTokens().size(), 0);
+		assertEquals(luke.getTokens().size(), 0);
+		assertEquals(jayson.getTokens().size(), 0);
+		
+		tournament.setToken(Token.PURPLE);
+		assertEquals(tournament.getPlayers().size(), 3);
+		
+		controller.setTurn(60001);
+		controller.withdraw();
+		assertEquals(tournament.getPlayers().size(), 2);
+		
+		controller.setTurn(60002);
+		controller.withdraw();
+		
+		// Check that the tournament has not been reset
+		assertEquals(tournament.getPlayers().size(), 1);
+		assertEquals(controller.getCurrentTurnPlayer(), jayson);
+		assertEquals(controller.getState(), 5); // WAITING_FOR_WINNING_TOKEN
+		assertEquals(controller.getTournament().getToken(), Token.PURPLE);
+		
+		JSONObject chooseColor = requestBuilder.buildChooseToken("blue");
+		controller.processPlayerMove(60003, chooseColor);
+		
+		// Check that Jayson won and was given the correct Token
+		assertEquals(controller.getCurrentTurnPlayer(), jayson);
+		assertEquals(jayson.getTokens().size(), 1);
+		assertEquals(jayson.getTokens().get(0), Token.BLUE);
+		
+		assertEquals(alexei.getTokens().size(), 0);
+		assertEquals(luke.getTokens().size(), 0);
+	}
+	
 	/**
 	 * Test that the controller's current tournament is correctly reset; players keep their hands
 	 * but discard their displays
@@ -137,8 +173,8 @@ public class WinningTournamentTest {
 		
 		// Ensure that the displays are cleared but the hands are carried over
 		assertEquals(controller.getPreviousTournament(), Token.RED);
+		assertEquals(controller.getTournament().getToken(), Token.UNDECIDED);
 		for (Player p: tournament.getPlayers().values()) {
-			System.out.println(p.getName() + " " + p.getHand());
 			assertEquals(p.getDisplay().size(), 0);
 			assertTrue(p.getHand().size() == 1 || p.getHand().size() == 2);
 			assertTrue(p.getHand().contains(r3));

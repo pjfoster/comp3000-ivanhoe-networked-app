@@ -111,6 +111,10 @@ public class AppClient implements Runnable {
 				view.displayChooseColor();
 			}
 			
+			else if (server_response.get("response_type").equals("choose_token")) {
+				view.displayChooseToken(server_response);
+			}
+			
 			else if (server_response.get("response_type").equals("withdraw")) {
 				view.announceWithdrawal((String)server_response.get("player_name"));
 			}
@@ -128,7 +132,12 @@ public class AppClient implements Runnable {
 			}
 			
 			else if (server_response.get("response_type").equals("tournament_over_win")) {
-				view.displayTournamentWonMessage((String)server_response.get("token_color"));
+				if (server_response.get("token_color").equals("purple")) {
+					view.displayPurpleTournamentWonMessage();
+				}
+				else {
+					view.displayTournamentWonMessage((String)server_response.get("token_color"));
+				}
 			}
 			
 			else if (server_response.get("response_type").equals("tournament_over_loss")) {

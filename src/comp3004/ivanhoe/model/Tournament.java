@@ -39,15 +39,15 @@ public class Tournament {
 	
 	public void reset(HashMap<Integer, Player> players) {
 		
+		token = Token.UNDECIDED;
+		
 		// reset players
 		currentPlayers = new HashMap<Integer, Player>(players);
 		
 		// take all players displays and put them in the discard pile
 		for (Player p: currentPlayers.values()) {
-			for (Card c: p.getDisplay()) {
-				p.removeDisplayCard(c);
-				discardPile.add(c);
-			}
+			discardPile.addAll(p.getDisplay());
+			p.resetRound();
 		}
 		
 		// Add discard pile to deck and shuffle

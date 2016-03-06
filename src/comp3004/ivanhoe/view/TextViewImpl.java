@@ -80,6 +80,14 @@ public class TextViewImpl implements View, Runnable {
 	}
 	
 	@Override
+	public void displayChooseToken(JSONObject server_response) {
+		System.out.println("You are withdrawing with a maiden in your display...");
+		System.out.println("That means you must forfeit a token.");
+		System.out.println("Write choose_color <token> to select which token to give up: ");
+		System.out.println("Your tokens: " + parser.getTokensFromSnapshot(server_response));
+	}
+	
+	@Override
 	public void displayTournamentView(JSONObject snapshot) {
 		System.out.println();
 		System.out.println("TOURNAMENT COLOR: " + parser.getColor(snapshot));
@@ -210,6 +218,13 @@ public class TextViewImpl implements View, Runnable {
 	public void displayGameLossMessage(String winnerName) {
 		System.out.println("***** GAME OVER ****");
 		System.out.println("The winner of the game is: " + winnerName);
+	}
+
+	@Override
+	public void displayPurpleTournamentWonMessage() {
+		System.out.println("YOU WIN!!!");
+		System.out.println("Since this is a purple tournament, you get to choose what color token you win.");
+		System.out.println("Write \"choose_color <color>\" to pick: ");
 	}
 
 }

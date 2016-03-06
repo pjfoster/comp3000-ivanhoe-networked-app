@@ -123,10 +123,9 @@ public class Player {
 	}
 	
 	/**
-	 * Used to clear hand and display for next tournament
+	 * Used to clear display for next tournament
 	 */
 	public void resetRound(){
-		hand = new ArrayList<Card>();
 		display = new ArrayList<Card>();
 	}
 	

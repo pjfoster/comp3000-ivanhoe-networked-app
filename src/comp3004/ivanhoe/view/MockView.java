@@ -5,75 +5,57 @@ import org.json.simple.JSONObject;
 public class MockView implements View {
 
 	@Override
-	public void launch() {
-	}
+	public void launch() { }
+	
+	@Override
+	public void stop() { }
 
 	@Override
-	public void stop() {
-	}
+	public void displayWaitingMessage() { }
 
 	@Override
-	public void displayWaitingMessage() {
-	}
+	public void displayTournamentView(JSONObject snapshot) { }
 
 	@Override
-	public void displayTournamentView(JSONObject snapshot) {
-	}
+	public void displayTurnView() { }
 
 	@Override
-	public void displayTurnView() {
-	}
+	public void displayWelcome() { }
 
 	@Override
-	public void displayWelcome() {
-	}
+	public void displayStartScreen(JSONObject snapshot) { }
 
 	@Override
-	public void displayStartScreen(JSONObject snapshot) {
-	}
+	public void displayChooseColor() { }
 
 	@Override
-	public void displayChooseColor() {
-	}
+	public void displayInvalidMove() { }
 
 	@Override
-	public void displayInvalidMove() {
-	}
+	public void displayTurnView(String drawnCard) { }
 
 	@Override
-	public void displayTurnView(String drawnCard) {
-	}
+	public void displayTurnPlayer(String playerName) { }
 
 	@Override
-	public void displayTurnPlayer(String playerName) {
-	}
+	public void announceWithdrawal(String string) { }
 
 	@Override
-	public void announceWithdrawal(String string) {
-	}
+	public void displayTournamentWonMessage(String tokenColor) { }
 
 	@Override
-	public void displayTournamentWonMessage(String tokenColor) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void displayTournamentLossMessage(String winnerName) { }
 
 	@Override
-	public void displayTournamentLossMessage(String winnerName) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void displayGameWonMessage() { }
 
 	@Override
-	public void displayGameWonMessage() {
-		// TODO Auto-generated method stub
-		
-	}
+	public void displayGameLossMessage(String string) { }
+	
+	@Override
+	public void displayPurpleTournamentWonMessage() { }
 
 	@Override
-	public void displayGameLossMessage(String string) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void displayChooseToken(JSONObject server_response) { }
 
 }

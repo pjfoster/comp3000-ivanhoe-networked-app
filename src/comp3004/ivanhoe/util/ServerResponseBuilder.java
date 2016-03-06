@@ -43,6 +43,21 @@ public class ServerResponseBuilder {
 		return new JSONObject(responseMap);
 	}
 	
+	@SuppressWarnings("unchecked")
+	public JSONObject buildChooseToken(Player p) {
+		JSONObject response = new JSONObject();
+		response.put("response_type", "choose_token");
+		
+		JSONArray tokens = new JSONArray();
+		for (Token t: p.getTokens()) {
+			tokens.add(t.toString());
+		}
+		
+		response.put("tokens", tokens);
+		
+		return response;
+	}
+	
 	/**
 	 * 
 	 * @param tournament

@@ -111,6 +111,18 @@ public class ViewImpl implements View {
 		
 	}
 
+	@Override
+	public void displayPurpleTournamentWonMessage() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void displayChooseToken(JSONObject server_response) {
+		// TODO Auto-generated method stub
+		
+	}
+
 	
 	
 }
