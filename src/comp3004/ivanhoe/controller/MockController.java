@@ -38,6 +38,10 @@ public class MockController extends IvanhoeController {
 		this.previousTournament = color;
 	}
 	
+	public Token getPreviousTournament() {
+		return previousTournament;
+	}
+	
 	public void givePlayerToken(int playerId, Token token) {
 		players.get(playerId).addToken(token);
 	}

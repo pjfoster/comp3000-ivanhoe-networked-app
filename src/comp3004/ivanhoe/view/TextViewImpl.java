@@ -93,7 +93,6 @@ public class TextViewImpl implements View, Runnable {
 				System.out.println("Display: " + parser.getPlayerDisplay(p) + " -- Total: " + 
 												 parser.getPlayerDisplayTotal(p));
 				System.out.println();
-				break;
 			}
 		}
 		for (Object p: players) {
@@ -102,7 +101,6 @@ public class TextViewImpl implements View, Runnable {
 				System.out.println("Your display: " + parser.getPlayerDisplay(p));
 				System.out.println("Your display total: " + parser.getPlayerDisplayTotal(p));
 				System.out.println("Your tokens: " + parser.getPlayerTokens(p));
-				break;
 			}
 		}
 		System.out.println("- - - - - ");

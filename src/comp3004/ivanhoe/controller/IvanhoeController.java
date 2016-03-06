@@ -447,7 +447,7 @@ public class IvanhoeController {
 		playerTurns = new ArrayList<Integer>(players.keySet());
 		currentTurn = playerTurns.indexOf(winnerId);
 		
-		currentTournament = new Tournament(players, Token.UNDECIDED);
+		currentTournament.reset(players);
 		
 		JSONObject startGameMessage = responseBuilder.buildStartTournament(currentTournament, getCurrentTurnId());
 		server.broadcast(startGameMessage);

@@ -113,6 +113,20 @@ public class SupporterCardTest {
 	}
 	
 	@Test
+	public void testMaidenAlreadyPlayed() {
+		assertEquals(alexei.getDisplayTotal(tournament.getToken()), 0);
+		
+		controller.setTurn(60001);
+		alexei.addHandCard(m6);
+		assertTrue(controller.playCard(m6Wrapper));
+		assertEquals(alexei.getDisplayTotal(tournament.getToken()), 6);
+		
+		alexei.addHandCard(m6);
+		assertFalse(controller.playCard(m6Wrapper));
+		assertEquals(alexei.getDisplayTotal(tournament.getToken()), 6);
+	}
+	
+	@Test
 	public void testMaidenGreen() {
 		
 		tournament.setToken(Token.GREEN);

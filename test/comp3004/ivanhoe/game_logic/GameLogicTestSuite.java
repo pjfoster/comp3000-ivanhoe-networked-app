@@ -10,7 +10,8 @@ import org.junit.runners.Suite;
    SupporterCardTest.class,
    ActionCardTest.class,
    WithdrawTest.class,
-   StartTournamentTest.class
+   StartTournamentTest.class,
+   WinningTournamentTest.class
 })
 
 public class GameLogicTestSuite {   

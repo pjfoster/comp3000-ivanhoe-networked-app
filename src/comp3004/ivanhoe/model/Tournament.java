@@ -16,6 +16,9 @@ public class Tournament {
 	private List<Card> deck;
 	private List<Card> discardPile;
 	
+	/**
+	 * Blank constructor for testing
+	 */
 	public Tournament() {
 		currentPlayers = new HashMap<Integer, Player>();
 		cardLookup = new HashMap<String, ArrayList<Card>>();
@@ -32,6 +35,24 @@ public class Tournament {
 		discardPile = new ArrayList<Card>();
 		buildDeck();
 		dealStartingHands();
+	}
+	
+	public void reset(HashMap<Integer, Player> players) {
+		
+		// reset players
+		currentPlayers = new HashMap<Integer, Player>(players);
+		
+		// take all players displays and put them in the discard pile
+		for (Player p: currentPlayers.values()) {
+			for (Card c: p.getDisplay()) {
+				p.removeDisplayCard(c);
+				discardPile.add(c);
+			}
+		}
+		
+		// Add discard pile to deck and shuffle
+		resetDiscardToDeck();
+		
 	}
 	
 	/**
@@ -94,7 +115,7 @@ public class Tournament {
 	 */
 	public Card drawCard(){
 		if (deck.size() == 0)
-			resetDiscardtoDeck();
+			resetDiscardToDeck();
 		return deck.remove(0);
 	}
 	
@@ -109,7 +130,7 @@ public class Tournament {
 	/**
 	 * This function is called by drawCard() when the deck has no cards and it takes the discard deck shuffles and adds it to the empty deck
 	 */
-	private void resetDiscardtoDeck(){
+	private void resetDiscardToDeck(){
 		deck.addAll(discardPile);
 		shuffle();
 		discardPile = new ArrayList<Card>();
