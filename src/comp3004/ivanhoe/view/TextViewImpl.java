@@ -62,11 +62,6 @@ public class TextViewImpl implements View, Runnable {
 		
 	}
 
-	@Override
-	public void displayWelcome() {
-		// TODO Auto-generated method stub
-		
-	}
 
 	@Override
 	public void run() {
@@ -104,6 +99,29 @@ public class TextViewImpl implements View, Runnable {
 	public void stop() {
 		System.out.println("Closing client!");
 		running = false;
+	}
+
+	@Override
+	public void exit() {
+		System.out.println("Closing");
+	}
+
+	@Override
+	public void update(JSONObject snapshot) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void withdraw() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void selectCard(String player, String card) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
