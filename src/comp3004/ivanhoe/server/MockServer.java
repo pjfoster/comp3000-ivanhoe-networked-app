@@ -11,21 +11,38 @@ import comp3004.ivanhoe.model.Player;
  */
 public class MockServer extends AppServer {
 
+	/**
+	 * Certain tests require networking; others require that it is shut off
+	 * This is controlled through this boolean flag
+	 */
+	boolean enableNetworking;
+	
 	public MockServer() {
 		super(0, 0);
 	}
 	
 	public MockServer(int port, int maxPlayers) {
 		super(port, maxPlayers);
+		enableNetworking = false;
 	}
 	
 	@Override
-	public void broadcast(JSONObject s) { return; }
+	public void broadcast(JSONObject s) { 
+		if (enableNetworking) {
+			super.broadcast(s);
+		}
+		return; 
+	}
 	
 	@Override
-	public void sendToClient(int id, JSONObject s) { return; }
+	public void sendToClient(int id, JSONObject s) {
+		if (enableNetworking) {
+			super.sendToClient(id,  s);
+		}
+		return; 
+	}
 	
-	// METHOD FOR TESTING
+	// METHODS FOR TESTING
 	
 	/** Primarily for testing purposes. Returns number of clients. */
 	public int getNumClients() {
@@ -40,5 +57,9 @@ public class MockServer extends AppServer {
 	 */
 	public boolean isPlayerRegistered(String username) {
 		return controller.isPlayerRegistered(username);
+	}
+	
+	public void enableNetworking(boolean enabled) {
+		enableNetworking = enabled;
 	}
 }
