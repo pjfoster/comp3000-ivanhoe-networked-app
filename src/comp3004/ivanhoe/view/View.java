@@ -20,5 +20,6 @@ public interface View {
 	public void displayChooseColor();
 	
 	public void update();
+	public void exit();
 	
 }

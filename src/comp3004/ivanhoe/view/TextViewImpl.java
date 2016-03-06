@@ -108,8 +108,13 @@ public class TextViewImpl implements View, Runnable {
 
 	@Override
 	public void update() {
-		// TODO Auto-generated method stub
+		System.out.println("update");
 		
+	}
+
+	@Override
+	public void exit() {
+		System.out.println("Closing");
 	}
 
 }

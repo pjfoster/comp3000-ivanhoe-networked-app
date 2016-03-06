@@ -11,18 +11,19 @@ import java.awt.event.ActionListener;
  * @author David Farrar
  *
  */
+@SuppressWarnings("serial")
 public class WelcomeDisplay extends JFrame{
-	View view;
+	private ViewImpl view;
 	
-	
-	JLabel title, authors;
-	JButton start, exit;
+	private JLabel title, authors;
+	private JButton start, exit;
 	
 	public WelcomeDisplay(ViewImpl v){
-		view = v;
+		this.view = v;
 		
 		setSize(800,600);
 		setBackground(Color.GREEN);
+		setLayout(null);
 		
 		title = new JLabel("Ivanhoe");
 		title.setBounds(300,50,200,100);
@@ -38,7 +39,7 @@ public class WelcomeDisplay extends JFrame{
 		start.setBounds(300,250,200,100);
 		start.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
-				startAction();
+				startAction();	
 			}
 		});
 		start.setVisible(true);
@@ -48,7 +49,7 @@ public class WelcomeDisplay extends JFrame{
 		exit.setBounds(300, 450, 200, 100);
 		exit.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
-				exitAction();
+				exitAction();			
 			}
 		});
 		exit.setVisible(true);
@@ -57,12 +58,11 @@ public class WelcomeDisplay extends JFrame{
 		setVisible(true);
 	}
 	
-	
 	public void startAction(){
-		
+		view.displayStartScreen();;
 	}
 	
 	public void exitAction(){
-		
+		view.exit();
 	}
 }
