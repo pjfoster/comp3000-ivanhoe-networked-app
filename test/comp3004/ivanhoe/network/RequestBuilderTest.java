@@ -2,6 +2,8 @@ package comp3004.ivanhoe.network;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
+
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -9,15 +11,24 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import comp3004.ivanhoe.model.Card;
+import comp3004.ivanhoe.model.ColourCard;
+import comp3004.ivanhoe.model.SupporterCard;
+import comp3004.ivanhoe.model.Token;
+import comp3004.ivanhoe.model.Tournament;
 import comp3004.ivanhoe.util.ClientRequestBuilder;
+import comp3004.ivanhoe.util.ServerParser;
 
 public class RequestBuilderTest {
 
 	private ClientRequestBuilder requestBuilder = new ClientRequestBuilder();
 	private JSONParser parser = new JSONParser();
+	private ServerParser serverParser = new ServerParser();
+	private Tournament tournament;
 	
 	@Before
 	public void setUp() throws Exception {
+		tournament = new Tournament();
 	}
 
 	@After
@@ -46,53 +57,88 @@ public class RequestBuilderTest {
 		assertEquals(testMove.size(), 2);
 		assertEquals(testMove.get("request_type"), "choose_token");
 		assertEquals(testMove.get("token_color"), "red");
+		Token t = Token.fromString((String)testMove.get("token_color"));
+		assertEquals(t, Token.RED);
+		
+		testMoveString = requestBuilder.buildChooseToken("purple").toJSONString();
+		testMove = (JSONObject)parser.parse(testMoveString);
+		
+		assertEquals(testMove.size(), 2);
+		assertEquals(testMove.get("request_type"), "choose_token");
+		assertEquals(testMove.get("token_color"), "purple");
+		t = Token.fromString((String)testMove.get("token_color"));
+		assertEquals(t, Token.PURPLE);
 		
 	}
 	
 	@Test
-	public void testBuildColorCardMove() throws ParseException {
-		
-		String testMoveString = requestBuilder.buildColorCardMove("r6").toJSONString();
+	public void testBuildChooseTokenInvalid() throws ParseException {
+		String testMoveString = requestBuilder.buildChooseToken("foo").toJSONString();
 		JSONObject testMove = (JSONObject)parser.parse(testMoveString);
 		
-		assertEquals(testMove.size(), 3);
-		assertEquals(testMove.get("request_type"), "turn_move");
-		assertEquals(testMove.get("move_type"), "color_card");
-		assertEquals(testMove.get("card_code"), "r6");
-		
+		assertEquals(testMove.size(), 2);
+		assertEquals(testMove.get("request_type"), "choose_token");
+		assertEquals(testMove.get("token_color"), "foo");
+		Token t = Token.fromString((String)testMove.get("token_color"));
+		assertNull(t);
 	}
 	
 	@Test
-	public void testBuildSupporterCardMove() throws ParseException {
+	public void testBuildCardMove() throws ParseException {
 		
-		String testMoveString = requestBuilder.buildSupporterCardMove("s3").toJSONString();
+		// test some color cards
+		String testMoveString = requestBuilder.buildCardMove("r3").toJSONString();
 		JSONObject testMove = (JSONObject)parser.parse(testMoveString);
 		
 		assertEquals(testMove.size(), 3);
-		assertEquals(testMove.get("request_type"), "turn_move");
-		assertEquals(testMove.get("move_type"), "supporter_card");
-		assertEquals(testMove.get("card_code"), "s3");
+		assertEquals(testMove.get("request_type"), "turn_move"); 
+		assertEquals(testMove.get("move_type"), "play_card");
+		assertEquals(testMove.get("card_code"), "r3");
 		
-		testMoveString = requestBuilder.buildSupporterCardMove("m6").toJSONString();
+		ArrayList<Card> cards = serverParser.getCard(testMove, tournament);
+		assertTrue(cards.get(0) instanceof ColourCard);
+		assertEquals(cards.get(0).getName(), "red");
+		assertEquals(cards.get(0).getValue(), 3);
+		
+		testMoveString = requestBuilder.buildCardMove("p5").toJSONString();
 		testMove = (JSONObject)parser.parse(testMoveString);
 		
 		assertEquals(testMove.size(), 3);
-		assertEquals(testMove.get("request_type"), "turn_move");
-		assertEquals(testMove.get("move_type"), "supporter_card");
-		assertEquals(testMove.get("card_code"), "m6");
+		assertEquals(testMove.get("request_type"), "turn_move"); 
+		assertEquals(testMove.get("move_type"), "play_card");
+		assertEquals(testMove.get("card_code"), "p5");
 		
-	}
-	
-	@Test
-	public void testBuildActionCardMove() throws ParseException {
+		cards = serverParser.getCard(testMove, tournament);
+		assertTrue(cards.get(0) instanceof ColourCard);
+		assertEquals(cards.get(0).getName(), "purple");
+		assertEquals(cards.get(0).getValue(), 5);
 		
-		String testMoveString = requestBuilder.buildActionCardMove("dg").toJSONString();
-		JSONObject testMove = (JSONObject)parser.parse(testMoveString);
+		// test some supporter cards
+		testMoveString = requestBuilder.buildCardMove("s3").toJSONString();
+		testMove = (JSONObject)parser.parse(testMoveString);
 		
 		assertEquals(testMove.size(), 3);
-		assertEquals(testMove.get("request_type"), "turn_move");
-		assertEquals(testMove.get("move_type"), "action_card");
-		assertEquals(testMove.get("card_code"), "dg");
+		assertEquals(testMove.get("request_type"), "turn_move"); 
+		assertEquals(testMove.get("move_type"), "play_card");
+		assertEquals(testMove.get("card_code"), "s3");
+		
+		cards = serverParser.getCard(testMove, tournament);
+		assertTrue(cards.get(0) instanceof SupporterCard);
+		assertEquals(cards.get(0).getName().toLowerCase(), "squire");
+		assertEquals(cards.get(0).getValue(), 3);
+		
+		testMoveString = requestBuilder.buildCardMove("m6").toJSONString();
+		testMove = (JSONObject)parser.parse(testMoveString);
+		
+		assertEquals(testMove.size(), 3);
+		assertEquals(testMove.get("request_type"), "turn_move"); 
+		assertEquals(testMove.get("move_type"), "play_card");
+		assertEquals(testMove.get("card_code"), "m6");
+		
+		cards = serverParser.getCard(testMove, tournament);
+		assertTrue(cards.get(0) instanceof SupporterCard);
+		assertEquals(cards.get(0).getName().toLowerCase(), "maiden");
+		assertEquals(cards.get(0).getValue(), 6);
 		
 	}
 	

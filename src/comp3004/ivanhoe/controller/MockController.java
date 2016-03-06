@@ -81,6 +81,10 @@ public class MockController extends IvanhoeController {
 		return playerTurns;
 	}
 	
+	public void setPlayerTurns(ArrayList<Integer> turns) {
+		this.playerTurns = turns;
+	}
+	
 	public HashMap<Integer, Player> getPlayers() { 
 		for (Integer key: players.keySet()) {
 			System.out.println(key + ": " + players.get(key));

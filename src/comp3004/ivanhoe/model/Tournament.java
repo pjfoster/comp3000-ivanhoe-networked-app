@@ -21,6 +21,8 @@ public class Tournament {
 	 */
 	public Tournament() {
 		currentPlayers = new HashMap<Integer, Player>();
+		token = Token.UNDECIDED;
+		
 		cardLookup = new HashMap<String, ArrayList<Card>>();
 		discardPile = new ArrayList<Card>();
 		deck = new ArrayList<Card>();

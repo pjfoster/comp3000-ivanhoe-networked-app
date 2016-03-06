@@ -2,6 +2,7 @@ package comp3004.ivanhoe.server;
 
 import org.json.simple.JSONObject;
 
+import comp3004.ivanhoe.controller.IvanhoeController;
 import comp3004.ivanhoe.model.Player;
 
 /**
@@ -61,5 +62,9 @@ public class MockServer extends AppServer {
 	
 	public void enableNetworking(boolean enabled) {
 		enableNetworking = enabled;
+	}
+	
+	public void setController(IvanhoeController controller) {
+		this.controller = controller;
 	}
 }

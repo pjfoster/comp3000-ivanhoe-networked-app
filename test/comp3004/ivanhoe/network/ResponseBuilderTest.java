@@ -20,6 +20,12 @@ import comp3004.ivanhoe.model.Tournament;
 import comp3004.ivanhoe.util.ClientParser;
 import comp3004.ivanhoe.util.ServerResponseBuilder;
 
+/**
+ * Tests JSONObjects created by ResponseBuilder
+ * Also tests that the client can parse and extract values correctly
+ * @author PJF
+ *
+ */
 public class ResponseBuilderTest {
 	
 	JSONParser parser = new JSONParser();
@@ -56,6 +62,7 @@ public class ResponseBuilderTest {
 		assertEquals(players.size(), 2);
 		assertEquals(clientParser.getDeck(snapshot).size(), 94);
 		assertEquals(clientParser.getColor(snapshot).toLowerCase(), "red");
+		assertEquals(clientParser.getHighestDisplay(snapshot), "0");
 		
 		for (Object p: players) {
 			Long id = clientParser.getPlayerId(p);
@@ -102,16 +109,22 @@ public class ResponseBuilderTest {
 	}
 	
 	@Test
+	public void testChooseToken() throws ParseException {
+		fail();
+	}
+	
+	@Test
 	public void testStartTournament() throws ParseException {
 		String testMoveString = responseBuilder.buildStartTournament(tournament, 0).toJSONString();
 		JSONObject testMove = (JSONObject)parser.parse(testMoveString);
 		
-		assertEquals(testMove.size(), 5);
+		assertEquals(testMove.size(), 6);
 		assertEquals(testMove.get("response_type"), "start_tournament");
-		assertEquals(testMove.get("turn"), "0");
+		assertEquals(testMove.get("current_turn"), "0");
 		assertNotNull(testMove.get("players"));
 		assertNotNull(testMove.get("tournament_color"));
 		assertNotNull(testMove.get("deck"));
+		assertNotNull(testMove.get("highest_display"));
 	}
 	
 	@Test
@@ -126,15 +139,21 @@ public class ResponseBuilderTest {
 	}
 	
 	@Test
+	public void testIndicateTurn() throws ParseException {
+		fail();
+	}
+	
+	@Test
 	public void testUpdateView() throws ParseException {
 		String testMoveString = responseBuilder.buildUpdateView(tournament).toJSONString();
 		JSONObject testMove = (JSONObject)parser.parse(testMoveString);
 		
-		assertEquals(testMove.size(), 4);
+		assertEquals(testMove.size(), 5);
 		assertEquals(testMove.get("response_type"), "update_view");
 		assertNotNull(testMove.get("players"));
 		assertNotNull(testMove.get("tournament_color"));
 		assertNotNull(testMove.get("deck"));
+		assertNotNull(testMove.get("highest_display"));
 	}
 	
 	@Test
@@ -142,8 +161,9 @@ public class ResponseBuilderTest {
 		String testMoveString = responseBuilder.buildTournamentOverWin("red").toJSONString();
 		JSONObject testMove = (JSONObject)parser.parse(testMoveString);
 		
-		assertEquals(testMove.size(), 1);
+		assertEquals(testMove.size(), 2);
 		assertEquals(testMove.get("response_type"), "tournament_over_win");
+		assertEquals(testMove.get("token_color"), "red");
 	}
 	
 	@Test
@@ -151,8 +171,29 @@ public class ResponseBuilderTest {
 		String testMoveString = responseBuilder.buildTournamentOverLoss("Jayson").toJSONString();
 		JSONObject testMove = (JSONObject)parser.parse(testMoveString);
 		
-		assertEquals(testMove.size(), 1);
+		assertEquals(testMove.size(), 2);
 		assertEquals(testMove.get("response_type"), "tournament_over_loss");
+		assertEquals(testMove.get("winner"), "Jayson");
+	}
+	
+	@Test
+	public void testGameOverWin() throws ParseException {
+		fail();
+	}
+	
+	@Test
+	public void testGameOverLoss() throws ParseException {
+		fail();
+	}
+	
+	@Test
+	public void testWaiting() throws ParseException {
+		fail();
+	}
+	
+	@Test
+	public void testWithdraw() throws ParseException {
+		fail();
 	}
 	
 	@Test

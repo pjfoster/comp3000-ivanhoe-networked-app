@@ -47,55 +47,6 @@ public class ClientRequestBuilder {
 	}
 	
 	/**
-	 * Play a color card
-	 * @param cardColor
-	 * 	Expected 'red', 'blue', 'green', 'yellow', or 'purple'
-	 * @param cardValue
-	 * 	Expecting an integer value (as a string)
-	 * @return
-	 */
-	public JSONObject buildColorCardMove(String cardCode)
-	{ 
-		HashMap<String, String> requestMap = new HashMap<String, String>();
-		requestMap.put("request_type", "turn_move"); 
-		requestMap.put("move_type", "color_card");
-		requestMap.put("card_code", cardCode);
-		return new JSONObject(requestMap); 
-	}
-	
-	/**
-	 * Play a supporter card
-	 * @param supporterType
-	 * 	Expected 'squire' or 'maiden'
-	 * @param supporterValue
-	 * 	Expected value of card - 2,3 for squire, 6 for maiden
-	 * @return
-	 */
-	public JSONObject buildSupporterCardMove(String cardCode)
-	{ 
-		HashMap<String, String> requestMap = new HashMap<String, String>();
-		requestMap.put("request_type", "turn_move"); 
-		requestMap.put("move_type", "supporter_card");
-		requestMap.put("card_code", cardCode);
-		return new JSONObject(requestMap); 
-	}
-	
-	/**
-	 * Play an action card
-	 * @param actionCardCode
-	 * 	String representing action card
-	 * @return
-	 */
-	public JSONObject buildActionCardMove(String actionCardCode)
-	{ 
-		HashMap<String, String> requestMap = new HashMap<String, String>();
-		requestMap.put("request_type", "turn_move"); 
-		requestMap.put("move_type", "action_card");
-		requestMap.put("card_code", actionCardCode);
-		return new JSONObject(requestMap); 
-	}
-	
-	/**
 	 * Withdraw from a tournament
 	 * @return
 	 */
