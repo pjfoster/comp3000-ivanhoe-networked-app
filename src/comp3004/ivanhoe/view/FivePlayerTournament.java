@@ -1,7 +1,5 @@
 package comp3004.ivanhoe.view;
 
-import javax.swing.JFrame;
-
 import org.json.simple.JSONObject;
 
 public class FivePlayerTournament extends IvanhoeFrame implements TournamentDisplay{

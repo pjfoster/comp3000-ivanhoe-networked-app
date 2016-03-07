@@ -1,9 +1,8 @@
 package comp3004.ivanhoe.view;
 
 import java.awt.Color;
-import java.awt.event.*;
 
-import javax.swing.*;
+import javax.swing.JLabel;
 
 import org.json.simple.JSONObject;
 

@@ -9,13 +9,11 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 
 import org.apache.log4j.Logger;
-import org.apache.log4j.PropertyConfigurator;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import comp3004.ivanhoe.util.ClientRequestBuilder;
-import comp3004.ivanhoe.view.TextViewImpl;
 import comp3004.ivanhoe.view.View;
 import comp3004.ivanhoe.view.ViewFactory;
 

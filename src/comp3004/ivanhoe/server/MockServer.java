@@ -3,7 +3,6 @@ package comp3004.ivanhoe.server;
 import org.json.simple.JSONObject;
 
 import comp3004.ivanhoe.controller.IvanhoeController;
-import comp3004.ivanhoe.model.Player;
 
 /**
  * Extension of AppServer class with testing capabilities

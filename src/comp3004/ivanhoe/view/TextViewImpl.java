@@ -45,6 +45,7 @@ public class TextViewImpl implements View, Runnable {
 		run();
 	}
 
+	@SuppressWarnings("static-access")
 	@Override
 	public void displayStartScreen(JSONObject snapshot) {
 		System.out.println("The Game is beginning!");
@@ -79,6 +80,7 @@ public class TextViewImpl implements View, Runnable {
 		System.out.println("Write choose_color <color> to start: ");
 	}
 	
+	@SuppressWarnings("static-access")
 	@Override
 	public void displayChooseToken(JSONObject server_response) {
 		System.out.println("You are withdrawing with a maiden in your display...");
@@ -87,6 +89,7 @@ public class TextViewImpl implements View, Runnable {
 		System.out.println("Your tokens: " + parser.getTokensFromSnapshot(server_response));
 	}
 	
+	@SuppressWarnings("static-access")
 	@Override
 	public void displayTournamentView(JSONObject snapshot) {
 		System.out.println();
@@ -125,6 +128,7 @@ public class TextViewImpl implements View, Runnable {
 	public void displayTurnView() {
 		System.out.println("It's your turn!");
 		System.out.println("Write \"make_move <card>\" to play a card");
+		System.out.println("OR \"make_move <card1> <card2> <card3>\" to play multiple cards");
 		System.out.println("Write \"make_move withdraw\" to withdraw");
 	}
 	

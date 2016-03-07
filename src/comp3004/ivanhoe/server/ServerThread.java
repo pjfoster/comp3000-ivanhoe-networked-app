@@ -63,9 +63,11 @@ public class ServerThread extends Thread {
 			try {
 				/** Received a message and pass to the server to handle */
 				String txt = streamIn.readLine();
-				server.handle(ID, txt);
-				logger.info(String.format("RECEIVED Message from Client [%s:%d] : %s",
+				server.handle(ID, txt); 
+				if (txt != null) { 
+					logger.info(String.format("RECEIVED Message from Client [%s:%d] : %s",
 						    clientAddress, ID, sanitize(txt)));
+				}
 			} catch (IOException ioe) {
 				logger.error(ID + " Error processing client message: " + ioe.getMessage());
 				server.remove(ID);

@@ -27,6 +27,8 @@ public class StartServer {
 			logger.error("No System Console; use IDE Console");
 		}
 		
+		
+		System.out.println("Write \"start\" to start");
 		do {
 			String input = sc.nextLine();
 			

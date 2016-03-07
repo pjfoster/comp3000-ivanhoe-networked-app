@@ -1,6 +1,7 @@
 package comp3004.ivanhoe.network;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
 
@@ -10,7 +11,6 @@ import org.junit.Test;
 import org.mockito.Mockito;
 
 import comp3004.ivanhoe.client.AppClient;
-import comp3004.ivanhoe.server.AppServer;
 import comp3004.ivanhoe.server.MockServer;
 import comp3004.ivanhoe.util.Config;
 import comp3004.ivanhoe.view.MockViewFactory;

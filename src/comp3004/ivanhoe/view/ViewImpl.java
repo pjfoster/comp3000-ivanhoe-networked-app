@@ -1,18 +1,14 @@
 package comp3004.ivanhoe.view;
 
+import java.io.IOException;
+
+import javax.swing.JOptionPane;
+
 import org.json.simple.JSONObject;
 
 import comp3004.ivanhoe.client.AppClient;
+import comp3004.ivanhoe.util.ClientParser;
 import comp3004.ivanhoe.util.ClientRequestBuilder;
-import java.io.IOException;
-
-import javax.swing.*;
-
-import org.json.simple.JSONObject;
-
-import comp3004.ivanhoe.client.*;
-import comp3004.ivanhoe.model.*;
-import comp3004.ivanhoe.util.*;
 
 public class ViewImpl implements View{	
 	AppClient client;

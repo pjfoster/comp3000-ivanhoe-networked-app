@@ -51,6 +51,7 @@ public class ResponseBuilderTest {
 		tournament = null;
 	}
 
+	@SuppressWarnings("static-access")
 	@Test
 	public void testCreateGameSnapshot() throws ParseException {
 		HashMap<String, String> responseMap = new HashMap<String, String>();
