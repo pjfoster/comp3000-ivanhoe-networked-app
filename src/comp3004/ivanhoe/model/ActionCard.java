@@ -40,26 +40,26 @@ public class ActionCard extends Card {
 	
 	public static List<ActionCard> getActionDeck(){
 		List<ActionCard> output = new ArrayList<ActionCard>();
-		output.add(new ActionCard("Unhorse"));
-		output.add(new ActionCard("Change Weapon"));
-		output.add(new ActionCard("Drop Weapon"));
-		output.add(new ActionCard("Shield"));
-		output.add(new ActionCard("Stunned"));
-		output.add(new ActionCard("Ivanhoe"));
-		output.add(new ActionCard("Break Lance"));
-		output.add(new ActionCard("Riposte"));
-		output.add(new ActionCard("Riposte"));
-		output.add(new ActionCard("Riposte"));
-		output.add(new ActionCard("Dodge"));
-		output.add(new ActionCard("Retreat"));
-		output.add(new ActionCard("Knock Down"));
-		output.add(new ActionCard("Knock Down"));
-		output.add(new ActionCard("Outmaneuver"));
-		output.add(new ActionCard("Charge"));
-		output.add(new ActionCard("Countercharge"));
-		output.add(new ActionCard("Disgrace"));
-		output.add(new ActionCard("Adapt"));
-		output.add(new ActionCard("Outwit"));
+		output.add(new ActionCard("unhorse"));
+		output.add(new ActionCard("changeweapon"));
+		output.add(new ActionCard("dropweapon"));
+		output.add(new ActionCard("shield"));
+		output.add(new ActionCard("stunned"));
+		output.add(new ActionCard("ivanhoe"));
+		output.add(new ActionCard("breaklance"));
+		output.add(new ActionCard("riposte"));
+		output.add(new ActionCard("riposte"));
+		output.add(new ActionCard("riposte"));
+		output.add(new ActionCard("dodge"));
+		output.add(new ActionCard("retreat"));
+		output.add(new ActionCard("knockdown"));
+		output.add(new ActionCard("knockdown"));
+		output.add(new ActionCard("outmaneuver"));
+		output.add(new ActionCard("charge"));
+		output.add(new ActionCard("countercharge"));
+		output.add(new ActionCard("disgrace"));
+		output.add(new ActionCard("adapt"));
+		output.add(new ActionCard("outwit"));
 		return output;
 	}
 }

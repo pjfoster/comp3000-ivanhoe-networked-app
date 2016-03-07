@@ -133,7 +133,6 @@ public class TextViewImpl implements View, Runnable {
 		System.out.println(playerName + " has withdrawn from the game");
 	}
 
-	@Override
 	public void displayWelcome() {
 		System.out.println("Welcome to IVANHOE!");
 	}
@@ -217,7 +216,10 @@ public class TextViewImpl implements View, Runnable {
 	public void displayGameWonMessage() {
 		System.out.println("***** CONGRATULATIONS ****");
 		System.out.println("You won the game!");
+	}
 		
+	public void exit() {
+		System.out.println("Closing");
 	}
 
 	@Override
@@ -231,6 +233,7 @@ public class TextViewImpl implements View, Runnable {
 		System.out.println("YOU WIN!!!");
 		System.out.println("Since this is a purple tournament, you get to choose what color token you win.");
 		System.out.println("Write \"choose_color <color>\" to pick: ");
+		
 	}
 
 }
