@@ -45,7 +45,7 @@ public class AppClient implements Runnable {
 	static Logger logger = Logger.getLogger(AppClient.class);
 	
 	public AppClient(ViewFactory viewFactory, String ipAddress, int port) {
-		PropertyConfigurator.configure("resources/log4j.client.properties");
+		//PropertyConfigurator.configure("resources/log4j.client.properties");
 		this.serverAddress = ipAddress;
 		this.serverPort = port;	
 		parser = new JSONParser();

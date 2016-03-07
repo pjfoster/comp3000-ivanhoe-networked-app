@@ -18,7 +18,7 @@ public class ClientThread extends Thread {
 	static Logger logger = Logger.getLogger(ClientThread.class);
 	
 	public ClientThread(AppClient client, Socket socket) {
-		PropertyConfigurator.configure("resources/log4j.client.properties");
+		//PropertyConfigurator.configure("resources/log4j.client.properties");
 		this.client = client;
 		this.socket = socket;
 		this.open();  

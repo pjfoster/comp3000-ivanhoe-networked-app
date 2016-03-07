@@ -26,7 +26,7 @@ public class ServerThread extends Thread {
 
 	public ServerThread(AppServer server, Socket socket) {
 		super();
-		PropertyConfigurator.configure("resources/log4j.server.properties");
+		//PropertyConfigurator.configure("resources/log4j.server.properties");
 		this.server = server;
 		this.socket = socket;
 		this.ID = socket.getPort();

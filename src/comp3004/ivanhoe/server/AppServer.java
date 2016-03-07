@@ -32,7 +32,7 @@ public class AppServer implements Runnable {
 	
 	public AppServer(int port, int maxPlayers) {
 		
-		PropertyConfigurator.configure("resources/log4j.server.properties");
+		//PropertyConfigurator.configure("resources/log4j.server.properties");
 		
 		try {
 			/** Set up game object */
