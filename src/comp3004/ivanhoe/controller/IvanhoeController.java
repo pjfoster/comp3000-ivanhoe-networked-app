@@ -25,6 +25,7 @@ public class IvanhoeController {
 	protected final int WAITING_FOR_PLAYER_MOVE = 		3;
 	protected final int WAITING_FOR_WITHDRAW_TOKEN = 	4;
 	protected final int WAITING_FOR_WINNING_TOKEN = 	5;
+	protected final int GAME_OVER = 					6;
 	
 	protected int maxPlayers;
 	protected HashMap<Integer, Player> players;
@@ -211,6 +212,12 @@ public class IvanhoeController {
 					}
 					
 					getCurrentTurnPlayer().addToken(token);
+					
+					if (checkGameWon()) {
+						processGameWon();
+						return;
+					}
+					
 					resetTournament(getCurrentTurnId());
 				}
 				else {
@@ -243,10 +250,15 @@ public class IvanhoeController {
 		
 		Player winner = getCurrentTurnPlayer();
 		
-		previousTournament = currentTournament.getToken();
+		if (currentTournament.getToken().equals(Token.PURPLE)) {
+			state = WAITING_FOR_WINNING_TOKEN;
+		} else {
+			winner.addToken(currentTournament.getToken());
+		}
 		
 		if (checkGameWon()) {
 			processGameWon();
+			return;
 		}
 		
 		JSONObject tournamentWon = responseBuilder.buildTournamentOverWin(currentTournament.getToken().toString());
@@ -259,10 +271,7 @@ public class IvanhoeController {
 			}
 		}
 		
-		if (currentTournament.getToken().equals(Token.PURPLE)) {
-			state = WAITING_FOR_WINNING_TOKEN;
-		} else {
-			winner.addToken(currentTournament.getToken());
+		if (state != WAITING_FOR_WINNING_TOKEN) {
 			resetTournament(getCurrentTurnId());
 		}
 		
@@ -282,8 +291,9 @@ public class IvanhoeController {
 			}
 		}
 		
-		JSONObject quit = responseBuilder.buildQuit();
-		server.broadcast(quit);
+		state = GAME_OVER;
+		//JSONObject quit = responseBuilder.buildQuit();
+		//server.broadcast(quit);
 		
 	}
 	
@@ -292,6 +302,7 @@ public class IvanhoeController {
 	 * @return
 	 */
 	public boolean checkGameWon() {
+	
 		// conditions for 2-3 players
 		if (players.size() < 4) {
 			
@@ -595,7 +606,8 @@ public class IvanhoeController {
 	 * @param winnerId
 	 */
 	public void resetTournament(int winnerId) {
-		state = WAITING_FOR_TOURNAMENT_COLOR;	
+		state = WAITING_FOR_TOURNAMENT_COLOR;
+		previousTournament = currentTournament.getToken();
 		
 		// since there is no dealer, pick a random person to choose the first color
 		playerTurns = new ArrayList<Integer>(players.keySet());

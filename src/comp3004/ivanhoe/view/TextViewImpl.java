@@ -184,7 +184,7 @@ public class TextViewImpl implements View, Runnable {
 	         	running = false;
 	         }
 			catch (NullPointerException np) {
-				System.out.println("Accidentally tried to read null...");
+				
 			}
 		}
 		
