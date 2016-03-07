@@ -9,6 +9,7 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 
 import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -43,7 +44,7 @@ public class AppClient implements Runnable {
 	static Logger logger = Logger.getLogger(AppClient.class);
 	
 	public AppClient(ViewFactory viewFactory, String ipAddress, int port) {
-		//PropertyConfigurator.configure("resources/log4j.client.properties");
+		PropertyConfigurator.configure("resources/log4j.client.properties");
 		this.serverAddress = ipAddress;
 		this.serverPort = port;	
 		parser = new JSONParser();

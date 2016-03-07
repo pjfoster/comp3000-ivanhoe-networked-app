@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -30,7 +31,7 @@ public class AppServer implements Runnable {
 	
 	public AppServer(int port, int maxPlayers) {
 		
-		//PropertyConfigurator.configure("resources/log4j.server.properties");
+		PropertyConfigurator.configure("resources/log4j.server.properties");
 		
 		try {
 			/** Set up game object */
