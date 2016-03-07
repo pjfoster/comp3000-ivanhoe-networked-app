@@ -58,4 +58,34 @@ public class MockView implements View {
 	@Override
 	public void displayChooseToken(JSONObject server_response) { }
 
+	@Override
+	public void displayStartScreen() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void update(JSONObject snapshot) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void exit() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void withdraw() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void selectCard(String player, String card) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

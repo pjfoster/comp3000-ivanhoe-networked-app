@@ -2,11 +2,7 @@ package comp3004.ivanhoe.view;
 
 import org.json.simple.JSONObject;
 
-<<<<<<< HEAD
-public interface View {
-=======
 import comp3004.ivanhoe.client.AppClient;
->>>>>>> origin/master
 
 public interface View {
 	
@@ -23,13 +19,10 @@ public interface View {
 	public void displayWaitingMessage();
 	public void displayTournamentView(JSONObject snapshot);
 	public void displayTurnView();
-<<<<<<< HEAD
 	public void displayTurnView(String drawnCard);
 	public void displayWelcome();
 	public void displayStartScreen(JSONObject snapshot);
-=======
 	public void displayStartScreen();
->>>>>>> origin/master
 	public void displayChooseColor();
 	public void displayInvalidMove();
 	public void displayTurnPlayer(String playerName);
@@ -41,9 +34,9 @@ public interface View {
 	public void displayPurpleTournamentWonMessage();
 	public void displayChooseToken(JSONObject server_response);
 	
+	
 	public void update(JSONObject snapshot);
 	public void exit();
-
 	public void withdraw();
 	public void selectCard(String player, String card);
 }

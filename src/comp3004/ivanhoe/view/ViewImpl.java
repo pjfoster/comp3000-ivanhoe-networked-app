@@ -1,13 +1,10 @@
 package comp3004.ivanhoe.view;
 
-<<<<<<< HEAD
 import org.json.simple.JSONObject;
 
 import comp3004.ivanhoe.client.AppClient;
 import comp3004.ivanhoe.util.ClientRequestBuilder;
-=======
 import java.io.IOException;
->>>>>>> origin/master
 
 import javax.swing.*;
 
@@ -34,12 +31,11 @@ public class ViewImpl implements View{
 		this.username = username;
 	}
 	
-<<<<<<< HEAD
 	@Override
 	public void displayTournamentView(JSONObject snapshot) {
 		// TODO Auto-generated method stub
-		
-=======
+	}
+	
 	public void displayWaitingMessage() {
 		if(currentWindow!=null)
 			currentWindow.dispose();
@@ -50,7 +46,6 @@ public class ViewImpl implements View{
 	public void launch() {
 		running = true;
 		displayStartScreen();
->>>>>>> origin/master
 	}
 
 	public void displayStartScreen() {
@@ -100,16 +95,14 @@ public class ViewImpl implements View{
 		currentWindow.refresh(snapshot);
 	}
 
-<<<<<<< HEAD
 	@Override
 	public void displayStartScreen(JSONObject snapshot) {
 		// TODO Auto-generated method stub
+	}
 		
-=======
 	public void exit() {
 		currentWindow.dispose();
 		System.exit(0);
->>>>>>> origin/master
 	}
 	
 	
@@ -122,7 +115,6 @@ public class ViewImpl implements View{
 		client.setUsername(username);
 		client.connect();
 	}
-<<<<<<< HEAD
 
 	@Override
 	public void displayInvalidMove() {
@@ -183,9 +175,6 @@ public class ViewImpl implements View{
 		// TODO Auto-generated method stub
 		
 	}
-
-=======
->>>>>>> origin/master
 	
 	public void withdraw(){
 		JSONObject request = requestBuilder.buildWithdrawMove();
@@ -197,19 +186,7 @@ public class ViewImpl implements View{
 	}
 	
 	public void selectCard(String player, String card){
-		JSONObject request;
-		if(0==0){ //actionCard
-			request = requestBuilder.buildActionCardMove(card);
-		}
-		
-		else if(0==0){ // supporterCard
-			request = requestBuilder.buildSupporterCardMove("", "");
-		} 
-		
-		else if(0==0){ // colour card
-			request = requestBuilder.buildColorCardMove("", "");
-		}
-		
+		JSONObject request = null;
 		
 		try {
 			client.handleClientRequest(request);
@@ -218,6 +195,12 @@ public class ViewImpl implements View{
 		} catch (IOException e) {
 			JOptionPane.showMessageDialog(currentWindow, "Failed Move or Action");
 		}
+	}
+
+	@Override
+	public void displayWelcome() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
