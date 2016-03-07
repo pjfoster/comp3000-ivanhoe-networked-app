@@ -44,4 +44,9 @@ public class ServerParser {
 		return Token.fromString(colorString);
 	}
 	
+	@SuppressWarnings("unchecked")
+	public ArrayList<String> getCardCodes(JSONObject request) {
+		return (ArrayList<String>)request.get("cards");
+	}
+	
 }

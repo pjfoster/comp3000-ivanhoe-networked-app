@@ -132,6 +132,14 @@ public class IvanhoeController {
 						}
 						else { invalidMove(); return; }
 					}
+					else if (parser.getMoveType(playerMove).equals("play_cards")) {
+						
+						// Sense it is not clear what kind of tournament this would produce,
+						// this is considered an invalid move
+						
+						invalidMove();
+						return;
+					}
 		
 				}
 				else { invalidMove(); return; }
@@ -160,6 +168,20 @@ public class IvanhoeController {
 						}
 						
 					}
+					
+					else if (moveType.equals("play_cards")) {
+						// TODO: Multiple cards
+						System.out.println("PLAYING MULTIPLE CARDS WOOOO");
+						ArrayList<Card> cardsToPlay = getCardsInHand(parser.getCardCodes(playerMove));
+						if (playMultipleCards(cardsToPlay)) {
+							finishTurn();
+							return;
+						}
+						else {
+							invalidMove();
+							return;
+						}
+					}
 
 				}
 			}
@@ -172,7 +194,8 @@ public class IvanhoeController {
 					if (!withdraw(token)) { invalidMove(); return; } ;
 				}
 				else {
-					invalidMove(); return;
+					invalidMove(); 
+					return;
 				}
 			}
 			break;
@@ -189,6 +212,10 @@ public class IvanhoeController {
 					
 					getCurrentTurnPlayer().addToken(token);
 					resetTournament(getCurrentTurnId());
+				}
+				else {
+					invalidMove();
+					return;
 				}
 			}
 			break;
@@ -290,6 +317,111 @@ public class IvanhoeController {
 			
 			return false;
 		}
+	}
+	
+	/**
+	 * Check if the player's hand contains all the cards they are attempting 
+	 * to play. If so, return a list of the cards objects they are playing.
+	 * If not, return null
+	 * @param cardCodes
+	 * @return
+	 */
+	public ArrayList<Card> getCardsInHand(ArrayList<String> cardCodes) {
+
+		ArrayList<Card> finalCards = new ArrayList<Card>();
+		
+		// This is necessary if two cards are the same
+		ArrayList<Card> handCopy = new ArrayList<Card>(getCurrentTurnPlayer().getHand());
+		
+		for (String cardCode: cardCodes) {
+			
+			System.out.println("Cardcode: " + cardCode);
+			ArrayList<Card> possibleCards = currentTournament.getCard(cardCode);
+			boolean foundCard = false;
+			
+			for (Card c: possibleCards) {
+				if (handCopy.contains(c)) {
+					System.out.println("We found it!");
+					handCopy.remove(c);
+					finalCards.add(c);
+					foundCard = true;
+					break;
+				}
+			}
+			if (!foundCard) { return null; }
+		}
+		
+		return finalCards;
+		
+	}
+	
+	/**
+	 * Returns the total value of the cards being played, depending
+	 * on whether or not the tournament is green
+	 * @param cards
+	 * @return
+	 */
+	public int sumCardTotal(ArrayList<Card> cards) {
+		int cardTotal = 0;
+		
+		if (currentTournament.getToken().equals(Token.GREEN)) {
+			for (Card c: cards) {
+				cardTotal += 1;
+			}
+		}
+		else {
+			for (Card c: cards) {
+				cardTotal += c.getValue();
+			}
+		}
+		
+		return cardTotal;
+	}
+	
+	/**
+	 * Plays each card in the list, as long as they are all valid
+	 * Returns true if valid
+	 * @param cards
+	 * @return
+	 */
+	public boolean playMultipleCards(ArrayList<Card> cards) {
+		
+		System.out.println("cards: " + cards.size());
+		
+		if (cards == null || cards.isEmpty()) { return false; }
+		
+		for (Card c: cards) {
+			// Check color card
+			if (c instanceof ColourCard) {
+				System.out.println("Tournament color: " + currentTournament.getToken().toString());
+				if (!c.getName().toLowerCase().equals(currentTournament.getToken().toString().toLowerCase())) {
+					return false;
+				}
+			}
+			// Check if card is a maiden
+			else if (c instanceof SupporterCard) {
+				if (c.getName().equals("maiden")) {
+					if (getCurrentTurnPlayer().hasPlayedMaiden()) { return false; }
+				}
+			}
+			else if (c instanceof ActionCard) {
+				return false;
+			}
+		}
+		
+		int cardTotal = sumCardTotal(cards);
+		System.out.println("CardTotal: " + cardTotal);
+		
+		// check that the new value is high enough
+		int newDisplayTotal = getCurrentTurnPlayer().getDisplayTotal(currentTournament.getToken()) + cardTotal;
+		if (newDisplayTotal <= currentTournament.getHighestDisplayTotal()) { return false; }
+		
+		// Play each card
+		for (Card c: cards) {
+			getCurrentTurnPlayer().playCard(c);
+		}
+		
+		return true;
 	}
 	
 	/**

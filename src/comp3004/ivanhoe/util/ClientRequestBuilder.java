@@ -2,6 +2,7 @@ package comp3004.ivanhoe.util;
 
 import java.util.HashMap;
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 /**
@@ -44,6 +45,22 @@ public class ClientRequestBuilder {
 		requestMap.put("move_type", "play_card");
 		requestMap.put("card_code", cardCode);
 		return new JSONObject(requestMap); 
+	}
+	
+	@SuppressWarnings("unchecked")
+	public JSONObject buildMultipleCardsMove(String[] cards) {
+		JSONObject request = new JSONObject();
+		request.put("request_type", "turn_move"); 
+		request.put("move_type", "play_cards");
+
+		JSONArray cardsArray = new JSONArray();
+		for (int i =1 ; i < cards.length; ++i) {
+			cardsArray.add(cards[i]);
+		}
+		
+		request.put("cards", cardsArray);
+		
+		return request; 
 	}
 	
 	/**

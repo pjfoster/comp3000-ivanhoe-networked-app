@@ -132,7 +132,7 @@ public class AppClient implements Runnable {
 			}
 			
 			else if (server_response.get("response_type").equals("tournament_over_win")) {
-				if (server_response.get("token_color").equals("purple")) {
+				if (((String)server_response.get("token_color")).toLowerCase().equals("purple")) {
 					view.displayPurpleTournamentWonMessage();
 				}
 				else {

@@ -157,14 +157,20 @@ public class TextViewImpl implements View, Runnable {
 				
 				else if (text.contains("make_move")) {
 					
-					String move = text.split(" ")[1];
+					String[] movesList = text.split(" ");
+					String move = movesList[1];
 					JSONObject request = null;
 					
 					if (move.equals("withdraw")) {
 						request = requestBuilder.buildWithdrawMove();
 					}
 					else {
-						request = requestBuilder.buildCardMove(move);
+						if (movesList.length <= 2) {
+							request = requestBuilder.buildCardMove(move);
+						}
+						else {
+							request = requestBuilder.buildMultipleCardsMove(movesList);
+						}
 					}
 					
 					client.handleClientRequest(request);
