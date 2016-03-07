@@ -6,6 +6,14 @@ import org.json.simple.JSONObject;
 
 public class ClientParser {
 
+	public static String getColor(JSONObject snapshot) {
+		return (String)snapshot.get("tournament_color");
+	}
+	
+	public static String getHighestDisplay(JSONObject snapshot) {
+		return (String)snapshot.get("highest_display");
+	}
+	
 	@SuppressWarnings("unchecked")
 	public static ArrayList<Object> getPlayerList(JSONObject snapshot) {
 		return (ArrayList<Object>)snapshot.get("players");
@@ -35,8 +43,17 @@ public class ClientParser {
 		return (String)((JSONObject)player).get("username");
 	}
 	
+	public static String getPlayerDisplayTotal(Object player) {
+		return (String)((JSONObject)player).get("display_total");
+	}
+	
 	public static Long getPlayerId(Object player) {
 		return (Long)((JSONObject)player).get("id");
+	}
+	
+	@SuppressWarnings("unchecked")
+	public static ArrayList<String> getTokensFromSnapshot(Object snapshot) {
+		return (ArrayList<String>)((JSONObject)snapshot).get("tokens");
 	}
 	
 }

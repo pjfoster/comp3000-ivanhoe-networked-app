@@ -17,7 +17,6 @@ public class Player {
 	private List<Token> tokens;
 	private List<Card> hand;
 	private List<Card> display;
-	private int displayTotal;
 	
 	/**
 	 * Default for testing
@@ -27,7 +26,6 @@ public class Player {
 		hand = new ArrayList<Card>();
 		tokens = new ArrayList<Token>();
 		display = new ArrayList<Card>();
-		displayTotal = 0;
 	}
 	
 	/**
@@ -39,7 +37,6 @@ public class Player {
 		hand = new ArrayList<Card>();
 		tokens = new ArrayList<Token>();
 		display = new ArrayList<Card>();
-		displayTotal = 0;
 	}
 	
 	/**
@@ -48,6 +45,18 @@ public class Player {
 	 */
 	public boolean addHandCard(Card card) {
 		return hand.add(card);
+	}
+	
+	public boolean hasCardInHand(Card card) {
+		if (hand.contains(card)) { return true; }
+		return false;
+	}
+	
+	public boolean hasPlayedMaiden() {
+		for (Card c: display) {
+			if (c.getName().equals("maiden")) { return true; }
+		}
+		return false;
 	}
 	
 	/**
@@ -67,9 +76,8 @@ public class Player {
 	 */
 	public boolean addDisplayCard(Card card){
 		// if statement checks if card is not an action card
-		if(card.getValue()!=0){
-			hand.add(card);
-			displayTotal+=card.getValue();
+		if (card.getValue() != 0) {
+			display.add(card);
 			return true;
 		}
 		return false;
@@ -81,8 +89,7 @@ public class Player {
 	 * @return
 	 */
 	public boolean removeDisplayCard(Card card){
-		if(card.getValue()!=0 && display.contains(card)){
-			displayTotal-=card.getValue();
+		if (card.getValue() != 0 && display.contains(card)){
 			return display.remove(card);
 		}
 		return false;
@@ -97,28 +104,29 @@ public class Player {
 		return tokens.add(token);
 	}
 	
+	public boolean removeToken(Token token) {
+		return tokens.remove(token);
+	}
+	
 	/**
 	 * Adds card from player's hand to their display
 	 * @param card
 	 * @return
 	 */
 	public boolean playCard(Card card) {
-		if(hand.contains(card)){
+		if (hand.contains(card)){
 			display.add(card);
 			hand.remove(card);
-			displayTotal+=card.getValue();
 			return true;
 		}
 		return false;
 	}
 	
 	/**
-	 * Used to clear hand and display for next tournament
+	 * Used to clear display for next tournament
 	 */
 	public void resetRound(){
-		hand = new ArrayList<Card>();
 		display = new ArrayList<Card>();
-		displayTotal = 0;
 	}
 	
 	/**
@@ -165,7 +173,19 @@ public class Player {
 	 * Returns player display total
 	 * @return
 	 */
-	public int getDisplayTotal(){
+	public int getDisplayTotal(Token color){
+		
+		int displayTotal = 0;
+		for (Card c: display) {
+			if (c instanceof SupporterCard && color.equals(Token.GREEN)) {
+				displayTotal += 1;
+			}
+			else {
+				displayTotal += c.getValue();
+			}
+		}
+		
 		return displayTotal;
+
 	}
 }

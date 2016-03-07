@@ -1,7 +1,0 @@
-{
-  \"request_type\" : \"turn\",
-  \"turn_action\" : \"play_card\",
-  \"card_type\": \"color_card\",
-  \"card_color\": \"red\",
-  \"card_value\": \"10\"
-}

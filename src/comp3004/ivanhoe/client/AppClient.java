@@ -17,6 +17,7 @@ import org.json.simple.parser.ParseException;
 import comp3004.ivanhoe.util.ClientRequestBuilder;
 import comp3004.ivanhoe.view.TextViewImpl;
 import comp3004.ivanhoe.view.View;
+import comp3004.ivanhoe.view.ViewFactory;
 
 /**
  * Relays messages from server and controls 
@@ -43,14 +44,14 @@ public class AppClient implements Runnable {
 	
 	static Logger logger = Logger.getLogger(AppClient.class);
 	
-	public AppClient(String ipAddress, int port) {
+	public AppClient(ViewFactory viewFactory, String ipAddress, int port) {
 		PropertyConfigurator.configure("resources/log4j.client.properties");
 		this.serverAddress = ipAddress;
 		this.serverPort = port;	
 		parser = new JSONParser();
 		requestBuilder = new ClientRequestBuilder();
 		
-		this.view = new TextViewImpl(this, requestBuilder);
+		this.view = viewFactory.createView(this);
 		view.launch();
 	}
 	
@@ -73,13 +74,8 @@ public class AppClient implements Runnable {
 	 */
 	public void handleServerResponse(String input) throws IOException {
 		
-		System.out.println("AppClient : " + input);
-		
 		if (input == null) // case where server dies unexpectedly 
-		{ 
-			System.out.println("AppClient : " + input);
-			return ; 
-		}
+		{ return ; }
 		
 		try {
 			JSONObject server_response = (JSONObject)parser.parse(input);
@@ -93,34 +89,73 @@ public class AppClient implements Runnable {
 			else if (server_response.get("response_type").equals("connection_accepted")) {
 				System.out.println("Connection accepted!"); // test
 				handleClientRequest(requestBuilder.buildRegisterPlayer(username));
-				view.displayWaitingMessage();
 			}
 			
 			else if (server_response.get("response_type").equals("start_game")) {
-				view.displayStartScreen();
+				view.displayStartScreen(server_response);
+			}
+			
+			else if (server_response.get("response_type").equals("waiting")) {
+				view.displayWaitingMessage();
+			}
+			
+			else if (server_response.get("response_type").equals("indicate_turn")) {
+				view.displayTurnPlayer((String)server_response.get("player_name"));
+			}
+			
+			else if (server_response.get("response_type").equals("invalid_choice")) {
+				view.displayInvalidMove();
 			}
 			
 			else if (server_response.get("response_type").equals("choose_color")) {
 				view.displayChooseColor();
 			}
 			
+			else if (server_response.get("response_type").equals("choose_token")) {
+				view.displayChooseToken(server_response);
+			}
+			
+			else if (server_response.get("response_type").equals("withdraw")) {
+				view.announceWithdrawal((String)server_response.get("player_name"));
+			}
+			
+			else if (server_response.get("response_type").equals("start_tournament")) {
+				view.displayStartScreen(server_response);
+			}
+			
 			else if (server_response.get("response_type").equals("start_player_turn")) {
-				// TODO: pass in parameters
-				view.displayTurnView();
+				view.displayTurnView((String)server_response.get("drawn_card"));
 			}
 			
 			else if (server_response.get("response_type").equals("update_view")) {
-				// TODO: pass in parameters - or add updateTournamentView() method?
-				view.displayTournamentView();
+				view.displayTournamentView(server_response);
 			}
 			
-			else if (server_response.get("response_type").equals("make_move")) {
-				// TODO: client may require a back and forth with the server (for example when playing
-				// action cards)
+			else if (server_response.get("response_type").equals("tournament_over_win")) {
+				if (((String)server_response.get("token_color")).toLowerCase().equals("purple")) {
+					view.displayPurpleTournamentWonMessage();
+				}
+				else {
+					view.displayTournamentWonMessage((String)server_response.get("token_color"));
+				}
 			}
+			
+			else if (server_response.get("response_type").equals("tournament_over_loss")) {
+				view.displayTournamentLossMessage((String)server_response.get("winner"));
+			}
+			
+			else if (server_response.get("response_type").equals("game_over_win")) {
+				view.displayGameWonMessage();
+			}
+			
+			else if (server_response.get("response_type").equals("game_over_loss")) {
+				view.displayGameLossMessage((String)server_response.get("winner"));
+			}
+			
 			
 			else {
 				logger.error(String.format("Invalid server response"));
+				System.out.println(server_response);
 			}
 		}
 		catch (ParseException e) {

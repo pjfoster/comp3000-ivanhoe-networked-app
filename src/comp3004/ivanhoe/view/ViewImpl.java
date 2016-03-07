@@ -1,6 +1,13 @@
 package comp3004.ivanhoe.view;
 
+<<<<<<< HEAD
+import org.json.simple.JSONObject;
+
+import comp3004.ivanhoe.client.AppClient;
+import comp3004.ivanhoe.util.ClientRequestBuilder;
+=======
 import java.io.IOException;
+>>>>>>> origin/master
 
 import javax.swing.*;
 
@@ -27,6 +34,12 @@ public class ViewImpl implements View{
 		this.username = username;
 	}
 	
+<<<<<<< HEAD
+	@Override
+	public void displayTournamentView(JSONObject snapshot) {
+		// TODO Auto-generated method stub
+		
+=======
 	public void displayWaitingMessage() {
 		if(currentWindow!=null)
 			currentWindow.dispose();
@@ -37,6 +50,7 @@ public class ViewImpl implements View{
 	public void launch() {
 		running = true;
 		displayStartScreen();
+>>>>>>> origin/master
 	}
 
 	public void displayStartScreen() {
@@ -86,9 +100,16 @@ public class ViewImpl implements View{
 		currentWindow.refresh(snapshot);
 	}
 
+<<<<<<< HEAD
+	@Override
+	public void displayStartScreen(JSONObject snapshot) {
+		// TODO Auto-generated method stub
+		
+=======
 	public void exit() {
 		currentWindow.dispose();
 		System.exit(0);
+>>>>>>> origin/master
 	}
 	
 	
@@ -101,6 +122,70 @@ public class ViewImpl implements View{
 		client.setUsername(username);
 		client.connect();
 	}
+<<<<<<< HEAD
+
+	@Override
+	public void displayInvalidMove() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void displayTurnView(String drawnCard) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void displayTurnPlayer(String playerName) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void announceWithdrawal(String string) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void displayTournamentWonMessage(String tokenColor) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void displayTournamentLossMessage(String winnerName) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void displayGameWonMessage() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void displayGameLossMessage(String string) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void displayPurpleTournamentWonMessage() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void displayChooseToken(JSONObject server_response) {
+		// TODO Auto-generated method stub
+		
+	}
+
+=======
+>>>>>>> origin/master
 	
 	public void withdraw(){
 		JSONObject request = requestBuilder.buildWithdrawMove();

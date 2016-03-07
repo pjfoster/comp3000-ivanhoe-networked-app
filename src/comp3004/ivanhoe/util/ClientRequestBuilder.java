@@ -2,6 +2,7 @@ package comp3004.ivanhoe.util;
 
 import java.util.HashMap;
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 /**
@@ -38,55 +39,28 @@ public class ClientRequestBuilder {
 		return new JSONObject(requestMap); 
 	}
 	
-	/**
-	 * Play a color card
-	 * @param cardColor
-	 * 	Expected 'red', 'blue', 'green', 'yellow', or 'purple'
-	 * @param cardValue
-	 * 	Expecting an integer value (as a string)
-	 * @return
-	 */
-	public JSONObject buildColorCardMove(String cardColor, String cardValue)
-	{ 
+	public JSONObject buildCardMove(String cardCode) {
 		HashMap<String, String> requestMap = new HashMap<String, String>();
 		requestMap.put("request_type", "turn_move"); 
-		requestMap.put("move_type", "color_card");
-		requestMap.put("card_color", cardColor);
-		requestMap.put("card_value", cardValue);
+		requestMap.put("move_type", "play_card");
+		requestMap.put("card_code", cardCode);
 		return new JSONObject(requestMap); 
 	}
 	
-	/**
-	 * Play a supporter card
-	 * @param supporterType
-	 * 	Expected 'squire' or 'maiden'
-	 * @param supporterValue
-	 * 	Expected value of card - 2,3 for squire, 6 for maiden
-	 * @return
-	 */
-	public JSONObject buildSupporterCardMove(String supporterType, String supporterValue)
-	{ 
-		HashMap<String, String> requestMap = new HashMap<String, String>();
-		requestMap.put("request_type", "turn_move"); 
-		requestMap.put("move_type", "supporter_card");
-		requestMap.put("supporter_type", supporterType);
-		requestMap.put("supporter_value", supporterValue);
-		return new JSONObject(requestMap); 
-	}
-	
-	/**
-	 * Play an action card
-	 * @param actionCardCode
-	 * 	String representing action card
-	 * @return
-	 */
-	public JSONObject buildActionCardMove(String actionCardCode)
-	{ 
-		HashMap<String, String> requestMap = new HashMap<String, String>();
-		requestMap.put("request_type", "turn_move"); 
-		requestMap.put("move_type", "action_card");
-		requestMap.put("card_code", actionCardCode);
-		return new JSONObject(requestMap); 
+	@SuppressWarnings("unchecked")
+	public JSONObject buildMultipleCardsMove(String[] cards) {
+		JSONObject request = new JSONObject();
+		request.put("request_type", "turn_move"); 
+		request.put("move_type", "play_cards");
+
+		JSONArray cardsArray = new JSONArray();
+		for (int i =1 ; i < cards.length; ++i) {
+			cardsArray.add(cards[i]);
+		}
+		
+		request.put("cards", cardsArray);
+		
+		return request; 
 	}
 	
 	/**

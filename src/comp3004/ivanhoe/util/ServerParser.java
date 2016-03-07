@@ -1,8 +1,15 @@
 package comp3004.ivanhoe.util;
 
+import java.util.ArrayList;
+
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+
+import comp3004.ivanhoe.model.Card;
+import comp3004.ivanhoe.model.ColourCard;
+import comp3004.ivanhoe.model.Token;
+import comp3004.ivanhoe.model.Tournament;
 
 public class ServerParser {
 
@@ -12,28 +19,34 @@ public class ServerParser {
 		parser = new JSONParser();
 	}
 	
-	public Command parseCommand(String jsonString) {
-		return null;
+	public String getParam(JSONObject request, String param) {
+		if (request.get(param) != null) {
+			return (String)request.get(param);
+		}
+		else return null;
 	}
 	
-	public static void main(String[] args) {
-		
-		JSONParser parser = new JSONParser();
-		
-		String test = "{\"test\":\"test_value\"}";
-		String str = null;
-		
-		try {
-			JSONObject obj = (JSONObject)parser.parse(test);
-			
-			System.out.println(test);
-			System.out.println(obj.toJSONString());
-			System.out.println(obj.get("test"));
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
+	public String getRequestType(JSONObject request) {
+		return (String)request.get("request_type");
+	}
+	
+	public String getMoveType(JSONObject request) {
+		return (String)request.get("move_type");
+	}
+	
+	public ArrayList<Card> getCard(JSONObject request, Tournament tournament) {
+		String cardCode = (String)request.get("card_code");
+		return tournament.getCard(cardCode);
+	}
+	
+	public Token getToken(JSONObject request) {
+		String colorString = (String)request.get("token_color");
+		return Token.fromString(colorString);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public ArrayList<String> getCardCodes(JSONObject request) {
+		return (ArrayList<String>)request.get("cards");
 	}
 	
 }

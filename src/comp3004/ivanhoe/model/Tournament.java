@@ -11,24 +11,50 @@ public class Tournament {
 	
 	private Token token;
 	private HashMap<Integer, Player> currentPlayers;
-	//private List<Player> currentPlayers;
+	private HashMap<String, ArrayList<Card>> cardLookup;
 	
 	private List<Card> deck;
 	private List<Card> discardPile;
 	
-	public Tournament(){
+	/**
+	 * Blank constructor for testing
+	 */
+	public Tournament() {
 		currentPlayers = new HashMap<Integer, Player>();
+		token = Token.UNDECIDED;
+		
+		cardLookup = new HashMap<String, ArrayList<Card>>();
+		discardPile = new ArrayList<Card>();
+		deck = new ArrayList<Card>();
+		discardPile = new ArrayList<Card>();
+		buildDeck();
+	}
+	
+	public Tournament(HashMap<Integer, Player> players, Token token){
+		currentPlayers = new HashMap<Integer, Player>(players);
+		cardLookup = new HashMap<String, ArrayList<Card>>();
+		this.token = token;
 		discardPile = new ArrayList<Card>();
 		buildDeck();
 		dealStartingHands();
 	}
 	
-	public Tournament(HashMap<Integer, Player> players, String tokenColor){
-		currentPlayers = players;
-		token = Token.fromString(tokenColor);
-		discardPile = new ArrayList<Card>();
-		buildDeck();
-		dealStartingHands();
+	public void reset(HashMap<Integer, Player> players) {
+		
+		token = Token.UNDECIDED;
+		
+		// reset players
+		currentPlayers = new HashMap<Integer, Player>(players);
+		
+		// take all players displays and put them in the discard pile
+		for (Player p: currentPlayers.values()) {
+			discardPile.addAll(p.getDisplay());
+			p.resetRound();
+		}
+		
+		// Add discard pile to deck and shuffle
+		resetDiscardToDeck();
+		
 	}
 	
 	/**
@@ -61,6 +87,17 @@ public class Tournament {
 		deck.addAll(ColourCard.getColourDeck());
 		deck.addAll(SupporterCard.getSupporterDeck());
 		shuffle();
+		
+		for (Card c: deck) {
+			if (cardLookup.containsKey(c.toString())) {
+				cardLookup.get(c.toString()).add(c);
+			}
+			else {
+				ArrayList<Card> newArr = new ArrayList<Card>();
+				newArr.add(c);
+				cardLookup.put(c.toString(), newArr);
+			}
+		}
 	}
 	
 	/**
@@ -80,7 +117,7 @@ public class Tournament {
 	 */
 	public Card drawCard(){
 		if (deck.size() == 0)
-			resetDiscardtoDeck();
+			resetDiscardToDeck();
 		return deck.remove(0);
 	}
 	
@@ -95,7 +132,7 @@ public class Tournament {
 	/**
 	 * This function is called by drawCard() when the deck has no cards and it takes the discard deck shuffles and adds it to the empty deck
 	 */
-	private void resetDiscardtoDeck(){
+	private void resetDiscardToDeck(){
 		deck.addAll(discardPile);
 		shuffle();
 		discardPile = new ArrayList<Card>();
@@ -113,12 +150,23 @@ public class Tournament {
 	 * @return
 	 */
 	public Player getPlayerWithHighestDisplay(){
-		Player temp = currentPlayers.get(0);
+		Player temp = null;
+		int highestTotal = 0;
 		for (Player p: currentPlayers.values()){
-			if (p.getDisplayTotal() > temp.getDisplayTotal())
+			if (p.getDisplayTotal(token) > highestTotal)
 				temp = p;
+				highestTotal = p.getDisplayTotal(token);
 		}
 		return temp;
+	}
+	
+	public int getHighestDisplayTotal() {
+		int highestTotal = 0;
+		for (Player p: currentPlayers.values()){
+			if (p.getDisplayTotal(token) > highestTotal)
+				highestTotal = p.getDisplayTotal(token);
+		}
+		return highestTotal;
 	}
 	
 	public HashMap<Integer, Player> getPlayers() {
@@ -144,4 +192,13 @@ public class Tournament {
 	public void setToken(Token tkn){
 		token  = tkn;
 	}
+	
+	public void setPlayers(HashMap<Integer, Player> players) {
+		currentPlayers = new HashMap<Integer, Player>(players);
+	}
+	
+	public ArrayList<Card> getCard(String code) {
+		return cardLookup.get(code);
+	}
+
 }
