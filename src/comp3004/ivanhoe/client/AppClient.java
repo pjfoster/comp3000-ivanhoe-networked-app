@@ -78,6 +78,7 @@ public class AppClient implements Runnable {
 		
 		try {
 			JSONObject server_response = (JSONObject)parser.parse(input);
+			//System.out.println(getID() + ": Received input: " + input);
 			
 			if (server_response.get("response_type").equals("connection_rejected") ||
 				server_response.get("response_type").equals("quit")) {

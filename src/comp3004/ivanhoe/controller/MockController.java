@@ -86,10 +86,54 @@ public class MockController extends IvanhoeController {
 	}
 	
 	public HashMap<Integer, Player> getPlayers() { 
-		for (Integer key: players.keySet()) {
-			System.out.println(key + ": " + players.get(key));
-		}
 		return players;
+	}
+	
+	public void swapHand(int playerId, ArrayList<Card> cards)  {
+		players.get(playerId).setStartingHand(cards);
+	}
+	
+	public Card getCardFromString(String cardCode) {
+		ArrayList<Card> temp = currentTournament.getCard(cardCode);
+		if (temp != null && !temp.isEmpty()) {
+			return temp.get(0);
+		}
+		return null;
+	}
+	
+	public ArrayList<Card> getCardsFromStrings(ArrayList<String> cardCodes) {
+		ArrayList<Card> cards = new ArrayList<Card>();
+		
+		for (String cardCode: cardCodes) {
+			ArrayList<Card> temp = currentTournament.getCard(cardCode);
+			if (temp != null && !temp.isEmpty()) {
+				cards.add(temp.get(0));
+			}
+		}
+		
+		return cards;
+	}
+	
+	public ArrayList<Card> getCardsFromStrings(String[] cardCodes) {
+		ArrayList<Card> cards = new ArrayList<Card>();
+		
+		for (String cardCode: cardCodes) {
+			ArrayList<Card> temp = currentTournament.getCard(cardCode);
+			if (temp != null && !temp.isEmpty()) {
+				Card c = temp.get(0);
+				currentTournament.getDeck().remove(c);
+				cards.add(c);
+			}
+		}
+		
+		return cards;
+	}
+	
+	public void setPlayerTurns(Integer[] turns) {
+		playerTurns = new ArrayList<Integer>();
+		for (Integer i: turns) {
+			playerTurns.add(i);
+		}
 	}
 	
 }

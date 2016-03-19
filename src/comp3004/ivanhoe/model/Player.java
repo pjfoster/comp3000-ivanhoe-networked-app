@@ -1,6 +1,7 @@
 package comp3004.ivanhoe.model;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -8,13 +9,11 @@ import java.util.List;
  * This class keeps track of player tokens, their hand, and their display
  * It also keeps track of the players display total based on their current cards played
  * The Player object is set once per game so the class comes with a reset method that allows the hand and display to be cleared
- * @author David
- * @since 2016-02-08
  */
 public class Player {
 
 	private String name;
-	private List<Token> tokens;
+	private HashSet<Token> tokens;
 	private List<Card> hand;
 	private List<Card> display;
 	
@@ -24,7 +23,7 @@ public class Player {
 	public Player(){
 		name = "Default Dan";
 		hand = new ArrayList<Card>();
-		tokens = new ArrayList<Token>();
+		tokens = new HashSet<Token>();
 		display = new ArrayList<Card>();
 	}
 	
@@ -35,7 +34,7 @@ public class Player {
 	public Player(String nm){
 		name = nm;
 		hand = new ArrayList<Card>();
-		tokens = new ArrayList<Token>();
+		tokens = new HashSet<Token>();
 		display = new ArrayList<Card>();
 	}
 	
@@ -149,7 +148,7 @@ public class Player {
 	 * Returns player tokens
 	 * @return
 	 */
-	public List<Token> getTokens(){
+	public HashSet<Token> getTokens(){
 		return tokens;
 	}
 	

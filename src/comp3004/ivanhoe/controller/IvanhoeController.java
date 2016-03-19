@@ -90,6 +90,9 @@ public class IvanhoeController {
 
 	public void processPlayerMove(int id, JSONObject playerMove) {
 
+		System.out.println("State: " + state);
+		//System.out.println("Player: " + getCurrentTurnPlayer().getName());
+		
 		switch (state) {
 		case WAITING_FOR_TOURNAMENT_COLOR:
 			if (getCurrentTurnId() == id) {
@@ -360,6 +363,8 @@ public class IvanhoeController {
 	 */
 	public ArrayList<Card> getCardsInHand(ArrayList<String> cardCodes) {
 
+		//System.out.println("Looking for " + cardCodes.size() + " cards");
+		
 		ArrayList<Card> finalCards = new ArrayList<Card>();
 
 		// This is necessary if two cards are the same
@@ -419,6 +424,8 @@ public class IvanhoeController {
 	 */
 	public boolean playMultipleCards(ArrayList<Card> cards) {
 
+		//System.out.println("Playing " + cards.size() + "cards");
+		
 		if (cards == null || cards.isEmpty()) {
 			return false;
 		}
@@ -567,6 +574,7 @@ public class IvanhoeController {
 		if (getCurrentTurnPlayer().getTokens().size() > 0) {
 			for (Card c : getCurrentTurnPlayer().getDisplay()) {
 				if (c.toString().equals("m6")) {
+					//System.out.println("Player has a maiden in their display...");
 					state = WAITING_FOR_WITHDRAW_TOKEN;
 					return;
 				}

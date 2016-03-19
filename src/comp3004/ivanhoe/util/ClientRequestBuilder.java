@@ -49,6 +49,9 @@ public class ClientRequestBuilder {
 	
 	@SuppressWarnings("unchecked")
 	public JSONObject buildMultipleCardsMove(String[] cards) {
+		
+		System.out.println("Building request for " + cards.length + " cards");
+		
 		JSONObject request = new JSONObject();
 		request.put("request_type", "turn_move"); 
 		request.put("move_type", "play_cards");
@@ -58,6 +61,7 @@ public class ClientRequestBuilder {
 			cardsArray.add(cards[i]);
 		}
 		
+		System.out.println(cardsArray);
 		request.put("cards", cardsArray);
 		
 		return request; 

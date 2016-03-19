@@ -92,11 +92,50 @@ public class WinningTournamentTest {
 		// Check that Jayson won and was given the correct Token
 		assertEquals(controller.getCurrentTurnPlayer(), jayson);
 		assertEquals(jayson.getTokens().size(), 1);
-		assertEquals(jayson.getTokens().get(0), Token.RED);
+		assertTrue(jayson.getTokens().contains(Token.RED));
 		
 		assertEquals(alexei.getTokens().size(), 0);
 		assertEquals(luke.getTokens().size(), 0);
 		
+	}
+	
+	/**
+	 * Test that a player cannot receive more than 1 of the same
+	 * color token
+	 */
+	@Test
+	public void testTournamentWinDuplicateToken() {
+		assertEquals(jayson.getTokens().size(), 0);
+		tournament.setToken(Token.RED);
+		assertEquals(tournament.getPlayers().size(), 3);
+		
+		controller.setTurn(60001);
+		controller.withdraw();
+		assertEquals(tournament.getPlayers().size(), 2);
+		
+		controller.setTurn(60002);
+		controller.withdraw();
+		
+		// Check that Jayson won and was given the correct Token
+		assertEquals(controller.getCurrentTurnPlayer(), jayson);
+		assertEquals(jayson.getTokens().size(), 1);
+		assertTrue(jayson.getTokens().contains(Token.RED));
+		
+		// new round
+		tournament.setToken(Token.RED);
+		
+		controller.setTurn(60001);
+		controller.withdraw();
+		assertEquals(tournament.getPlayers().size(), 2);
+		
+		controller.setTurn(60002);
+		controller.withdraw();
+		
+		// Check that Jayson won and was given the correct Token
+		assertEquals(controller.getCurrentTurnPlayer(), jayson);
+		assertEquals(jayson.getTokens().size(), 1);
+		assertTrue(jayson.getTokens().contains(Token.RED));
+
 	}
 	
 	@Test
@@ -128,7 +167,7 @@ public class WinningTournamentTest {
 		// Check that Jayson won and was given the correct Token
 		assertEquals(controller.getCurrentTurnPlayer(), jayson);
 		assertEquals(jayson.getTokens().size(), 1);
-		assertEquals(jayson.getTokens().get(0), Token.BLUE);
+		assertTrue(jayson.getTokens().contains(Token.BLUE));
 		
 		assertEquals(alexei.getTokens().size(), 0);
 		assertEquals(luke.getTokens().size(), 0);
@@ -166,7 +205,7 @@ public class WinningTournamentTest {
 		// check that Jayson won and that everything was reset correctly
 		assertEquals(controller.getCurrentTurnPlayer(), jayson);
 		assertEquals(jayson.getTokens().size(), 1);
-		assertEquals(jayson.getTokens().get(0), Token.RED);
+		assertTrue(jayson.getTokens().contains(Token.RED));
 		
 		assertEquals(alexei.getTokens().size(), 0);
 		assertEquals(luke.getTokens().size(), 0);
