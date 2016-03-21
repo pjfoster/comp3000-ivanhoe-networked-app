@@ -93,13 +93,13 @@ public class MockController extends IvanhoeController {
 		players.get(playerId).setStartingHand(cards);
 	}
 	
-	public Card getCardFromString(String cardCode) {
+	/*public Card getCardFromString(String cardCode) {
 		ArrayList<Card> temp = currentTournament.getCard(cardCode);
 		if (temp != null && !temp.isEmpty()) {
 			return temp.get(0);
 		}
 		return null;
-	}
+	}*/
 	
 	public ArrayList<Card> getCardsFromStrings(ArrayList<String> cardCodes) {
 		ArrayList<Card> cards = new ArrayList<Card>();

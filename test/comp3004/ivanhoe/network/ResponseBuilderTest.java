@@ -138,9 +138,8 @@ public class ResponseBuilderTest {
 		assertNotNull(testMove.get("tokens"));
 		
 		tokens = clientParser.getTokensFromSnapshot(testMove);
-		assertEquals(tokens.size(), 2);
+		assertEquals(tokens.size(), 1);
 		assertEquals(tokens.get(0).toLowerCase(), "blue");
-		assertEquals(tokens.get(1).toLowerCase(), "blue");
 		
 		// Test for multiple tokens, mutliple colors
 		emma.addToken(Token.RED);
@@ -154,7 +153,7 @@ public class ResponseBuilderTest {
 		assertNotNull(testMove.get("tokens"));
 		
 		tokens = clientParser.getTokensFromSnapshot(testMove);
-		assertEquals(tokens.size(), 4);
+		assertEquals(tokens.size(), 3);
 		for (String token: tokens) {
 			assertTrue(token.toLowerCase().equals("blue") ||
 					   token.toLowerCase().equals("red") ||

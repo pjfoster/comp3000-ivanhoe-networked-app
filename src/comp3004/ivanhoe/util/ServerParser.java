@@ -47,4 +47,12 @@ public class ServerParser {
 		return (ArrayList<String>)request.get("cards");
 	}
 	
+	@SuppressWarnings("unchecked")
+	public ArrayList<String> getCardCode(JSONObject request) {
+		ArrayList<String> cards = new ArrayList<String>();
+		String cardCode = (String)request.get("card_code");
+		cards.add(cardCode);
+		return cards;
+	}
+	
 }

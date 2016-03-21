@@ -192,44 +192,5 @@ public class WithdrawTest {
 		assertFalse(tournament.getPlayers().values().contains(jayson));
 		assertTrue(controller.getCurrentTurnPlayer() != jayson);
 	}
-	
-	/**
-	 * Tests that a player can withdraw from a tournament when they have a
-	 * maidens in their hand and more than one token AND repeated colours
-	 */
-	@Test
-	public void testWithdrawMaidenWithMultipleTokensRepeatColor() {
-		controller.setTurn(60003);
-		controller.setState(3);
-		assertEquals(tournament.getPlayers().size(), 3);
-
-		jayson.addDisplayCard(m6);
-		jayson.addToken(Token.BLUE);
-		jayson.addToken(Token.BLUE);
-		jayson.addToken(Token.GREEN);
-		assertEquals(jayson.getTokens().size(), 3);
-
-		controller.withdraw();
-
-		assertEquals(controller.getState(), 4); // WAITING_FOR_WITHDRAW_TOKEN
-		assertEquals(controller.getCurrentTurnPlayer(), jayson); // Turn has not changed yet
-
-		JSONObject chooseToken = requestBuilder.buildChooseToken("blue");
-		controller.processPlayerMove(60003, chooseToken);
-
-		// check that Jayson no longer has the blue token, but all other tokens
-		assertEquals(jayson.getTokens().size(), 2);
-		assertTrue(jayson.getTokens().contains(Token.BLUE));
-
-		// Check that the player has been removed from the tournament but not the game
-		assertEquals(tournament.getPlayers().size(), 2);
-		assertEquals(controller.getPlayers().size(), 3);
-
-		// Check that the turn has been correctly updated
-		assertTrue(controller.getCurrentTurn() < 2);
-		assertTrue(controller.getCurrentTurn() >= 0);
-		assertFalse(tournament.getPlayers().values().contains(jayson));
-		assertTrue(controller.getCurrentTurnPlayer() != jayson);
-	}
 
 }

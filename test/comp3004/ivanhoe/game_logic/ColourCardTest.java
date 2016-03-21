@@ -25,7 +25,7 @@ public class ColourCardTest {
 	MockController controller;
 	Player alexei, luke;
 	ColourCard r3, r5, p5;
-	ArrayList<Card> r3Wrapper, r5Wrapper, p5Wrapper;
+	ArrayList<String> r3Wrapper, r5Wrapper, p5Wrapper;
 	
 	@Before
 	public void setUp() throws Exception {
@@ -45,17 +45,17 @@ public class ColourCardTest {
 		tournament.setPlayers(players);
 		controller.setTournament(tournament);
 		
-		r3 = new ColourCard("red", 3);
-		r3Wrapper = new ArrayList<Card>();
-		r3Wrapper.add(r3);
+		r3 = (ColourCard)controller.getCardFromDeck("r3");
+		r3Wrapper = new ArrayList<String>();
+		r3Wrapper.add("r3");
 		
-		r5 = new ColourCard("red", 5);
-		r5Wrapper = new ArrayList<Card>();
-		r5Wrapper.add(r5);
+		r5 = (ColourCard)controller.getCardFromDeck("r5");
+		r5Wrapper = new ArrayList<String>();
+		r5Wrapper.add("r5");
 		
-		p5 = new ColourCard("purple", 5);
-		p5Wrapper = new ArrayList<Card>();
-		p5Wrapper.add(p5);
+		p5 = (ColourCard)controller.getCardFromDeck("p5");
+		p5Wrapper = new ArrayList<String>();
+		p5Wrapper.add("p5");
 	}
 
 	@After

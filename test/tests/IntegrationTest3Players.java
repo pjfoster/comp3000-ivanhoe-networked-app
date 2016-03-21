@@ -172,7 +172,7 @@ public class IntegrationTest3Players {
 		
 		Thread.sleep(WAIT_TIME_MILLIS);
 		
-		Mockito.verify(luke).handleServerResponse(Mockito.matches(".*invalid_choice.*"));
+		Mockito.verify(luke, Mockito.atLeast(1)).handleServerResponse(Mockito.matches(".*invalid_choice.*"));
 		
 		JSONObject withdraw = requestBuilder.buildWithdrawMove();
 		luke.handleClientRequest(withdraw);

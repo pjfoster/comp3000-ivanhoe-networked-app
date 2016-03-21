@@ -11,6 +11,7 @@ import org.junit.Test;
 
 import comp3004.ivanhoe.controller.MockController;
 import comp3004.ivanhoe.model.Card;
+import comp3004.ivanhoe.model.ColourCard;
 import comp3004.ivanhoe.model.Player;
 import comp3004.ivanhoe.model.SupporterCard;
 import comp3004.ivanhoe.model.Token;
@@ -24,7 +25,7 @@ public class SupporterCardTest {
 	Tournament tournament;
 	MockController controller;
 	Player alexei, luke;
-	ArrayList<Card> s3Wrapper, s2Wrapper, m6Wrapper;
+	ArrayList<String> s3Wrapper, s2Wrapper, m6Wrapper;
 	SupporterCard s3, s2, m6;
 	
 	@Before
@@ -45,18 +46,18 @@ public class SupporterCardTest {
 		tournament.setPlayers(players);
 		controller.setTournament(tournament);
 		
-		s2 = new SupporterCard("squire", 2);
-		s3 = new SupporterCard("squire", 3);
-		m6 = new SupporterCard("maiden", 6);
+		s2 = (SupporterCard)controller.getCardFromDeck("s2");
+		s3 = (SupporterCard)controller.getCardFromDeck("s3");
+		m6 = (SupporterCard)controller.getCardFromDeck("m6");
 		
-		s3Wrapper = new ArrayList<Card>();
-		s3Wrapper.add(s3);
+		s3Wrapper = new ArrayList<String>();
+		s3Wrapper.add("s3");
 		
-		s2Wrapper = new ArrayList<Card>();
-		s2Wrapper.add(s2);
+		s2Wrapper = new ArrayList<String>();
+		s2Wrapper.add("s2");
 		
-		m6Wrapper = new ArrayList<Card>();
-		m6Wrapper.add(m6);
+		m6Wrapper = new ArrayList<String>();
+		m6Wrapper.add("m6");
 	}
 
 	@After
