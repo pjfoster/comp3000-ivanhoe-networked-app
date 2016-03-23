@@ -165,5 +165,17 @@ public class RequestBuilderTest {
 		assertEquals(testMove.get("opponent_username"), "Alexei");
 		
 	}
+	
+	@Test
+	public void testBuildPickCard() throws ParseException {
+		
+		String testMoveString = requestBuilder.buildPickCard("r3").toJSONString();
+		JSONObject testMove = (JSONObject)parser.parse(testMoveString);
+		
+		assertEquals(testMove.size(), 2);
+		assertEquals(testMove.get("request_type"), "pick_card");
+		assertEquals(testMove.get("card_code"), "r3");
+		
+	}
 
 }

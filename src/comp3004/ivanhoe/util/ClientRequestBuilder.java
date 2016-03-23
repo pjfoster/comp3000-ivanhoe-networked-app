@@ -91,4 +91,11 @@ public class ClientRequestBuilder {
 		return new JSONObject(requestMap); 
 	}
 	
+	public JSONObject buildPickCard(String cardCode) {
+		HashMap<String, String> requestMap = new HashMap<String, String>();
+		requestMap.put("request_type", "pick_card"); 
+		requestMap.put("card_code", cardCode); 
+		return new JSONObject(requestMap); 
+	}
+	
 }
