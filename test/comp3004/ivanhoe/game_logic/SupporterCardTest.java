@@ -16,6 +16,7 @@ import comp3004.ivanhoe.model.Player;
 import comp3004.ivanhoe.model.SupporterCard;
 import comp3004.ivanhoe.model.Token;
 import comp3004.ivanhoe.model.Tournament;
+import comp3004.ivanhoe.server.MockServer;
 import comp3004.ivanhoe.util.ServerResponseBuilder;
 
 public class SupporterCardTest {
@@ -38,7 +39,7 @@ public class SupporterCardTest {
 		players.put(60001, alexei);
 		players.put(60002, luke);
 		
-		controller = new MockController(null, responseBuilder, 2);
+		controller = new MockController(new MockServer(), responseBuilder, 2);
 		controller.setPlayers(players);
 		
 		tournament = new Tournament();
@@ -95,6 +96,7 @@ public class SupporterCardTest {
 		assertTrue(controller.playCard(s2Wrapper));
 		assertEquals(alexei.getDisplayTotal(tournament.getToken()), 1);
 		
+		controller.setTurn(60001);
 		alexei.addHandCard(s3);
 		assertTrue(controller.playCard(s3Wrapper));
 		assertEquals(alexei.getDisplayTotal(tournament.getToken()), 2);
