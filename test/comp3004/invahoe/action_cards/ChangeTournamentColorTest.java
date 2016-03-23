@@ -1,4 +1,4 @@
-package comp3004.ivanhoe.game_logic;
+package comp3004.invahoe.action_cards;
 
 import static org.junit.Assert.*;
 
@@ -20,7 +20,7 @@ import comp3004.ivanhoe.server.MockServer;
 import comp3004.ivanhoe.util.ClientRequestBuilder;
 import comp3004.ivanhoe.util.ServerResponseBuilder;
 
-public class ActionCardTest {
+public class ChangeTournamentColorTest {
 
 	HashMap<Integer, Player> players;
 	ServerResponseBuilder responseBuilder = new ServerResponseBuilder();

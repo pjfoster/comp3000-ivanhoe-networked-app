@@ -8,7 +8,6 @@ import org.junit.runners.Suite;
    WinningGameTest.class,
    ColourCardTest.class,
    SupporterCardTest.class,
-   ActionCardTest.class,
    WithdrawTest.class,
    StartTournamentTest.class,
    WinningTournamentTest.class
