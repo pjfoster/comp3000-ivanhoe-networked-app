@@ -39,6 +39,16 @@ public class ClientParser {
 		return (ArrayList<String>)((JSONObject)player).get("tokens");
 	}
 	
+	@SuppressWarnings("unchecked")
+	public ArrayList<String> getOpponents(JSONObject snapshot) {
+		return (ArrayList<String>)((JSONObject)snapshot).get("opponents");
+	}
+	
+	@SuppressWarnings("unchecked")
+	public ArrayList<String> getCards(JSONObject snapshot) {
+		return (ArrayList<String>)((JSONObject)snapshot).get("cards");
+	}
+	
 	public String getPlayerName(Object player) {
 		return (String)((JSONObject)player).get("username");
 	}

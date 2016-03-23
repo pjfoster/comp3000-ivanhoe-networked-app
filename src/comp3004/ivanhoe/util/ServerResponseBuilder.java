@@ -2,6 +2,7 @@ package comp3004.ivanhoe.util;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -55,6 +56,38 @@ public class ServerResponseBuilder {
 		}
 		
 		response.put("tokens", tokens);
+		
+		return response;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public JSONObject buildPickOpponent(int currentPlayerId, Tournament tournament) {
+		JSONObject response = new JSONObject();
+		response.put("response_type", "pick_opponent");
+		
+		JSONArray opponents = new JSONArray();
+		for (Integer id: tournament.getPlayers().keySet()) {
+			if (id != currentPlayerId) {
+				opponents.add(tournament.getPlayers().get(id).getName());
+			}
+		}
+		
+		response.put("opponents", opponents);
+		
+		return response;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public JSONObject buildPickCard(List<Card> cardList) {
+		JSONObject response = new JSONObject();
+		response.put("response_type", "pick_card");
+		
+		JSONArray cards = new JSONArray();
+		for (Card c: cardList) {
+			cards.add(c.toString());
+		}
+		
+		response.put("cards", cards);
 		
 		return response;
 	}

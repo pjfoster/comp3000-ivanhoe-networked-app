@@ -12,9 +12,11 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import comp3004.ivanhoe.model.ActionCard;
 import comp3004.ivanhoe.model.Card;
 import comp3004.ivanhoe.model.ColourCard;
 import comp3004.ivanhoe.model.Player;
+import comp3004.ivanhoe.model.SupporterCard;
 import comp3004.ivanhoe.model.Token;
 import comp3004.ivanhoe.model.Tournament;
 import comp3004.ivanhoe.util.ClientParser;
@@ -107,6 +109,73 @@ public class ResponseBuilderTest {
 		
 		assertEquals(testMove.size(), 1);
 		assertEquals(testMove.get("response_type"), "choose_color");
+	}
+	
+	@Test
+	public void testPickOpponent() throws ParseException {
+		
+		HashMap<Integer, Player> players = new HashMap<Integer, Player>();
+		players.put(60001, new Player("Alexei"));
+		players.put(60002, new Player("Emma"));
+		players.put(60003, new Player("Luke"));
+		
+		Tournament tournament = new Tournament();
+		tournament.setPlayers(players);
+		
+		// Build a repsonse with Alexei as current player
+		String pickOpponent = responseBuilder.buildPickOpponent(60001, tournament).toJSONString();
+		JSONObject testMove = (JSONObject)parser.parse(pickOpponent);
+		
+		assertEquals(testMove.size(), 2);
+		assertEquals(testMove.get("response_type"), "pick_opponent");
+		assertNotNull(testMove.get("opponents"));
+		
+		ArrayList<String> opponents = clientParser.getOpponents(testMove);
+		assertEquals(opponents.size(), 2);
+		assertTrue(opponents.contains("Emma"));
+		assertTrue(opponents.contains("Luke"));
+		assertFalse(opponents.contains("Alexei"));
+		
+		// Build a repsonse with Luke as current player
+		pickOpponent = responseBuilder.buildPickOpponent(60003, tournament).toJSONString();
+		testMove = (JSONObject)parser.parse(pickOpponent);
+
+		assertEquals(testMove.size(), 2);
+		assertEquals(testMove.get("response_type"), "pick_opponent");
+		assertNotNull(testMove.get("opponents"));
+
+		opponents = clientParser.getOpponents(testMove);
+		assertEquals(opponents.size(), 2);
+		assertTrue(opponents.contains("Emma"));
+		assertFalse(opponents.contains("Luke"));
+		assertTrue(opponents.contains("Alexei"));
+	}
+	
+	@Test
+	public void testPickCard() throws ParseException {
+		ArrayList<Card> cards = new ArrayList<Card>();
+		cards.add(new ColourCard("red", 3));
+		cards.add(new ColourCard("blue", 5));
+		cards.add(new SupporterCard("squire", 3));
+		cards.add(new SupporterCard("maiden", 6));
+		cards.add(new ActionCard("changeweapon"));
+		cards.add(new ActionCard("ivanhoe"));
+		
+		String testMoveString = responseBuilder.buildPickCard(cards).toJSONString();
+		JSONObject testMove = (JSONObject)parser.parse(testMoveString);
+		
+		assertEquals(testMove.size(), 2);
+		assertEquals(testMove.get("response_type"), "pick_card");
+		assertNotNull(testMove.get("cards"));
+		
+		ArrayList<String> cardStrings = clientParser.getCards(testMove);
+		assertEquals(cardStrings.size(), 6);
+		assertTrue(cardStrings.contains("r3"));
+		assertTrue(cardStrings.contains("b5"));
+		assertTrue(cardStrings.contains("s3"));
+		assertTrue(cardStrings.contains("m6"));
+		assertTrue(cardStrings.contains("changeweapon"));
+		assertTrue(cardStrings.contains("ivanhoe"));
 	}
 	
 	@Test
