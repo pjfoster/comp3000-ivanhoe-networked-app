@@ -177,6 +177,10 @@ public class Tournament {
 		return deck;
 	}
 	
+	public List<Card> getDiscardPile() {
+		return discardPile;
+	}
+	
 	/**
 	 * This function returns the current token
 	 * @return

@@ -3,6 +3,8 @@ package comp3004.ivanhoe.controller;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import org.json.simple.JSONObject;
+
 import comp3004.ivanhoe.model.Card;
 import comp3004.ivanhoe.model.Player;
 import comp3004.ivanhoe.model.Token;
@@ -134,6 +136,10 @@ public class MockController extends IvanhoeController {
 		for (Integer i: turns) {
 			playerTurns.add(i);
 		}
+	}
+	
+	public boolean testChangeTournamentColor(JSONObject request) {
+		return changeTournamentColor(request);
 	}
 	
 }

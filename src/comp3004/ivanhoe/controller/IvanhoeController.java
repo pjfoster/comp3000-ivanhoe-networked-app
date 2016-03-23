@@ -26,6 +26,8 @@ public class IvanhoeController {
 	protected final int WAITING_FOR_WITHDRAW_TOKEN = 4;
 	protected final int WAITING_FOR_WINNING_TOKEN = 5;
 	protected final int WAITING_FOR_NEW_TOURNAMENT_COLOR = 6;
+	protected final int WAITING_FOR_OPPONENT_SELECTION = 7;
+	protected final int WAIITNG_FOR_CARD = 8;
 	protected final int GAME_OVER = 6;
 
 	protected int maxPlayers;
@@ -777,7 +779,7 @@ public class IvanhoeController {
 	 * @param playerMove
 	 * @return
 	 */
-	private boolean changeTournamentColor(JSONObject playerMove) {
+	protected boolean changeTournamentColor(JSONObject playerMove) {
 	
 		ArrayList<Card> cards = getCardsInHand(lastPlayed);
 		if (cards == null || cards.isEmpty()) return false;
@@ -789,8 +791,11 @@ public class IvanhoeController {
 			if (newColor == tournament.getToken()) return false;
 		}
 		
+		tournament.setToken(Token.BLUE);
+		
 		getCurrentTurnPlayer().removeHandCard(cards.get(0));
 		tournament.addToDiscard(cards.get(0));
+		state = WAITING_FOR_PLAYER_MOVE;
 		finishTurn();
 		
 		return true;
