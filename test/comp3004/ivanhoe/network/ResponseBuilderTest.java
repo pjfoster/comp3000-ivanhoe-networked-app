@@ -116,7 +116,7 @@ public class ResponseBuilderTest {
 		Player emma = new Player("Emma");
 		emma.addToken(Token.BLUE);
 		
-		String testMoveString = responseBuilder.buildChooseToken(emma).toJSONString();
+		String testMoveString = responseBuilder.buildChooseToken(emma.getTokens()).toJSONString();
 		JSONObject testMove = (JSONObject)parser.parse(testMoveString);
 		
 		assertEquals(testMove.size(), 2);
@@ -130,7 +130,7 @@ public class ResponseBuilderTest {
 		// Test for multiple tokens, same color
 		emma.addToken(Token.BLUE);
 		
-		testMoveString = responseBuilder.buildChooseToken(emma).toJSONString();
+		testMoveString = responseBuilder.buildChooseToken(emma.getTokens()).toJSONString();
 		testMove = (JSONObject)parser.parse(testMoveString);
 		
 		assertEquals(testMove.size(), 2);
@@ -145,7 +145,7 @@ public class ResponseBuilderTest {
 		emma.addToken(Token.RED);
 		emma.addToken(Token.YELLOW);
 		
-		testMoveString = responseBuilder.buildChooseToken(emma).toJSONString();
+		testMoveString = responseBuilder.buildChooseToken(emma.getTokens()).toJSONString();
 		testMove = (JSONObject)parser.parse(testMoveString);
 		
 		assertEquals(testMove.size(), 2);

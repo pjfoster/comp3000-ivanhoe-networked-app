@@ -17,7 +17,32 @@ public class ActionCardTest {
 	}
 
 	@Test
-	public void test() {
+	public void testUnhorse() {
+		
+	}
+	
+	@Test
+	public void testUnhorseInvalid() {
+		
+	}
+	
+	@Test
+	public void testChangeWeapon() {
+		
+	}
+	
+	@Test
+	public void testChangeWeaponInvalid() {
+		
+	}
+	
+	@Test
+	public void testDropWeapon() {
+		
+	}
+	
+	@Test
+	public void testDropWeaponInvalid() {
 		
 	}
 

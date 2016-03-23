@@ -1,6 +1,7 @@
 package comp3004.ivanhoe.util;
 
 import java.util.HashMap;
+import java.util.HashSet;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -44,12 +45,12 @@ public class ServerResponseBuilder {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public JSONObject buildChooseToken(Player p) {
+	public JSONObject buildChooseToken(HashSet<Token> tokenColors) {
 		JSONObject response = new JSONObject();
 		response.put("response_type", "choose_token");
 		
 		JSONArray tokens = new JSONArray();
-		for (Token t: p.getTokens()) {
+		for (Token t: tokenColors) {
 			tokens.add(t.toString());
 		}
 		

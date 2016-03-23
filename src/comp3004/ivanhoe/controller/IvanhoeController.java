@@ -25,6 +25,7 @@ public class IvanhoeController {
 	protected final int WAITING_FOR_PLAYER_MOVE = 3;
 	protected final int WAITING_FOR_WITHDRAW_TOKEN = 4;
 	protected final int WAITING_FOR_WINNING_TOKEN = 5;
+	protected final int WAITING_FOR_NEW_TOURNAMENT_COLOR = 6;
 	protected final int GAME_OVER = 6;
 
 	protected int maxPlayers;
@@ -35,13 +36,13 @@ public class IvanhoeController {
 	protected AppServer server;
 	protected Random rnd = new Random();
 
-	protected Tournament currentTournament;
+	protected Tournament tournament;
 	protected Token previousTournament;
 	protected int currentTurn;
 	protected boolean gameWon;
 	protected int state;
 
-	private Card lastPlayed;
+	private ArrayList<String> lastPlayed;
 
 	public IvanhoeController(AppServer server,
 			ServerResponseBuilder responseBuilder, int maxPlayers) {
@@ -53,7 +54,7 @@ public class IvanhoeController {
 
 		gameWon = false;
 		state = WAITING_FOR_MORE_PLAYERS;
-		currentTournament = null;
+		tournament = null;
 		previousTournament = null;
 		currentTurn = -1;
 		lastPlayed = null;
@@ -97,76 +98,84 @@ public class IvanhoeController {
 		int r = rnd.nextInt(players.size());
 		currentTurn = r;
 
-		currentTournament = new Tournament(players, Token.UNDECIDED);
+		tournament = new Tournament(players, Token.UNDECIDED);
 
 		JSONObject startGameMessage = responseBuilder.buildStartGame(
-				currentTournament, getCurrentTurnId());
+				tournament, getCurrentTurnId());
 		server.broadcast(startGameMessage);
 	}
-	
-	
+
+
 	public void processPlayerMove(int id, JSONObject playerMove) {
-		
+
 		// check if it's the player's turn
 		if (getCurrentTurnId() != id) { invalidMove(); return; }
-		
+
 		String requestType = parser.getRequestType(playerMove);
 		if (requestType == null) { invalidMove(); return; }
-		
+
 		switch (state) {
-			// handle the first move, where tournament color is undecided
-			case WAITING_FOR_TOURNAMENT_COLOR:
-				if (requestType.equals("choose_token") && lastPlayed != null) { 
-					if (!handleSetTournamentColor(playerMove)) { invalidMove(); }
-				}
-				
-				else if (requestType.equals("turn_move")) { 
-					String moveType = (String) playerMove.get("move_type");
-					if (moveType.equals("withdraw")) { withdraw(); }
-					else if (moveType.equals("play_card")) {
-						if (!handleFirstCardMove(playerMove)) { invalidMove(); }
-					}
-					else { invalidMove(); }
-				}
-				else { invalidMove(); }
-				break;
-				
-			// handle regular turn
-			case WAITING_FOR_PLAYER_MOVE:
-				if (requestType.equals("turn_move")) {
-					String moveType = (String) playerMove.get("move_type");
-					if (moveType.equals("withdraw")) { withdraw(); }
-					else if (moveType.equals("play_card")) { 
-						if (!handlePlayCard(playerMove)) { invalidMove(); }
-					}
-					else if (moveType.equals("play_cards")) {
-						if (!handlePlayMultipleCards(playerMove)) { invalidMove(); }
-					}
-				}
-				else { invalidMove(); }
-				break;
-				
-			// handle case where player must give back a token in order to withdraw
-			case WAITING_FOR_WITHDRAW_TOKEN:
-				if (requestType.equals("choose_token")) {
-					if (!handleWithdrawWithToken(playerMove)) { invalidMove(); }
-				}
-				else { invalidMove(); }
-				break;
-				
-			// handle case where player can choose the color of the token they are winning
-			case WAITING_FOR_WINNING_TOKEN:
-				if (requestType.equals("choose_token")) { 
-					if (!handleWinningToken(playerMove)) { invalidMove(); }
-				}
-				else { invalidMove(); }
-				break;
-			default:
-				invalidMove();
-		}
 		
+		// handle the first move, where tournament color is undecided
+		case WAITING_FOR_TOURNAMENT_COLOR:
+			if (requestType.equals("choose_token") && lastPlayed != null) { 
+				if (!handleSetTournamentColor(playerMove)) { invalidMove(); }
+			}
+
+			else if (requestType.equals("turn_move")) { 
+				String moveType = (String) playerMove.get("move_type");
+				if (moveType.equals("withdraw")) { withdraw(); }
+				else if (moveType.equals("play_card")) {
+					if (!handleFirstCardMove(playerMove)) { invalidMove(); }
+				}
+				else { invalidMove(); }
+			}
+			else { invalidMove(); }
+			break;
+
+			// handle regular turn
+		case WAITING_FOR_PLAYER_MOVE:
+			if (requestType.equals("turn_move")) {
+				String moveType = (String) playerMove.get("move_type");
+				if (moveType.equals("withdraw")) { withdraw(); }
+				else if (moveType.equals("play_card")) { 
+					if (!handlePlayCard(playerMove)) { invalidMove(); }
+				}
+				else if (moveType.equals("play_cards")) {
+					if (!handlePlayMultipleCards(playerMove)) { invalidMove(); }
+				}
+			}
+			else { invalidMove(); }
+			break;
+
+			// handle case where player must give back a token in order to withdraw
+		case WAITING_FOR_WITHDRAW_TOKEN:
+			if (requestType.equals("choose_token")) {
+				if (!handleWithdrawWithToken(playerMove)) { invalidMove(); }
+			}
+			else { invalidMove(); }
+			break;
+
+			// handle case where player can choose the color of the token they are winning
+		case WAITING_FOR_WINNING_TOKEN:
+			if (requestType.equals("choose_token")) { 
+				if (!handleWinningToken(playerMove)) { invalidMove(); }
+			}
+			else { invalidMove(); }
+			break;
+			
+		case WAITING_FOR_NEW_TOURNAMENT_COLOR:
+			if (requestType.equals("choose_token")) { 
+				if (!changeTournamentColor(playerMove)) { invalidMove(); }
+			}
+			else { invalidMove(); }
+			break;
+		default:
+			invalidMove();
+		}
+
 	}
-	
+
 	/**
 	 * Sets the color of the tournament based on the color selected by the player
 	 * @param tokenColor
@@ -176,69 +185,79 @@ public class IvanhoeController {
 
 		String tokenColor = (String)playerMove.get("token_color");
 		if (tokenColor == null) return false;
-		
+
 		// Prevent people from choosing purple tournaments
 		if (previousTournament == Token.PURPLE && tokenColor.equals("purple")) {
 			return false;
 		}
 
-		currentTournament.setToken(Token.fromString(tokenColor));
+		tournament.setToken(Token.fromString(tokenColor));
 
 		playCard(lastPlayed);
 		lastPlayed = null;
 
 		state = WAITING_FOR_PLAYER_MOVE;
-		finishTurn();
+		//finishTurn();
 		return true;
 
 	}
-	
+
+	/**
+	 * Handles the first card move, with special rules depending on the type
+	 * of card that was played
+	 * @param playerMove
+	 * @return
+	 */
 	private boolean handleFirstCardMove(JSONObject playerMove) {
-		
+
 		ArrayList<Card> cards = getCardsInHand(parser.getCardCode(playerMove));
 		if (cards == null || cards.size() != 1) return false;
-		
+
 		Card card = cards.get(0);
 
 		// if the first card played is a Supporter Card, prompt the user to choose a color
 		if (card instanceof SupporterCard) {
-			lastPlayed = card;
+			lastPlayed = parser.getCardCode(playerMove);
 			JSONObject chooseColor = responseBuilder
 					.buildChooseColor();
 			server.sendToClient(getCurrentTurnId(), chooseColor);
 			return true;
 		}
-
-		if (playCard(card)) {
-			state = WAITING_FOR_PLAYER_MOVE;
-			finishTurn();
-			return true;
-		} else { 
-			return false; 
-		}
 		
+		else if (card instanceof ColourCard) {
+			ColourCard c = (ColourCard)card;
+			if (handleColourCard(c)) {
+				state = WAITING_FOR_PLAYER_MOVE;
+				//finishTurn();
+				return true;
+			}
+			else {
+				return false;
+			}
+		} 
+		
+		return false;
+
 	}
-	
+
 	private boolean handlePlayCard(JSONObject playerMove) {
 		if (playCard(parser.getCardCode(playerMove))) {
-			finishTurn();
+			//finishTurn();
 			return true;
 		} else {
-			invalidMove();
 			return false;
 		}
 	}
-	
+
 	private boolean handlePlayMultipleCards(JSONObject playerMove) {
 		if (playMultipleCards(parser.getCardCodes(playerMove))) {
 			finishTurn();
 			return true;
 		} else {
-			invalidMove();
 			return false;
 		}
 	}
-	
+
 	private boolean handleWithdrawWithToken(JSONObject playerMove) {
 		Token token = parser.getToken(playerMove);
 		if (!withdraw(token)) {
@@ -246,7 +265,7 @@ public class IvanhoeController {
 		} 
 		return true;
 	}
-	
+
 	private boolean handleWinningToken(JSONObject playerMove) {
 		Token token = Token.fromString((String) playerMove
 				.get("token_color"));
@@ -263,15 +282,15 @@ public class IvanhoeController {
 		resetTournament(getCurrentTurnId());
 		return true;
 	}
-	
+
 	public void processTournamentWon() {
 
 		Player winner = getCurrentTurnPlayer();
 
-		if (currentTournament.getToken().equals(Token.PURPLE)) {
+		if (tournament.getToken().equals(Token.PURPLE)) {
 			state = WAITING_FOR_WINNING_TOKEN;
 		} else {
-			winner.addToken(currentTournament.getToken());
+			winner.addToken(tournament.getToken());
 		}
 
 		if (checkGameWon()) {
@@ -280,7 +299,7 @@ public class IvanhoeController {
 		}
 
 		JSONObject tournamentWon = responseBuilder
-				.buildTournamentOverWin(currentTournament.getToken().toString());
+				.buildTournamentOverWin(tournament.getToken().toString());
 		server.sendToClient(getCurrentTurnId(), tournamentWon);
 
 		JSONObject tournamentLoss = responseBuilder
@@ -362,7 +381,7 @@ public class IvanhoeController {
 	public ArrayList<Card> getCardsInHand(ArrayList<String> cardCodes) {
 
 		//System.out.println("Looking for " + cardCodes.size() + " cards");
-		
+
 		ArrayList<Card> finalCards = new ArrayList<Card>();
 
 		// This is necessary if two cards are the same
@@ -370,7 +389,7 @@ public class IvanhoeController {
 				.getHand());
 
 		for (String cardCode : cardCodes) {
-			ArrayList<Card> possibleCards = currentTournament.getCard(cardCode);
+			ArrayList<Card> possibleCards = tournament.getCard(cardCode);
 			boolean foundCard = false;
 
 			for (Card c : possibleCards) {
@@ -400,7 +419,7 @@ public class IvanhoeController {
 	public int sumCardTotal(ArrayList<Card> cards) {
 		int cardTotal = 0;
 
-		if (currentTournament.getToken().equals(Token.GREEN)) {
+		if (tournament.getToken().equals(Token.GREEN)) {
 			for (Card c : cards) {
 				cardTotal += 1;
 			}
@@ -423,7 +442,7 @@ public class IvanhoeController {
 	public boolean playMultipleCards(ArrayList<String> cardCodes) {
 
 		ArrayList<Card> cards = getCardsInHand(cardCodes);
-			
+
 		if (cards == null || cards.isEmpty()) {
 			return false;
 		}
@@ -433,7 +452,7 @@ public class IvanhoeController {
 			if (c instanceof ColourCard) {
 				if (!c.getName()
 						.toLowerCase()
-						.equals(currentTournament.getToken().toString()
+						.equals(tournament.getToken().toString()
 								.toLowerCase())) {
 					return false;
 				}
@@ -454,9 +473,9 @@ public class IvanhoeController {
 
 		// check that the new value is high enough
 		int newDisplayTotal = getCurrentTurnPlayer().getDisplayTotal(
-				currentTournament.getToken())
+				tournament.getToken())
 				+ cardTotal;
-		if (newDisplayTotal <= currentTournament.getHighestDisplayTotal()) {
+		if (newDisplayTotal <= tournament.getHighestDisplayTotal()) {
 			return false;
 		}
 
@@ -468,95 +487,172 @@ public class IvanhoeController {
 		return true;
 	}
 
-	
+	/**
+	 * Checks that the user has the correct card in hand, and
+	 * then plays the card, delegating to a different function based
+	 * on the type of card
+	 * @param cardCodes
+	 * @return
+	 */
 	public boolean playCard(ArrayList<String> cardCodes) {
 		ArrayList<Card> c = getCardsInHand(cardCodes);
-		
+
 		if (c == null || c.size() != 1) {
 			return false;
 		}
+
+		if (c.get(0) instanceof ColourCard) {
+			ColourCard card = (ColourCard)c.get(0);
+			return handleColourCard(card);
+			
+		} else if (c.get(0) instanceof SupporterCard) {
+			SupporterCard card = (SupporterCard)c.get(0);
+			return handleSupporterCard(card);
+		}
+
+		else if (c.get(0) instanceof ActionCard) {
+			ActionCard card = (ActionCard)c.get(0);
+			return handleActionCard(card);
+		}
 		
-		return playCard(c.get(0));
+		return false;
 	}
-	
+
 	/**
-	 * Plays the card given
-	 * 
-	 * @param c
+	 * Handles validation for colour cards. If the move is valid,
+	 * plays the card and returns true
+	 * @param card
 	 * @return
 	 */
-	public boolean playCard(Card c) {
+	private boolean handleColourCard(ColourCard card) {
 
-		if (c instanceof ColourCard) {
+		// handle case where the tournament color hasn't been decided yet
+		if (tournament.getToken().equals(Token.UNDECIDED)) {
+			tournament.setToken(Token.fromString(card.getColour()));
+			
+		// check that the card is the right color
+		} else if (!card
+				.getColour()
+				.toLowerCase()
+				.equals(tournament.getToken().toString()
+						.toLowerCase())) {
+			return false;
+		}
 
-			// Check that the player has the card in their hand
-			ColourCard card = (ColourCard)c;
+		// check that the value of the card is sufficient for it to be played
+		int newDisplayTotal = getCurrentTurnPlayer().getDisplayTotal(
+				tournament.getToken())
+				+ card.getValue();
+		if (newDisplayTotal <= tournament.getHighestDisplayTotal()) {
+			return false;
+		}
 
-			if (card == null) {
+		// Play the card
+		getCurrentTurnPlayer().playCard(card);
+		finishTurn();
+		return true;
+	}
+
+	/**
+	 * Handles validation for supporter cards. If the move is valid,
+	 * plays the card and returns true
+	 * @param card
+	 * @return
+	 */
+	private boolean handleSupporterCard(SupporterCard card) {
+		
+		// check that the player doesn't already have a maiden
+		if (card.getName().equals("maiden")) {
+			if (getCurrentTurnPlayer().hasPlayedMaiden()) {
 				return false;
 			}
+		}
 
-			if (currentTournament.getToken().equals(Token.UNDECIDED)) {
-				currentTournament.setToken(Token.fromString(card.getColour()));
-			} else if (!card
-					.getColour()
-					.toLowerCase()
-					.equals(currentTournament.getToken().toString()
-							.toLowerCase())) {
-				return false;
-			}
-
-			int newDisplayTotal = getCurrentTurnPlayer().getDisplayTotal(
-					currentTournament.getToken())
+		// Handle Green Tournaments
+		int newDisplayTotal;
+		if (tournament.getToken().equals(Token.GREEN)) {
+			newDisplayTotal = getCurrentTurnPlayer().getDisplayTotal(
+					tournament.getToken()) + 1;
+		} else {
+			newDisplayTotal = getCurrentTurnPlayer().getDisplayTotal(
+					tournament.getToken())
 					+ card.getValue();
-			if (newDisplayTotal <= currentTournament.getHighestDisplayTotal()) {
-				return false;
-			}
-
-			// Play the card
-			getCurrentTurnPlayer().playCard(card);
-			return true;
-
-		} else if (c instanceof SupporterCard) {
-
-			// Check that the player has the card in their hand
-			SupporterCard card = (SupporterCard)c;
-
-			if (card == null) {
-				return false;
-			}
-
-			// check that the player doesn't already have a maiden
-			if (card.getName().equals("maiden")) {
-				if (getCurrentTurnPlayer().hasPlayedMaiden()) {
-					return false;
-				}
-			}
-
-			// Handle Green Tournaments
-			int newDisplayTotal;
-			if (currentTournament.getToken().equals(Token.GREEN)) {
-				newDisplayTotal = getCurrentTurnPlayer().getDisplayTotal(
-						currentTournament.getToken()) + 1;
-			} else {
-				newDisplayTotal = getCurrentTurnPlayer().getDisplayTotal(
-						currentTournament.getToken())
-						+ card.getValue();
-			}
-			if (newDisplayTotal <= currentTournament.getHighestDisplayTotal()) {
-				return false;
-			}
-
-			// Play the card
-			getCurrentTurnPlayer().playCard(card);
-			return true;
-
+		}
+		if (newDisplayTotal <= tournament.getHighestDisplayTotal()) {
+			return false;
 		}
 
-		else if (c instanceof ActionCard) {
+		// Play the card
+		getCurrentTurnPlayer().playCard(card);
+		finishTurn();
+		return true;
 
+	}
+
+	/**
+	 * Handles validation for action cards. If the move is valid,
+	 * plays the card and returns true
+	 * @param card
+	 * @return
+	 */
+	private boolean handleActionCard(ActionCard c) {
+		
+		if (c.getName().equals("unhorse")) {
+			
+			// check that the current tournament is a jousting tournament
+			if (tournament.getToken() != Token.PURPLE) return false;
+			
+			HashSet<Token> choices = new HashSet<Token>();
+			choices.add(Token.BLUE);
+			choices.add(Token.RED);
+			choices.add(Token.YELLOW);
+			JSONObject choose_token = responseBuilder.buildChooseToken(choices);
+			server.sendToClient(getCurrentTurnId(), choose_token);
+			
+			lastPlayed = new ArrayList<String>();
+			lastPlayed.add("unhorse");
+			
+			state = WAITING_FOR_NEW_TOURNAMENT_COLOR;
+			return true;
+			
 		}
+
+		else if (c.getName().equals("changeweapon")) {
+			// check that the current tournament is the right color
+			if (tournament.getToken() == Token.PURPLE || tournament.getToken() == Token.GREEN) {
+				return false;
+			}
+
+			HashSet<Token> choices = new HashSet<Token>();
+			if (tournament.getToken() != Token.BLUE) choices.add(Token.BLUE);
+			if (tournament.getToken() != Token.YELLOW) choices.add(Token.RED);
+			if (tournament.getToken() != Token.RED) choices.add(Token.YELLOW);
+			JSONObject choose_token = responseBuilder.buildChooseToken(choices);
+			server.sendToClient(getCurrentTurnId(), choose_token);
+
+			lastPlayed = new ArrayList<String>();
+			lastPlayed.add("changeweapon");
+
+			state = WAITING_FOR_NEW_TOURNAMENT_COLOR;
+			return true;
+		}
+		
+		else if (c.getName().equals("dropweapon")) {
+			// check that the current tournament is the right color
+			if (tournament.getToken() == Token.PURPLE || tournament.getToken() == Token.GREEN) {
+				return false;
+			}
+			
+			tournament.setToken(Token.GREEN);
+			getCurrentTurnPlayer().removeHandCard(c);
+			tournament.addToDiscard(c);
+			finishTurn();
+			return true;
+			
+		}
+
 		return false;
+		
 	}
 
 	/**
@@ -569,7 +665,6 @@ public class IvanhoeController {
 		if (getCurrentTurnPlayer().getTokens().size() > 0) {
 			for (Card c : getCurrentTurnPlayer().getDisplay()) {
 				if (c.toString().equals("m6")) {
-					//System.out.println("Player has a maiden in their display...");
 					state = WAITING_FOR_WITHDRAW_TOKEN;
 					return;
 				}
@@ -603,7 +698,7 @@ public class IvanhoeController {
 				.buildWithdraw(getCurrentTurnPlayer().getName());
 		server.broadcast(announceWithdraw);
 
-		currentTournament.removePlayer(getCurrentTurnId());
+		tournament.removePlayer(getCurrentTurnId());
 		playerTurns.remove(currentTurn);
 
 		if (currentTurn == 0) {
@@ -621,17 +716,17 @@ public class IvanhoeController {
 	 */
 	public void finishTurn() {
 
-		if (currentTournament.getPlayers().size() == 1) {
+		if (tournament.getPlayers().size() == 1) {
 			processTournamentWon();
 			return;
 		}
 
 		nextPlayerTurn();
-		Card drawnCard = currentTournament.drawCard();
+		Card drawnCard = tournament.drawCard();
 		getCurrentTurnPlayer().addHandCard(drawnCard);
 
 		JSONObject newSnapshot = responseBuilder
-				.buildUpdateView(currentTournament);
+				.buildUpdateView(tournament);
 		server.broadcast(newSnapshot);
 
 		JSONObject playerTurn = responseBuilder.buildStartPlayerTurn(drawnCard);
@@ -663,18 +758,42 @@ public class IvanhoeController {
 	 */
 	public void resetTournament(int winnerId) {
 		state = WAITING_FOR_TOURNAMENT_COLOR;
-		previousTournament = currentTournament.getToken();
+		previousTournament = tournament.getToken();
 
 		// since there is no dealer, pick a random person to choose the first
 		// color
 		playerTurns = new ArrayList<Integer>(players.keySet());
 		currentTurn = playerTurns.indexOf(winnerId);
 
-		currentTournament.reset(players);
+		tournament.reset(players);
 
 		JSONObject startGameMessage = responseBuilder.buildStartTournament(
-				currentTournament, getCurrentTurnId());
+				tournament, getCurrentTurnId());
 		server.broadcast(startGameMessage);
+	}
+	
+	/**
+	 * Handles rules for the action cards UNHORSE and CHANGE WEAPON
+	 * @param playerMove
+	 * @return
+	 */
+	private boolean changeTournamentColor(JSONObject playerMove) {
+	
+		ArrayList<Card> cards = getCardsInHand(lastPlayed);
+		if (cards == null || cards.isEmpty()) return false;
+		
+		Token newColor = parser.getToken(playerMove);
+		if (newColor == Token.GREEN || newColor == Token.PURPLE) { return false; }
+		
+		else if (lastPlayed.get(0).equals("changeweapon")) {
+			if (newColor == tournament.getToken()) return false;
+		}
+		
+		getCurrentTurnPlayer().removeHandCard(cards.get(0));
+		tournament.addToDiscard(cards.get(0));
+		finishTurn();
+		
+		return true;
 	}
 
 	/**
@@ -685,7 +804,7 @@ public class IvanhoeController {
 	public int nextPlayerTurn() {
 		do {
 			currentTurn = (currentTurn + 1) % playerTurns.size();
-		} while (!currentTournament.getPlayers()
+		} while (!tournament.getPlayers()
 				.containsKey(getCurrentTurnId()));
 		return currentTurn;
 	}

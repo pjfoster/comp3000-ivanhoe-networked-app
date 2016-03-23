@@ -23,7 +23,7 @@ public class MockController extends IvanhoeController {
 		super(server, responseBuilder, maxPlayers);
 	}
 	
-	public Tournament getTournament() { return currentTournament; }
+	public Tournament getTournament() { return tournament; }
 	public int getCurrentTurn() { return currentTurn; }
 	
 	public void setPlayers(HashMap<Integer, Player> players) {
@@ -31,7 +31,7 @@ public class MockController extends IvanhoeController {
 	}
 	
 	public void setTournament(Tournament tournament) {
-		this.currentTournament = tournament;
+		this.tournament = tournament;
 	}
 	
 	public void setPreviousTournament(Token color) {
@@ -69,7 +69,7 @@ public class MockController extends IvanhoeController {
 	}
 	
 	public Card getCardFromDeck(String cardCode) {
-		for (Card c: currentTournament.getDeck()) {
+		for (Card c: tournament.getDeck()) {
 			if (c.toString().equals(cardCode)) {
 				return c;
 			}
@@ -105,7 +105,7 @@ public class MockController extends IvanhoeController {
 		ArrayList<Card> cards = new ArrayList<Card>();
 		
 		for (String cardCode: cardCodes) {
-			ArrayList<Card> temp = currentTournament.getCard(cardCode);
+			ArrayList<Card> temp = tournament.getCard(cardCode);
 			if (temp != null && !temp.isEmpty()) {
 				cards.add(temp.get(0));
 			}
@@ -118,10 +118,10 @@ public class MockController extends IvanhoeController {
 		ArrayList<Card> cards = new ArrayList<Card>();
 		
 		for (String cardCode: cardCodes) {
-			ArrayList<Card> temp = currentTournament.getCard(cardCode);
+			ArrayList<Card> temp = tournament.getCard(cardCode);
 			if (temp != null && !temp.isEmpty()) {
 				Card c = temp.get(0);
-				currentTournament.getDeck().remove(c);
+				tournament.getDeck().remove(c);
 				cards.add(c);
 			}
 		}
