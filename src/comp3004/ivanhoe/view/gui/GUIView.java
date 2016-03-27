@@ -3,6 +3,7 @@ package comp3004.ivanhoe.view.gui;
 import java.awt.FlowLayout;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.IOException;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -20,7 +21,7 @@ public class GUIView extends JFrame implements View {
 	private ClientRequestBuilder requestBuilder;
 	private JPanel mainPanel;
 	
-	public GUIView(AppClient client, ClientRequestBuilder requestBuilder) {
+	public GUIView(AppClient client, ClientRequestBuilder requestBuilder) throws IOException {
 		super("Ivanhoe");
 		
 		this.setSize(800, 600);
