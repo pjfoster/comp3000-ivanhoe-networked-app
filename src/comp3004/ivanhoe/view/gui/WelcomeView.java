@@ -14,20 +14,20 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import org.json.simple.JSONObject;
+
 @SuppressWarnings("serial")
-public class WelcomeView extends JPanel {
+public class WelcomeView extends JPanel implements ActionListener {
 	
+	GUIView view;
+	JLabel centerComposite;
 	JButton connectButton;
 	JTextField usernameField;
-	JLabel errorField;
+	JLabel messageField;
 	
-	class ButtonClick implements ActionListener {
-		public void actionPerformed(ActionEvent e) {
-			
-		}
-	}
-	
-	public WelcomeView() throws IOException {
+	public WelcomeView(GUIView view) {
+		
+		  this.view = view;
 		  this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		  
 		  JLabel welcomeLabel = ImageHandler.loadImage("welcome");
@@ -39,32 +39,43 @@ public class WelcomeView extends JPanel {
 		  connectButton = new JButton("CONNECT");
 		  connectButton.setFont(new Font("Verdana", Font.BOLD, 20));
 		  connectButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+		  connectButton.addActionListener(this);
 		  
 		  usernameField = new JTextField();
 		  usernameField.setMaximumSize(new Dimension(300, 50));
 		  usernameField.setAlignmentX(Component.CENTER_ALIGNMENT);
 		  
-		  JLabel imageLabel = ImageHandler.loadImage("blueknight");
-		  imageLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+		  centerComposite = ImageHandler.loadImage("blueknight");
+		  centerComposite.setAlignmentX(Component.CENTER_ALIGNMENT);
 		  
-		  errorField = new JLabel();
-		  errorField.setAlignmentX(Component.CENTER_ALIGNMENT);
+		  messageField = new JLabel("");
+		  messageField.setAlignmentX(Component.CENTER_ALIGNMENT);
 		  
 		  this.add(Box.createRigidArea(new Dimension(0,50)));
 		  this.add(welcomeLabel);
 		  this.add(Box.createRigidArea(new Dimension(0,10)));
-		  this.add(imageLabel);
+		  this.add(centerComposite);
 		  this.add(Box.createRigidArea(new Dimension(0,10)));
 		  this.add(userLabel);
 		  this.add(usernameField);
 		  this.add(Box.createRigidArea(new Dimension(0,10)));
 		  this.add(connectButton);
 		  this.add(Box.createRigidArea(new Dimension(0,10)));
-		  this.add(errorField);
+		  this.add(messageField);
+	}
+	
+	public void setMessage(String message) {
+		messageField.setText(message);
+		connectButton.setEnabled(false);
+		usernameField.setEnabled(false);
 	}
 	
 	public void setErrorMessage(String message) {
-		this.errorField = new JLabel(message);
+		this.messageField = new JLabel(message);
+	}
+	
+	public void actionPerformed(ActionEvent e) {
+		view.connect(usernameField.getText());
 	}
 	
 }

@@ -68,7 +68,7 @@ public class ResponseBuilderTest {
 		assertEquals(clientParser.getHighestDisplay(snapshot), "0");
 		
 		for (Object p: players) {
-			Long id = clientParser.getPlayerId(p);
+			Integer id = clientParser.getPlayerId(p);
 			assertEquals(clientParser.getPlayerHand(p).size(), 8);
 			assertEquals(clientParser.getPlayerDisplay(p).size(), 0);
 			assertEquals(clientParser.getPlayerTokens(p).size(), 0);

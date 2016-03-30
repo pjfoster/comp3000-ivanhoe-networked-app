@@ -6,6 +6,6 @@ import comp3004.ivanhoe.view.gui.GUIView;
 
 public class ViewFactoryImpl implements ViewFactory {
 	public View createView(AppClient client) {
-		return new TextViewImpl(client, new ClientRequestBuilder());
+		return new GUIView(client, new ClientRequestBuilder());
 	}
 }

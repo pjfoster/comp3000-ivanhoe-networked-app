@@ -12,6 +12,7 @@ import org.json.simple.JSONObject;
 
 import comp3004.ivanhoe.client.AppClient;
 import comp3004.ivanhoe.util.ClientRequestBuilder;
+import comp3004.ivanhoe.util.Strings;
 import comp3004.ivanhoe.view.View;
 
 @SuppressWarnings("serial")
@@ -21,8 +22,10 @@ public class GUIView extends JFrame implements View {
 	private ClientRequestBuilder requestBuilder;
 	private JPanel mainPanel;
 	
-	public GUIView(AppClient client, ClientRequestBuilder requestBuilder) throws IOException {
+	public GUIView(AppClient client, ClientRequestBuilder requestBuilder) {
 		super("Ivanhoe");
+		this.requestBuilder = requestBuilder;
+		this.client = client;
 		
 		this.setSize(800, 600);
 		this.setLayout(new FlowLayout());
@@ -33,9 +36,31 @@ public class GUIView extends JFrame implements View {
 	         }        
 	     });    
 	    
-	    mainPanel = new WelcomeView();
+	    mainPanel = new WelcomeView(this);
 	    
 	    this.add(mainPanel);
+	}
+	
+	public ClientRequestBuilder getRequestBuilder() {
+		return requestBuilder;
+	}
+	
+	public Integer getId() {
+		return client.getID();
+	}
+	
+	public void connect(String username) {
+		client.setUsername(username);
+		client.connect();
+	}
+	
+	public void handleEvent(JSONObject request) {
+		try {
+			System.out.println("Handling request!: " + request);
+			client.handleClientRequest(request);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	@Override
@@ -50,9 +75,19 @@ public class GUIView extends JFrame implements View {
 	}
 
 	@Override
+	public void displayConnectionRejected() {
+		// check that the main panel is still the welcome view
+		if (mainPanel instanceof WelcomeView) {
+			((WelcomeView) mainPanel).setErrorMessage(Strings.connection_rejected);
+		}
+	}
+
+	@Override
 	public void displayWaitingMessage() {
-		// TODO Auto-generated method stub
-		
+		// check that the main panel is still the welcome view
+		if (mainPanel instanceof WelcomeView) {
+			((WelcomeView) mainPanel).setMessage(Strings.connection_accepted_waiting);
+		}
 	}
 
 	@Override

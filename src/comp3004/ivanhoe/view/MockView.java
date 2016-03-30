@@ -58,4 +58,10 @@ public class MockView implements View {
 	@Override
 	public void displayChooseToken(JSONObject server_response) { }
 
+	@Override
+	public void displayConnectionRejected() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

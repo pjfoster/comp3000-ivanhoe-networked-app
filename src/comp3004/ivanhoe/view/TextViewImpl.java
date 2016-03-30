@@ -240,4 +240,10 @@ public class TextViewImpl implements View, Runnable {
 		
 	}
 
+	@Override
+	public void displayConnectionRejected() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

@@ -32,4 +32,6 @@ public interface View {
 	public void displayGameLossMessage(String winnerName);
 	public void displayPurpleTournamentWonMessage();
 	public void displayChooseToken(JSONObject server_response);
+
+	public void displayConnectionRejected();
 }

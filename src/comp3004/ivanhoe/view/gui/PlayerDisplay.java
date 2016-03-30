@@ -17,28 +17,31 @@ import javax.swing.JScrollPane;
 
 import org.apache.commons.lang3.StringUtils;
 
+import comp3004.ivanhoe.util.ClientParser;
+
 
 @SuppressWarnings("serial")
 public class PlayerDisplay extends JPanel {
 
 	private int userId;
 	private String username; 
+	private ClientParser parser = new ClientParser();
 	private ArrayList<String> cards;
 	private ArrayList<String> tokens;
-	private int displayTotal;
+	private String displayTotal;
 	
 	public JPanel userComposite;
 	public JPanel displayComposite;
 	
-	public PlayerDisplay(JLabel imageIcon, int userId, String username, ArrayList<String> tokens,
-			             ArrayList<String> displayCards, int displayTotal) {
+	public PlayerDisplay(Object player, JLabel imageIcon) {
 		this.setLayout(new FlowLayout());
+		this.setOpaque(false);
 		
-		this.userId = userId;
-		this.username = username;
-		this.cards = displayCards;
-		this.tokens = tokens;
-		this.displayTotal = displayTotal;
+		this.userId = parser.getPlayerId(player);
+		this.username = parser.getPlayerName(player);
+		this.cards = parser.getPlayerDisplay(player);
+		this.tokens = parser.getPlayerTokens(player);
+		this.displayTotal = parser.getPlayerDisplayTotal(player);
 		
 		this.userComposite = createUserComposite(this.username, imageIcon);
 		this.displayComposite = createDisplayComposite(this.tokens, this.cards, this.displayTotal);
@@ -57,6 +60,7 @@ public class PlayerDisplay extends JPanel {
 	 */
 	public JPanel createUserComposite(String username, JLabel imageIcon) {
 		JPanel userComposite = new JPanel();
+		userComposite.setOpaque(false);
 		//userComposite.setBorder(BorderFactory.createLineBorder(Color.black));
 		userComposite.setLayout(new BoxLayout(userComposite, BoxLayout.Y_AXIS));
 		
@@ -78,8 +82,9 @@ public class PlayerDisplay extends JPanel {
 	 * @param displayTotal
 	 * @return
 	 */
-	public JPanel createDisplayComposite(ArrayList<String> tokens, ArrayList<String> displayCards, int displayTotal) {
+	public JPanel createDisplayComposite(ArrayList<String> tokens, ArrayList<String> displayCards, String displayTotal) {
 		JPanel displayComposite = new JPanel();
+		displayComposite.setOpaque(false);
 		displayComposite.setLayout(new BoxLayout(displayComposite, BoxLayout.Y_AXIS));
 		
 		JLabel totalLabel = new JLabel("DISPLAY TOTAL: " + displayTotal);
@@ -87,7 +92,8 @@ public class PlayerDisplay extends JPanel {
 		
 		// Display tokens
 		JPanel tokensComposite = new JPanel();
-		tokensComposite.setSize(250, 25);
+		tokensComposite.setOpaque(false);
+		tokensComposite.setSize(350, 25);
 		tokensComposite.setAlignmentX(Component.LEFT_ALIGNMENT);
 		tokensComposite.setLayout(new FlowLayout(FlowLayout.LEFT));
 		for (String t: tokens) {
@@ -98,6 +104,7 @@ public class PlayerDisplay extends JPanel {
 		
 		// display cards
 		JPanel cardsComposite = new JPanel();
+		cardsComposite.setOpaque(false);
 		cardsComposite.setLayout(new FlowLayout());
 		for (String c: displayCards) {
 			JLabel card = ImageHandler.loadCard(c);
@@ -106,7 +113,7 @@ public class PlayerDisplay extends JPanel {
 		JScrollPane cardsScrollPane = new JScrollPane(cardsComposite, JScrollPane.VERTICAL_SCROLLBAR_NEVER,
 										              JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		cardsScrollPane.setBorder(null);
-		cardsScrollPane.setPreferredSize(new Dimension(250, 115));
+		cardsScrollPane.setPreferredSize(new Dimension(350, 115));
 		cardsScrollPane.setAlignmentX(Component.LEFT_ALIGNMENT);
 		
 		displayComposite.add(totalLabel);
