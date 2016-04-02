@@ -42,6 +42,10 @@ public class ServerParser {
 		return Token.fromString(colorString);
 	}
 	
+	public String getOpponentName(JSONObject request) {
+		return (String) request.get("opponent_username");
+	}
+	
 	@SuppressWarnings("unchecked")
 	public ArrayList<String> getCardCodes(JSONObject request) {
 		return (ArrayList<String>)request.get("cards");

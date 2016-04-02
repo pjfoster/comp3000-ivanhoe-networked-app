@@ -3,6 +3,7 @@ package comp3004.ivanhoe.model;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Random;
 
 /**
  * The Player class handles all actions associated with the player during a round of Ivanhoe.
@@ -36,6 +37,22 @@ public class Player {
 		hand = new ArrayList<Card>();
 		tokens = new HashSet<Token>();
 		display = new ArrayList<Card>();
+	}
+	
+	public String getName() { return name; }
+	public HashSet<Token> getTokens() {	return tokens; }
+	public List<Card> getHand() { return hand; }
+	public List<Card> getDisplay() { return display; }
+	public Card getDisplayTop() { return display.get(display.size()-1); }
+	
+	/**
+	 * Returns a random card from the player's hand
+	 * @return
+	 */
+	public Card getHandRandom() {
+		Random rnd = new Random();
+		int i = rnd.nextInt(hand.size());
+		return hand.get(i);
 	}
 	
 	/**
@@ -134,38 +151,6 @@ public class Player {
 	 */
 	public void setStartingHand(List<Card> startingHand){
 		hand = startingHand;
-	}
-	
-	/**
-	 * Returns player name
-	 * @return
-	 */
-	public String getName(){
-		return name;
-	}
-	
-	/**
-	 * Returns player tokens
-	 * @return
-	 */
-	public HashSet<Token> getTokens(){
-		return tokens;
-	}
-	
-	/**
-	 * Returns player hand
-	 * @return
-	 */
-	public List<Card> getHand(){
-		return hand;
-	}
-	
-	/**
-	 * Returns player display
-	 * @return
-	 */
-	public List<Card> getDisplay(){
-		return display;
 	}
 	
 	/**

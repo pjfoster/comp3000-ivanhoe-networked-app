@@ -67,6 +67,10 @@ public class ModifyDisplayTest {
 	public void tearDown() throws Exception {
 	}
 
+	/**
+	 * Test the BREAK LANCE action card. Discard all purple cards from
+	 * a valid opponent's display
+	 */
 	@Test
 	public void testBreakLance() {
 
@@ -96,13 +100,17 @@ public class ModifyDisplayTest {
 
 	}
 
+	/**
+	 * Test the RIPOSTE action card. Take the card at the top of a valid opponent's
+	 * display and add it to the player's display.
+	 */
 	@Test
 	public void testRiposte() {
 
 		ActionCard riposte = (ActionCard)controller.getCardFromDeck("riposte");
 		alexei.addHandCard(riposte);
 		cardWrapper.add("riposte");
-
+		
 		luke.addDisplayCard(new ColourCard("blue", 3));
 		luke.addDisplayCard(new ColourCard("blue", 5));
 		luke.addDisplayCard(new SupporterCard("squire", 2));
@@ -124,10 +132,13 @@ public class ModifyDisplayTest {
 		assertEquals(luke.getDisplay().size(), 2);
 		assertEquals(luke.getDisplayTotal(Token.BLUE), 8);
 		assertEquals(alexei.getDisplay().size(), 1);
-		assertEquals(alexei.getDisplay().get(0).toString(), "s3");
+		assertEquals(alexei.getDisplay().get(0).toString(), "s2");
 
 	}
 
+	/** 
+	 * Test DODGE action card. Pick any card in a valid opponent's display; discard it
+	 */
 	@Test
 	public void testDodge() {
 
@@ -135,8 +146,9 @@ public class ModifyDisplayTest {
 		alexei.addHandCard(dodge);
 		cardWrapper.add("dodge");
 
+		Card b5 = controller.getCardFromDeck("b5");
 		luke.addDisplayCard(new ColourCard("blue", 3));
-		luke.addDisplayCard(new ColourCard("blue", 5));
+		luke.addDisplayCard(b5);
 		luke.addDisplayCard(new SupporterCard("squire", 2));
 
 		assertTrue(controller.playCard(cardWrapper));
@@ -194,8 +206,9 @@ public class ModifyDisplayTest {
 		alexei.addHandCard(retreat);
 		cardWrapper.add("retreat");
 
+		Card b5 = controller.getCardFromDeck("b5");
 		luke.addDisplayCard(new ColourCard("blue", 3));
-		luke.addDisplayCard(new ColourCard("blue", 5));
+		luke.addDisplayCard(b5);
 		luke.addDisplayCard(new SupporterCard("squire", 2));
 
 		assertTrue(controller.playCard(cardWrapper));
@@ -221,8 +234,9 @@ public class ModifyDisplayTest {
 		// check that the displays were changed
 		assertEquals(luke.getDisplay().size(), 2);
 		assertEquals(luke.getDisplayTotal(Token.BLUE), 5);
-		assertEquals(luke.getHand().size(), 1);
-		assertEquals(luke.getHand().get(0).toString(), "b5");
+		assertEquals(luke.getHand().size(), 2); // one card picked on his turn
+		assertTrue(luke.getHand().get(0).toString().equals("b5") ||
+				   luke.getHand().get(1).toString().equals("b5"));
 	}
 
 	@Test
@@ -245,6 +259,10 @@ public class ModifyDisplayTest {
 		assertEquals(tournament.getDiscardPile().size(), 0);
 	}
 
+	/**
+	 * Select a random card from a valid opponent's hand and add it to
+	 * the player's hand
+	 */
 	@Test
 	public void testKnockDown() {
 		ActionCard knockDown = (ActionCard)controller.getCardFromDeck("knockdown");
@@ -265,13 +283,16 @@ public class ModifyDisplayTest {
 		controller.processPlayerMove(60001, selectOpponent);
 
 		// check that Alexei's hand now contains one of Luke's cards
-		assertEquals(luke.getHand().size(), 2);
+		assertEquals(luke.getHand().size(), 3); // one card picked when his turn started
 		assertEquals(alexei.getHand().size(), 1);
-		assertTrue(alexei.getHand().get(0).toString() == "b5" ||
-				alexei.getHand().get(0).toString() == "b3" ||
-				alexei.getHand().get(0).toString() == "s3");
+		assertTrue(alexei.getHand().get(0).toString().equals("b5") ||
+				alexei.getHand().get(0).toString().equals("b3") ||
+				alexei.getHand().get(0).toString().equals("s2"));
 	}
 
+	/**
+	 * Remove card at the top of each player's display
+	 */
 	@Test
 	public void testOutmaneuver() {
 		ActionCard outmaneuver = (ActionCard)controller.getCardFromDeck("outmaneuver");

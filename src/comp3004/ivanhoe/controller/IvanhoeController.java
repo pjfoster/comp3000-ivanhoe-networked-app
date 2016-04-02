@@ -27,8 +27,9 @@ public class IvanhoeController {
 	protected final int WAITING_FOR_WINNING_TOKEN = 5;
 	protected final int WAITING_FOR_NEW_TOURNAMENT_COLOR = 6;
 	protected final int WAITING_FOR_OPPONENT_SELECTION = 7;
-	protected final int WAIITNG_FOR_CARD = 8;
-	protected final int GAME_OVER = 6;
+	protected final int WAITING_FOR_CARD = 8;
+	protected final int WAITING_FOR_ALL_CARDS = 9;
+	protected final int GAME_OVER = 10;
 
 	protected int maxPlayers;
 	protected HashMap<Integer, Player> players;
@@ -45,6 +46,7 @@ public class IvanhoeController {
 	protected int state;
 
 	private ArrayList<String> lastPlayed;
+	private Player selectedOpponent;
 
 	public IvanhoeController(AppServer server,
 			ServerResponseBuilder responseBuilder, int maxPlayers) {
@@ -60,6 +62,7 @@ public class IvanhoeController {
 		previousTournament = null;
 		currentTurn = -1;
 		lastPlayed = null;
+		selectedOpponent = null;
 	}
 
 	/**
@@ -168,7 +171,21 @@ public class IvanhoeController {
 			
 		case WAITING_FOR_NEW_TOURNAMENT_COLOR:
 			if (requestType.equals("choose_token")) { 
-				if (!changeTournamentColor(playerMove)) { invalidMove(); }
+				if (!actionCardChangeTournamentColor(playerMove)) { invalidMove(); }
+			}
+			else { invalidMove(); }
+			break;
+			
+		case WAITING_FOR_OPPONENT_SELECTION:
+			if (requestType.equals("select_opponent")) { 
+				if (!actionCardPickOpponent(playerMove)) { invalidMove(); }
+			}
+			else { invalidMove(); }
+			break;
+			
+		case WAITING_FOR_CARD:
+			if (requestType.equals("pick_card")) { 
+				if (!actionCardPickCard(playerMove)) { invalidMove(); }
 			}
 			else { invalidMove(); }
 			break;
@@ -652,6 +669,20 @@ public class IvanhoeController {
 			return true;
 			
 		}
+		
+		else if (c.getName().equals("breaklance") || c.getName().equals("riposte") ||
+				 c.getName().equals("dodge") || c.getName().equals("retreat") ||
+				 c.getName().equals("knockdown") || c.getName().equals("adapt")) {
+			
+			lastPlayed = new ArrayList<String>();
+			lastPlayed.add(c.getName());
+			
+			JSONObject selectOpponent = responseBuilder.buildPickOpponent(getCurrentTurnId(), tournament);
+			server.sendToClient(getCurrentTurnId(), selectOpponent);
+			
+			state = WAITING_FOR_OPPONENT_SELECTION;
+			return true;
+		}
 
 		return false;
 		
@@ -775,11 +806,12 @@ public class IvanhoeController {
 	}
 	
 	/**
-	 * Handles rules for the action cards UNHORSE and CHANGE WEAPON
+	 * Handles rules for the action cards that change the tournament colour:
+	 * UNHORSE and CHANGE WEAPON
 	 * @param playerMove
 	 * @return
 	 */
-	protected boolean changeTournamentColor(JSONObject playerMove) {
+	protected boolean actionCardChangeTournamentColor(JSONObject playerMove) {
 	
 		ArrayList<Card> cards = getCardsInHand(lastPlayed);
 		if (cards == null || cards.isEmpty()) return false;
@@ -797,6 +829,121 @@ public class IvanhoeController {
 		tournament.addToDiscard(cards.get(0));
 		state = WAITING_FOR_PLAYER_MOVE;
 		finishTurn();
+		
+		return true;
+	}
+	
+	/**
+	 * Handles all action cards that require the player to pick a valid opponent:
+	 * BREAK LANCE, RIPOSTE, DODGE, RETREAT, KNOCK DOWN, ADAPT
+	 * @param playerMove
+	 * @return
+	 */
+	protected boolean actionCardPickOpponent(JSONObject playerMove) {
+		
+		// check that a valid opponent was selected
+		String opponentName = parser.getOpponentName(playerMove);
+		Player opponent = getTournamentPlayer(opponentName);
+		if (opponent == null) return false;
+		
+		String cardName = lastPlayed.get(0);
+		ActionCard actionCard = (ActionCard)tournament.getCard(cardName).get(0);
+		
+		if (cardName.equals("breaklance")) {
+			// remove all purple cards from the opponent's display
+			ArrayList<Card> displayCopy = new ArrayList<Card>(opponent.getDisplay());
+			for (Card c: displayCopy) {
+				if (c.toString().charAt(0) == 'p' && opponent.getDisplay().size() > 1) {
+					opponent.removeDisplayCard(c);
+				}
+			}
+			state = WAITING_FOR_PLAYER_MOVE;
+			getCurrentTurnPlayer().removeHandCard(actionCard);
+			lastPlayed = null;
+			finishTurn();
+		}
+		
+		else if (cardName.equals("riposte")) {
+			// take the card at the top of the opponent's display
+			if (opponent.getDisplay().size() <= 1) return false;
+			
+			Card c = opponent.getDisplayTop();
+			opponent.removeDisplayCard(c);
+			getCurrentTurnPlayer().addDisplayCard(c);
+			
+			state = WAITING_FOR_PLAYER_MOVE;
+			getCurrentTurnPlayer().removeHandCard(actionCard);
+			lastPlayed = null;
+			finishTurn();
+			
+		}
+		
+		else if (cardName.equals("knockdown")) {
+			// take a random card from the opponent's hand
+			Card c = opponent.getHandRandom();
+			opponent.removeHandCard(c);
+			getCurrentTurnPlayer().addHandCard(c);
+			
+			state = WAITING_FOR_PLAYER_MOVE;
+			lastPlayed = null;
+			getCurrentTurnPlayer().removeHandCard(actionCard);
+			finishTurn();
+		}
+		
+		else if (cardName.equals("dodge") || cardName.equals("retreat")) {
+			// select a card in the opponent's display
+			JSONObject pick_card = responseBuilder.buildPickCard(opponent.getDisplay());
+			server.sendToClient(getCurrentTurnId(), pick_card);
+			selectedOpponent = opponent;
+			state = WAITING_FOR_CARD;
+		}
+		
+		return true;
+	}
+	
+	/**
+	 * Handles action cards where the player is required to select a card:
+	 * DODGE, RETREAT
+	 * @param playerMove
+	 * @return
+	 */
+	protected boolean actionCardPickCard(JSONObject playerMove) {
+		
+		if (selectedOpponent == null) { return false; }
+		ArrayList<Card> cards = parser.getCard(playerMove, tournament);
+		
+		
+		// check that the player selected a valid card
+		Card card = null;
+		for (Card c: cards) {
+			if (selectedOpponent.getDisplay().contains(c)) {
+				card = c;
+				break;
+			}
+		}
+		if (card == null) { return false; }
+		
+		String actionCardPlayed = lastPlayed.get(0);
+		ActionCard actionCard = (ActionCard)tournament.getCard(actionCardPlayed).get(0);
+		
+		if (actionCardPlayed.equals("dodge")) {
+			selectedOpponent.removeDisplayCard(card);
+			tournament.addToDiscard(card);
+			
+			state = WAITING_FOR_PLAYER_MOVE;
+			getCurrentTurnPlayer().removeHandCard(actionCard);
+			lastPlayed = null;
+			finishTurn();
+		}
+		
+		else if (actionCardPlayed.equals("retreat")) {
+			selectedOpponent.removeDisplayCard(card);
+			selectedOpponent.addHandCard(card);
+			
+			state = WAITING_FOR_PLAYER_MOVE;
+			lastPlayed = null;
+			finishTurn();
+		}
 		
 		return true;
 	}
@@ -845,6 +992,21 @@ public class IvanhoeController {
 			}
 		}
 		return false;
+	}
+	
+	/**
+	 * Returns the player with the given username, if they are registered
+	 * in the tournment. Returns null otherwise
+	 * @param username
+	 * @return
+	 */
+	public Player getTournamentPlayer(String username) {
+		for (Player p: tournament.getPlayers().values()) {
+			if (p.getName().toLowerCase().equals(username.toLowerCase())) {
+				return p;
+			}
+		}
+		return null;
 	}
 
 }

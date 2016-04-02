@@ -139,7 +139,7 @@ public class MockController extends IvanhoeController {
 	}
 	
 	public boolean testChangeTournamentColor(JSONObject request) {
-		return changeTournamentColor(request);
+		return actionCardChangeTournamentColor(request);
 	}
 	
 }
