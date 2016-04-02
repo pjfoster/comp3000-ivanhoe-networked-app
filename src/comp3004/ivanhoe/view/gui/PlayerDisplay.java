@@ -37,7 +37,7 @@ public class PlayerDisplay extends JPanel {
 		this.setLayout(new FlowLayout());
 		this.setOpaque(false);
 		
-		this.userId = parser.getPlayerId(player);
+		this.userId = parser.getPlayerId(player).intValue();
 		this.username = parser.getPlayerName(player);
 		this.cards = parser.getPlayerDisplay(player);
 		this.tokens = parser.getPlayerTokens(player);

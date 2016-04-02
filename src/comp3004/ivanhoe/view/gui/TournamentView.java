@@ -113,7 +113,7 @@ public class TournamentView extends JPanel {
 		JLabel tournamentText = ImageHandler.loadImage("tournament");
 
 		JLabel token;
-		if (tokenColor.toLowerCase() == "undecided") {
+		if (tokenColor == null  || tokenColor.toLowerCase().trim().equals("undecided")) {
 			token = new JLabel("");
 		} else {
 			token = ImageHandler.loadToken(tokenColor.toLowerCase());
@@ -155,6 +155,7 @@ public class TournamentView extends JPanel {
 		JPanel cardsPanel = new JPanel();
 		cardsPanel.setLayout(new BoxLayout(cardsPanel, BoxLayout.Y_AXIS));
 		cardsPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
+		System.out.println("Cards: " + cards);
 		for (String c: cards) {
 			JLabel card = ImageHandler.loadCard(c);
 			card.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -197,14 +198,13 @@ public class TournamentView extends JPanel {
 	}
 
 	public boolean isPlayer(Object player) {
-		if (parser.getPlayerId(player) == masterView.getId()) return true;
+		if (parser.getPlayerId(player).intValue() == masterView.getId()) return true;
 		return false;
 	}
 	
 	public ArrayList<String> getPlayerHand(JSONObject snapshot) {
 		for (Object player: parser.getPlayerList(snapshot)) {
-			//if (parser.getPlayerId(player) == masterView.getId()) {
-			if (parser.getPlayerId(player) == 60001) {
+			if (parser.getPlayerId(player).intValue() == masterView.getId()) {
 				return parser.getPlayerHand(player);
 			}
 		}

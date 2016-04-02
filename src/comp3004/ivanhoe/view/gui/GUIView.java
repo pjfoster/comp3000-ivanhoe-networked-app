@@ -116,8 +116,14 @@ public class GUIView extends JFrame implements View {
 
 	@Override
 	public void displayStartScreen(JSONObject snapshot) {
-		// TODO Auto-generated method stub
+		this.remove(mainPanel);
 		
+		TournamentView tournamentView = new TournamentView(this, snapshot);
+		mainPanel = tournamentView;
+		this.add(mainPanel);
+		
+		this.repaint();
+		this.revalidate();
 	}
 
 	@Override
