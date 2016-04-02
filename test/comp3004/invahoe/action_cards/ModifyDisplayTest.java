@@ -382,6 +382,9 @@ public class ModifyDisplayTest {
 		}
 	}
 	
+	/**
+	 * Test DISGRACE action card. Remove all supporter cards from all players' displays
+	 */
 	@Test
 	public void testDisgrace() {
 		ActionCard disgrace = (ActionCard)controller.getCardFromDeck("disgrace");
@@ -408,10 +411,11 @@ public class ModifyDisplayTest {
 		assertEquals(jayson.getDisplayTotal(Token.BLUE), 2);
 		assertEquals(emma.getDisplayTotal(Token.BLUE), 3);
 		
-		// check that no one's hand contains b2
+		// check that no one's display contains a supporter card
 		for (Player p: tournament.getPlayers().values()) {
-			for (Card c: p.getHand()) {
-				assertFalse(c.toString().contains("s") || c.toString().contains("m")) ;
+			if (p.getName().equals("Emma")) continue;
+			for (Card c: p.getDisplay()) {
+				assertFalse(c.toString().charAt(0) == 's' || c.toString().charAt(0) == 'm') ;
 			}
 		}
 	}
@@ -431,10 +435,12 @@ public class ModifyDisplayTest {
 		alexei.addHandCard(outwit);
 		cardWrapper.add("outwit");
 		
-		alexei.addDisplayCard(new ColourCard("blue", 2));
+		Card b2 = controller.getCardFromDeck("b2");
+		alexei.addDisplayCard(b2);
 		
+		Card b5 = controller.getCardFromDeck("b5");
 		luke.addDisplayCard(new ColourCard("blue", 3));
-		luke.addDisplayCard(new ColourCard("blue", 5));
+		luke.addDisplayCard(b5);
 		luke.addDisplayCard(new SupporterCard("squire", 2));
 
 		assertTrue(controller.playCard(cardWrapper));
@@ -455,7 +461,7 @@ public class ModifyDisplayTest {
 
 		// check that Alexei is now required to pick one of her own cards
 		assertEquals(controller.getCurrentTurnPlayer(), alexei);
-		assertEquals(controller.getState(), 8);
+		assertEquals(controller.getState(), 9);
 
 		pickCard = requestBuilder.buildPickCard("b2");
 		controller.processPlayerMove(60001, pickCard);

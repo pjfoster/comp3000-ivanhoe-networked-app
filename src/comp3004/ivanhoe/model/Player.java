@@ -111,6 +111,10 @@ public class Player {
 		return false;
 	}
 	
+	public Card removeDisplayTop() {
+		return display.remove(display.size()-1);
+	}
+	
 	/**
 	 * Adds token to player's collection
 	 * @param token
