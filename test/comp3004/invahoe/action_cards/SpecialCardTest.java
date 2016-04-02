@@ -17,8 +17,18 @@ public class SpecialCardTest {
 	}
 
 	@Test
-	public void test() {
-		fail("Not yet implemented");
+	public void testShield() {
+	
+	}
+	
+	@Test
+	public void testStunned() {
+	
+	}
+	
+	@Test
+	public void testIvanhoe() {
+	
 	}
 
 }
