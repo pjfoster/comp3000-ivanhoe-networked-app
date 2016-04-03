@@ -197,7 +197,7 @@ public class TournamentView extends JPanel {
 		
 		int x = 0;
 		for (Object player: parser.getPlayerList(snapshot)) {
-			if (isPlayer(player)) continue;
+			//if (isPlayer(player)) continue;
 			PlayerDisplay newDisplay = new PlayerDisplay(player, ImageHandler.loadImage(icons[x]));
 			++x;
 			playersComposite.add(newDisplay);
@@ -242,15 +242,16 @@ public class TournamentView extends JPanel {
 		tournamentColor = ImageHandler.loadToken(tokenColor.toLowerCase());
 		header.add(tournamentColor);
 		
-		if (tokenColor.equals("blue")) {
+		System.out.println("TOKEN COLOR: " + tokenColor);
+		if (tokenColor.equals("BLUE")) {
 			this.setBackground(new Color(51, 153, 255));
-		} else if (tokenColor.equals("red")) {
+		} else if (tokenColor.equals("RED")) {
 			this.setBackground(new Color(255, 102, 102));
-		} else if (tokenColor.equals("yellow")) {
+		} else if (tokenColor.equals("YELLOW")) {
 			this.setBackground(new Color(255, 255, 0));
-		} else if (tokenColor.equals("purple")) {
+		} else if (tokenColor.equals("PURPLE")) {
 			this.setBackground(new Color(153, 51, 255));
-		} else if (tokenColor.equals("green")) {
+		} else if (tokenColor.equals("GREEN")) {
 			this.setBackground(new Color(102, 204, 0));
 		}
 	}
@@ -267,6 +268,7 @@ public class TournamentView extends JPanel {
 	public void updateHand(ArrayList<String> cards) {
 		
 		currentHand = cards;
+		System.out.println("NEW HAND CARDS: "+ cards);
 		
 		handComposite.remove(cardsPane);
 		JPanel cardsPanel = new JPanel();
@@ -293,7 +295,7 @@ public class TournamentView extends JPanel {
 		System.out.println("Updating players composite!");
 		for (Object player : players) {
 			int playerId = parser.getPlayerId(player).intValue();
-			if (playerId == masterView.getId()) continue;
+			//if (playerId == masterView.getId()) continue;
 			playerDisplays.get(playerId).updateDisplay(player);
 		}
 	}

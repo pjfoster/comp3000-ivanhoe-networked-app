@@ -868,16 +868,23 @@ public class IvanhoeController {
 				.buildUpdateView(tournament);
 		server.broadcast(newSnapshot);
 
-		JSONObject playerTurn = responseBuilder.buildStartPlayerTurn(drawnCard);
-		server.sendToClient(getCurrentTurnId(), playerTurn);
-
 		JSONObject turn = responseBuilder
 				.buildIndicateTurn(getCurrentTurnPlayer().getName());
-		for (int key : players.keySet()) {
+		server.broadcast(turn);
+		/*for (int key : players.keySet()) {
 			if (key != getCurrentTurnId()) {
 				server.sendToClient(key, turn);
 			}
+		}*/
+		
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+		JSONObject playerTurn = responseBuilder.buildStartPlayerTurn(drawnCard);
+		server.sendToClient(getCurrentTurnId(), playerTurn);
 	}
 
 	/**

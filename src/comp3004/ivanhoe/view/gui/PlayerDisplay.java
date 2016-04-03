@@ -150,6 +150,7 @@ public class PlayerDisplay extends JPanel {
 		tokensComposite = makeTokensComposite(parser.getPlayerTokens(player));
 		
 		// update display
+		System.out.println(parser.getPlayerName(player) + " new display " + parser.getPlayerDisplay(player));
 		cardsScrollPane = makeCardsScrollPane(parser.getPlayerDisplay(player));
 		
 		displayComposite.add(tokensComposite);
