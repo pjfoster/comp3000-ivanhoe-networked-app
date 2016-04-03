@@ -1,9 +1,11 @@
 package comp3004.ivanhoe.view.gui;
 
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -95,6 +97,7 @@ public class GUIView extends JFrame implements View {
 
 	@Override
 	public void displayTournamentView(JSONObject snapshot) {
+		System.out.println("UPDATING TOURNAMENT VIEW " + client.getID());
 		if (mainPanel instanceof TournamentView) {
 			((TournamentView) mainPanel).updateView(snapshot);
 		}
@@ -102,14 +105,16 @@ public class GUIView extends JFrame implements View {
 
 	@Override
 	public void displayTurnView() {
-		// TODO Auto-generated method stub
-		
+		if (mainPanel instanceof TournamentView)  {
+			((TournamentView) mainPanel).displayPlayerTurn(null);
+		}
 	}
 
 	@Override
 	public void displayTurnView(String drawnCard) {
-		// TODO Auto-generated method stub
-		
+		if (mainPanel instanceof TournamentView)  {
+			((TournamentView) mainPanel).displayPlayerTurn(drawnCard);
+		}	
 	}
 
 	@Override

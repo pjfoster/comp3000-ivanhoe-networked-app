@@ -12,6 +12,7 @@ import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBoxMenuItem;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -27,7 +28,7 @@ import comp3004.ivanhoe.util.Strings;
  *
  */
 @SuppressWarnings("serial")
-public class TurnView extends JPanel implements ActionListener {
+public class TurnView extends JFrame implements ActionListener {
 
 	GUIView masterView;
 	
@@ -39,9 +40,14 @@ public class TurnView extends JPanel implements ActionListener {
 	HashMap<JCheckBoxMenuItem, String> cardsLookup;
 	
 	public TurnView(GUIView masterView, ArrayList<String> cards, String newCard) {
+		super("It's Your Turn!");
+		this.setSize(600, 300);
 		this.masterView = masterView;
-		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		this.cardsLookup = new HashMap<JCheckBoxMenuItem, String>();
+		
+		JPanel mainView = new JPanel();
+		mainView.setLayout(new BoxLayout(mainView, BoxLayout.Y_AXIS));
+		this.add(mainView);
 		
 		JLabel l1 = new JLabel(Strings.your_turn_to_play);
 		
@@ -66,10 +72,10 @@ public class TurnView extends JPanel implements ActionListener {
 		withdrawButton = new JButton("Withdraw");
 		withdrawButton.addActionListener(this);
 		
-		this.add(l1);
-		this.add(cardScrollPane);
-		this.add(submitButton);
-		this.add(withdrawButton);
+		mainView.add(l1);
+		mainView.add(cardScrollPane);
+		mainView.add(submitButton);
+		mainView.add(withdrawButton);
 		
 	}
 
@@ -89,16 +95,24 @@ public class TurnView extends JPanel implements ActionListener {
 			if (selectedCards.size() == 1) {
 				JSONObject cardMove = ClientRequestBuilder.buildCardMove(selectedCards.get(0));
 				masterView.handleEvent(cardMove);
+				exit();
 			} else if (selectedCards.size() > 1) {
 				JSONObject cardsMove = ClientRequestBuilder.buildMultipleCardsMove(selectedCards);
 				masterView.handleEvent(cardsMove);
+				exit();
 			}
 			
 		} else if (e.getSource() == withdrawButton) {
 			JSONObject withdraw = ClientRequestBuilder.buildWithdrawMove();
 			masterView.handleEvent(withdraw);
+			exit();
 		}
 		
+	}
+	
+	public void exit() {
+		this.setVisible(false);
+		this.dispose();
 	}
 	
 }

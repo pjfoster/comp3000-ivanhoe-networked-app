@@ -28,13 +28,10 @@ public class TournamentView extends JPanel {
 	
 	GUIView masterView;
 	ClientParser parser;
-
 	JPanel header;
 	JLabel tournamentColor;
-	
 	JPanel handComposite;
 	JScrollPane cardsPane;
-	
 	JPanel statsComposite;
 	
 	JScrollPane playersScrollPane;
@@ -43,6 +40,8 @@ public class TournamentView extends JPanel {
 	JLabel highestDisplayTotal;
 	JLabel currentTurn;
 
+	ArrayList<String> currentHand;
+	
 	public TournamentView(GUIView masterView, JSONObject snapshot) {
 		this.masterView = masterView;
 		this.parser = new ClientParser();
@@ -113,6 +112,7 @@ public class TournamentView extends JPanel {
 	 */
 	private JPanel createHeader(String tokenColor) {
 		JPanel header = new JPanel();
+		header.setOpaque(false);
 		//header.setBackground(new Color(153, 0, 0));
 		
 		//header.setBorder(BorderFactory.createLineBorder(Color.black));
@@ -134,6 +134,7 @@ public class TournamentView extends JPanel {
 		JPanel statsPanel = new JPanel();
 		//statsPanel.setBorder(BorderFactory.createLineBorder(Color.black));
 		statsPanel.setLayout(new BoxLayout(statsPanel, BoxLayout.Y_AXIS));
+		statsPanel.setOpaque(false);
 		
 		this.highestDisplayTotal = new JLabel("HIGHEST DISPLAY: " + highestDisplayTotal);
 		this.currentTurn = new JLabel("CURRENT TURN: " + currentTurn);
@@ -153,6 +154,7 @@ public class TournamentView extends JPanel {
 		
 		//handComposite.setBorder(BorderFactory.createLineBorder(Color.black));
 		handComposite.setLayout(new BoxLayout(handComposite, BoxLayout.Y_AXIS));
+		handComposite.setOpaque(false);
 		
 		JLabel text = new JLabel("YOUR HAND:");
 		text.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -160,6 +162,7 @@ public class TournamentView extends JPanel {
 		handComposite.add(Box.createRigidArea(new Dimension(0, 15)));
 		
 		JPanel cardsPanel = new JPanel();
+		cardsPanel.setOpaque(false);
 		cardsPanel.setLayout(new BoxLayout(cardsPanel, BoxLayout.Y_AXIS));
 		cardsPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
 		System.out.println("Cards: " + cards);
@@ -171,6 +174,8 @@ public class TournamentView extends JPanel {
 		}
 		cardsPane = new JScrollPane(cardsPanel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
 	                                            JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		cardsPane.setOpaque(false);
+		cardsPane.getViewport().setOpaque(false);
 		cardsPane.setBorder(null);
 		cardsPane.setAlignmentX(Component.CENTER_ALIGNMENT);
 		handComposite.add(cardsPane);
@@ -188,6 +193,7 @@ public class TournamentView extends JPanel {
 		//playersComposite.setBackground(Color.YELLOW);
 		playersComposite.setBorder(BorderFactory.createLineBorder(Color.black));
 		playersComposite.setLayout(new BoxLayout(playersComposite, BoxLayout.Y_AXIS));
+		playersComposite.setOpaque(false);
 		
 		int x = 0;
 		for (Object player: parser.getPlayerList(snapshot)) {
@@ -201,6 +207,8 @@ public class TournamentView extends JPanel {
 		
 		JScrollPane playersScrollPane = new JScrollPane(playersComposite);
 		playersScrollPane.setAlignmentX(LEFT_ALIGNMENT);
+		playersScrollPane.setOpaque(false);
+		playersScrollPane.getViewport().setOpaque(false);
 		
 		return playersScrollPane;
 	}
@@ -219,7 +227,8 @@ public class TournamentView extends JPanel {
 		updateStats(null, parser.getHighestDisplay(snapshot));
 		
 		for (Object p: parser.getPlayerList(snapshot)) {
-			if (parser.getPlayerId(p) == masterView.getId()) {
+			if (parser.getPlayerId(p).intValue() == masterView.getId()) {
+				System.out.println("Updating hand of : " + parser.getPlayerName(p));
 				updateHand(parser.getPlayerHand(p));
 				break;
 			}
@@ -234,15 +243,15 @@ public class TournamentView extends JPanel {
 		header.add(tournamentColor);
 		
 		if (tokenColor.equals("blue")) {
-			playersComposite.setBackground(new Color(51, 153, 255));
+			this.setBackground(new Color(51, 153, 255));
 		} else if (tokenColor.equals("red")) {
-			playersComposite.setBackground(new Color(255, 102, 102));
+			this.setBackground(new Color(255, 102, 102));
 		} else if (tokenColor.equals("yellow")) {
-			playersComposite.setBackground(new Color(255, 255, 153));
+			this.setBackground(new Color(255, 255, 0));
 		} else if (tokenColor.equals("purple")) {
-			playersComposite.setBackground(new Color(153, 51, 255));
+			this.setBackground(new Color(153, 51, 255));
 		} else if (tokenColor.equals("green")) {
-			playersComposite.setBackground(new Color(102, 204, 0));
+			this.setBackground(new Color(102, 204, 0));
 		}
 	}
 	
@@ -257,8 +266,11 @@ public class TournamentView extends JPanel {
 	
 	public void updateHand(ArrayList<String> cards) {
 		
+		currentHand = cards;
+		
 		handComposite.remove(cardsPane);
 		JPanel cardsPanel = new JPanel();
+		cardsPanel.setOpaque(false);
 		cardsPanel.setLayout(new BoxLayout(cardsPanel, BoxLayout.Y_AXIS));
 		cardsPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
 		for (String c: cards) {
@@ -271,13 +283,16 @@ public class TournamentView extends JPanel {
 	                                            JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		cardsPane.setBorder(null);
 		cardsPane.setAlignmentX(Component.CENTER_ALIGNMENT);
+		cardsPane.setOpaque(false);
+		cardsPane.getViewport().setOpaque(false);
 		handComposite.add(cardsPane);
 		
 	}
 	
 	public void updatePlayersComposite(ArrayList<Object> players) {
+		System.out.println("Updating players composite!");
 		for (Object player : players) {
-			int playerId = parser.getPlayerId(player);
+			int playerId = parser.getPlayerId(player).intValue();
 			if (playerId == masterView.getId()) continue;
 			playerDisplays.get(playerId).updateDisplay(player);
 		}
@@ -285,12 +300,17 @@ public class TournamentView extends JPanel {
 	
 	public ArrayList<String> getPlayerHand(JSONObject snapshot) {
 		for (Object player: parser.getPlayerList(snapshot)) {
-			//if (parser.getPlayerId(player).intValue() == masterView.getId()) {
-			if (parser.getPlayerId(player).intValue() == 60001) {
+			if (parser.getPlayerId(player).intValue() == masterView.getId()) {
+				this.currentHand = parser.getPlayerHand(player);
 				return parser.getPlayerHand(player);
 			}
 		}
 		return null;
+	}
+	
+	public void displayPlayerTurn(String newCard) {
+		TurnView turnView = new TurnView(masterView, currentHand, newCard);
+		turnView.setVisible(true);
 	}
 	
 }

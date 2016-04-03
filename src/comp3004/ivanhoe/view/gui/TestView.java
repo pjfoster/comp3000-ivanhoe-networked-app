@@ -95,7 +95,7 @@ public class TestView {
 		testFrame.setVisible(true);
 		
 		testPanel.updateStats("Miambi", "20");
-		testPanel.updateHeader("green");
+		testPanel.updateHeader("blue");
 		
 		ArrayList<String> newCards = new ArrayList<String>();
 		newCards.add("riposte");
@@ -115,7 +115,7 @@ public class TestView {
 		testPanel.updateView(snapshot);
 		
 		TurnView turnView = new TurnView(view, newCards, null);
-
+		turnView.setVisible(true);
 		
 	}
 
