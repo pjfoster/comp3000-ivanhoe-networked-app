@@ -14,8 +14,11 @@ import org.json.simple.JSONObject;
 
 import comp3004.ivanhoe.client.AppClient;
 import comp3004.ivanhoe.controller.MockController;
+import comp3004.ivanhoe.model.ActionCard;
+import comp3004.ivanhoe.model.Card;
 import comp3004.ivanhoe.model.ColourCard;
 import comp3004.ivanhoe.model.Player;
+import comp3004.ivanhoe.model.SupporterCard;
 import comp3004.ivanhoe.model.Token;
 import comp3004.ivanhoe.model.Tournament;
 import comp3004.ivanhoe.server.MockServer;
@@ -87,10 +90,18 @@ public class TestView {
 		ServerResponseBuilder responseBuilder = new ServerResponseBuilder();
 		JSONObject snapshot = responseBuilder.buildUpdateView(tournament);
 		
-		JPanel testPanel = new TournamentView(view, snapshot);
+		TournamentView testPanel = new TournamentView(view, snapshot);
 		testFrame.add(testPanel);
 		testFrame.setVisible(true);
 		
+		testPanel.updateStats("Miambi", "20");
+		testPanel.updateHeader("green");
+		
+		ArrayList<String> newCards = new ArrayList<String>();
+		newCards.add("riposte");
+		newCards.add("m6");
+		newCards.add("y3");
+		testPanel.updateHand(newCards);
 	}
 
 }

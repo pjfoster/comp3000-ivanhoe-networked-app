@@ -29,9 +29,13 @@ public class PlayerDisplay extends JPanel {
 	private ArrayList<String> cards;
 	private ArrayList<String> tokens;
 	private String displayTotal;
+	private JLabel displayLabel;
 	
 	public JPanel userComposite;
 	public JPanel displayComposite;
+	
+	public JPanel tokensComposite;
+	public JScrollPane cardsScrollPane;
 	
 	public PlayerDisplay(Object player, JLabel imageIcon) {
 		this.setLayout(new FlowLayout());
@@ -51,6 +55,8 @@ public class PlayerDisplay extends JPanel {
 		this.add(displayComposite);
 		
 	}
+	
+	public int getUserId() { return userId; }
 	
 	/**
 	 * Create the userComposite, which displays a player's username and an icon
@@ -87,11 +93,11 @@ public class PlayerDisplay extends JPanel {
 		displayComposite.setOpaque(false);
 		displayComposite.setLayout(new BoxLayout(displayComposite, BoxLayout.Y_AXIS));
 		
-		JLabel totalLabel = new JLabel("DISPLAY TOTAL: " + displayTotal);
-		totalLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+		displayLabel = new JLabel("DISPLAY TOTAL: " + displayTotal);
+		displayLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
 		
 		// Display tokens
-		JPanel tokensComposite = new JPanel();
+		tokensComposite = new JPanel();
 		tokensComposite.setOpaque(false);
 		tokensComposite.setSize(350, 25);
 		tokensComposite.setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -110,20 +116,42 @@ public class PlayerDisplay extends JPanel {
 			JLabel card = ImageHandler.loadCard(c);
 			cardsComposite.add(card);
 		}
-		JScrollPane cardsScrollPane = new JScrollPane(cardsComposite, JScrollPane.VERTICAL_SCROLLBAR_NEVER,
+		cardsScrollPane = new JScrollPane(cardsComposite, JScrollPane.VERTICAL_SCROLLBAR_NEVER,
 										              JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		cardsScrollPane.setBorder(null);
 		cardsScrollPane.setPreferredSize(new Dimension(350, 115));
 		cardsScrollPane.setAlignmentX(Component.LEFT_ALIGNMENT);
 		
-		displayComposite.add(totalLabel);
+		displayComposite.add(displayLabel);
 		displayComposite.add(tokensComposite);
 		displayComposite.add(cardsScrollPane);
 		
 		return displayComposite;
 	}
 	
+	private JScrollPane makeCardsScrollPane(ArrayList<String> displayCards) {
+		JPanel cardsComposite = new JPanel();
+		cardsComposite.setOpaque(false);
+		cardsComposite.setLayout(new FlowLayout());
+		for (String c: displayCards) {
+			JLabel card = ImageHandler.loadCard(c);
+			cardsComposite.add(card);
+		}
+		JScrollPane cardsScrollPane = new JScrollPane(cardsComposite, JScrollPane.VERTICAL_SCROLLBAR_NEVER,
+										              JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		cardsScrollPane.setBorder(null);
+		cardsScrollPane.setPreferredSize(new Dimension(350, 115));
+		cardsScrollPane.setAlignmentX(Component.LEFT_ALIGNMENT);
+		return cardsScrollPane;
+	}
 	
+	public void updateDisplay(Object player) {
+		// update display total
+		
+		// update tokens
+		
+		// update display
+	}
 	
 	
 	

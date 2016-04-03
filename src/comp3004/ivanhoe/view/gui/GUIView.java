@@ -11,6 +11,7 @@ import javax.swing.JPanel;
 import org.json.simple.JSONObject;
 
 import comp3004.ivanhoe.client.AppClient;
+import comp3004.ivanhoe.util.ClientParser;
 import comp3004.ivanhoe.util.ClientRequestBuilder;
 import comp3004.ivanhoe.util.Strings;
 import comp3004.ivanhoe.view.View;
@@ -20,11 +21,13 @@ public class GUIView extends JFrame implements View {
 
 	private AppClient client;
 	private ClientRequestBuilder requestBuilder;
+	private ClientParser parser;
 	private JPanel mainPanel;
 	
 	public GUIView(AppClient client, ClientRequestBuilder requestBuilder) {
 		super("Ivanhoe");
 		this.requestBuilder = requestBuilder;
+		this.parser = new ClientParser();
 		this.client = client;
 		
 		this.setSize(800, 600);
@@ -124,6 +127,10 @@ public class GUIView extends JFrame implements View {
 		
 		this.repaint();
 		this.revalidate();
+		
+		if (parser.getCurrentTurn(snapshot) == client.getID()) {
+			displayTurnView();
+		}
 	}
 
 	@Override
@@ -140,8 +147,9 @@ public class GUIView extends JFrame implements View {
 
 	@Override
 	public void displayTurnPlayer(String playerName) {
-		// TODO Auto-generated method stub
-		
+		if (mainPanel instanceof TournamentView) {
+			((TournamentView) mainPanel).updateStats(playerName, null);
+		}
 	}
 
 	@Override

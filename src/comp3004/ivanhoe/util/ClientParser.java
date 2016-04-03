@@ -10,6 +10,10 @@ public class ClientParser {
 		return (String)snapshot.get("tournament_color");
 	}
 	
+	public Integer getCurrentTurn(JSONObject snapshot) {
+		return Integer.parseInt((String)snapshot.get("current_turn"));
+	}
+	
 	public String getHighestDisplay(JSONObject snapshot) {
 		return (String)snapshot.get("highest_display");
 	}
@@ -57,8 +61,8 @@ public class ClientParser {
 		return (String)((JSONObject)player).get("display_total");
 	}
 	
-	public Long getPlayerId(Object player) {
-		return (Long)((JSONObject)player).get("id");
+	public Integer getPlayerId(Object player) {
+		return (Integer)((JSONObject)player).get("id");
 	}
 	
 	@SuppressWarnings("unchecked")
