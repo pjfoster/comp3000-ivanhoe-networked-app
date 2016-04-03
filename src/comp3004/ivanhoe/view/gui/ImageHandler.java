@@ -25,6 +25,16 @@ public class ImageHandler {
 		return null;
 	}
 	
+	public static ImageIcon loadCardIcon(String cardName) {
+		try {
+			BufferedImage image = ImageIO.read(ImageHandler.class.getResource("cards/big/" + cardName + ".jpeg"));
+			return new ImageIcon(image);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
 	/**
 	 * Returns a JLabel containing the card loaded from the given string
 	 * @param imageName

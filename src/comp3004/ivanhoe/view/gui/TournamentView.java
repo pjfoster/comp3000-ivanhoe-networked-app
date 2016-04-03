@@ -29,17 +29,18 @@ public class TournamentView extends JPanel {
 	GUIView masterView;
 	ClientParser parser;
 
-	JPanel announcements;
+	JPanel announcementSection;
+	JPanel currentAnnouncement;
 	JPanel header;
+	JLabel tournamentColor;
 	
 	JPanel handComposite;
 	JScrollPane cardsPane;
 	
 	JPanel statsComposite;
+	
 	JScrollPane playersComposite;
 	HashMap<Integer, PlayerDisplay> playerDisplays;
-	
-	JLabel tournamentColor;
 	JLabel highestDisplayTotal;
 	JLabel currentTurn;
 
@@ -53,7 +54,10 @@ public class TournamentView extends JPanel {
 		
 		this.setLayout(new GridBagLayout());
 
-		announcements = new JPanel();
+		announcementSection = new JPanel();
+		currentAnnouncement = new JPanel();
+		announcementSection.add(currentAnnouncement);
+		
 		header = createHeader(parser.getColor(snapshot));
 		handComposite = createHandComposite(getPlayerHand(snapshot));
 		statsComposite = createStats("We dunno yet", parser.getHighestDisplay(snapshot));
@@ -219,7 +223,17 @@ public class TournamentView extends JPanel {
 		return false;
 	}
 	
-	// TODO: methods for announcements
+	public void setAnnouncement(JPanel announcement) {
+		announcementSection.remove(currentAnnouncement);
+		currentAnnouncement = announcement;
+		announcementSection.add(currentAnnouncement);
+	}
+	
+	public void clearAnnouncement() {
+		announcementSection.remove(currentAnnouncement);
+		currentAnnouncement = new JPanel();
+		announcementSection.add(currentAnnouncement);
+	}
 	
 	/**
 	 * Updates the tournament view based on a tournament snapshot

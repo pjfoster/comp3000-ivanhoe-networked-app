@@ -95,8 +95,9 @@ public class GUIView extends JFrame implements View {
 
 	@Override
 	public void displayTournamentView(JSONObject snapshot) {
-		// TODO Auto-generated method stub
-		
+		if (mainPanel instanceof TournamentView) {
+			((TournamentView) mainPanel).updateView(snapshot);
+		}
 	}
 
 	@Override

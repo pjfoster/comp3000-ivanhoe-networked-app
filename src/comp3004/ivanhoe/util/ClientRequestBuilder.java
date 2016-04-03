@@ -1,5 +1,6 @@
 package comp3004.ivanhoe.util;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.json.simple.JSONArray;
@@ -17,7 +18,7 @@ public class ClientRequestBuilder {
 	 * @param username
 	 * @return
 	 */
-	public JSONObject buildRegisterPlayer(String username)
+	public static JSONObject buildRegisterPlayer(String username)
 	{ 
 		HashMap<String, String> requestMap = new HashMap<String, String>();
 		requestMap.put("request_type", "register_player"); 
@@ -31,7 +32,7 @@ public class ClientRequestBuilder {
 	 * 	Expected 'red', 'blue', 'green', 'yellow', or 'purple'
 	 * @return
 	 */
-	public JSONObject buildChooseToken(String color) 
+	public static JSONObject buildChooseToken(String color) 
 	{ 
 		HashMap<String, String> requestMap = new HashMap<String, String>();
 		requestMap.put("request_type", "choose_token"); 
@@ -39,7 +40,7 @@ public class ClientRequestBuilder {
 		return new JSONObject(requestMap); 
 	}
 	
-	public JSONObject buildCardMove(String cardCode) {
+	public static JSONObject buildCardMove(String cardCode) {
 		HashMap<String, String> requestMap = new HashMap<String, String>();
 		requestMap.put("request_type", "turn_move"); 
 		requestMap.put("move_type", "play_card");
@@ -47,18 +48,23 @@ public class ClientRequestBuilder {
 		return new JSONObject(requestMap); 
 	}
 	
+	// Legacy
+	public static JSONObject buildMultipleCardsMove(String[] cards) {
+		return null;
+	}
+	
 	@SuppressWarnings("unchecked")
-	public JSONObject buildMultipleCardsMove(String[] cards) {
+	public static JSONObject buildMultipleCardsMove(ArrayList<String> cards) {
 		
-		System.out.println("Building request for " + cards.length + " cards");
+		System.out.println("Building request for " + cards.size() + " cards");
 		
 		JSONObject request = new JSONObject();
 		request.put("request_type", "turn_move"); 
 		request.put("move_type", "play_cards");
 
 		JSONArray cardsArray = new JSONArray();
-		for (int i =1 ; i < cards.length; ++i) {
-			cardsArray.add(cards[i]);
+		for (int i = 0 ; i < cards.size(); ++i) {
+			cardsArray.add(cards.get(i));
 		}
 		
 		System.out.println(cardsArray);
@@ -71,7 +77,7 @@ public class ClientRequestBuilder {
 	 * Withdraw from a tournament
 	 * @return
 	 */
-	public JSONObject buildWithdrawMove()
+	public static JSONObject buildWithdrawMove()
 	{ 
 		HashMap<String, String> requestMap = new HashMap<String, String>();
 		requestMap.put("request_type", "turn_move"); 
@@ -83,7 +89,7 @@ public class ClientRequestBuilder {
 	 * Pick an opponent; typically someone against whom to play an action card
 	 * @return
 	 */
-	public JSONObject buildSelectOpponent(String opponentUsername)
+	public static JSONObject buildSelectOpponent(String opponentUsername)
 	{ 
 		HashMap<String, String> requestMap = new HashMap<String, String>();
 		requestMap.put("request_type", "select_opponent"); 
@@ -91,7 +97,7 @@ public class ClientRequestBuilder {
 		return new JSONObject(requestMap); 
 	}
 	
-	public JSONObject buildPickCard(String cardCode) {
+	public static JSONObject buildPickCard(String cardCode) {
 		HashMap<String, String> requestMap = new HashMap<String, String>();
 		requestMap.put("request_type", "pick_card"); 
 		requestMap.put("card_code", cardCode); 
