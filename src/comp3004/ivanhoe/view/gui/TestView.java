@@ -102,6 +102,17 @@ public class TestView {
 		newCards.add("m6");
 		newCards.add("y3");
 		testPanel.updateHand(newCards);
+		
+		luke.addDisplayCard(new SupporterCard("squire", 3));
+		luke.addDisplayCard(new ColourCard("purple", 7));
+		jayson.addDisplayCard(new ColourCard("yellow", 3));
+		jayson.addToken(Token.PURPLE);
+		alexei.addHandCard(new ActionCard("charge"));
+		alexei.addHandCard(new ActionCard("stunned"));
+		alexei.addDisplayCard(new SupporterCard("maiden", 6));
+		tournament.setToken(Token.RED);
+		snapshot = responseBuilder.buildUpdateView(tournament);
+		testPanel.updateView(snapshot);
 	}
 
 }

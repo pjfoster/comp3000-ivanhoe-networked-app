@@ -96,8 +96,18 @@ public class PlayerDisplay extends JPanel {
 		displayLabel = new JLabel("DISPLAY TOTAL: " + displayTotal);
 		displayLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
 		
-		// Display tokens
-		tokensComposite = new JPanel();
+		tokensComposite = makeTokensComposite(tokens);
+		cardsScrollPane = makeCardsScrollPane(displayCards);
+		
+		displayComposite.add(displayLabel);
+		displayComposite.add(tokensComposite);
+		displayComposite.add(cardsScrollPane);
+		
+		return displayComposite;
+	}
+	
+	private JPanel makeTokensComposite(ArrayList<String> tokens) {
+		JPanel tokensComposite = new JPanel();
 		tokensComposite.setOpaque(false);
 		tokensComposite.setSize(350, 25);
 		tokensComposite.setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -107,26 +117,7 @@ public class PlayerDisplay extends JPanel {
 			tokensComposite.add(token);
 		}
 		tokensComposite.add(Box.createHorizontalGlue());
-		
-		// display cards
-		JPanel cardsComposite = new JPanel();
-		cardsComposite.setOpaque(false);
-		cardsComposite.setLayout(new FlowLayout());
-		for (String c: displayCards) {
-			JLabel card = ImageHandler.loadCard(c);
-			cardsComposite.add(card);
-		}
-		cardsScrollPane = new JScrollPane(cardsComposite, JScrollPane.VERTICAL_SCROLLBAR_NEVER,
-										              JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		cardsScrollPane.setBorder(null);
-		cardsScrollPane.setPreferredSize(new Dimension(350, 115));
-		cardsScrollPane.setAlignmentX(Component.LEFT_ALIGNMENT);
-		
-		displayComposite.add(displayLabel);
-		displayComposite.add(tokensComposite);
-		displayComposite.add(cardsScrollPane);
-		
-		return displayComposite;
+		return tokensComposite;
 	}
 	
 	private JScrollPane makeCardsScrollPane(ArrayList<String> displayCards) {
@@ -147,10 +138,20 @@ public class PlayerDisplay extends JPanel {
 	
 	public void updateDisplay(Object player) {
 		// update display total
+		String newTotal = parser.getPlayerDisplayTotal(player);
+		displayLabel.setText("DISPLAY TOTAL: " + newTotal);
+		
+		displayComposite.remove(tokensComposite);
+		displayComposite.remove(cardsScrollPane);
 		
 		// update tokens
+		tokensComposite = makeTokensComposite(parser.getPlayerTokens(player));
 		
 		// update display
+		cardsScrollPane = makeCardsScrollPane(parser.getPlayerDisplay(player));
+		
+		displayComposite.add(tokensComposite);
+		displayComposite.add(cardsScrollPane);
 	}
 	
 	

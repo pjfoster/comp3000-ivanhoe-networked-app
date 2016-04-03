@@ -221,12 +221,22 @@ public class TournamentView extends JPanel {
 	
 	// TODO: methods for announcements
 	
-	// TODO: create update methods for all the composites
+	/**
+	 * Updates the tournament view based on a tournament snapshot
+	 * @param snapshot
+	 */
 	public void updateView(JSONObject snapshot) {
-		updateHeader(null);
-		updateStats(null, null);
-		updateHand(null);
-		updatePlayersComposite(null);
+		updateHeader(parser.getColor(snapshot));
+		updateStats(null, parser.getHighestDisplay(snapshot));
+		
+		for (Object p: parser.getPlayerList(snapshot)) {
+			if (parser.getPlayerId(p) == masterView.getId()) {
+				updateHand(parser.getPlayerHand(p));
+				break;
+			}
+		}
+		
+		updatePlayersComposite(parser.getPlayerList(snapshot));
 	}
 	
 	public void updateHeader(String tokenColor) {
@@ -267,6 +277,7 @@ public class TournamentView extends JPanel {
 	public void updatePlayersComposite(ArrayList<Object> players) {
 		for (Object player : players) {
 			int playerId = parser.getPlayerId(player);
+			if (playerId == masterView.getId()) continue;
 			playerDisplays.get(playerId).updateDisplay(player);
 		}
 	}
