@@ -131,6 +131,8 @@ public class PlayerDisplay extends JPanel {
 		JScrollPane cardsScrollPane = new JScrollPane(cardsComposite, JScrollPane.VERTICAL_SCROLLBAR_NEVER,
 										              JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		cardsScrollPane.setBorder(null);
+		cardsScrollPane.setOpaque(false);
+		cardsScrollPane.getViewport().setOpaque(false);
 		cardsScrollPane.setPreferredSize(new Dimension(350, 115));
 		cardsScrollPane.setAlignmentX(Component.LEFT_ALIGNMENT);
 		return cardsScrollPane;

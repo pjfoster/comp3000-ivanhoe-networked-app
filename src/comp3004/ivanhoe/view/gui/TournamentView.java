@@ -29,8 +29,6 @@ public class TournamentView extends JPanel {
 	GUIView masterView;
 	ClientParser parser;
 
-	JPanel announcementSection;
-	JPanel currentAnnouncement;
 	JPanel header;
 	JLabel tournamentColor;
 	
@@ -39,7 +37,8 @@ public class TournamentView extends JPanel {
 	
 	JPanel statsComposite;
 	
-	JScrollPane playersComposite;
+	JScrollPane playersScrollPane;
+	JPanel playersComposite;
 	HashMap<Integer, PlayerDisplay> playerDisplays;
 	JLabel highestDisplayTotal;
 	JLabel currentTurn;
@@ -53,43 +52,28 @@ public class TournamentView extends JPanel {
 		this.setPreferredSize(new Dimension(800, 600));
 		
 		this.setLayout(new GridBagLayout());
-
-		announcementSection = new JPanel();
-		currentAnnouncement = new JPanel();
-		announcementSection.add(currentAnnouncement);
 		
 		header = createHeader(parser.getColor(snapshot));
 		handComposite = createHandComposite(getPlayerHand(snapshot));
 		statsComposite = createStats("We dunno yet", parser.getHighestDisplay(snapshot));
-		playersComposite = createPlayersComposite(snapshot);
+		playersScrollPane = createPlayersComposite(snapshot);
 
 		GridBagConstraints constraints = new GridBagConstraints();
-
-		// create announcements section
+		
+		// create header
 		constraints.gridx = 0;
 		constraints.gridy = 0;
 		constraints.gridwidth = 2;
 		constraints.gridheight = 1;
 		constraints.weightx = 1;
-		constraints.weighty = 0.01;
-		constraints.anchor = GridBagConstraints.FIRST_LINE_START;
-		constraints.fill = GridBagConstraints.BOTH;
-		this.add(header, constraints);
-		
-		// create header
-		constraints.gridx = 0;
-		constraints.gridy = 1;
-		constraints.gridwidth = 2;
-		constraints.gridheight = 1;
-		constraints.weightx = 1;
-		constraints.weighty = 0.04;
+		constraints.weighty = 0.06;
 		constraints.anchor = GridBagConstraints.FIRST_LINE_START;
 		constraints.fill = GridBagConstraints.BOTH;
 		this.add(header, constraints);
 
 		// create stats
 		constraints.gridx = 1;
-		constraints.gridy = 2;
+		constraints.gridy = 1;
 		constraints.gridwidth = 1;
 		constraints.gridheight = 1;
 		constraints.weightx = 0.8;
@@ -100,7 +84,7 @@ public class TournamentView extends JPanel {
 
 		// create hand composite
 		constraints.gridx = 0;
-		constraints.gridy = 2;
+		constraints.gridy = 1;
 		constraints.gridwidth = 1;
 		constraints.gridheight = 2;
 		constraints.weightx = 0.2;
@@ -111,14 +95,14 @@ public class TournamentView extends JPanel {
 
 		// create players composite
 		constraints.gridx = 1;
-		constraints.gridy = 3;
+		constraints.gridy = 2;
 		constraints.gridwidth = 1;
 		constraints.gridheight = 1;
 		constraints.weightx = 0.8;
 		constraints.weighty = 0.91;
 		constraints.anchor = GridBagConstraints.FIRST_LINE_START;
 		constraints.fill = GridBagConstraints.BOTH;
-		this.add(playersComposite, constraints);
+		this.add(playersScrollPane, constraints);
 
 	}
 
@@ -129,8 +113,9 @@ public class TournamentView extends JPanel {
 	 */
 	private JPanel createHeader(String tokenColor) {
 		JPanel header = new JPanel();
+		//header.setBackground(new Color(153, 0, 0));
 		
-		header.setBorder(BorderFactory.createLineBorder(Color.black));
+		//header.setBorder(BorderFactory.createLineBorder(Color.black));
 		header.setLayout(new FlowLayout(FlowLayout.CENTER));
 		JLabel tournamentText = ImageHandler.loadImage("tournament");
 
@@ -147,7 +132,7 @@ public class TournamentView extends JPanel {
 
 	private JPanel createStats(String currentTurn, String highestDisplayTotal) {
 		JPanel statsPanel = new JPanel();
-		statsPanel.setBorder(BorderFactory.createLineBorder(Color.black));
+		//statsPanel.setBorder(BorderFactory.createLineBorder(Color.black));
 		statsPanel.setLayout(new BoxLayout(statsPanel, BoxLayout.Y_AXIS));
 		
 		this.highestDisplayTotal = new JLabel("HIGHEST DISPLAY: " + highestDisplayTotal);
@@ -166,12 +151,13 @@ public class TournamentView extends JPanel {
 	private JPanel createHandComposite(ArrayList<String> cards) {
 		JPanel handComposite = new JPanel();
 		
-		handComposite.setBorder(BorderFactory.createLineBorder(Color.black));
+		//handComposite.setBorder(BorderFactory.createLineBorder(Color.black));
 		handComposite.setLayout(new BoxLayout(handComposite, BoxLayout.Y_AXIS));
 		
 		JLabel text = new JLabel("YOUR HAND:");
 		text.setAlignmentX(Component.CENTER_ALIGNMENT);
 		handComposite.add(text);
+		handComposite.add(Box.createRigidArea(new Dimension(0, 15)));
 		
 		JPanel cardsPanel = new JPanel();
 		cardsPanel.setLayout(new BoxLayout(cardsPanel, BoxLayout.Y_AXIS));
@@ -185,6 +171,7 @@ public class TournamentView extends JPanel {
 		}
 		cardsPane = new JScrollPane(cardsPanel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
 	                                            JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		cardsPane.setBorder(null);
 		cardsPane.setAlignmentX(Component.CENTER_ALIGNMENT);
 		handComposite.add(cardsPane);
 		
@@ -197,8 +184,8 @@ public class TournamentView extends JPanel {
 	 * @return
 	 */
 	private JScrollPane createPlayersComposite(JSONObject snapshot) {
-		JPanel playersComposite = new JPanel();
-		playersComposite.setBackground(Color.YELLOW);
+		playersComposite = new JPanel();
+		//playersComposite.setBackground(Color.YELLOW);
 		playersComposite.setBorder(BorderFactory.createLineBorder(Color.black));
 		playersComposite.setLayout(new BoxLayout(playersComposite, BoxLayout.Y_AXIS));
 		
@@ -223,18 +210,6 @@ public class TournamentView extends JPanel {
 		return false;
 	}
 	
-	public void setAnnouncement(JPanel announcement) {
-		announcementSection.remove(currentAnnouncement);
-		currentAnnouncement = announcement;
-		announcementSection.add(currentAnnouncement);
-	}
-	
-	public void clearAnnouncement() {
-		announcementSection.remove(currentAnnouncement);
-		currentAnnouncement = new JPanel();
-		announcementSection.add(currentAnnouncement);
-	}
-	
 	/**
 	 * Updates the tournament view based on a tournament snapshot
 	 * @param snapshot
@@ -257,6 +232,18 @@ public class TournamentView extends JPanel {
 		header.remove(tournamentColor);
 		tournamentColor = ImageHandler.loadToken(tokenColor.toLowerCase());
 		header.add(tournamentColor);
+		
+		if (tokenColor.equals("blue")) {
+			playersComposite.setBackground(new Color(51, 153, 255));
+		} else if (tokenColor.equals("red")) {
+			playersComposite.setBackground(new Color(255, 102, 102));
+		} else if (tokenColor.equals("yellow")) {
+			playersComposite.setBackground(new Color(255, 255, 153));
+		} else if (tokenColor.equals("purple")) {
+			playersComposite.setBackground(new Color(153, 51, 255));
+		} else if (tokenColor.equals("green")) {
+			playersComposite.setBackground(new Color(102, 204, 0));
+		}
 	}
 	
 	public void updateStats(String username, String highestScore) {
@@ -274,7 +261,6 @@ public class TournamentView extends JPanel {
 		JPanel cardsPanel = new JPanel();
 		cardsPanel.setLayout(new BoxLayout(cardsPanel, BoxLayout.Y_AXIS));
 		cardsPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
-		System.out.println("Cards: " + cards);
 		for (String c: cards) {
 			JLabel card = ImageHandler.loadCard(c);
 			card.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -283,6 +269,7 @@ public class TournamentView extends JPanel {
 		}
 		cardsPane = new JScrollPane(cardsPanel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
 	                                            JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		cardsPane.setBorder(null);
 		cardsPane.setAlignmentX(Component.CENTER_ALIGNMENT);
 		handComposite.add(cardsPane);
 		

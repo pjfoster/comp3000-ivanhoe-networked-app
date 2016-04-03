@@ -91,8 +91,8 @@ public class TestView {
 		JSONObject snapshot = responseBuilder.buildUpdateView(tournament);
 		
 		TournamentView testPanel = new TournamentView(view, snapshot);
-		//testFrame.add(testPanel);
-		//testFrame.setVisible(true);
+		testFrame.add(testPanel);
+		testFrame.setVisible(true);
 		
 		testPanel.updateStats("Miambi", "20");
 		testPanel.updateHeader("green");
@@ -114,18 +114,8 @@ public class TestView {
 		snapshot = responseBuilder.buildUpdateView(tournament);
 		testPanel.updateView(snapshot);
 		
-		// Turn view
-		ArrayList<String> testCards = new ArrayList<String>();
-		testCards.add("b2");
-		testCards.add("b2");
-		testCards.add("b3");
-		testCards.add("b2");
-		testCards.add("b2");
-		testCards.add("b3");
-		
 		TurnView turnView = new TurnView(view, newCards, null);
-		testFrame.add(turnView);
-		testFrame.setVisible(true);
+
 		
 	}
 
