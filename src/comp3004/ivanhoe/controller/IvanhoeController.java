@@ -16,7 +16,7 @@ import comp3004.ivanhoe.model.Token;
 import comp3004.ivanhoe.model.Tournament;
 import comp3004.ivanhoe.server.AppServer;
 import comp3004.ivanhoe.util.ServerParser;
-import comp3004.ivanhoe.util.ServerResponseBuilder;
+import comp3004.ivanhoe.util.ResponseBuilder;
 
 public class IvanhoeController {
 
@@ -35,7 +35,7 @@ public class IvanhoeController {
 	protected int maxPlayers;
 	protected HashMap<Integer, Player> players;
 	protected ArrayList<Integer> playerTurns;
-	protected ServerResponseBuilder responseBuilder;
+	protected ResponseBuilder responseBuilder;
 	protected ServerParser parser;
 	protected AppServer server;
 	protected Random rnd = new Random();
@@ -49,11 +49,8 @@ public class IvanhoeController {
 	private ArrayList<String> lastPlayed;
 	private Player selectedOpponent;
 
-	public IvanhoeController(AppServer server,
-			ServerResponseBuilder responseBuilder, int maxPlayers) {
+	public IvanhoeController(AppServer server, int maxPlayers) {
 		this.server = server;
-		this.responseBuilder = responseBuilder;
-		this.parser = new ServerParser();
 		this.maxPlayers = maxPlayers;
 		players = new HashMap<Integer, Player>();
 

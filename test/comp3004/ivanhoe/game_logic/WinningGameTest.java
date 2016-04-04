@@ -11,12 +11,11 @@ import org.junit.Test;
 import comp3004.ivanhoe.controller.MockController;
 import comp3004.ivanhoe.model.Player;
 import comp3004.ivanhoe.model.Token;
-import comp3004.ivanhoe.util.ServerResponseBuilder;
+import comp3004.ivanhoe.util.ResponseBuilder;
 
 public class WinningGameTest {
 
 	HashMap<Integer, Player> players;
-	ServerResponseBuilder responseBuilder = new ServerResponseBuilder();
 	
 	@Before
 	public void setUp() throws Exception {	
@@ -33,7 +32,7 @@ public class WinningGameTest {
 		players.put(60001, new Player("Alexei"));
 		players.put(60002, new Player("Luke"));
 		
-		MockController controller = new MockController(null, responseBuilder, 2);
+		MockController controller = new MockController(null, 2);
 		controller.setPlayers(players);
 		
 		assertFalse(controller.checkGameWon());
@@ -81,7 +80,7 @@ public class WinningGameTest {
 		players.put(60004, new Player("Jayson"));
 		players.put(60005, new Player("Mark"));
 		
-		MockController controller = new MockController(null, responseBuilder, 2);
+		MockController controller = new MockController(null, 2);
 		controller.setPlayers(players);
 		
 		assertFalse(controller.checkGameWon());

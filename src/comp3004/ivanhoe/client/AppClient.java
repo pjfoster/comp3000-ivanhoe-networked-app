@@ -15,7 +15,7 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import comp3004.ivanhoe.util.ClientParser;
-import comp3004.ivanhoe.util.ClientRequestBuilder;
+import comp3004.ivanhoe.util.RequestBuilder;
 import comp3004.ivanhoe.view.View;
 import comp3004.ivanhoe.view.ViewFactory;
 
@@ -39,8 +39,6 @@ public class AppClient implements Runnable {
 	
 	private String username = "";
 	private View view;
-	private JSONParser parser;
-	private ClientRequestBuilder requestBuilder;
 	
 	static Logger logger = Logger.getLogger(AppClient.class);
 	
@@ -48,8 +46,6 @@ public class AppClient implements Runnable {
 		PropertyConfigurator.configure("resources/log4j.client.properties");
 		this.serverAddress = ipAddress;
 		this.serverPort = port;	
-		parser = new JSONParser();
-		requestBuilder = new ClientRequestBuilder();
 		
 		this.view = viewFactory.createView(this);
 		view.launch();
@@ -78,7 +74,8 @@ public class AppClient implements Runnable {
 		{ return ; }
 		
 		try {
-			JSONObject server_response = (JSONObject)parser.parse(input);
+			JSONParser jsonParser = new JSONParser();
+			JSONObject server_response = (JSONObject)jsonParser.parse(input);
 			//System.out.println(getID() + ": Received input: " + input);
 			
 			if (server_response.get("response_type").equals("connection_rejected")) {
@@ -91,7 +88,7 @@ public class AppClient implements Runnable {
 			
 			else if (server_response.get("response_type").equals("connection_accepted")) {
 				System.out.println("Connection accepted!"); // test
-				handleClientRequest(requestBuilder.buildRegisterPlayer(username));
+				handleClientRequest(RequestBuilder.buildRegisterPlayer(username));
 			}
 			
 			else if (server_response.get("response_type").equals("start_game")) {

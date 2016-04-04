@@ -17,12 +17,11 @@ import comp3004.ivanhoe.model.SupporterCard;
 import comp3004.ivanhoe.model.Token;
 import comp3004.ivanhoe.model.Tournament;
 import comp3004.ivanhoe.server.MockServer;
-import comp3004.ivanhoe.util.ServerResponseBuilder;
+import comp3004.ivanhoe.util.ResponseBuilder;
 
 public class SupporterCardTest {
 
 	HashMap<Integer, Player> players;
-	ServerResponseBuilder responseBuilder = new ServerResponseBuilder();
 	Tournament tournament;
 	MockController controller;
 	Player alexei, luke;
@@ -39,7 +38,7 @@ public class SupporterCardTest {
 		players.put(60001, alexei);
 		players.put(60002, luke);
 		
-		controller = new MockController(new MockServer(), responseBuilder, 2);
+		controller = new MockController(new MockServer(), 2);
 		controller.setPlayers(players);
 		
 		tournament = new Tournament();

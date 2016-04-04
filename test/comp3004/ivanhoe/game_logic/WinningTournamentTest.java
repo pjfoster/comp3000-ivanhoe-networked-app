@@ -17,14 +17,12 @@ import comp3004.ivanhoe.model.Player;
 import comp3004.ivanhoe.model.Token;
 import comp3004.ivanhoe.model.Tournament;
 import comp3004.ivanhoe.server.MockServer;
-import comp3004.ivanhoe.util.ClientRequestBuilder;
-import comp3004.ivanhoe.util.ServerResponseBuilder;
+import comp3004.ivanhoe.util.RequestBuilder;
+import comp3004.ivanhoe.util.ResponseBuilder;
 
 public class WinningTournamentTest {
 
 	HashMap<Integer, Player> players;
-	ServerResponseBuilder responseBuilder = new ServerResponseBuilder();
-	ClientRequestBuilder requestBuilder = new ClientRequestBuilder();
 	Tournament tournament;
 	MockController controller;
 	Player alexei, luke, jayson;
@@ -43,7 +41,7 @@ public class WinningTournamentTest {
 		players.put(60002, luke);
 		players.put(60003, jayson);
 
-		controller = new MockController(new MockServer(), responseBuilder, 2);
+		controller = new MockController(new MockServer(), 2);
 		controller.setPlayers(players);
 
 		tournament = new Tournament();
@@ -161,7 +159,7 @@ public class WinningTournamentTest {
 		assertEquals(controller.getState(), 5); // WAITING_FOR_WINNING_TOKEN
 		assertEquals(controller.getTournament().getToken(), Token.PURPLE);
 		
-		JSONObject chooseColor = requestBuilder.buildChooseToken("blue");
+		JSONObject chooseColor = RequestBuilder.buildChooseToken("blue");
 		controller.processPlayerMove(60003, chooseColor);
 		
 		// Check that Jayson won and was given the correct Token

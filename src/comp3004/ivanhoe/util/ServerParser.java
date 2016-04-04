@@ -9,50 +9,46 @@ import comp3004.ivanhoe.model.Card;
 import comp3004.ivanhoe.model.Token;
 import comp3004.ivanhoe.model.Tournament;
 
-public class ServerParser {
+public abstract class ServerParser {
 
-	private JSONParser parser;
+	private static JSONParser parser = new JSONParser();
 	
-	public ServerParser() {
-		parser = new JSONParser();
-	}
-	
-	public String getParam(JSONObject request, String param) {
+	public static String getParam(JSONObject request, String param) {
 		if (request.get(param) != null) {
 			return (String)request.get(param);
 		}
 		else return null;
 	}
 	
-	public String getRequestType(JSONObject request) {
+	public static String getRequestType(JSONObject request) {
 		return (String)request.get("request_type");
 	}
 	
-	public String getMoveType(JSONObject request) {
+	public static String getMoveType(JSONObject request) {
 		return (String)request.get("move_type");
 	}
 	
-	public ArrayList<Card> getCard(JSONObject request, Tournament tournament) {
+	public static ArrayList<Card> getCard(JSONObject request, Tournament tournament) {
 		String cardCode = (String)request.get("card_code");
 		return tournament.getCard(cardCode);
 	}
 	
-	public Token getToken(JSONObject request) {
+	public static Token getToken(JSONObject request) {
 		String colorString = (String)request.get("token_color");
 		return Token.fromString(colorString);
 	}
 	
-	public String getOpponentId(JSONObject request) {
+	public static String getOpponentId(JSONObject request) {
 		return (String) request.get("opponent_id");
 	}
 	
 	@SuppressWarnings("unchecked")
-	public ArrayList<String> getCardCodes(JSONObject request) {
+	public static ArrayList<String> getCardCodes(JSONObject request) {
 		return (ArrayList<String>)request.get("cards");
 	}
 	
 	@SuppressWarnings("unchecked")
-	public ArrayList<String> getCardCode(JSONObject request) {
+	public static ArrayList<String> getCardCode(JSONObject request) {
 		ArrayList<String> cards = new ArrayList<String>();
 		String cardCode = (String)request.get("card_code");
 		cards.add(cardCode);

@@ -10,7 +10,7 @@ import comp3004.ivanhoe.model.Player;
 import comp3004.ivanhoe.model.Token;
 import comp3004.ivanhoe.model.Tournament;
 import comp3004.ivanhoe.server.AppServer;
-import comp3004.ivanhoe.util.ServerResponseBuilder;
+import comp3004.ivanhoe.util.ResponseBuilder;
 
 /**
  * Extension of controller with testing capabilities. Mostly contains getters and setters
@@ -21,8 +21,8 @@ import comp3004.ivanhoe.util.ServerResponseBuilder;
  */
 public class MockController extends IvanhoeController {
 
-	public MockController(AppServer server, ServerResponseBuilder responseBuilder, int maxPlayers) {
-		super(server, responseBuilder, maxPlayers);
+	public MockController(AppServer server, int maxPlayers) {
+		super(server, maxPlayers);
 	}
 	
 	public Tournament getTournament() { return tournament; }

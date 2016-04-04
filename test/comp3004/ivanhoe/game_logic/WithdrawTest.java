@@ -19,14 +19,12 @@ import comp3004.ivanhoe.model.Player;
 import comp3004.ivanhoe.model.Token;
 import comp3004.ivanhoe.model.Tournament;
 import comp3004.ivanhoe.server.MockServer;
-import comp3004.ivanhoe.util.ClientRequestBuilder;
-import comp3004.ivanhoe.util.ServerResponseBuilder;
+import comp3004.ivanhoe.util.RequestBuilder;
+import comp3004.ivanhoe.util.ResponseBuilder;
 
 public class WithdrawTest {
 
 	HashMap<Integer, Player> players;
-	ServerResponseBuilder responseBuilder = new ServerResponseBuilder();
-	ClientRequestBuilder requestBuilder = new ClientRequestBuilder();
 	Tournament tournament;
 	MockController controller;
 	Player alexei, luke, jayson;
@@ -45,7 +43,7 @@ public class WithdrawTest {
 		players.put(60002, luke);
 		players.put(60003, jayson);
 
-		controller = new MockController(new MockServer(), responseBuilder, 2);
+		controller = new MockController(new MockServer(), 2);
 		controller.setPlayers(players);
 
 		tournament = new Tournament();
@@ -134,7 +132,7 @@ public class WithdrawTest {
 		assertEquals(controller.getState(), 4); // WAITING_FOR_WITHDRAW_TOKEN
 		assertEquals(controller.getCurrentTurnPlayer(), jayson); // Turn has not changed yet
 
-		JSONObject chooseToken = requestBuilder.buildChooseToken("blue");
+		JSONObject chooseToken = RequestBuilder.buildChooseToken("blue");
 		controller.processPlayerMove(60003, chooseToken);
 
 		// check that Jayson no longer has the blue token, but all other tokens
@@ -173,7 +171,7 @@ public class WithdrawTest {
 		assertEquals(controller.getState(), 4); // WAITING_FOR_WITHDRAW_TOKEN
 		assertEquals(controller.getCurrentTurnPlayer(), jayson); // Turn has not changed yet
 
-		JSONObject chooseToken = requestBuilder.buildChooseToken("blue");
+		JSONObject chooseToken = RequestBuilder.buildChooseToken("blue");
 		controller.processPlayerMove(60003, chooseToken);
 
 		// check that Jayson no longer has the blue token, but all other tokens

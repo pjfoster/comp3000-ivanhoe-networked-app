@@ -17,14 +17,12 @@ import comp3004.ivanhoe.model.Player;
 import comp3004.ivanhoe.model.Token;
 import comp3004.ivanhoe.model.Tournament;
 import comp3004.ivanhoe.server.MockServer;
-import comp3004.ivanhoe.util.ClientRequestBuilder;
-import comp3004.ivanhoe.util.ServerResponseBuilder;
+import comp3004.ivanhoe.util.RequestBuilder;
+import comp3004.ivanhoe.util.ResponseBuilder;
 
 public class ChangeTournamentColorTest {
 
 	HashMap<Integer, Player> players;
-	ServerResponseBuilder responseBuilder = new ServerResponseBuilder();
-	ClientRequestBuilder requestBuilder = new ClientRequestBuilder();
 	Tournament tournament;
 	MockController controller;
 	Player alexei, luke;
@@ -40,7 +38,7 @@ public class ChangeTournamentColorTest {
 		players.put(60001, alexei);
 		players.put(60002, luke);
 		
-		controller = new MockController(new MockServer(), responseBuilder, 2);
+		controller = new MockController(new MockServer(), 2);
 		controller.setPlayers(players);
 		
 		tournament = new Tournament();
@@ -71,7 +69,7 @@ public class ChangeTournamentColorTest {
 		assertEquals(controller.getCurrentTurnPlayer(), alexei);
 		assertEquals(controller.getState(), 6);
 		
-		JSONObject newColor = requestBuilder.buildChooseToken("blue");
+		JSONObject newColor = RequestBuilder.buildChooseToken("blue");
 		assertTrue(controller.testChangeTournamentColor(newColor));
 		
 		assertNotEquals(controller.getCurrentTurnPlayer(), alexei);
@@ -106,9 +104,9 @@ public class ChangeTournamentColorTest {
 		tournament.setToken(Token.PURPLE);
 		assertTrue(controller.playCard(cardWrapper));
 		
-		JSONObject newColor = requestBuilder.buildChooseToken("purple");
+		JSONObject newColor = RequestBuilder.buildChooseToken("purple");
 		assertFalse(controller.testChangeTournamentColor(newColor));
-		newColor = requestBuilder.buildChooseToken("green");
+		newColor = RequestBuilder.buildChooseToken("green");
 		assertFalse(controller.testChangeTournamentColor(newColor));
 		
 	}
@@ -126,7 +124,7 @@ public class ChangeTournamentColorTest {
 		assertEquals(controller.getCurrentTurnPlayer(), alexei);
 		assertEquals(controller.getState(), 6);
 		
-		JSONObject newColor = requestBuilder.buildChooseToken("blue");
+		JSONObject newColor = RequestBuilder.buildChooseToken("blue");
 		assertTrue(controller.testChangeTournamentColor(newColor));
 		
 		assertNotEquals(controller.getCurrentTurnPlayer(), alexei);
@@ -155,11 +153,11 @@ public class ChangeTournamentColorTest {
 		tournament.setToken(Token.RED);
 		assertTrue(controller.playCard(cardWrapper));
 		
-		JSONObject newColor = requestBuilder.buildChooseToken("purple");
+		JSONObject newColor = RequestBuilder.buildChooseToken("purple");
 		assertFalse(controller.testChangeTournamentColor(newColor));
-		newColor = requestBuilder.buildChooseToken("green");
+		newColor = RequestBuilder.buildChooseToken("green");
 		assertFalse(controller.testChangeTournamentColor(newColor));
-		newColor = requestBuilder.buildChooseToken("red");
+		newColor = RequestBuilder.buildChooseToken("red");
 		assertFalse(controller.testChangeTournamentColor(newColor));
 	}
 	

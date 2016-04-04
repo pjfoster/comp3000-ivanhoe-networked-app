@@ -19,9 +19,9 @@ import comp3004.ivanhoe.model.Card;
 import comp3004.ivanhoe.model.Player;
 import comp3004.ivanhoe.model.Token;
 import comp3004.ivanhoe.server.MockServer;
-import comp3004.ivanhoe.util.ClientRequestBuilder;
+import comp3004.ivanhoe.util.RequestBuilder;
 import comp3004.ivanhoe.util.Config;
-import comp3004.ivanhoe.util.ServerResponseBuilder;
+import comp3004.ivanhoe.util.ResponseBuilder;
 import comp3004.ivanhoe.view.MockViewFactory;
 import comp3004.ivanhoe.view.ViewFactory;
 
@@ -48,9 +48,6 @@ public class IntegrationTest3Players {
 
 	private ViewFactory viewFactory;
 
-	private ServerResponseBuilder responseBuilder = new ServerResponseBuilder();
-	private ClientRequestBuilder requestBuilder = new ClientRequestBuilder();
-
 	private MockController controller;
 	private MockServer server;
 
@@ -72,7 +69,7 @@ public class IntegrationTest3Players {
 		viewFactory = new MockViewFactory();
 
 		server = new MockServer(10020, 3);
-		controller = new MockController(server, responseBuilder, 3);
+		controller = new MockController(server, 3);
 		server.setController(controller);
 		server.enableNetworking(true);
 
@@ -152,7 +149,7 @@ public class IntegrationTest3Players {
 		assertEquals(controller.getCurrentTurnId(), alexeiId);
 		
 		// Alexei plays a yellow card
-		JSONObject playCard = requestBuilder.buildCardMove("y2");
+		JSONObject playCard = RequestBuilder.buildCardMove("y2");
 		alexei.handleClientRequest(playCard);
 		
 		Thread.sleep(WAIT_TIME_MILLIS);
@@ -167,14 +164,14 @@ public class IntegrationTest3Players {
 		assertEquals(controller.getCurrentTurnId(), lukeId);
 		
 		// Luke tries to play an invalid card
-		playCard = requestBuilder.buildCardMove("p3");
+		playCard = RequestBuilder.buildCardMove("p3");
 		luke.handleClientRequest(playCard);
 		
 		Thread.sleep(WAIT_TIME_MILLIS);
 		
 		Mockito.verify(luke, Mockito.atLeast(1)).handleServerResponse(Mockito.matches(".*invalid_choice.*"));
 		
-		JSONObject withdraw = requestBuilder.buildWithdrawMove();
+		JSONObject withdraw = RequestBuilder.buildWithdrawMove();
 		luke.handleClientRequest(withdraw);
 		
 		Thread.sleep(WAIT_TIME_MILLIS);
@@ -187,7 +184,7 @@ public class IntegrationTest3Players {
 		assertFalse(controller.getPlayerTurns().contains(lukeId));
 		
 		// jayson plays y4
-		playCard = requestBuilder.buildCardMove("y4");
+		playCard = RequestBuilder.buildCardMove("y4");
 		jayson.handleClientRequest(playCard);
 		
 		Thread.sleep(WAIT_TIME_MILLIS);
@@ -225,7 +222,7 @@ public class IntegrationTest3Players {
 		controller.setTurn(jaysonId);
 		
 		// jayson plays p3
-		playCard = requestBuilder.buildCardMove("p3");
+		playCard = RequestBuilder.buildCardMove("p3");
 		jayson.handleClientRequest(playCard);
 		
 		Thread.sleep(WAIT_TIME_MILLIS);
@@ -248,7 +245,7 @@ public class IntegrationTest3Players {
 		// luke plays 2 cards
 		int lukeHandSize = controller.getCurrentTurnPlayer().getHand().size();
 		String[] cardsToPlay = {"dummy_value", "p3", "p5"};
-		JSONObject multipleCardsMove = requestBuilder.buildMultipleCardsMove(cardsToPlay);
+		JSONObject multipleCardsMove = RequestBuilder.buildMultipleCardsMove(cardsToPlay);
 		luke.handleClientRequest(multipleCardsMove);
 		
 		Thread.sleep(WAIT_TIME_MILLIS*2);
@@ -275,7 +272,7 @@ public class IntegrationTest3Players {
 		
 		Mockito.verify(luke).handleServerResponse(Mockito.matches(".*tournament_over_win.*"));
 		
-		JSONObject chooseColor = requestBuilder.buildChooseToken("purple");
+		JSONObject chooseColor = RequestBuilder.buildChooseToken("purple");
 		luke.handleClientRequest(chooseColor);
 		
 		Thread.sleep(WAIT_TIME_MILLIS);
@@ -295,7 +292,7 @@ public class IntegrationTest3Players {
 				// TURN 3
 		
 		// luke opens the turn with a supporter card
-		playCard = requestBuilder.buildCardMove("s3");
+		playCard = RequestBuilder.buildCardMove("s3");
 		luke.handleClientRequest(playCard);
 		
 		Thread.sleep(WAIT_TIME_MILLIS);
@@ -305,7 +302,7 @@ public class IntegrationTest3Players {
 		Mockito.verify(luke).handleServerResponse(Mockito.matches(".*choose_color.*"));
 		
 		// luke tries to start another purple tournament, even though a purple tournament has just been won
-		chooseColor = requestBuilder.buildChooseToken("purple");
+		chooseColor = RequestBuilder.buildChooseToken("purple");
 		luke.handleClientRequest(chooseColor);
 		
 		Thread.sleep(WAIT_TIME_MILLIS);
@@ -314,7 +311,7 @@ public class IntegrationTest3Players {
 		assertEquals(controller.getCurrentTurnId(), lukeId);
 		Mockito.verify(luke, Mockito.atLeast(2)).handleServerResponse(Mockito.matches(".*invalid_choice.*"));
 		
-		chooseColor = requestBuilder.buildChooseToken("green");
+		chooseColor = RequestBuilder.buildChooseToken("green");
 		luke.handleClientRequest(chooseColor);
 		
 		Thread.sleep(WAIT_TIME_MILLIS);
@@ -331,7 +328,7 @@ public class IntegrationTest3Players {
 		// jayson plays 2 squires
 		int jaysonHandSize = controller.getCurrentTurnPlayer().getHand().size();
 		String[] jaysonCardsToPlay = {"dummy_value", "s3", "s3"};
-		multipleCardsMove = requestBuilder.buildMultipleCardsMove(jaysonCardsToPlay);
+		multipleCardsMove = RequestBuilder.buildMultipleCardsMove(jaysonCardsToPlay);
 		jayson.handleClientRequest(multipleCardsMove);
 		
 		Thread.sleep(WAIT_TIME_MILLIS);
@@ -352,7 +349,7 @@ public class IntegrationTest3Players {
 		
 		// luke plays three green cards
 		String[] lukeCardsToPlay = {"dummy_value", "g1", "g1", "g1"};
-		multipleCardsMove = requestBuilder.buildMultipleCardsMove(lukeCardsToPlay);
+		multipleCardsMove = RequestBuilder.buildMultipleCardsMove(lukeCardsToPlay);
 		luke.handleClientRequest(multipleCardsMove);
 		
 		Thread.sleep(WAIT_TIME_MILLIS);
@@ -382,7 +379,7 @@ public class IntegrationTest3Players {
 			// TURN 4
 		
 		// luke plays r5
-		playCard = requestBuilder.buildCardMove("r5");
+		playCard = RequestBuilder.buildCardMove("r5");
 		luke.handleClientRequest(playCard);
 		
 		Thread.sleep(WAIT_TIME_MILLIS);
@@ -396,7 +393,7 @@ public class IntegrationTest3Players {
 		
 		// jayson plays r3, m6
 		String[] jaysonCards2 = {"dummy_value", "r3", "m6"};
-		multipleCardsMove = requestBuilder.buildMultipleCardsMove(jaysonCards2);
+		multipleCardsMove = RequestBuilder.buildMultipleCardsMove(jaysonCards2);
 		jayson.handleClientRequest(multipleCardsMove);
 		
 		Thread.sleep(WAIT_TIME_MILLIS);
@@ -415,7 +412,7 @@ public class IntegrationTest3Players {
 		assertEquals(controller.getPlayerTurns().size(), 2);
 		
 		// luke plays m6
-		playCard = requestBuilder.buildCardMove("m6");
+		playCard = RequestBuilder.buildCardMove("m6");
 		luke.handleClientRequest(playCard);
 		Thread.sleep(WAIT_TIME_MILLIS);
 		
@@ -430,7 +427,7 @@ public class IntegrationTest3Players {
 		Thread.sleep(WAIT_TIME_MILLIS);
 		
 		// since Jayson has a maiden in his hand, he must choose a token to withdraw
-		JSONObject chooseToken = requestBuilder.buildChooseToken("yellow");
+		JSONObject chooseToken = RequestBuilder.buildChooseToken("yellow");
 		jayson.handleClientRequest(chooseToken);
 		Thread.sleep(WAIT_TIME_MILLIS);
 		
@@ -453,7 +450,7 @@ public class IntegrationTest3Players {
 		controller.swapHand(lukeId, controller.getCardsFromStrings(newLukeCards));
 		
 		// luke plays a blue card
-		playCard = requestBuilder.buildCardMove("b3");
+		playCard = RequestBuilder.buildCardMove("b3");
 		luke.handleClientRequest(playCard);
 		Thread.sleep(WAIT_TIME_MILLIS);
 		
@@ -465,7 +462,7 @@ public class IntegrationTest3Players {
 		assertEquals(controller.getTournament().getHighestDisplayTotal(), 3);
 		
 		// jayson plays a blue card
-		playCard = requestBuilder.buildCardMove("b4");
+		playCard = RequestBuilder.buildCardMove("b4");
 		jayson.handleClientRequest(playCard);
 		Thread.sleep(WAIT_TIME_MILLIS);
 		
@@ -476,7 +473,7 @@ public class IntegrationTest3Players {
 		assertEquals(controller.getTournament().getHighestDisplayTotal(), 4);
 		
 		// alexei plays a blue card
-		playCard = requestBuilder.buildCardMove("b5");
+		playCard = RequestBuilder.buildCardMove("b5");
 		alexei.handleClientRequest(playCard);
 		Thread.sleep(WAIT_TIME_MILLIS);
 		
@@ -487,7 +484,7 @@ public class IntegrationTest3Players {
 		assertEquals(controller.getTournament().getHighestDisplayTotal(), 5);
 		
 		// luke plays b5
-		playCard = requestBuilder.buildCardMove("b5");
+		playCard = RequestBuilder.buildCardMove("b5");
 		luke.handleClientRequest(playCard);
 		Thread.sleep(WAIT_TIME_MILLIS);
 		

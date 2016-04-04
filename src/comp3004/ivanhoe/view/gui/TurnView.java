@@ -23,7 +23,7 @@ import javax.swing.JScrollPane;
 
 import org.json.simple.JSONObject;
 
-import comp3004.ivanhoe.util.ClientRequestBuilder;
+import comp3004.ivanhoe.util.RequestBuilder;
 import comp3004.ivanhoe.util.Strings;
 
 /**
@@ -112,17 +112,17 @@ public class TurnView extends JFrame implements ActionListener, SelectionView {
 			}
 			
 			if (selectedCards.size() == 1) {
-				JSONObject cardMove = ClientRequestBuilder.buildCardMove(selectedCards.get(0));
+				JSONObject cardMove = RequestBuilder.buildCardMove(selectedCards.get(0));
 				masterView.handleEvent(cardMove);
 				exit();
 			} else if (selectedCards.size() > 1) {
-				JSONObject cardsMove = ClientRequestBuilder.buildMultipleCardsMove(selectedCards);
+				JSONObject cardsMove = RequestBuilder.buildMultipleCardsMove(selectedCards);
 				masterView.handleEvent(cardsMove);
 				exit();
 			}
 			
 		} else if (e.getSource() == withdrawButton) {
-			JSONObject withdraw = ClientRequestBuilder.buildWithdrawMove();
+			JSONObject withdraw = RequestBuilder.buildWithdrawMove();
 			masterView.handleEvent(withdraw);
 			exit();
 		}

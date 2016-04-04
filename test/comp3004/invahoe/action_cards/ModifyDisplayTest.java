@@ -19,8 +19,8 @@ import comp3004.ivanhoe.model.SupporterCard;
 import comp3004.ivanhoe.model.Token;
 import comp3004.ivanhoe.model.Tournament;
 import comp3004.ivanhoe.server.MockServer;
-import comp3004.ivanhoe.util.ClientRequestBuilder;
-import comp3004.ivanhoe.util.ServerResponseBuilder;
+import comp3004.ivanhoe.util.RequestBuilder;
+import comp3004.ivanhoe.util.ResponseBuilder;
 
 // TODO: test with opponents who have withdrawn, test with card not in hand
 // TODO: test with single card in opponent display
@@ -28,8 +28,6 @@ import comp3004.ivanhoe.util.ServerResponseBuilder;
 public class ModifyDisplayTest {
 
 	HashMap<Integer, Player> players;
-	ServerResponseBuilder responseBuilder = new ServerResponseBuilder();
-	ClientRequestBuilder requestBuilder = new ClientRequestBuilder();
 	Tournament tournament;
 	MockController controller;
 	Player alexei, luke, jayson, emma;
@@ -49,7 +47,7 @@ public class ModifyDisplayTest {
 		players.put(60003, jayson);
 		players.put(60004, emma);
 
-		controller = new MockController(new MockServer(), responseBuilder, 2);
+		controller = new MockController(new MockServer(), 2);
 		controller.setPlayers(players);
 
 		tournament = new Tournament();
@@ -88,7 +86,7 @@ public class ModifyDisplayTest {
 		assertEquals(controller.getCurrentTurnPlayer(), alexei);
 		assertEquals(controller.getState(), 7);
 
-		JSONObject opponent = requestBuilder.buildSelectOpponent("luke");
+		JSONObject opponent = RequestBuilder.buildSelectOpponent("luke");
 		controller.processPlayerMove(60001, opponent);
 
 		assertNotEquals(controller.getCurrentTurnPlayer(), alexei);
@@ -121,7 +119,7 @@ public class ModifyDisplayTest {
 		assertEquals(controller.getCurrentTurnPlayer(), alexei);
 		assertEquals(controller.getState(), 7);
 
-		JSONObject selectOpponent = requestBuilder.buildSelectOpponent("luke");
+		JSONObject selectOpponent = RequestBuilder.buildSelectOpponent("luke");
 		controller.processPlayerMove(60001, selectOpponent);
 
 		// check that Alexei's turn is done
@@ -157,14 +155,14 @@ public class ModifyDisplayTest {
 		assertEquals(controller.getCurrentTurnPlayer(), alexei);
 		assertEquals(controller.getState(), 7);
 
-		JSONObject selectOpponent = requestBuilder.buildSelectOpponent("luke");
+		JSONObject selectOpponent = RequestBuilder.buildSelectOpponent("luke");
 		controller.processPlayerMove(60001, selectOpponent);
 
 		// check that Alexei is now required to pick a card
 		assertEquals(controller.getCurrentTurnPlayer(), alexei);
 		assertEquals(controller.getState(), 8);
 
-		JSONObject pickCard = requestBuilder.buildPickCard("b5");
+		JSONObject pickCard = RequestBuilder.buildPickCard("b5");
 		controller.processPlayerMove(60001, pickCard);
 
 		// check that Alexei's turn is done
@@ -188,10 +186,10 @@ public class ModifyDisplayTest {
 		cardWrapper.add("dodge");
 		assertTrue(controller.playCard(cardWrapper));
 
-		JSONObject selectOpponent = requestBuilder.buildSelectOpponent("luke");
+		JSONObject selectOpponent = RequestBuilder.buildSelectOpponent("luke");
 		controller.processPlayerMove(60001, selectOpponent);
 
-		JSONObject pickCard = requestBuilder.buildPickCard("b5");
+		JSONObject pickCard = RequestBuilder.buildPickCard("b5");
 		controller.processPlayerMove(60001, pickCard);
 
 		// check that it is still Alexei's turn - the move wasn't processed
@@ -217,14 +215,14 @@ public class ModifyDisplayTest {
 		assertEquals(controller.getCurrentTurnPlayer(), alexei);
 		assertEquals(controller.getState(), 7);
 
-		JSONObject selectOpponent = requestBuilder.buildSelectOpponent("luke");
+		JSONObject selectOpponent = RequestBuilder.buildSelectOpponent("luke");
 		controller.processPlayerMove(60001, selectOpponent);
 
 		// check that Alexei is now required to pick a card
 		assertEquals(controller.getCurrentTurnPlayer(), alexei);
 		assertEquals(controller.getState(), 8);
 
-		JSONObject pickCard = requestBuilder.buildPickCard("b5");
+		JSONObject pickCard = RequestBuilder.buildPickCard("b5");
 		controller.processPlayerMove(60001, pickCard);
 
 		// check that Alexei's turn is done
@@ -247,10 +245,10 @@ public class ModifyDisplayTest {
 		cardWrapper.add("retreat");
 		assertTrue(controller.playCard(cardWrapper));
 
-		JSONObject selectOpponent = requestBuilder.buildSelectOpponent("luke");
+		JSONObject selectOpponent = RequestBuilder.buildSelectOpponent("luke");
 		controller.processPlayerMove(60001, selectOpponent);
 
-		JSONObject pickCard = requestBuilder.buildPickCard("b5");
+		JSONObject pickCard = RequestBuilder.buildPickCard("b5");
 		controller.processPlayerMove(60001, pickCard);
 
 		// check that it is still Alexei's turn - the move wasn't processed
@@ -279,7 +277,7 @@ public class ModifyDisplayTest {
 		assertEquals(controller.getCurrentTurnPlayer(), alexei);
 		assertEquals(controller.getState(), 7);
 
-		JSONObject selectOpponent = requestBuilder.buildSelectOpponent("luke");
+		JSONObject selectOpponent = RequestBuilder.buildSelectOpponent("luke");
 		controller.processPlayerMove(60001, selectOpponent);
 
 		// check that Alexei's hand now contains one of Luke's cards
@@ -449,21 +447,21 @@ public class ModifyDisplayTest {
 		assertEquals(controller.getCurrentTurnPlayer(), alexei);
 		assertEquals(controller.getState(), 7);
 
-		JSONObject selectOpponent = requestBuilder.buildSelectOpponent("luke");
+		JSONObject selectOpponent = RequestBuilder.buildSelectOpponent("luke");
 		controller.processPlayerMove(60001, selectOpponent);
 
 		// check that Alexei is now required to pick an opponent's card
 		assertEquals(controller.getCurrentTurnPlayer(), alexei);
 		assertEquals(controller.getState(), 8);
 
-		JSONObject pickCard = requestBuilder.buildPickCard("b5");
+		JSONObject pickCard = RequestBuilder.buildPickCard("b5");
 		controller.processPlayerMove(60001, pickCard);
 
 		// check that Alexei is now required to pick one of her own cards
 		assertEquals(controller.getCurrentTurnPlayer(), alexei);
 		assertEquals(controller.getState(), 9);
 
-		pickCard = requestBuilder.buildPickCard("b2");
+		pickCard = RequestBuilder.buildPickCard("b2");
 		controller.processPlayerMove(60001, pickCard);
 		
 		// check that Alexei's turn is done

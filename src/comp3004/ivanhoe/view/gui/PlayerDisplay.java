@@ -20,7 +20,6 @@ public class PlayerDisplay extends JPanel {
 	private int userId;
 	private String username; 
 	private JLabel icon;
-	private ClientParser parser = new ClientParser();
 	private ArrayList<String> cards;
 	private ArrayList<String> tokens;
 	private String displayTotal;
@@ -36,12 +35,12 @@ public class PlayerDisplay extends JPanel {
 		this.setLayout(new FlowLayout());
 		this.setOpaque(false);
 		
-		this.userId = parser.getPlayerId(player).intValue();
-		this.username = parser.getPlayerName(player);
+		this.userId = ClientParser.getPlayerId(player).intValue();
+		this.username = ClientParser.getPlayerName(player);
 		this.icon = imageIcon;
-		this.cards = parser.getPlayerDisplay(player);
-		this.tokens = parser.getPlayerTokens(player);
-		this.displayTotal = parser.getPlayerDisplayTotal(player);
+		this.cards = ClientParser.getPlayerDisplay(player);
+		this.tokens = ClientParser.getPlayerTokens(player);
+		this.displayTotal = ClientParser.getPlayerDisplayTotal(player);
 		
 		this.userComposite = createUserComposite(this.username, imageIcon);
 		this.displayComposite = createDisplayComposite(this.tokens, this.cards, this.displayTotal);
@@ -138,18 +137,18 @@ public class PlayerDisplay extends JPanel {
 	
 	public void updateDisplay(Object player) {
 		// update display total
-		String newTotal = parser.getPlayerDisplayTotal(player);
+		String newTotal = ClientParser.getPlayerDisplayTotal(player);
 		displayLabel.setText("DISPLAY TOTAL: " + newTotal);
 		
 		displayComposite.remove(tokensComposite);
 		displayComposite.remove(cardsScrollPane);
 		
 		// update tokens
-		tokensComposite = makeTokensComposite(parser.getPlayerTokens(player));
+		tokensComposite = makeTokensComposite(ClientParser.getPlayerTokens(player));
 		
 		// update display
-		System.out.println(parser.getPlayerName(player) + " new display " + parser.getPlayerDisplay(player));
-		cardsScrollPane = makeCardsScrollPane(parser.getPlayerDisplay(player));
+		System.out.println(ClientParser.getPlayerName(player) + " new display " + ClientParser.getPlayerDisplay(player));
+		cardsScrollPane = makeCardsScrollPane(ClientParser.getPlayerDisplay(player));
 		
 		displayComposite.add(tokensComposite);
 		displayComposite.add(cardsScrollPane);

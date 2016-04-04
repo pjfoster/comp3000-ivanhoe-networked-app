@@ -23,7 +23,7 @@ import javax.swing.JScrollPane;
 
 import org.json.simple.JSONObject;
 
-import comp3004.ivanhoe.util.ClientRequestBuilder;
+import comp3004.ivanhoe.util.RequestBuilder;
 import comp3004.ivanhoe.util.Strings;
 
 @SuppressWarnings("serial")
@@ -91,7 +91,7 @@ public class PickColourView extends JFrame implements ActionListener, SelectionV
 		if (btnGroup.getSelection() == null) return;
 		
 		String colour = btnGroup.getSelection().getActionCommand();
-		JSONObject pickColour = ClientRequestBuilder.buildChooseToken(colour);
+		JSONObject pickColour = RequestBuilder.buildChooseToken(colour);
 		masterView.handleEvent(pickColour);
 		this.setVisible(false);
 		//this.dispose();

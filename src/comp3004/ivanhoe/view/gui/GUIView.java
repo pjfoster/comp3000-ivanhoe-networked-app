@@ -13,7 +13,7 @@ import org.json.simple.JSONObject;
 
 import comp3004.ivanhoe.client.AppClient;
 import comp3004.ivanhoe.util.ClientParser;
-import comp3004.ivanhoe.util.ClientRequestBuilder;
+import comp3004.ivanhoe.util.RequestBuilder;
 import comp3004.ivanhoe.util.Strings;
 import comp3004.ivanhoe.view.View;
 
@@ -21,14 +21,11 @@ import comp3004.ivanhoe.view.View;
 public class GUIView extends JFrame implements View {
 
 	private AppClient client;
-	private ClientRequestBuilder requestBuilder;
-	private ClientParser parser;
+	private RequestBuilder requestBuilder;
 	private JPanel mainPanel;
 	
-	public GUIView(AppClient client, ClientRequestBuilder requestBuilder) {
+	public GUIView(AppClient client) {
 		super("Ivanhoe");
-		this.requestBuilder = requestBuilder;
-		this.parser = new ClientParser();
 		this.client = client;
 		
 		this.setSize(800, 600);
@@ -46,7 +43,7 @@ public class GUIView extends JFrame implements View {
 	    this.add(mainPanel);
 	}
 	
-	public ClientRequestBuilder getRequestBuilder() {
+	public RequestBuilder getRequestBuilder() {
 		return requestBuilder;
 	}
 	
@@ -134,7 +131,7 @@ public class GUIView extends JFrame implements View {
 		this.repaint();
 		this.revalidate();
 		
-		if (parser.getCurrentTurn(snapshot) == client.getID()) {
+		if (ClientParser.getCurrentTurn(snapshot) == client.getID()) {
 			displayTurnView();
 		}
 	}
@@ -217,7 +214,7 @@ public class GUIView extends JFrame implements View {
 
 	@Override
 	public void displayChooseToken(JSONObject server_response) {
-		ArrayList<String> tokens = parser.getTokensFromSnapshot(server_response);
+		ArrayList<String> tokens = ClientParser.getTokensFromSnapshot(server_response);
 		PickColourView colourView = new PickColourView(this, tokens, Strings.choose_token);
 		colourView.setVisible(true);
 	}

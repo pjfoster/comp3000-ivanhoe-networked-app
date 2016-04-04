@@ -22,7 +22,7 @@ import javax.swing.JScrollPane;
 
 import org.json.simple.JSONObject;
 
-import comp3004.ivanhoe.util.ClientRequestBuilder;
+import comp3004.ivanhoe.util.RequestBuilder;
 import comp3004.ivanhoe.util.Strings;
 
 @SuppressWarnings("serial")
@@ -99,7 +99,7 @@ public class PickOpponentView extends JFrame implements ActionListener, Selectio
 		if (btnGroup.getSelection() == null) return;
 		
 		String opponentId = btnGroup.getSelection().getActionCommand();
-		JSONObject pickOpponent = ClientRequestBuilder.buildSelectOpponent(opponentId);
+		JSONObject pickOpponent = RequestBuilder.buildSelectOpponent(opponentId);
 		masterView.handleEvent(pickOpponent);
 		this.setVisible(false);
 		//this.dispose();

@@ -16,14 +16,12 @@ import comp3004.ivanhoe.model.ColourCard;
 import comp3004.ivanhoe.model.SupporterCard;
 import comp3004.ivanhoe.model.Token;
 import comp3004.ivanhoe.model.Tournament;
-import comp3004.ivanhoe.util.ClientRequestBuilder;
+import comp3004.ivanhoe.util.RequestBuilder;
 import comp3004.ivanhoe.util.ServerParser;
 
 public class RequestBuilderTest {
 
-	private ClientRequestBuilder requestBuilder = new ClientRequestBuilder();
 	private JSONParser parser = new JSONParser();
-	private ServerParser serverParser = new ServerParser();
 	private Tournament tournament;
 	
 	@Before
@@ -38,7 +36,7 @@ public class RequestBuilderTest {
 	@Test
 	public void testBuildRegisterPlayer() throws ParseException {
 		
-		String testMoveString = requestBuilder.buildRegisterPlayer("Alexei").toJSONString();
+		String testMoveString = RequestBuilder.buildRegisterPlayer("Alexei").toJSONString();
 		JSONObject testMove = (JSONObject)parser.parse(testMoveString);
 		
 		assertEquals(testMove.size(), 2);
@@ -51,7 +49,7 @@ public class RequestBuilderTest {
 	@Test
 	public void testBuildChooseToken() throws ParseException {
 		
-		String testMoveString = requestBuilder.buildChooseToken("red").toJSONString();
+		String testMoveString = RequestBuilder.buildChooseToken("red").toJSONString();
 		JSONObject testMove = (JSONObject)parser.parse(testMoveString);
 		
 		assertEquals(testMove.size(), 2);
@@ -60,7 +58,7 @@ public class RequestBuilderTest {
 		Token t = Token.fromString((String)testMove.get("token_color"));
 		assertEquals(t, Token.RED);
 		
-		testMoveString = requestBuilder.buildChooseToken("purple").toJSONString();
+		testMoveString = RequestBuilder.buildChooseToken("purple").toJSONString();
 		testMove = (JSONObject)parser.parse(testMoveString);
 		
 		assertEquals(testMove.size(), 2);
@@ -73,7 +71,7 @@ public class RequestBuilderTest {
 	
 	@Test
 	public void testBuildChooseTokenInvalid() throws ParseException {
-		String testMoveString = requestBuilder.buildChooseToken("foo").toJSONString();
+		String testMoveString = RequestBuilder.buildChooseToken("foo").toJSONString();
 		JSONObject testMove = (JSONObject)parser.parse(testMoveString);
 		
 		assertEquals(testMove.size(), 2);
@@ -87,7 +85,7 @@ public class RequestBuilderTest {
 	public void testBuildCardMove() throws ParseException {
 		
 		// test some color cards
-		String testMoveString = requestBuilder.buildCardMove("r3").toJSONString();
+		String testMoveString = RequestBuilder.buildCardMove("r3").toJSONString();
 		JSONObject testMove = (JSONObject)parser.parse(testMoveString);
 		
 		assertEquals(testMove.size(), 3);
@@ -95,12 +93,12 @@ public class RequestBuilderTest {
 		assertEquals(testMove.get("move_type"), "play_card");
 		assertEquals(testMove.get("card_code"), "r3");
 		
-		ArrayList<Card> cards = serverParser.getCard(testMove, tournament);
+		ArrayList<Card> cards = ServerParser.getCard(testMove, tournament);
 		assertTrue(cards.get(0) instanceof ColourCard);
 		assertEquals(cards.get(0).getName(), "red");
 		assertEquals(cards.get(0).getValue(), 3);
 		
-		testMoveString = requestBuilder.buildCardMove("p5").toJSONString();
+		testMoveString = RequestBuilder.buildCardMove("p5").toJSONString();
 		testMove = (JSONObject)parser.parse(testMoveString);
 		
 		assertEquals(testMove.size(), 3);
@@ -108,13 +106,13 @@ public class RequestBuilderTest {
 		assertEquals(testMove.get("move_type"), "play_card");
 		assertEquals(testMove.get("card_code"), "p5");
 		
-		cards = serverParser.getCard(testMove, tournament);
+		cards = ServerParser.getCard(testMove, tournament);
 		assertTrue(cards.get(0) instanceof ColourCard);
 		assertEquals(cards.get(0).getName(), "purple");
 		assertEquals(cards.get(0).getValue(), 5);
 		
 		// test some supporter cards
-		testMoveString = requestBuilder.buildCardMove("s3").toJSONString();
+		testMoveString = RequestBuilder.buildCardMove("s3").toJSONString();
 		testMove = (JSONObject)parser.parse(testMoveString);
 		
 		assertEquals(testMove.size(), 3);
@@ -122,12 +120,12 @@ public class RequestBuilderTest {
 		assertEquals(testMove.get("move_type"), "play_card");
 		assertEquals(testMove.get("card_code"), "s3");
 		
-		cards = serverParser.getCard(testMove, tournament);
+		cards = ServerParser.getCard(testMove, tournament);
 		assertTrue(cards.get(0) instanceof SupporterCard);
 		assertEquals(cards.get(0).getName().toLowerCase(), "squire");
 		assertEquals(cards.get(0).getValue(), 3);
 		
-		testMoveString = requestBuilder.buildCardMove("m6").toJSONString();
+		testMoveString = RequestBuilder.buildCardMove("m6").toJSONString();
 		testMove = (JSONObject)parser.parse(testMoveString);
 		
 		assertEquals(testMove.size(), 3);
@@ -135,7 +133,7 @@ public class RequestBuilderTest {
 		assertEquals(testMove.get("move_type"), "play_card");
 		assertEquals(testMove.get("card_code"), "m6");
 		
-		cards = serverParser.getCard(testMove, tournament);
+		cards = ServerParser.getCard(testMove, tournament);
 		assertTrue(cards.get(0) instanceof SupporterCard);
 		assertEquals(cards.get(0).getName().toLowerCase(), "maiden");
 		assertEquals(cards.get(0).getValue(), 6);
@@ -145,7 +143,7 @@ public class RequestBuilderTest {
 	@Test
 	public void testBuildWithdrawMove() throws ParseException {
 		
-		String testMoveString = requestBuilder.buildWithdrawMove().toJSONString();
+		String testMoveString = RequestBuilder.buildWithdrawMove().toJSONString();
 		JSONObject testMove = (JSONObject)parser.parse(testMoveString);
 		
 		assertEquals(testMove.size(), 2);
@@ -157,7 +155,7 @@ public class RequestBuilderTest {
 	@Test
 	public void testBuildSelectOpponent() throws ParseException {
 		
-		String testMoveString = requestBuilder.buildSelectOpponent("Alexei").toJSONString();
+		String testMoveString = RequestBuilder.buildSelectOpponent("Alexei").toJSONString();
 		JSONObject testMove = (JSONObject)parser.parse(testMoveString);
 		
 		assertEquals(testMove.size(), 2);
@@ -169,7 +167,7 @@ public class RequestBuilderTest {
 	@Test
 	public void testBuildPickCard() throws ParseException {
 		
-		String testMoveString = requestBuilder.buildPickCard("r3").toJSONString();
+		String testMoveString = RequestBuilder.buildPickCard("r3").toJSONString();
 		JSONObject testMove = (JSONObject)parser.parse(testMoveString);
 		
 		assertEquals(testMove.size(), 2);

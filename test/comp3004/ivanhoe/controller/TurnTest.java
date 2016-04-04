@@ -13,12 +13,11 @@ import comp3004.ivanhoe.model.Player;
 import comp3004.ivanhoe.model.Token;
 import comp3004.ivanhoe.model.Tournament;
 import comp3004.ivanhoe.server.MockServer;
-import comp3004.ivanhoe.util.ServerResponseBuilder;
+import comp3004.ivanhoe.util.ResponseBuilder;
 
 public class TurnTest {
 
 	HashMap<Integer, Player> players;
-	ServerResponseBuilder responseBuilder = new ServerResponseBuilder();
 	Tournament tournament;
 	MockController controller;
 	Player alexei, luke, jayson;
@@ -35,7 +34,7 @@ public class TurnTest {
 		players.put(60002, luke);
 		players.put(60003, jayson);
 		
-		controller = new MockController(new MockServer(), responseBuilder, 2);
+		controller = new MockController(new MockServer(), 2);
 		controller.setPlayers(players);
 		
 		tournament = new Tournament();

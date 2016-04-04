@@ -20,7 +20,7 @@ import comp3004.ivanhoe.model.SupporterCard;
 import comp3004.ivanhoe.model.Token;
 import comp3004.ivanhoe.model.Tournament;
 import comp3004.ivanhoe.util.ClientParser;
-import comp3004.ivanhoe.util.ServerResponseBuilder;
+import comp3004.ivanhoe.util.ResponseBuilder;
 
 /**
  * Tests JSONObjects created by ResponseBuilder
@@ -31,8 +31,6 @@ import comp3004.ivanhoe.util.ServerResponseBuilder;
 public class ResponseBuilderTest {
 	
 	JSONParser parser = new JSONParser();
-	ClientParser clientParser = new ClientParser();
-	ServerResponseBuilder responseBuilder = new ServerResponseBuilder();
 	HashMap<Integer, Player> players;
 	Tournament tournament;
 	
@@ -57,27 +55,27 @@ public class ResponseBuilderTest {
 	@Test
 	public void testCreateGameSnapshot() throws ParseException {
 		HashMap<String, String> responseMap = new HashMap<String, String>();
-		String temp = responseBuilder.createGameSnapshot(responseMap, tournament).toJSONString();
+		String temp = ResponseBuilder.createGameSnapshot(responseMap, tournament).toJSONString();
 		
 		JSONObject snapshot = (JSONObject)parser.parse(temp);
 
-		ArrayList<Object> players = clientParser.getPlayerList(snapshot);
+		ArrayList<Object> players = ClientParser.getPlayerList(snapshot);
 		assertEquals(players.size(), 2);
-		assertEquals(clientParser.getDeck(snapshot).size(), 94);
-		assertEquals(clientParser.getColor(snapshot).toLowerCase(), "red");
-		assertEquals(clientParser.getHighestDisplay(snapshot), "0");
+		assertEquals(ClientParser.getDeck(snapshot).size(), 94);
+		assertEquals(ClientParser.getColor(snapshot).toLowerCase(), "red");
+		assertEquals(ClientParser.getHighestDisplay(snapshot), "0");
 		
 		for (Object p: players) {
-			Integer id = clientParser.getPlayerId(p).intValue();
-			assertEquals(clientParser.getPlayerHand(p).size(), 8);
-			assertEquals(clientParser.getPlayerDisplay(p).size(), 0);
-			assertEquals(clientParser.getPlayerTokens(p).size(), 0);
+			Integer id = ClientParser.getPlayerId(p).intValue();
+			assertEquals(ClientParser.getPlayerHand(p).size(), 8);
+			assertEquals(ClientParser.getPlayerDisplay(p).size(), 0);
+			assertEquals(ClientParser.getPlayerTokens(p).size(), 0);
 			
 			if (id == 60001) {
-				assertEquals(clientParser.getPlayerName(p), "Alexei");
+				assertEquals(ClientParser.getPlayerName(p), "Alexei");
 			}
 			else {
-				assertEquals(clientParser.getPlayerName(p), "Luke");
+				assertEquals(ClientParser.getPlayerName(p), "Luke");
 			}
 			
 		}	
@@ -86,7 +84,7 @@ public class ResponseBuilderTest {
 	
 	@Test
 	public void testConnectionAccepted() throws ParseException {
-		String testMoveString = responseBuilder.buildConnectionAccepted().toJSONString();
+		String testMoveString = ResponseBuilder.buildConnectionAccepted().toJSONString();
 		JSONObject testMove = (JSONObject)parser.parse(testMoveString);
 		
 		assertEquals(testMove.size(), 1);
@@ -95,7 +93,7 @@ public class ResponseBuilderTest {
 	
 	@Test
 	public void testConnectionRejected() throws ParseException {
-		String testMoveString = responseBuilder.buildConnectionRejected().toJSONString();
+		String testMoveString = ResponseBuilder.buildConnectionRejected().toJSONString();
 		JSONObject testMove = (JSONObject)parser.parse(testMoveString);
 		
 		assertEquals(testMove.size(), 1);
@@ -104,7 +102,7 @@ public class ResponseBuilderTest {
 	
 	@Test
 	public void testChooseColor() throws ParseException {
-		String testMoveString = responseBuilder.buildChooseColor().toJSONString();
+		String testMoveString = ResponseBuilder.buildChooseColor().toJSONString();
 		JSONObject testMove = (JSONObject)parser.parse(testMoveString);
 		
 		assertEquals(testMove.size(), 1);
@@ -123,28 +121,28 @@ public class ResponseBuilderTest {
 		tournament.setPlayers(players);
 		
 		// Build a repsonse with Alexei as current player
-		String pickOpponent = responseBuilder.buildPickOpponent(60001, tournament).toJSONString();
+		String pickOpponent = ResponseBuilder.buildPickOpponent(60001, tournament).toJSONString();
 		JSONObject testMove = (JSONObject)parser.parse(pickOpponent);
 		
 		assertEquals(testMove.size(), 2);
 		assertEquals(testMove.get("response_type"), "pick_opponent");
 		assertNotNull(testMove.get("opponents"));
 		
-		ArrayList<String> opponents = clientParser.getOpponents(testMove);
+		ArrayList<String> opponents = ClientParser.getOpponents(testMove);
 		assertEquals(opponents.size(), 2);
 		assertTrue(opponents.contains("Emma"));
 		assertTrue(opponents.contains("Luke"));
 		assertFalse(opponents.contains("Alexei"));
 		
 		// Build a repsonse with Luke as current player
-		pickOpponent = responseBuilder.buildPickOpponent(60003, tournament).toJSONString();
+		pickOpponent = ResponseBuilder.buildPickOpponent(60003, tournament).toJSONString();
 		testMove = (JSONObject)parser.parse(pickOpponent);
 
 		assertEquals(testMove.size(), 2);
 		assertEquals(testMove.get("response_type"), "pick_opponent");
 		assertNotNull(testMove.get("opponents"));
 
-		opponents = clientParser.getOpponents(testMove);
+		opponents = ClientParser.getOpponents(testMove);
 		assertEquals(opponents.size(), 2);
 		assertTrue(opponents.contains("Emma"));
 		assertFalse(opponents.contains("Luke"));
@@ -161,14 +159,14 @@ public class ResponseBuilderTest {
 		cards.add(new ActionCard("changeweapon"));
 		cards.add(new ActionCard("ivanhoe"));
 		
-		String testMoveString = responseBuilder.buildPickCard(cards).toJSONString();
+		String testMoveString = ResponseBuilder.buildPickCard(cards).toJSONString();
 		JSONObject testMove = (JSONObject)parser.parse(testMoveString);
 		
 		assertEquals(testMove.size(), 2);
 		assertEquals(testMove.get("response_type"), "pick_card");
 		assertNotNull(testMove.get("cards"));
 		
-		ArrayList<String> cardStrings = clientParser.getCards(testMove);
+		ArrayList<String> cardStrings = ClientParser.getCards(testMove);
 		assertEquals(cardStrings.size(), 6);
 		assertTrue(cardStrings.contains("r3"));
 		assertTrue(cardStrings.contains("b5"));
@@ -185,28 +183,28 @@ public class ResponseBuilderTest {
 		Player emma = new Player("Emma");
 		emma.addToken(Token.BLUE);
 		
-		String testMoveString = responseBuilder.buildChooseToken(emma.getTokens()).toJSONString();
+		String testMoveString = ResponseBuilder.buildChooseToken(emma.getTokens()).toJSONString();
 		JSONObject testMove = (JSONObject)parser.parse(testMoveString);
 		
 		assertEquals(testMove.size(), 2);
 		assertEquals(testMove.get("response_type"), "choose_token");
 		assertNotNull(testMove.get("tokens"));
 		
-		ArrayList<String> tokens = clientParser.getTokensFromSnapshot(testMove);
+		ArrayList<String> tokens = ClientParser.getTokensFromSnapshot(testMove);
 		assertEquals(tokens.size(), 1);
 		assertEquals(tokens.get(0).toLowerCase(), "blue");
 		
 		// Test for multiple tokens, same color
 		emma.addToken(Token.BLUE);
 		
-		testMoveString = responseBuilder.buildChooseToken(emma.getTokens()).toJSONString();
+		testMoveString = ResponseBuilder.buildChooseToken(emma.getTokens()).toJSONString();
 		testMove = (JSONObject)parser.parse(testMoveString);
 		
 		assertEquals(testMove.size(), 2);
 		assertEquals(testMove.get("response_type"), "choose_token");
 		assertNotNull(testMove.get("tokens"));
 		
-		tokens = clientParser.getTokensFromSnapshot(testMove);
+		tokens = ClientParser.getTokensFromSnapshot(testMove);
 		assertEquals(tokens.size(), 1);
 		assertEquals(tokens.get(0).toLowerCase(), "blue");
 		
@@ -214,14 +212,14 @@ public class ResponseBuilderTest {
 		emma.addToken(Token.RED);
 		emma.addToken(Token.YELLOW);
 		
-		testMoveString = responseBuilder.buildChooseToken(emma.getTokens()).toJSONString();
+		testMoveString = ResponseBuilder.buildChooseToken(emma.getTokens()).toJSONString();
 		testMove = (JSONObject)parser.parse(testMoveString);
 		
 		assertEquals(testMove.size(), 2);
 		assertEquals(testMove.get("response_type"), "choose_token");
 		assertNotNull(testMove.get("tokens"));
 		
-		tokens = clientParser.getTokensFromSnapshot(testMove);
+		tokens = ClientParser.getTokensFromSnapshot(testMove);
 		assertEquals(tokens.size(), 3);
 		for (String token: tokens) {
 			assertTrue(token.toLowerCase().equals("blue") ||
@@ -234,7 +232,7 @@ public class ResponseBuilderTest {
 	
 	@Test
 	public void testStartTournament() throws ParseException {
-		String testMoveString = responseBuilder.buildStartTournament(tournament, 0).toJSONString();
+		String testMoveString = ResponseBuilder.buildStartTournament(tournament, 0).toJSONString();
 		JSONObject testMove = (JSONObject)parser.parse(testMoveString);
 		
 		assertEquals(testMove.size(), 6);
@@ -249,7 +247,7 @@ public class ResponseBuilderTest {
 	@Test
 	public void testStartPlayerTurn() throws ParseException {
 		Card r3 = new ColourCard("red", 3);
-		String testMoveString = responseBuilder.buildStartPlayerTurn(r3).toJSONString();
+		String testMoveString = ResponseBuilder.buildStartPlayerTurn(r3).toJSONString();
 		JSONObject testMove = (JSONObject)parser.parse(testMoveString);
 		
 		assertEquals(testMove.size(), 2);
@@ -259,7 +257,7 @@ public class ResponseBuilderTest {
 	
 	@Test
 	public void testIndicateTurn() throws ParseException {
-		String testMoveString = responseBuilder.buildIndicateTurn("Jayson").toJSONString();
+		String testMoveString = ResponseBuilder.buildIndicateTurn("Jayson").toJSONString();
 		JSONObject testMove = (JSONObject)parser.parse(testMoveString);
 		
 		assertEquals(testMove.size(), 2);
@@ -270,7 +268,7 @@ public class ResponseBuilderTest {
 	
 	@Test
 	public void testUpdateView() throws ParseException {
-		String testMoveString = responseBuilder.buildUpdateView(tournament).toJSONString();
+		String testMoveString = ResponseBuilder.buildUpdateView(tournament).toJSONString();
 		JSONObject testMove = (JSONObject)parser.parse(testMoveString);
 		
 		assertEquals(testMove.size(), 5);
@@ -283,7 +281,7 @@ public class ResponseBuilderTest {
 	
 	@Test
 	public void testTournamentOverWin() throws ParseException {
-		String testMoveString = responseBuilder.buildTournamentOverWin("red").toJSONString();
+		String testMoveString = ResponseBuilder.buildTournamentOverWin("red").toJSONString();
 		JSONObject testMove = (JSONObject)parser.parse(testMoveString);
 		
 		assertEquals(testMove.size(), 2);
@@ -293,7 +291,7 @@ public class ResponseBuilderTest {
 	
 	@Test
 	public void testTournamentOverLoss() throws ParseException {
-		String testMoveString = responseBuilder.buildTournamentOverLoss("Jayson").toJSONString();
+		String testMoveString = ResponseBuilder.buildTournamentOverLoss("Jayson").toJSONString();
 		JSONObject testMove = (JSONObject)parser.parse(testMoveString);
 		
 		assertEquals(testMove.size(), 2);
@@ -303,7 +301,7 @@ public class ResponseBuilderTest {
 	
 	@Test
 	public void testGameOverWin() throws ParseException {
-		String testMoveString = responseBuilder.buildGameOverWin().toJSONString();
+		String testMoveString = ResponseBuilder.buildGameOverWin().toJSONString();
 		JSONObject testMove = (JSONObject)parser.parse(testMoveString);
 		
 		assertEquals(testMove.size(), 1);
@@ -312,7 +310,7 @@ public class ResponseBuilderTest {
 	
 	@Test
 	public void testGameOverLoss() throws ParseException {
-		String testMoveString = responseBuilder.buildGameOverLoss("Jayson").toJSONString();
+		String testMoveString = ResponseBuilder.buildGameOverLoss("Jayson").toJSONString();
 		JSONObject testMove = (JSONObject)parser.parse(testMoveString);
 		
 		assertEquals(testMove.size(), 2);
@@ -322,7 +320,7 @@ public class ResponseBuilderTest {
 	
 	@Test
 	public void testWaiting() throws ParseException {
-		String testMoveString = responseBuilder.buildWaiting().toJSONString();
+		String testMoveString = ResponseBuilder.buildWaiting().toJSONString();
 		JSONObject testMove = (JSONObject)parser.parse(testMoveString);
 		
 		assertEquals(testMove.size(), 1);
@@ -331,7 +329,7 @@ public class ResponseBuilderTest {
 	
 	@Test
 	public void testWithdraw() throws ParseException {
-		String testMoveString = responseBuilder.buildWithdraw(60002).toJSONString();
+		String testMoveString = ResponseBuilder.buildWithdraw(60002).toJSONString();
 		JSONObject testMove = (JSONObject)parser.parse(testMoveString);
 		
 		assertEquals(testMove.size(), 2);
@@ -341,7 +339,7 @@ public class ResponseBuilderTest {
 	
 	@Test
 	public void testQuit() throws ParseException {
-		String testMoveString = responseBuilder.buildQuit().toJSONString();
+		String testMoveString = ResponseBuilder.buildQuit().toJSONString();
 		JSONObject testMove = (JSONObject)parser.parse(testMoveString);
 		
 		assertEquals(testMove.size(), 1);

@@ -15,7 +15,7 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import comp3004.ivanhoe.controller.IvanhoeController;
-import comp3004.ivanhoe.util.ServerResponseBuilder;
+import comp3004.ivanhoe.util.ResponseBuilder;
 
 public class AppServer implements Runnable {
 	protected int clientCount = 0;
@@ -24,7 +24,7 @@ public class AppServer implements Runnable {
 	protected HashMap<Integer, ServerThread> clients;
 	protected IvanhoeController controller;
 	protected JSONParser parser;
-	protected ServerResponseBuilder responseBuilder;
+	protected ResponseBuilder responseBuilder;
 	protected int maxPlayers;
 	
 	final static Logger logger = Logger.getLogger(StartServer.class);
@@ -37,8 +37,7 @@ public class AppServer implements Runnable {
 			/** Set up game object */
 			this.maxPlayers = maxPlayers;	
 			parser = new JSONParser();
-			responseBuilder = new ServerResponseBuilder();
-			controller = new IvanhoeController(this, responseBuilder, maxPlayers);
+			controller = new IvanhoeController(this, maxPlayers);
 			
 			logger.debug("Binding to port " + port + ", please wait  ...");
 	

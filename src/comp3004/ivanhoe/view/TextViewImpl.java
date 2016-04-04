@@ -9,7 +9,7 @@ import org.json.simple.JSONObject;
 
 import comp3004.ivanhoe.client.AppClient;
 import comp3004.ivanhoe.util.ClientParser;
-import comp3004.ivanhoe.util.ClientRequestBuilder;
+import comp3004.ivanhoe.util.RequestBuilder;
 
 /**
  * Text-based UI. Used for testing purposes
@@ -19,17 +19,16 @@ import comp3004.ivanhoe.util.ClientRequestBuilder;
 public class TextViewImpl implements View, Runnable {
 
 	AppClient client;
-	ClientRequestBuilder requestBuilder;
+	RequestBuilder requestBuilder;
 	ClientParser parser;
 	BufferedReader console;
 	boolean running = false;
 	
-	public TextViewImpl (AppClient client, ClientRequestBuilder requestBuilder) {
+	public TextViewImpl (AppClient client, RequestBuilder requestBuilder) {
 		this.client = client;
 		this.requestBuilder = requestBuilder;
 		
 		console = new BufferedReader(new InputStreamReader(System.in));
-		parser = new ClientParser();
 	}
 	
 	@Override

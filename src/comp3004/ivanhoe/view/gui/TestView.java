@@ -22,8 +22,8 @@ import comp3004.ivanhoe.model.SupporterCard;
 import comp3004.ivanhoe.model.Token;
 import comp3004.ivanhoe.model.Tournament;
 import comp3004.ivanhoe.server.MockServer;
-import comp3004.ivanhoe.util.ClientRequestBuilder;
-import comp3004.ivanhoe.util.ServerResponseBuilder;
+import comp3004.ivanhoe.util.RequestBuilder;
+import comp3004.ivanhoe.util.ResponseBuilder;
 import comp3004.ivanhoe.util.Strings;
 import comp3004.ivanhoe.view.MockViewFactory;
 
@@ -33,7 +33,7 @@ public class TestView {
 		//AppClient client = new AppClient()
 		GUIView view;
 		AppClient client = new AppClient(new MockViewFactory(), "1.2.3.4", 10001);
-		view = new GUIView(client, new ClientRequestBuilder());
+		view = new GUIView(client);
 
 		/*ArrayList<String> cards = new ArrayList<String>();
 			cards.add("s3");
@@ -88,8 +88,7 @@ public class TestView {
 	         }        
 	     });  
 		
-		ServerResponseBuilder responseBuilder = new ServerResponseBuilder();
-		JSONObject snapshot = responseBuilder.buildUpdateView(tournament);
+		JSONObject snapshot = ResponseBuilder.buildUpdateView(tournament);
 		
 		/*TournamentView testPanel = new TournamentView(view, snapshot);
 		testFrame.add(testPanel);

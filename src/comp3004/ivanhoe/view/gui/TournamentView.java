@@ -48,7 +48,6 @@ public class TournamentView extends JPanel {
 	
 	public TournamentView(GUIView masterView, JSONObject snapshot) {
 		this.masterView = masterView;
-		this.parser = new ClientParser();
 		this.playerDisplays = new HashMap<Integer, PlayerDisplay>();
 		this.lastMove = null;
 		

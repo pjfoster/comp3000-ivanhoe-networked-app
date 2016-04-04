@@ -16,14 +16,12 @@ import comp3004.ivanhoe.model.Player;
 import comp3004.ivanhoe.model.Token;
 import comp3004.ivanhoe.model.Tournament;
 import comp3004.ivanhoe.server.MockServer;
-import comp3004.ivanhoe.util.ClientRequestBuilder;
-import comp3004.ivanhoe.util.ServerResponseBuilder;
+import comp3004.ivanhoe.util.RequestBuilder;
+import comp3004.ivanhoe.util.ResponseBuilder;
 
 public class StartTournamentTest {
 
 	HashMap<Integer, Player> players;
-	ServerResponseBuilder responseBuilder = new ServerResponseBuilder();
-	ClientRequestBuilder requestBuilder = new ClientRequestBuilder();
 	Tournament tournament;
 	MockController controller;
 	Player alexei, luke;
@@ -40,7 +38,7 @@ public class StartTournamentTest {
 		players.put(60001, alexei);
 		players.put(60002, luke);
 		
-		controller = new MockController(new MockServer(), responseBuilder, 2);
+		controller = new MockController(new MockServer(), 2);
 		controller.setPlayers(players);
 		
 		tournament = new Tournament();
@@ -82,7 +80,7 @@ public class StartTournamentTest {
 		controller.setState(2); // WAITING_FOR_TOURNAMENT_COLOR
 		
 		alexei.addHandCard(r3);
-		JSONObject playR3 = requestBuilder.buildCardMove(r3.toString());
+		JSONObject playR3 = RequestBuilder.buildCardMove(r3.toString());
 		controller.processPlayerMove(60001, playR3);
 		
 		assertEquals(controller.getTournament().getToken(), Token.RED);
@@ -104,7 +102,7 @@ public class StartTournamentTest {
 		controller.setState(2); // WAITING_FOR_TOURNAMENT_COLOR
 		
 		alexei.addHandCard(s3);
-		JSONObject playS3 = requestBuilder.buildCardMove(s3.toString());
+		JSONObject playS3 = RequestBuilder.buildCardMove(s3.toString());
 		controller.processPlayerMove(60001, playS3);
 		
 		assertEquals(controller.getTournament().getToken(), Token.UNDECIDED);
@@ -112,7 +110,7 @@ public class StartTournamentTest {
 		assertEquals(controller.getCurrentTurnId(), 60001); // The turn has NOT been changed
 		assertEquals(alexei.getDisplayTotal(Token.BLUE), 0);
 		
-		JSONObject chooseColor = requestBuilder.buildChooseToken("blue");
+		JSONObject chooseColor = RequestBuilder.buildChooseToken("blue");
 		controller.processPlayerMove(60001, chooseColor);
 		
 		assertEquals(controller.getTournament().getToken(), Token.BLUE);
@@ -135,7 +133,7 @@ public class StartTournamentTest {
 		controller.setState(2); // WAITING_FOR_TOURNAMENT_COLOR
 		
 		alexei.addHandCard(s3);
-		JSONObject playS3 = requestBuilder.buildCardMove(s3.toString());
+		JSONObject playS3 = RequestBuilder.buildCardMove(s3.toString());
 		controller.processPlayerMove(60001, playS3);
 		
 		assertEquals(controller.getTournament().getToken(), Token.UNDECIDED);
@@ -143,7 +141,7 @@ public class StartTournamentTest {
 		assertEquals(controller.getCurrentTurnId(), 60001); // The turn has NOT been changed
 		assertEquals(alexei.getDisplayTotal(Token.YELLOW), 0);
 		
-		JSONObject chooseColor = requestBuilder.buildChooseToken("purple");
+		JSONObject chooseColor = RequestBuilder.buildChooseToken("purple");
 		controller.processPlayerMove(60001, chooseColor);
 		
 		// check that move was rejected
@@ -152,7 +150,7 @@ public class StartTournamentTest {
 		assertEquals(controller.getCurrentTurnId(), 60001); // The turn has NOT been changed
 		assertEquals(alexei.getDisplayTotal(Token.YELLOW), 0);
 		
-		chooseColor = requestBuilder.buildChooseToken("yellow");
+		chooseColor = RequestBuilder.buildChooseToken("yellow");
 		controller.processPlayerMove(60001, chooseColor);
 		
 		assertEquals(controller.getTournament().getToken(), Token.YELLOW);

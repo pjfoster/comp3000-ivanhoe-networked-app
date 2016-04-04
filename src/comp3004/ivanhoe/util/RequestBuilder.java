@@ -11,7 +11,7 @@ import org.json.simple.JSONObject;
  * @author PJF
  *
  */
-public class ClientRequestBuilder {
+public abstract class RequestBuilder {
 	
 	/**
 	 * Once a connection is accepted, a user must register with the game
