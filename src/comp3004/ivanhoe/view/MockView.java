@@ -82,4 +82,10 @@ public class MockView implements View {
 		
 	}
 
+	@Override
+	public void createAnnouncement(String message) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

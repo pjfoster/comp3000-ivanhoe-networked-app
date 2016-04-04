@@ -168,6 +168,13 @@ public abstract class ResponseBuilder {
 		return new JSONObject(responseMap);
 	}
 	
+	public static JSONObject buildAnnouncement(String message) {
+		HashMap<String, String> responseMap = new HashMap<String, String>();
+		responseMap.put("response_type", "announcement");
+		responseMap.put("message", message);
+		return new JSONObject(responseMap);
+	}
+	
 	public static JSONObject buildWaiting() {
 		HashMap<String, String> responseMap = new HashMap<String, String>();
 		responseMap.put("response_type", "waiting");

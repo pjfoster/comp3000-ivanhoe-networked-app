@@ -17,6 +17,7 @@ import comp3004.ivanhoe.model.Tournament;
 import comp3004.ivanhoe.server.AppServer;
 import comp3004.ivanhoe.util.ResponseBuilder;
 import comp3004.ivanhoe.util.ServerParser;
+import comp3004.ivanhoe.util.Strings;
 
 public class IvanhoeController {
 
@@ -673,6 +674,7 @@ public class IvanhoeController {
 			tournament.setToken(Token.GREEN);
 			getCurrentTurnPlayer().removeHandCard(c);
 			tournament.addToDiscard(c);
+			createActionCardAnnouncement(getCurrentTurnPlayer().getName(), "DROP WEAPON");
 			finishTurn();
 			return true;
 			
@@ -704,6 +706,7 @@ public class IvanhoeController {
 			
 			getCurrentTurnPlayer().removeHandCard(c);
 			tournament.addToDiscard(c);
+			createActionCardAnnouncement(getCurrentTurnPlayer().getName(), "OUTMANEUVER");
 			finishTurn();
 			return true;
 		}
@@ -734,6 +737,7 @@ public class IvanhoeController {
 			
 			getCurrentTurnPlayer().removeHandCard(c);
 			tournament.addToDiscard(c);
+			createActionCardAnnouncement(getCurrentTurnPlayer().getName(), "CHARGE");
 			finishTurn();
 			return true;
 			
@@ -765,6 +769,7 @@ public class IvanhoeController {
 			
 			getCurrentTurnPlayer().removeHandCard(c);
 			tournament.addToDiscard(c);
+			createActionCardAnnouncement(getCurrentTurnPlayer().getName(), "COUNTER CHARGE");
 			finishTurn();
 			return true;
 		}
@@ -785,6 +790,7 @@ public class IvanhoeController {
 			
 			getCurrentTurnPlayer().removeHandCard(c);
 			tournament.addToDiscard(c);
+			createActionCardAnnouncement(getCurrentTurnPlayer().getName(), "DISGRACE");
 			finishTurn();
 			return true;
 		}
@@ -933,6 +939,9 @@ public class IvanhoeController {
 		
 		else if (lastPlayed.get(0).equals("changeweapon")) {
 			if (newColor == tournament.getToken()) return false;
+			createActionCardAnnouncement(getCurrentTurnPlayer().getName(), "CHANGE WEAPON");
+		} else {
+			createActionCardAnnouncement(getCurrentTurnPlayer().getName(), "DROP WEAPON");
 		}
 		
 		tournament.setToken(Token.BLUE);
@@ -973,6 +982,7 @@ public class IvanhoeController {
 			state = WAITING_FOR_PLAYER_MOVE;
 			getCurrentTurnPlayer().removeHandCard(actionCard);
 			lastPlayed = null;
+			createActionCardAnnouncement(getCurrentTurnPlayer().getName(), "BREAK LANCE");
 			finishTurn();
 		}
 		
@@ -987,6 +997,7 @@ public class IvanhoeController {
 			state = WAITING_FOR_PLAYER_MOVE;
 			getCurrentTurnPlayer().removeHandCard(actionCard);
 			lastPlayed = null;
+			createActionCardAnnouncement(getCurrentTurnPlayer().getName(), "RIPOSTE");
 			finishTurn();
 			
 		}
@@ -1000,6 +1011,7 @@ public class IvanhoeController {
 			state = WAITING_FOR_PLAYER_MOVE;
 			lastPlayed = null;
 			getCurrentTurnPlayer().removeHandCard(actionCard);
+			createActionCardAnnouncement(getCurrentTurnPlayer().getName(), "KNOCK DOWN");
 			finishTurn();
 		}
 		
@@ -1062,6 +1074,7 @@ public class IvanhoeController {
 			state = WAITING_FOR_PLAYER_MOVE;
 			getCurrentTurnPlayer().removeHandCard(actionCard);
 			lastPlayed = null;
+			createActionCardAnnouncement(getCurrentTurnPlayer().getName(), "DODGE");
 			finishTurn();
 		}
 		
@@ -1071,6 +1084,7 @@ public class IvanhoeController {
 			
 			state = WAITING_FOR_PLAYER_MOVE;
 			lastPlayed = null;
+			createActionCardAnnouncement(getCurrentTurnPlayer().getName(), "RETREAT");
 			finishTurn();
 		}
 		
@@ -1130,8 +1144,15 @@ public class IvanhoeController {
 
 		state = WAITING_FOR_PLAYER_MOVE;
 		lastPlayed = null;
+		createActionCardAnnouncement(getCurrentTurnPlayer().getName(), "OUTWIT");
 		finishTurn();
 		return true;
+	}
+	
+	public void createActionCardAnnouncement(String playerName, String cardCode) {
+		String message = String.format(Strings.action_card_played, playerName, cardCode);
+		JSONObject actionCardPlayed = ResponseBuilder.buildAnnouncement(message);
+		server.broadcast(actionCardPlayed);
 	}
 	
 	/**
@@ -1194,5 +1215,6 @@ public class IvanhoeController {
 		}
 		return null;
 	}
+	
 
 }

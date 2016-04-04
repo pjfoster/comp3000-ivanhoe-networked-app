@@ -261,4 +261,10 @@ public class TextViewImpl implements View, Runnable {
 		
 	}
 
+	@Override
+	public void createAnnouncement(String message) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

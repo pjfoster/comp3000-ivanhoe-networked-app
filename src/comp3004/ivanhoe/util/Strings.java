@@ -9,6 +9,8 @@ public class Strings {
 	public static String choose_token = "<html>You are withdrawing with a maiden in your display! <br> Choose which of your tokens to forfeit: </html>";
 	public static String change_tournament_color = "<html>You are changing the colour of the tournament! Please chooe a new colour</html>";
 	
+	public static String action_card_played = "<html>%s played the action card %s</html>";
+	
 	public static String pick_opponent_card = "<html>Pick one of your opponent's cards:</html>";
 	public static String pick_own_card = "<html>Pick one of your own cards:</html>";
 	

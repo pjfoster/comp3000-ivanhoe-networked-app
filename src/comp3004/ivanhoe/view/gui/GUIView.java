@@ -253,4 +253,9 @@ public class GUIView extends JFrame implements View {
 		colourView.setVisible(true);
 	}
 
+	@Override
+	public void createAnnouncement(String message) {
+		((TournamentView) mainPanel).updateStats(null, null, message);
+	}
+
 }

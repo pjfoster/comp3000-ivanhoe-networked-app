@@ -127,6 +127,10 @@ public class AppClient implements Runnable {
 				view.displayPickCard(server_response);
 			}
 			
+			else if (server_response.get("response_type").equals("announcement")) {
+				view.createAnnouncement(ClientParser.getAnnouncement(server_response));
+			}
+			
 			else if (server_response.get("response_type").equals("withdraw")) {
 				view.announceWithdrawal(ClientParser.getPlayerIdFromSnapshot(server_response));
 			}

@@ -69,8 +69,12 @@ public abstract class ClientParser {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public static ArrayList<String> getTokensFromChooseColor(Object snapshot) {
-		return (ArrayList<String>)((JSONObject)snapshot).get("tokens");
+	public static ArrayList<String> getTokensFromChooseColor(JSONObject snapshot) {
+		return (ArrayList<String>)snapshot.get("tokens");
+	}
+	
+	public static String getAnnouncement(JSONObject snapshot) {
+		return (String)snapshot.get("message");
 	}
 	
 }

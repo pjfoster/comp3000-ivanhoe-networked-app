@@ -34,4 +34,5 @@ public interface View {
 	public void displayConnectionRejected();
 	public void displayChangeTournamentColor(JSONObject server_response);
 	public void displayPickCard(JSONObject server_response);
+	public void createAnnouncement(String message);
 }
