@@ -20,7 +20,7 @@ public class StartServer {
 	
 	public static void main(String[] argv) {
 		
-		//PropertyConfigurator.configure("resources/log4j.server.properties");
+		PropertyConfigurator.configure("resources/log4j.server.properties");
 		
 		Console c = System.console();
 		if (c == null) {

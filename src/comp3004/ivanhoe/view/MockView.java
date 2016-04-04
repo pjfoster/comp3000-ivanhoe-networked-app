@@ -38,7 +38,7 @@ public class MockView implements View {
 	public void displayTurnPlayer(String playerName) { }
 
 	@Override
-	public void announceWithdrawal(String string) { }
+	public void announceWithdrawal(Integer playerId) { }
 
 	@Override
 	public void displayTournamentWonMessage(String tokenColor) { }
@@ -60,6 +60,12 @@ public class MockView implements View {
 
 	@Override
 	public void displayConnectionRejected() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void displayPickOpponent() {
 		// TODO Auto-generated method stub
 		
 	}

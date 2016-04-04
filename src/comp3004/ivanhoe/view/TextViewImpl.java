@@ -133,8 +133,8 @@ public class TextViewImpl implements View, Runnable {
 	}
 	
 	@Override
-	public void announceWithdrawal(String playerName) {
-		System.out.println(playerName + " has withdrawn from the game");
+	public void announceWithdrawal(Integer playerId) {
+		System.out.println(playerId + " has withdrawn from the game");
 	}
 
 	public void displayWelcome() {
@@ -242,6 +242,12 @@ public class TextViewImpl implements View, Runnable {
 
 	@Override
 	public void displayConnectionRejected() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void displayPickOpponent() {
 		// TODO Auto-generated method stub
 		
 	}

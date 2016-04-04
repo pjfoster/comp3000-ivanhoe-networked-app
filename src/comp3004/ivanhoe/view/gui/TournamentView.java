@@ -167,7 +167,7 @@ public class TournamentView extends JPanel {
 		cardsPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
 		System.out.println("Cards: " + cards);
 		for (String c: cards) {
-			JLabel card = ImageHandler.loadCard(c);
+			JLabel card = new JLabel(ImageHandler.loadCardIcon(c));
 			card.setAlignmentX(Component.CENTER_ALIGNMENT);
 			cardsPanel.add(card);
 			cardsPanel.add(Box.createRigidArea(new Dimension(0, 10)));
@@ -191,7 +191,7 @@ public class TournamentView extends JPanel {
 	private JScrollPane createPlayersComposite(JSONObject snapshot) {
 		playersComposite = new JPanel();
 		//playersComposite.setBackground(Color.YELLOW);
-		playersComposite.setBorder(BorderFactory.createLineBorder(Color.black));
+		//playersComposite.setBorder(BorderFactory.createLineBorder(Color.black));
 		playersComposite.setLayout(new BoxLayout(playersComposite, BoxLayout.Y_AXIS));
 		playersComposite.setOpaque(false);
 		
@@ -208,6 +208,8 @@ public class TournamentView extends JPanel {
 		JScrollPane playersScrollPane = new JScrollPane(playersComposite);
 		playersScrollPane.setAlignmentX(LEFT_ALIGNMENT);
 		playersScrollPane.setOpaque(false);
+		playersScrollPane.setBorder(null);
+		playersScrollPane.getViewport().setBorder(null);
 		playersScrollPane.getViewport().setOpaque(false);
 		
 		return playersScrollPane;
@@ -276,7 +278,7 @@ public class TournamentView extends JPanel {
 		cardsPanel.setLayout(new BoxLayout(cardsPanel, BoxLayout.Y_AXIS));
 		cardsPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
 		for (String c: cards) {
-			JLabel card = ImageHandler.loadCard(c);
+			JLabel card = new JLabel(ImageHandler.loadCardIcon(c));
 			card.setAlignmentX(Component.CENTER_ALIGNMENT);
 			cardsPanel.add(card);
 			cardsPanel.add(Box.createRigidArea(new Dimension(0, 10)));
@@ -311,13 +313,18 @@ public class TournamentView extends JPanel {
 	}
 	
 	public void displayPlayerTurn(String newCard) {
-		TurnView turnView = new TurnView(masterView, currentHand, newCard);
+		TurnView turnView = new TurnView(masterView, currentHand);
 		turnView.setVisible(true);
 	}
 	
 	public void displaySelectOpponent() {
 		PickOpponentView oppView = new PickOpponentView(masterView, playerDisplays.values());
 		oppView.setVisible(true);
+	}
+	
+	public void withdrawPlayer(int playerId) {
+		PlayerDisplay pd = playerDisplays.get(playerId);
+		pd.withdraw();
 	}
 	
 }

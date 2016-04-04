@@ -32,7 +32,7 @@ public class PickOpponentView extends JFrame implements ActionListener {
 	
 	public PickOpponentView(GUIView masterView, Collection<PlayerDisplay> playerDisplays) {
 		super("Pick an opponent");
-		this.setSize(600, 300);
+		this.setSize(400, 300);
 		this.setResizable(false);
 		this.masterView = masterView;
 		
@@ -52,16 +52,20 @@ public class PickOpponentView extends JFrame implements ActionListener {
 		opponentSelector.setLayout(new GridLayout(2, playerDisplays.size() - 1));
 		 
 		for (PlayerDisplay pd: playerDisplays) {
-			opponentSelector.add(pd.getIcon());
+			if (pd.getUserId() != masterView.getId()) {
+				opponentSelector.add(pd.getIcon());
+			}
 		}
 		
 		btnGroup = new ButtonGroup();
 		for (PlayerDisplay pd: playerDisplays) {
-			JRadioButton radioButton = new JRadioButton(pd.getName());
-			radioButton.setActionCommand("" + pd.getUserId());
-			radioButton.setOpaque(false);
-			btnGroup.add(radioButton);
-			opponentSelector.add(radioButton);
+			if (pd.getUserId() != masterView.getId()) {
+				JRadioButton radioButton = new JRadioButton(pd.getUserName());
+				radioButton.setActionCommand("" + pd.getUserId());
+				radioButton.setOpaque(false);
+				btnGroup.add(radioButton);
+				opponentSelector.add(radioButton);
+			}
 		}
 		
 		JScrollPane opponentScrollPane = new JScrollPane(opponentSelector, JScrollPane.VERTICAL_SCROLLBAR_NEVER,

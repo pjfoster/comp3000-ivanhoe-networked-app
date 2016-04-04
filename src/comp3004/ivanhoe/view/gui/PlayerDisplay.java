@@ -155,6 +155,11 @@ public class PlayerDisplay extends JPanel {
 		displayComposite.add(cardsScrollPane);
 	}
 	
-	
+	public void withdraw() {
+		displayLabel.setText("DISPLAY TOTAL: ---");
+		displayComposite.remove(cardsScrollPane);
+		JLabel withdrawLabel = new JLabel(username + " has withdrawn from the tournament");
+		displayComposite.add(withdrawLabel);
+	}
 	
 }

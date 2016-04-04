@@ -27,13 +27,14 @@ public interface View {
 	public void displayChooseColor();
 	public void displayInvalidMove();
 	public void displayTurnPlayer(String playerName);
-	public void announceWithdrawal(String playerName);
+	public void announceWithdrawal(Integer playerId);
 	public void displayTournamentWonMessage(String tokenColor);
 	public void displayTournamentLossMessage(String winnerName);
 	public void displayGameWonMessage();
 	public void displayGameLossMessage(String winnerName);
 	public void displayPurpleTournamentWonMessage();
 	public void displayChooseToken(JSONObject server_response);
+	public void displayPickOpponent();
 
 	public void displayConnectionRejected();
 }

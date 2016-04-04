@@ -42,8 +42,8 @@ public class ServerParser {
 		return Token.fromString(colorString);
 	}
 	
-	public String getOpponentName(JSONObject request) {
-		return (String) request.get("opponent_username");
+	public String getOpponentId(JSONObject request) {
+		return (String) request.get("opponent_id");
 	}
 	
 	@SuppressWarnings("unchecked")

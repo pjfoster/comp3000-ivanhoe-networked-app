@@ -150,6 +150,13 @@ public class GUIView extends JFrame implements View {
 		PickColourView colourView = new PickColourView(this, tokens);
 		colourView.setVisible(true);	
 	}
+	
+	@Override
+	public void displayPickOpponent() {
+		if (mainPanel instanceof TournamentView)  {
+			((TournamentView) mainPanel).displaySelectOpponent();
+		}	
+	}
 
 	@Override
 	public void displayInvalidMove() {
@@ -165,9 +172,10 @@ public class GUIView extends JFrame implements View {
 	}
 
 	@Override
-	public void announceWithdrawal(String playerName) {
-		// TODO Auto-generated method stub
-		
+	public void announceWithdrawal(Integer playerId) {
+		if (mainPanel instanceof TournamentView) {
+			((TournamentView) mainPanel).withdrawPlayer(playerId);
+		}
 	}
 
 	@Override

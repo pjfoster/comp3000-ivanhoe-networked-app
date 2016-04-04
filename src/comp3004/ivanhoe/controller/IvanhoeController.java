@@ -109,6 +109,9 @@ public class IvanhoeController {
 		JSONObject startGameMessage = responseBuilder.buildStartGame(
 				tournament, getCurrentTurnId());
 		server.broadcast(startGameMessage);
+		
+		JSONObject indicateTurn = responseBuilder.buildIndicateTurn(getCurrentTurnPlayer().getName());
+		server.broadcast(indicateTurn);
 	}
 
 
@@ -834,7 +837,7 @@ public class IvanhoeController {
 	 */
 	private void handleWithdraw() {
 		JSONObject announceWithdraw = responseBuilder
-				.buildWithdraw(getCurrentTurnPlayer().getName());
+				.buildWithdraw(getCurrentTurnId());
 		server.broadcast(announceWithdraw);
 
 		tournament.removePlayer(getCurrentTurnId());
@@ -955,8 +958,9 @@ public class IvanhoeController {
 	protected boolean actionCardPickOpponent(JSONObject playerMove) {
 		
 		// check that a valid opponent was selected
-		String opponentName = parser.getOpponentName(playerMove);
-		Player opponent = getTournamentPlayer(opponentName);
+		Integer opponentId = Integer.parseInt(parser.getOpponentId(playerMove));
+		if (opponentId == null) return false;
+		Player opponent = tournament.getPlayers().get(opponentId);
 		if (opponent == null) return false;
 		
 		String cardName = lastPlayed.get(0);

@@ -14,6 +14,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import comp3004.ivanhoe.util.ClientParser;
 import comp3004.ivanhoe.util.ClientRequestBuilder;
 import comp3004.ivanhoe.view.View;
 import comp3004.ivanhoe.view.ViewFactory;
@@ -117,8 +118,12 @@ public class AppClient implements Runnable {
 				view.displayChooseToken(server_response);
 			}
 			
+			else if (server_response.get("response_type").equals("pick_opponent")) {
+				view.displayPickOpponent();
+			}
+			
 			else if (server_response.get("response_type").equals("withdraw")) {
-				view.announceWithdrawal((String)server_response.get("player_name"));
+				view.announceWithdrawal(ClientParser.getWithdrawPlayerId(server_response));
 			}
 			
 			else if (server_response.get("response_type").equals("start_tournament")) {

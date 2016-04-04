@@ -14,6 +14,10 @@ public class ClientParser {
 		return Integer.parseInt((String)snapshot.get("current_turn"));
 	}
 	
+	public static Integer getWithdrawPlayerId(JSONObject response) {
+		return Integer.parseInt((String)response.get("player_id"));
+	}
+	
 	public String getHighestDisplay(JSONObject snapshot) {
 		return (String)snapshot.get("highest_display");
 	}

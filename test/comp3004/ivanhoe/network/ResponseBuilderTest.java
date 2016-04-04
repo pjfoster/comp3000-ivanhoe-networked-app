@@ -331,12 +331,12 @@ public class ResponseBuilderTest {
 	
 	@Test
 	public void testWithdraw() throws ParseException {
-		String testMoveString = responseBuilder.buildWithdraw("Luke").toJSONString();
+		String testMoveString = responseBuilder.buildWithdraw(60002).toJSONString();
 		JSONObject testMove = (JSONObject)parser.parse(testMoveString);
 		
 		assertEquals(testMove.size(), 2);
 		assertEquals(testMove.get("response_type"), "withdraw");
-		assertEquals(testMove.get("player_name"), "Luke");
+		assertEquals(testMove.get("player_id"), 60002);
 	}
 	
 	@Test

@@ -43,7 +43,7 @@ public class TurnView extends JFrame implements ActionListener {
 	
 	HashMap<JCheckBoxMenuItem, String> cardsLookup;
 	
-	public TurnView(GUIView masterView, ArrayList<String> cards, String newCard) {
+	public TurnView(GUIView masterView, ArrayList<String> cards) {
 		super("It's Your Turn!");
 		this.setSize(600, 300);
 		this.setResizable(false);
@@ -65,11 +65,10 @@ public class TurnView extends JFrame implements ActionListener {
 		JPanel cardSelector = new JPanel();
 		cardSelector.setLayout(new FlowLayout());
 		
-		cards.add(newCard);
-		for (String card: cards) {
-			ImageIcon cardIcon = ImageHandler.loadCardIcon(card);
+		for (int i = 0; i < cards.size(); ++i) {
+			ImageIcon cardIcon = ImageHandler.loadCardIcon(cards.get(i));
 			JCheckBoxMenuItem checkBox;
-			if (card == newCard) {
+			if (i == cards.size() -1) {
 				checkBox = new JCheckBoxMenuItem("NEW", cardIcon);
 				checkBox.setBorder(BorderFactory.createLineBorder(Color.RED));
 			} else {
@@ -77,7 +76,7 @@ public class TurnView extends JFrame implements ActionListener {
 			}
 			checkBox.setOpaque(false);
 			cardSelector.add(checkBox);
-			cardsLookup.put(checkBox, card);
+			cardsLookup.put(checkBox, cards.get(i));
 		}
 		cardScrollPane = new JScrollPane(cardSelector, JScrollPane.VERTICAL_SCROLLBAR_NEVER,
 	              JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);

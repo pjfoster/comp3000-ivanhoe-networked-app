@@ -158,10 +158,10 @@ public class ServerResponseBuilder {
 		return new JSONObject(responseMap);
 	}
 	
-	public JSONObject buildWithdraw(String playerName) {
+	public JSONObject buildWithdraw(Integer playerId) {
 		HashMap<String, String> responseMap = new HashMap<String, String>();
 		responseMap.put("response_type", "withdraw");
-		responseMap.put("player_name", playerName);
+		responseMap.put("player_id", ""+playerId);
 		return new JSONObject(responseMap);
 	}
 	
