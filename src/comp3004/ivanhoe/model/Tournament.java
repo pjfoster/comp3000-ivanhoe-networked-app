@@ -52,6 +52,11 @@ public class Tournament {
 			p.resetRound();
 		}
 		
+		for (Player p: currentPlayers.values()) {
+			discardPile.addAll(p.getSpecial());
+			p.resetRound();
+		}
+		
 		// Add discard pile to deck and shuffle
 		resetDiscardToDeck();
 		

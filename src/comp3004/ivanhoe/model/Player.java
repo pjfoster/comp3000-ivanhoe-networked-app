@@ -16,16 +16,18 @@ public class Player {
 	private String name;
 	private HashSet<Token> tokens;
 	private List<Card> hand;
+	private List<Card> special;
 	private List<Card> display;
 	
 	/**
 	 * Default for testing
 	 */
 	public Player(){
-		name = "Default Dan";
+		name = "Test";
 		hand = new ArrayList<Card>();
 		tokens = new HashSet<Token>();
 		display = new ArrayList<Card>();
+		special = new ArrayList<Card>();
 	}
 	
 	/**
@@ -37,6 +39,7 @@ public class Player {
 		hand = new ArrayList<Card>();
 		tokens = new HashSet<Token>();
 		display = new ArrayList<Card>();
+		special = new ArrayList<Card>();
 	}
 	
 	public String getName() { return name; }
@@ -44,6 +47,7 @@ public class Player {
 	public List<Card> getHand() { return hand; }
 	public List<Card> getDisplay() { return display; }
 	public Card getDisplayTop() { return display.get(display.size()-1); }
+	public List<Card> getSpecial() { return special; }
 	
 	/**
 	 * Returns a random card from the player's hand
@@ -68,9 +72,39 @@ public class Player {
 		return false;
 	}
 	
+	/**
+	 * Returns true if the player has a maiden in their display
+	 * @return
+	 */
 	public boolean hasPlayedMaiden() {
 		for (Card c: display) {
 			if (c.getName().equals("maiden")) { return true; }
+		}
+		return false;
+	}
+	
+	/**
+	 * Returns true if the player has played the SHIELD action card
+	 * @return
+	 */
+	public boolean hasShield() {
+		for (Card c: special) {
+			if (c.toString().equals("shield")) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	/**
+	 * Returns true is the player has STUNNED card next to their display
+	 * @return
+	 */
+	public boolean isStunned() {
+		for (Card c: special) {
+			if (c.toString().equals("stunned")) {
+				return true;
+			}
 		}
 		return false;
 	}
@@ -99,20 +133,30 @@ public class Player {
 		return false;
 	}
 	
+	public boolean addSpecialCard(Card card) {
+		if (card.getName().toLowerCase().equals("shield") ||
+			card.getName().toLowerCase().equals("stunned")) {
+			special.add(card);
+			return true;
+		}
+		return false;
+	}
+	
 	/**
 	 * Removes card from display and alters display total
 	 * @param card
 	 * @return
 	 */
 	public boolean removeDisplayCard(Card card){
-		if (card.getValue() != 0 && display.contains(card)){
-			return display.remove(card);
-		}
-		return false;
+		return display.remove(card);
 	}
 	
 	public Card removeDisplayTop() {
 		return display.remove(display.size()-1);
+	}
+	
+	public boolean removeSpecial(Card card){
+		return display.remove(card);
 	}
 	
 	/**
@@ -147,6 +191,7 @@ public class Player {
 	 */
 	public void resetRound(){
 		display = new ArrayList<Card>();
+		special = new ArrayList<Card>();
 	}
 	
 	/**

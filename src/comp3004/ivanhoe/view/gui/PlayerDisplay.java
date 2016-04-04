@@ -1,10 +1,12 @@
 package comp3004.ivanhoe.view.gui;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.util.ArrayList;
 
+import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
@@ -43,7 +45,8 @@ public class PlayerDisplay extends JPanel {
 		this.displayTotal = ClientParser.getPlayerDisplayTotal(player);
 		
 		this.userComposite = createUserComposite(this.username, imageIcon);
-		this.displayComposite = createDisplayComposite(this.tokens, this.cards, this.displayTotal);
+		this.displayComposite = createDisplayComposite(this.tokens, this.cards, 
+												       ClientParser.getPlayerSpecial(player), this.displayTotal);
 		
 		this.add(userComposite);
 		this.add(Box.createRigidArea(new Dimension(10,0)));
@@ -85,7 +88,8 @@ public class PlayerDisplay extends JPanel {
 	 * @param displayTotal
 	 * @return
 	 */
-	public JPanel createDisplayComposite(ArrayList<String> tokens, ArrayList<String> displayCards, String displayTotal) {
+	public JPanel createDisplayComposite(ArrayList<String> tokens, ArrayList<String> displayCards, 
+			                             ArrayList<String> special, String displayTotal) {
 		JPanel displayComposite = new JPanel();
 		displayComposite.setOpaque(false);
 		displayComposite.setLayout(new BoxLayout(displayComposite, BoxLayout.Y_AXIS));
@@ -94,7 +98,7 @@ public class PlayerDisplay extends JPanel {
 		displayLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
 		
 		tokensComposite = makeTokensComposite(tokens);
-		cardsScrollPane = makeCardsScrollPane(displayCards);
+		cardsScrollPane = makeCardsScrollPane(displayCards, special);
 		
 		displayComposite.add(displayLabel);
 		displayComposite.add(tokensComposite);
@@ -118,10 +122,19 @@ public class PlayerDisplay extends JPanel {
 		return tokensComposite;
 	}
 	
-	private JScrollPane makeCardsScrollPane(ArrayList<String> displayCards) {
+	private JScrollPane makeCardsScrollPane(ArrayList<String> displayCards, ArrayList<String> special) {
 		JPanel cardsComposite = new JPanel();
 		cardsComposite.setOpaque(false);
 		cardsComposite.setLayout(new FlowLayout());
+		 
+		// add special cards - SHIELD OR STUNNED
+		for (String c: special) {
+			JLabel card = ImageHandler.loadCard(c);
+			card.setBorder(BorderFactory.createLineBorder(Color.RED));
+			cardsComposite.add(card);
+		}
+		
+		// add regular display cards
 		for (String c: displayCards) {
 			JLabel card = ImageHandler.loadCard(c);
 			cardsComposite.add(card);
@@ -149,7 +162,8 @@ public class PlayerDisplay extends JPanel {
 		
 		// update display
 		//System.out.println(ClientParser.getPlayerName(player) + " new display " + ClientParser.getPlayerDisplay(player));
-		cardsScrollPane = makeCardsScrollPane(ClientParser.getPlayerDisplay(player));
+		cardsScrollPane = makeCardsScrollPane(ClientParser.getPlayerDisplay(player),
+											  ClientParser.getPlayerSpecial(player));
 		
 		displayComposite.add(tokensComposite);
 		displayComposite.add(cardsScrollPane);

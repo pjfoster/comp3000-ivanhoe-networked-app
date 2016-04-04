@@ -42,6 +42,11 @@ public abstract class ClientParser {
 		return (ArrayList<String>)((JSONObject)player).get("tokens");
 	}
 	
+	@SuppressWarnings("unchecked")
+	public static ArrayList<String> getPlayerSpecial(Object player) {
+		return (ArrayList<String>)((JSONObject)player).get("special");
+	}
+	
 	public static String getPlayerName(Object player) {
 		return (String)((JSONObject)player).get("username");
 	}

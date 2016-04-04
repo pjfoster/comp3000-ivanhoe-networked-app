@@ -469,6 +469,8 @@ public class IvanhoeController {
 	 */
 	public boolean playMultipleCards(ArrayList<String> cardCodes) {
 
+		if (getCurrentTurnPlayer().isStunned()) return false;
+		
 		ArrayList<Card> cards = getCardsInHand(cardCodes);
 
 		if (cards == null || cards.isEmpty()) {
@@ -682,7 +684,8 @@ public class IvanhoeController {
 		
 		else if (c.getName().equals("breaklance") || c.getName().equals("riposte") ||
 				 c.getName().equals("dodge") || c.getName().equals("retreat") ||
-				 c.getName().equals("knockdown") || c.getName().equals("outwit")) {
+				 c.getName().equals("knockdown") || c.getName().equals("outwit") ||
+				 c.getName().equals("stunned")) {
 			// require player to pick an opponent
 			
 			lastPlayed = new ArrayList<String>();
@@ -698,7 +701,8 @@ public class IvanhoeController {
 		else if (c.getName().equals("outmaneuver")) {
 			// discard the top of each player's display
 			for (int key: tournament.getPlayers().keySet()) {
-				if (key != getCurrentTurnId() && players.get(key).getDisplay().size() > 1) {
+				if (key != getCurrentTurnId() && players.get(key).getDisplay().size() > 1 &&
+					!players.get(key).hasShield()) {
 					Card card = players.get(key).removeDisplayTop();
 					tournament.addToDiscard(card);
 				}
@@ -727,7 +731,7 @@ public class IvanhoeController {
 			for (Player p: tournament.getPlayers().values()) {
 				ArrayList<Card> displayCopy = new ArrayList<Card>(p.getDisplay());
 				for (Card card: displayCopy) {
-					if (p.getDisplay().size() <= 1) break;
+					if (p.getDisplay().size() <= 1 || p.hasShield()) break;
 					if (card.toString().equals(chosenCard.toString())) {
 						p.removeDisplayCard(card);
 						tournament.addToDiscard(card);
@@ -759,7 +763,7 @@ public class IvanhoeController {
 			for (Player p: tournament.getPlayers().values()) {
 				ArrayList<Card> displayCopy = new ArrayList<Card>(p.getDisplay());
 				for (Card card: displayCopy) {
-					if (p.getDisplay().size() <= 1) break;
+					if (p.getDisplay().size() <= 1 || p.hasShield()) break;
 					if (card.toString().equals(chosenCard.toString())) {
 						p.removeDisplayCard(card);
 						tournament.addToDiscard(card);
@@ -778,6 +782,7 @@ public class IvanhoeController {
 			
 			// remove all supporter cards from displays
 			for (Player p: tournament.getPlayers().values()) {
+				if (p.hasShield()) continue;
 				ArrayList<Card> displayCopy = new ArrayList<Card>(p.getDisplay());
 				for (Card card: displayCopy) {
 					if (p.getDisplay().size() <= 1) break;
@@ -791,6 +796,14 @@ public class IvanhoeController {
 			getCurrentTurnPlayer().removeHandCard(c);
 			tournament.addToDiscard(c);
 			createActionCardAnnouncement(getCurrentTurnPlayer().getName(), "DISGRACE");
+			finishTurn();
+			return true;
+		}
+		
+		else if (c.getName().equals("shield")) {
+			getCurrentTurnPlayer().removeHandCard(c);
+			getCurrentTurnPlayer().addSpecialCard(c);
+			createActionCardAnnouncement(getCurrentTurnPlayer().getName(), "SHIELD");
 			finishTurn();
 			return true;
 		}
@@ -956,7 +969,7 @@ public class IvanhoeController {
 	
 	/**
 	 * Handles all action cards that require the player to pick a valid opponent:
-	 * BREAK LANCE, RIPOSTE, DODGE, RETREAT, KNOCK DOWN, OUTWIT
+	 * BREAK LANCE, RIPOSTE, DODGE, RETREAT, KNOCK DOWN, OUTWIT, STUNNED
 	 * @param playerMove
 	 * @return
 	 */
@@ -975,6 +988,7 @@ public class IvanhoeController {
 			// remove all purple cards from the opponent's display
 			ArrayList<Card> displayCopy = new ArrayList<Card>(opponent.getDisplay());
 			for (Card c: displayCopy) {
+				if (opponent.hasShield()) break;
 				if (c.toString().charAt(0) == 'p' && opponent.getDisplay().size() > 1) {
 					opponent.removeDisplayCard(c);
 				}
@@ -988,7 +1002,7 @@ public class IvanhoeController {
 		
 		else if (cardName.equals("riposte")) {
 			// take the card at the top of the opponent's display
-			if (opponent.getDisplay().size() <= 1) return false;
+			if (opponent.getDisplay().size() <= 1 || opponent.hasShield()) return false;
 			
 			Card c = opponent.getDisplayTop();
 			opponent.removeDisplayCard(c);
@@ -1016,6 +1030,7 @@ public class IvanhoeController {
 		}
 		
 		else if (cardName.equals("dodge") || cardName.equals("retreat")) {
+			if (opponent.hasShield()) return false;
 			// select a card in the opponent's display
 			JSONObject pick_card = ResponseBuilder.buildPickCard(opponent.getDisplay(), opponentId);
 			server.sendToClient(getCurrentTurnId(), pick_card);
@@ -1032,6 +1047,17 @@ public class IvanhoeController {
 			server.sendToClient(getCurrentTurnId(), pick_card);
 			selectedOpponent = opponent;
 			state = WAITING_FOR_OPPONENT_CARD;
+		}
+		
+		else if (cardName.equals("stunned")) {
+			getCurrentTurnPlayer().removeHandCard(actionCard);
+			opponent.addSpecialCard(actionCard);
+			
+			state = WAITING_FOR_PLAYER_MOVE;
+			lastPlayed = null;
+			createActionCardAnnouncement(getCurrentTurnPlayer().getName(), "STUNNED");
+			finishTurn();
+
 		}
 		
 		return true;

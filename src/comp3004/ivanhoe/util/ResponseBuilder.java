@@ -230,6 +230,13 @@ public abstract class ResponseBuilder {
 			}
 			player.put("display", display);
 			
+			// create special display
+			JSONArray special = new JSONArray();
+			for (Card c : p.getSpecial()) {
+				special.add(c.toString());
+			}
+			player.put("special", special);
+			
 			// create tokens
 			JSONArray tokens = new JSONArray();
 			for (Token t: p.getTokens()) {

@@ -57,7 +57,7 @@ public class ImageHandler {
 	 * @return
 	 */
 	public static JLabel loadToken(String color) {
-		System.out.println("Token color: " + color);
+		//System.out.println("Token color: " + color);
 		try {
 			BufferedImage image = ImageIO.read(ImageHandler.class.getResource("misc_images/token_" + color.toLowerCase().trim() + ".png"));
 			JLabel imageWrapper = new JLabel(new ImageIcon(image));
