@@ -92,15 +92,13 @@ public class AppServer implements Runnable {
 					logger.info("Registering " + client_request.get("username"));
 				} 
 				
-				else if (client_request.get("request_type").equals("choose_token")) {
+				else if (client_request.get("request_type").equals("turn_move") ||
+						 client_request.get("request_type").equals("choose_token") ||
+						 client_request.get("request_type").equals("select_opponent") ||
+						 client_request.get("request_type").equals("pick_card")) {
 					controller.processPlayerMove(id, client_request);
 				}
 				
-				else if (client_request.get("request_type").equals("turn_move")) {
-					controller.processPlayerMove(id, client_request);
-				}
-				
-				// TODO: should we keep this?
 				else if (client_request.get("request_type").equals("shutdown")) {
 					shutdown(); 
 				}

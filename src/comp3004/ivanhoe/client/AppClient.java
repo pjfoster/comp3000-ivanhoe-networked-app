@@ -115,12 +115,20 @@ public class AppClient implements Runnable {
 				view.displayChooseToken(server_response);
 			}
 			
+			else if (server_response.get("response_type").equals("change_tournament_color")) {
+				view.displayChangeTournamentColor(server_response);
+			}
+			
 			else if (server_response.get("response_type").equals("pick_opponent")) {
 				view.displayPickOpponent();
 			}
 			
+			else if (server_response.get("response_type").equals("pick_card")) {
+				view.displayPickCard(server_response);
+			}
+			
 			else if (server_response.get("response_type").equals("withdraw")) {
-				view.announceWithdrawal(ClientParser.getWithdrawPlayerId(server_response));
+				view.announceWithdrawal(ClientParser.getPlayerIdFromSnapshot(server_response));
 			}
 			
 			else if (server_response.get("response_type").equals("start_tournament")) {

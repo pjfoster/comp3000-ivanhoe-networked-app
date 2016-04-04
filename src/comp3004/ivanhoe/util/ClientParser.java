@@ -6,30 +6,25 @@ import org.json.simple.JSONObject;
 
 public abstract class ClientParser {
 
-	public static String getColor(JSONObject snapshot) {
+	public static String getServerResponse(JSONObject response) {
+		return (String)response.get("server_response");
+	}
+	
+	public static String getColorFromSnapshot(JSONObject snapshot) {
 		return (String)snapshot.get("tournament_color");
 	}
 	
-	public static Integer getCurrentTurn(JSONObject snapshot) {
+	public static Integer getCurrentTurnFromSnapshot(JSONObject snapshot) {
 		return Integer.parseInt((String)snapshot.get("current_turn"));
 	}
 	
-	public static Integer getWithdrawPlayerId(JSONObject response) {
-		return Integer.parseInt((String)response.get("player_id"));
-	}
-	
-	public static String getHighestDisplay(JSONObject snapshot) {
+	public static String getHighestDisplayFromSnapshot(JSONObject snapshot) {
 		return (String)snapshot.get("highest_display");
 	}
 	
 	@SuppressWarnings("unchecked")
 	public static ArrayList<Object> getPlayerList(JSONObject snapshot) {
 		return (ArrayList<Object>)snapshot.get("players");
-	}
-	
-	@SuppressWarnings("unchecked")
-	public static ArrayList<String> getDeck(JSONObject snapshot) {
-		return (ArrayList<String>)snapshot.get("deck");
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -47,16 +42,6 @@ public abstract class ClientParser {
 		return (ArrayList<String>)((JSONObject)player).get("tokens");
 	}
 	
-	@SuppressWarnings("unchecked")
-	public static ArrayList<String> getOpponents(JSONObject snapshot) {
-		return (ArrayList<String>)((JSONObject)snapshot).get("opponents");
-	}
-	
-	@SuppressWarnings("unchecked")
-	public static ArrayList<String> getCards(JSONObject snapshot) {
-		return (ArrayList<String>)((JSONObject)snapshot).get("cards");
-	}
-	
 	public static String getPlayerName(Object player) {
 		return (String)((JSONObject)player).get("username");
 	}
@@ -70,12 +55,22 @@ public abstract class ClientParser {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public static ArrayList<String> getTokensFromSnapshot(Object snapshot) {
-		return (ArrayList<String>)((JSONObject)snapshot).get("tokens");
+	public static ArrayList<String> getOpponentsFromSelectOpponent(JSONObject snapshot) {
+		return (ArrayList<String>)((JSONObject)snapshot).get("opponents");
 	}
-
-	public static String getServerResponse(JSONObject response) {
-		return (String)response.get("server_response");
+	
+	public static Integer getPlayerIdFromSnapshot(JSONObject response) {
+		return Integer.parseInt((String)response.get("player_id"));
+	}
+	
+	@SuppressWarnings("unchecked")
+	public static ArrayList<String> getCardsFromPickCard(JSONObject snapshot) {
+		return (ArrayList<String>)((JSONObject)snapshot).get("cards");
+	}
+	
+	@SuppressWarnings("unchecked")
+	public static ArrayList<String> getTokensFromChooseColor(Object snapshot) {
+		return (ArrayList<String>)((JSONObject)snapshot).get("tokens");
 	}
 	
 }

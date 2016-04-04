@@ -55,9 +55,9 @@ public class TournamentView extends JPanel {
 		
 		this.setLayout(new GridBagLayout());
 		
-		header = createHeader(ClientParser.getColor(snapshot));
+		header = createHeader(ClientParser.getColorFromSnapshot(snapshot));
 		handComposite = createHandComposite(getPlayerHand(snapshot));
-		statsComposite = createStats("", ClientParser.getHighestDisplay(snapshot));
+		statsComposite = createStats("", ClientParser.getHighestDisplayFromSnapshot(snapshot));
 		playersScrollPane = createPlayersComposite(snapshot);
 
 		GridBagConstraints constraints = new GridBagConstraints();
@@ -135,13 +135,13 @@ public class TournamentView extends JPanel {
 
 	private JPanel createStats(String currentTurn, String highestDisplayTotal) {
 		JPanel statsPanel = new JPanel();
-		statsPanel.setBorder(BorderFactory.createLineBorder(Color.black));
+		//statsPanel.setBorder(BorderFactory.createLineBorder(Color.black));
 		statsPanel.setLayout(new BoxLayout(statsPanel, BoxLayout.Y_AXIS));
 		statsPanel.setOpaque(false);
 		
 		this.highestDisplayTotal = new JLabel("HIGHEST DISPLAY: " + highestDisplayTotal);
 		this.currentTurn = new JLabel("CURRENT TURN: " + currentTurn);
-		this.announcement = new JLabel("Test");
+		this.announcement = new JLabel("");
 		
 		statsPanel.add(this.highestDisplayTotal);
 		statsPanel.add(this.currentTurn);
@@ -170,7 +170,6 @@ public class TournamentView extends JPanel {
 		cardsPanel.setOpaque(false);
 		cardsPanel.setLayout(new BoxLayout(cardsPanel, BoxLayout.Y_AXIS));
 		cardsPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
-		System.out.println("Cards: " + cards);
 		for (String c: cards) {
 			JLabel card = new JLabel(ImageHandler.loadCardIcon(c));
 			card.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -230,12 +229,11 @@ public class TournamentView extends JPanel {
 	 * @param snapshot
 	 */
 	public void updateView(JSONObject snapshot) {
-		updateHeader(ClientParser.getColor(snapshot));
-		updateStats(null, ClientParser.getHighestDisplay(snapshot), null);
+		updateHeader(ClientParser.getColorFromSnapshot(snapshot));
+		updateStats(null, ClientParser.getHighestDisplayFromSnapshot(snapshot), null);
 		
 		for (Object p: ClientParser.getPlayerList(snapshot)) {
 			if (ClientParser.getPlayerId(p).intValue() == masterView.getId()) {
-				System.out.println("Updating hand of : " + ClientParser.getPlayerName(p));
 				updateHand(ClientParser.getPlayerHand(p));
 				break;
 			}
@@ -246,10 +244,11 @@ public class TournamentView extends JPanel {
 	
 	public void updateHeader(String tokenColor) {
 		header.remove(tournamentColor);
-		tournamentColor = ImageHandler.loadToken(tokenColor.toLowerCase());
+		if (tokenColor != null && !tokenColor.toLowerCase().trim().equals("undecided")) {
+			tournamentColor = ImageHandler.loadToken(tokenColor.toLowerCase());
+		}
 		header.add(tournamentColor);
 		
-		System.out.println("TOKEN COLOR: " + tokenColor);
 		if (tokenColor.equals("BLUE")) {
 			this.setBackground(new Color(51, 153, 255));
 		} else if (tokenColor.equals("RED")) {
@@ -263,22 +262,21 @@ public class TournamentView extends JPanel {
 		}
 	}
 	
-	public void updateStats(String username, String highestScore, String announcement) {
+	public void updateStats(String username, String highestScore, String message) {
 		if (username != null) {
 			currentTurn.setText("CURRENT TURN: " + username);
 		}
 		if (highestScore != null) {
 			highestDisplayTotal.setText("HIGHEST DISPLAY: " + highestScore);
 		}
-		if (announcement != null) {
-			this.announcement.setText(announcement);
+		if (message != null) {
+			announcement.setText(message);
 		}
 	}
 	
 	public void updateHand(ArrayList<String> cards) {
 		
 		currentHand = cards;
-		System.out.println("NEW HAND CARDS: "+ cards);
 		
 		handComposite.remove(cardsPane);
 		JPanel cardsPanel = new JPanel();
@@ -302,7 +300,7 @@ public class TournamentView extends JPanel {
 	}
 	
 	public void updatePlayersComposite(ArrayList<Object> players) {
-		System.out.println("Updating players composite!");
+		//System.out.println("Updating players composite!");
 		for (Object player : players) {
 			int playerId = ClientParser.getPlayerId(player).intValue();
 			//if (playerId == masterView.getId()) continue;
@@ -327,7 +325,7 @@ public class TournamentView extends JPanel {
 	}
 	
 	public void displaySelectOpponent() {
-		PickOpponentView oppView = new PickOpponentView(masterView, playerDisplays.values());
+		PickOpponentWindow oppView = new PickOpponentWindow(masterView, playerDisplays.values());
 		lastMove = oppView;
 		oppView.setVisible(true);
 	}

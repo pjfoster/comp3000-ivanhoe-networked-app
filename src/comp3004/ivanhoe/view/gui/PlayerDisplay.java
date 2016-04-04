@@ -110,6 +110,7 @@ public class PlayerDisplay extends JPanel {
 		tokensComposite.setAlignmentX(Component.LEFT_ALIGNMENT);
 		tokensComposite.setLayout(new FlowLayout(FlowLayout.LEFT));
 		for (String t: tokens) {
+			if (t.toLowerCase().trim().equals("undecided")) System.out.println("HOW?????");
 			JLabel token = ImageHandler.loadToken(t);
 			tokensComposite.add(token);
 		}
@@ -147,7 +148,7 @@ public class PlayerDisplay extends JPanel {
 		tokensComposite = makeTokensComposite(ClientParser.getPlayerTokens(player));
 		
 		// update display
-		System.out.println(ClientParser.getPlayerName(player) + " new display " + ClientParser.getPlayerDisplay(player));
+		//System.out.println(ClientParser.getPlayerName(player) + " new display " + ClientParser.getPlayerDisplay(player));
 		cardsScrollPane = makeCardsScrollPane(ClientParser.getPlayerDisplay(player));
 		
 		displayComposite.add(tokensComposite);

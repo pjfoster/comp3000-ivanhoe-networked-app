@@ -165,7 +165,7 @@ public class Player {
 		
 		int displayTotal = 0;
 		for (Card c: display) {
-			if (c instanceof SupporterCard && color.equals(Token.GREEN)) {
+			if (color.equals(Token.GREEN)) {
 				displayTotal += 1;
 			}
 			else {

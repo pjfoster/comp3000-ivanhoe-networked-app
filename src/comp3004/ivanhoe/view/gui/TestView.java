@@ -115,7 +115,7 @@ public class TestView {
 		colours.add("blue");
 		colours.add("green");
 		colours.add("red");
-		PickColourView colourView = new PickColourView(view, colours, Strings.choose_color);
+		PickColourWindow colourView = new PickColourWindow(view, colours, Strings.choose_color);
 		colourView.setVisible(true);
 		
 	}

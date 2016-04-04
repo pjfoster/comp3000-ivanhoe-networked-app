@@ -23,6 +23,7 @@ public class GUIView extends JFrame implements View {
 	private AppClient client;
 	private RequestBuilder requestBuilder;
 	private JPanel mainPanel;
+	String announcement;
 	
 	public GUIView(AppClient client) {
 		super("Ivanhoe");
@@ -94,7 +95,7 @@ public class GUIView extends JFrame implements View {
 
 	@Override
 	public void displayTournamentView(JSONObject snapshot) {
-		System.out.println("UPDATING TOURNAMENT VIEW " + client.getID());
+		//System.out.println("UPDATING TOURNAMENT VIEW " + client.getID());
 		if (mainPanel instanceof TournamentView) {
 			((TournamentView) mainPanel).updateView(snapshot);
 		}
@@ -131,7 +132,12 @@ public class GUIView extends JFrame implements View {
 		this.repaint();
 		this.revalidate();
 		
-		if (ClientParser.getCurrentTurn(snapshot) == client.getID()) {
+		if (announcement != null) {
+			((TournamentView) mainPanel).updateStats(null, null, announcement);
+			announcement = null;
+		}
+		
+		if (ClientParser.getCurrentTurnFromSnapshot(snapshot) == client.getID()) {
 			displayTurnView();
 		}
 	}
@@ -144,7 +150,7 @@ public class GUIView extends JFrame implements View {
 		tokens.add("green");
 		tokens.add("yellow");
 		tokens.add("purple");
-		PickColourView colourView = new PickColourView(this, tokens, Strings.choose_color);
+		PickColourWindow colourView = new PickColourWindow(this, tokens, Strings.choose_color);
 		((TournamentView) mainPanel).setLastMove(colourView);
 		colourView.setVisible(true);	
 	}
@@ -154,6 +160,24 @@ public class GUIView extends JFrame implements View {
 		if (mainPanel instanceof TournamentView)  {
 			((TournamentView) mainPanel).displaySelectOpponent();
 		}	
+	}
+	
+	@Override
+	public void displayPickCard(JSONObject response) {
+		
+		Integer playerId = ClientParser.getPlayerIdFromSnapshot(response);
+		ArrayList<String> cards = ClientParser.getCardsFromPickCard(response);
+		
+		PickCardWindow pickCardWindow;
+		if (playerId == client.getID()) {
+			pickCardWindow = new PickCardWindow(this, cards, Strings.pick_own_card);
+		}
+		else {
+			pickCardWindow = new PickCardWindow(this, cards, Strings.pick_opponent_card);
+		}
+		
+		((TournamentView) mainPanel).setLastMove(pickCardWindow);
+		pickCardWindow.setVisible(true);
 	}
 
 	@Override
@@ -177,12 +201,14 @@ public class GUIView extends JFrame implements View {
 
 	@Override
 	public void displayTournamentWonMessage(String tokenColor) {
+		announcement = Strings.tournament_won;
 		((TournamentView) mainPanel).updateStats(null, null, Strings.tournament_won);
 	}
 
 	@Override
 	public void displayTournamentLossMessage(String winnerName) {
 		String message = String.format(Strings.tournament_loss, winnerName);
+		announcement = message;
 		((TournamentView) mainPanel).updateStats(null, null, message);
 		
 	}
@@ -207,15 +233,23 @@ public class GUIView extends JFrame implements View {
 		tokens.add("green");
 		tokens.add("yellow");
 		tokens.add("purple");
-		PickColourView colourView = new PickColourView(this, tokens, Strings.tournament_won_purple);
+		PickColourWindow colourView = new PickColourWindow(this, tokens, Strings.tournament_won_purple);
 		((TournamentView) mainPanel).setLastMove(colourView);
+		announcement = Strings.tournament_won;
 		colourView.setVisible(true);	
 	}
 
 	@Override
 	public void displayChooseToken(JSONObject server_response) {
-		ArrayList<String> tokens = ClientParser.getTokensFromSnapshot(server_response);
-		PickColourView colourView = new PickColourView(this, tokens, Strings.choose_token);
+		ArrayList<String> tokens = ClientParser.getTokensFromChooseColor(server_response);
+		PickColourWindow colourView = new PickColourWindow(this, tokens, Strings.choose_token);
+		colourView.setVisible(true);
+	}
+
+	@Override
+	public void displayChangeTournamentColor(JSONObject server_response) {
+		ArrayList<String> tokens = ClientParser.getTokensFromChooseColor(server_response);
+		PickColourWindow colourView = new PickColourWindow(this, tokens, Strings.change_tournament_color);
 		colourView.setVisible(true);
 	}
 

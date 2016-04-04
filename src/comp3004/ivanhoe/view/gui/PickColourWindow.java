@@ -27,14 +27,14 @@ import comp3004.ivanhoe.util.RequestBuilder;
 import comp3004.ivanhoe.util.Strings;
 
 @SuppressWarnings("serial")
-public class PickColourView extends JFrame implements ActionListener, SelectionView {
+public class PickColourWindow extends JFrame implements ActionListener, SelectionView {
 
 	JLabel headerLabel;
 	GUIView masterView;
 	JButton submitButton;
 	ButtonGroup btnGroup;
 	
-	public PickColourView(GUIView masterView, ArrayList<String> tokenColours, String message) {
+	public PickColourWindow(GUIView masterView, ArrayList<String> tokenColours, String message) {
 		super("Pick a Colour");
 		this.setSize(600, 200);
 		this.setResizable(false);

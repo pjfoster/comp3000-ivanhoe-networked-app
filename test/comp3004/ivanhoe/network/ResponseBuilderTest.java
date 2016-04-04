@@ -60,9 +60,8 @@ public class ResponseBuilderTest {
 
 		ArrayList<Object> players = ClientParser.getPlayerList(snapshot);
 		assertEquals(players.size(), 2);
-		assertEquals(ClientParser.getDeck(snapshot).size(), 94);
-		assertEquals(ClientParser.getColor(snapshot).toLowerCase(), "red");
-		assertEquals(ClientParser.getHighestDisplay(snapshot), "0");
+		assertEquals(ClientParser.getColorFromSnapshot(snapshot).toLowerCase(), "red");
+		assertEquals(ClientParser.getHighestDisplayFromSnapshot(snapshot), "0");
 		
 		for (Object p: players) {
 			Integer id = ClientParser.getPlayerId(p).intValue();
@@ -127,7 +126,7 @@ public class ResponseBuilderTest {
 		assertEquals(testMove.get("response_type"), "pick_opponent");
 		assertNotNull(testMove.get("opponents"));
 		
-		ArrayList<String> opponents = ClientParser.getOpponents(testMove);
+		ArrayList<String> opponents = ClientParser.getOpponentsFromSelectOpponent(testMove);
 		assertEquals(opponents.size(), 2);
 		assertTrue(opponents.contains("Emma"));
 		assertTrue(opponents.contains("Luke"));
@@ -141,7 +140,7 @@ public class ResponseBuilderTest {
 		assertEquals(testMove.get("response_type"), "pick_opponent");
 		assertNotNull(testMove.get("opponents"));
 
-		opponents = ClientParser.getOpponents(testMove);
+		opponents = ClientParser.getOpponentsFromSelectOpponent(testMove);
 		assertEquals(opponents.size(), 2);
 		assertTrue(opponents.contains("Emma"));
 		assertFalse(opponents.contains("Luke"));
@@ -158,14 +157,14 @@ public class ResponseBuilderTest {
 		cards.add(new ActionCard("changeweapon"));
 		cards.add(new ActionCard("ivanhoe"));
 		
-		String testMoveString = ResponseBuilder.buildPickCard(cards).toJSONString();
+		String testMoveString = ResponseBuilder.buildPickCard(cards, 60001).toJSONString();
 		JSONObject testMove = (JSONObject)parser.parse(testMoveString);
 		
 		assertEquals(testMove.size(), 2);
 		assertEquals(testMove.get("response_type"), "pick_card");
 		assertNotNull(testMove.get("cards"));
 		
-		ArrayList<String> cardStrings = ClientParser.getCards(testMove);
+		ArrayList<String> cardStrings = ClientParser.getCardsFromPickCard(testMove);
 		assertEquals(cardStrings.size(), 6);
 		assertTrue(cardStrings.contains("r3"));
 		assertTrue(cardStrings.contains("b5"));
@@ -189,7 +188,7 @@ public class ResponseBuilderTest {
 		assertEquals(testMove.get("response_type"), "choose_token");
 		assertNotNull(testMove.get("tokens"));
 		
-		ArrayList<String> tokens = ClientParser.getTokensFromSnapshot(testMove);
+		ArrayList<String> tokens = ClientParser.getTokensFromChooseColor(testMove);
 		assertEquals(tokens.size(), 1);
 		assertEquals(tokens.get(0).toLowerCase(), "blue");
 		
@@ -203,7 +202,7 @@ public class ResponseBuilderTest {
 		assertEquals(testMove.get("response_type"), "choose_token");
 		assertNotNull(testMove.get("tokens"));
 		
-		tokens = ClientParser.getTokensFromSnapshot(testMove);
+		tokens = ClientParser.getTokensFromChooseColor(testMove);
 		assertEquals(tokens.size(), 1);
 		assertEquals(tokens.get(0).toLowerCase(), "blue");
 		
@@ -218,7 +217,7 @@ public class ResponseBuilderTest {
 		assertEquals(testMove.get("response_type"), "choose_token");
 		assertNotNull(testMove.get("tokens"));
 		
-		tokens = ClientParser.getTokensFromSnapshot(testMove);
+		tokens = ClientParser.getTokensFromChooseColor(testMove);
 		assertEquals(tokens.size(), 3);
 		for (String token: tokens) {
 			assertTrue(token.toLowerCase().equals("blue") ||

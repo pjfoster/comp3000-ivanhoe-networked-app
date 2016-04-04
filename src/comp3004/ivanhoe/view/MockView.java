@@ -70,4 +70,16 @@ public class MockView implements View {
 		
 	}
 
+	@Override
+	public void displayChangeTournamentColor(JSONObject server_response) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void displayPickCard(JSONObject server_response) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

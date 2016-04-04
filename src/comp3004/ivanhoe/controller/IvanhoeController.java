@@ -112,6 +112,7 @@ public class IvanhoeController {
 
 	public void processPlayerMove(int id, JSONObject playerMove) {
 
+		System.out.println("STATE: " + state + " ; CURRENT TURN: " + getCurrentTurnPlayer().getName());
 		// check if it's the player's turn
 		if (getCurrentTurnId() != id) { invalidMove(); return; }
 
@@ -1004,7 +1005,7 @@ public class IvanhoeController {
 		
 		else if (cardName.equals("dodge") || cardName.equals("retreat")) {
 			// select a card in the opponent's display
-			JSONObject pick_card = ResponseBuilder.buildPickCard(opponent.getDisplay());
+			JSONObject pick_card = ResponseBuilder.buildPickCard(opponent.getDisplay(), opponentId);
 			server.sendToClient(getCurrentTurnId(), pick_card);
 			selectedOpponent = opponent;
 			state = WAITING_FOR_OPPONENT_CARD;
@@ -1015,7 +1016,7 @@ public class IvanhoeController {
 			ArrayList<Card> faceupCards = new ArrayList<Card>(opponent.getDisplay());
 			//faceupCards.addAll() TODO: special cards
 			
-			JSONObject pick_card = ResponseBuilder.buildPickCard(faceupCards);
+			JSONObject pick_card = ResponseBuilder.buildPickCard(faceupCards, opponentId);
 			server.sendToClient(getCurrentTurnId(), pick_card);
 			selectedOpponent = opponent;
 			state = WAITING_FOR_OPPONENT_CARD;
@@ -1075,7 +1076,8 @@ public class IvanhoeController {
 		
 		else if (actionCardPlayed.equals("outwit")) {
 			
-			JSONObject pickCard = ResponseBuilder.buildPickCard(getCurrentTurnPlayer().getDisplay());
+			JSONObject pickCard = ResponseBuilder.buildPickCard(getCurrentTurnPlayer().getDisplay(), 
+														        getCurrentTurnId());
 			server.sendToClient(getCurrentTurnId(), pickCard);
 			state = WAITING_FOR_OWN_CARD;
 			lastPlayed.add(selectedCard.toString());

@@ -26,14 +26,14 @@ import comp3004.ivanhoe.util.RequestBuilder;
 import comp3004.ivanhoe.util.Strings;
 
 @SuppressWarnings("serial")
-public class PickOpponentView extends JFrame implements ActionListener, SelectionView {
+public class PickOpponentWindow extends JFrame implements ActionListener, SelectionView {
 
 	JLabel headerLabel;
 	GUIView masterView;
 	JButton submitButton;
 	ButtonGroup btnGroup;
 	
-	public PickOpponentView(GUIView masterView, Collection<PlayerDisplay> playerDisplays) {
+	public PickOpponentWindow(GUIView masterView, Collection<PlayerDisplay> playerDisplays) {
 		super("Pick an opponent");
 		this.setSize(400, 300);
 		this.setResizable(false);

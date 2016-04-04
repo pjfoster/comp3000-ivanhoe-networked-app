@@ -61,6 +61,21 @@ public abstract class ResponseBuilder {
 	}
 	
 	@SuppressWarnings("unchecked")
+	public static JSONObject buildChangeTournamentColor(HashSet<Token> tokenColors) {
+		JSONObject response = new JSONObject();
+		response.put("response_type", "change_tournament_color");
+		
+		JSONArray tokens = new JSONArray();
+		for (Token t: tokenColors) {
+			tokens.add(t.toString());
+		}
+		
+		response.put("tokens", tokens);
+		
+		return response;
+	}
+	
+	@SuppressWarnings("unchecked")
 	public static JSONObject buildPickOpponent(int currentPlayerId, Tournament tournament) {
 		JSONObject response = new JSONObject();
 		response.put("response_type", "pick_opponent");
@@ -78,9 +93,10 @@ public abstract class ResponseBuilder {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public static JSONObject buildPickCard(List<Card> cardList) {
+	public static JSONObject buildPickCard(List<Card> cardList, int playerId) {
 		JSONObject response = new JSONObject();
 		response.put("response_type", "pick_card");
+		response.put("player_id", "" + playerId);
 		
 		JSONArray cards = new JSONArray();
 		for (Card c: cardList) {

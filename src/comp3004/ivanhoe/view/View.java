@@ -31,6 +31,7 @@ public interface View {
 	public void displayPurpleTournamentWonMessage();
 	public void displayChooseToken(JSONObject server_response);
 	public void displayPickOpponent();
-
 	public void displayConnectionRejected();
+	public void displayChangeTournamentColor(JSONObject server_response);
+	public void displayPickCard(JSONObject server_response);
 }
