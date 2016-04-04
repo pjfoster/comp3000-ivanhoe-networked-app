@@ -1,5 +1,6 @@
 package comp3004.ivanhoe.view.gui;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridLayout;
@@ -23,10 +24,12 @@ import javax.swing.JScrollPane;
 import org.json.simple.JSONObject;
 
 import comp3004.ivanhoe.util.ClientRequestBuilder;
+import comp3004.ivanhoe.util.Strings;
 
 @SuppressWarnings("serial")
-public class PickColourView extends JFrame implements ActionListener {
+public class PickColourView extends JFrame implements ActionListener, SelectionView {
 
+	JLabel headerLabel;
 	GUIView masterView;
 	JButton submitButton;
 	ButtonGroup btnGroup;
@@ -47,7 +50,7 @@ public class PickColourView extends JFrame implements ActionListener {
 		mainView.setLayout(new BoxLayout(mainView, BoxLayout.Y_AXIS));
 		this.add(mainView);
 		
-		JLabel l1 = new JLabel("Pick one of the following colours:");
+		headerLabel = new JLabel("Pick one of the following colours:");
 				
 		JPanel colourSelector = new JPanel();
 		colourSelector.setLayout(new GridLayout(2, tokenColours.size()));
@@ -75,7 +78,7 @@ public class PickColourView extends JFrame implements ActionListener {
 		submitButton = new JButton("Submit");
 		submitButton.addActionListener(this);
 		
-		mainView.add(l1);
+		mainView.add(headerLabel);
 		mainView.add(Box.createRigidArea(new Dimension(0, 15)));
 		mainView.add(colourScrollPane);
 		mainView.add(submitButton);
@@ -91,8 +94,14 @@ public class PickColourView extends JFrame implements ActionListener {
 		JSONObject pickColour = ClientRequestBuilder.buildChooseToken(colour);
 		masterView.handleEvent(pickColour);
 		this.setVisible(false);
-		this.dispose();
+		//this.dispose();
 		
+	}
+	
+	@Override
+	public void indicateInvalid() {
+		headerLabel.setForeground(Color.RED);
+		headerLabel.setText(Strings.invalid_colour);
 	}
 
 }

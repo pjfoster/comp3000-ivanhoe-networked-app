@@ -13,6 +13,7 @@ import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -41,11 +42,13 @@ public class TournamentView extends JPanel {
 	JLabel currentTurn;
 
 	ArrayList<String> currentHand;
+	JFrame lastMove;
 	
 	public TournamentView(GUIView masterView, JSONObject snapshot) {
 		this.masterView = masterView;
 		this.parser = new ClientParser();
 		this.playerDisplays = new HashMap<Integer, PlayerDisplay>();
+		this.lastMove = null;
 		
 		this.setMinimumSize(new Dimension(800, 600));
 		this.setPreferredSize(new Dimension(800, 600));
@@ -314,17 +317,28 @@ public class TournamentView extends JPanel {
 	
 	public void displayPlayerTurn(String newCard) {
 		TurnView turnView = new TurnView(masterView, currentHand);
+		lastMove = turnView;
 		turnView.setVisible(true);
 	}
 	
 	public void displaySelectOpponent() {
 		PickOpponentView oppView = new PickOpponentView(masterView, playerDisplays.values());
+		lastMove = oppView;
 		oppView.setVisible(true);
+	}
+	
+	public void displayInvalidMove() {
+		((SelectionView)lastMove).indicateInvalid();
+		lastMove.setVisible(true);
 	}
 	
 	public void withdrawPlayer(int playerId) {
 		PlayerDisplay pd = playerDisplays.get(playerId);
 		pd.withdraw();
+	}
+	
+	public void setLastMove(JFrame lastMove) {
+		this.lastMove = lastMove;
 	}
 	
 }

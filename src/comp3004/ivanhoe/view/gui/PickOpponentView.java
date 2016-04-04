@@ -1,5 +1,6 @@
 package comp3004.ivanhoe.view.gui;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridLayout;
@@ -22,10 +23,12 @@ import javax.swing.JScrollPane;
 import org.json.simple.JSONObject;
 
 import comp3004.ivanhoe.util.ClientRequestBuilder;
+import comp3004.ivanhoe.util.Strings;
 
 @SuppressWarnings("serial")
-public class PickOpponentView extends JFrame implements ActionListener {
+public class PickOpponentView extends JFrame implements ActionListener, SelectionView {
 
+	JLabel headerLabel;
 	GUIView masterView;
 	JButton submitButton;
 	ButtonGroup btnGroup;
@@ -46,7 +49,7 @@ public class PickOpponentView extends JFrame implements ActionListener {
 		mainView.setLayout(new BoxLayout(mainView, BoxLayout.Y_AXIS));
 		this.add(mainView);
 		
-		JLabel l1 = new JLabel("Pick an opponent:");
+		headerLabel = new JLabel("Pick an opponent:");
 				
 		JPanel opponentSelector = new JPanel();
 		opponentSelector.setLayout(new GridLayout(2, playerDisplays.size() - 1));
@@ -77,11 +80,17 @@ public class PickOpponentView extends JFrame implements ActionListener {
 		submitButton = new JButton("Submit");
 		submitButton.addActionListener(this);
 		
-		mainView.add(l1);
+		mainView.add(headerLabel);
 		mainView.add(Box.createRigidArea(new Dimension(0, 15)));
 		mainView.add(opponentScrollPane);
 		mainView.add(submitButton);
 		
+	}
+	
+	@Override
+	public void indicateInvalid() {
+		headerLabel.setForeground(Color.RED);
+		headerLabel.setText(Strings.invalid_opponent);
 	}
 	
 	@Override
@@ -93,7 +102,7 @@ public class PickOpponentView extends JFrame implements ActionListener {
 		JSONObject pickOpponent = ClientRequestBuilder.buildSelectOpponent(opponentId);
 		masterView.handleEvent(pickOpponent);
 		this.setVisible(false);
-		this.dispose();
+		//this.dispose();
 		
 	}
 

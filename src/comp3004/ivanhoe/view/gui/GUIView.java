@@ -148,6 +148,7 @@ public class GUIView extends JFrame implements View {
 		tokens.add("yellow");
 		tokens.add("purple");
 		PickColourView colourView = new PickColourView(this, tokens);
+		((TournamentView) mainPanel).setLastMove(colourView);
 		colourView.setVisible(true);	
 	}
 	
@@ -160,8 +161,7 @@ public class GUIView extends JFrame implements View {
 
 	@Override
 	public void displayInvalidMove() {
-		// TODO Auto-generated method stub
-		
+		((TournamentView) mainPanel).displayInvalidMove();
 	}
 
 	@Override

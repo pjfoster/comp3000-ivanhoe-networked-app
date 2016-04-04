@@ -32,10 +32,11 @@ import comp3004.ivanhoe.util.Strings;
  *
  */
 @SuppressWarnings("serial")
-public class TurnView extends JFrame implements ActionListener {
+public class TurnView extends JFrame implements ActionListener, SelectionView {
 
 	GUIView masterView;
 	
+	JLabel headerLabel;
 	JPanel newCardDisplay;
 	JScrollPane cardScrollPane;
 	JButton submitButton;
@@ -60,7 +61,7 @@ public class TurnView extends JFrame implements ActionListener {
 		mainView.setLayout(new BoxLayout(mainView, BoxLayout.Y_AXIS));
 		this.add(mainView);
 		
-		JLabel l1 = new JLabel(Strings.your_turn_to_play);
+		headerLabel = new JLabel(Strings.your_turn_to_play);
 		
 		JPanel cardSelector = new JPanel();
 		cardSelector.setLayout(new FlowLayout());
@@ -90,7 +91,7 @@ public class TurnView extends JFrame implements ActionListener {
 		withdrawButton = new JButton("Withdraw");
 		withdrawButton.addActionListener(this);
 		
-		mainView.add(l1);
+		mainView.add(headerLabel);
 		mainView.add(cardScrollPane);
 		mainView.add(submitButton);
 		mainView.add(withdrawButton);
@@ -128,9 +129,15 @@ public class TurnView extends JFrame implements ActionListener {
 		
 	}
 	
+	@Override
+	public void indicateInvalid() {
+		headerLabel.setForeground(Color.RED);
+		headerLabel.setText(Strings.invalid_turn);
+	}
+	
 	public void exit() {
 		this.setVisible(false);
-		this.dispose();
+		//this.dispose();
 	}
 	
 }
