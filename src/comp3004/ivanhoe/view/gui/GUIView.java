@@ -147,7 +147,7 @@ public class GUIView extends JFrame implements View {
 		tokens.add("green");
 		tokens.add("yellow");
 		tokens.add("purple");
-		PickColourView colourView = new PickColourView(this, tokens);
+		PickColourView colourView = new PickColourView(this, tokens, Strings.choose_color);
 		((TournamentView) mainPanel).setLastMove(colourView);
 		colourView.setVisible(true);	
 	}
@@ -167,7 +167,7 @@ public class GUIView extends JFrame implements View {
 	@Override
 	public void displayTurnPlayer(String playerName) {
 		if (mainPanel instanceof TournamentView) {
-			((TournamentView) mainPanel).updateStats(playerName, null);
+			((TournamentView) mainPanel).updateStats(playerName, null, null);
 		}
 	}
 
@@ -180,13 +180,13 @@ public class GUIView extends JFrame implements View {
 
 	@Override
 	public void displayTournamentWonMessage(String tokenColor) {
-		// TODO Auto-generated method stub
-		
+		((TournamentView) mainPanel).updateStats(null, null, Strings.tournament_won);
 	}
 
 	@Override
 	public void displayTournamentLossMessage(String winnerName) {
-		// TODO Auto-generated method stub
+		String message = String.format(Strings.tournament_loss, winnerName);
+		((TournamentView) mainPanel).updateStats(null, null, message);
 		
 	}
 
@@ -204,14 +204,21 @@ public class GUIView extends JFrame implements View {
 
 	@Override
 	public void displayPurpleTournamentWonMessage() {
-		// TODO Auto-generated method stub
-		
+		ArrayList<String> tokens = new ArrayList<String>();
+		tokens.add("red");
+		tokens.add("blue");
+		tokens.add("green");
+		tokens.add("yellow");
+		tokens.add("purple");
+		PickColourView colourView = new PickColourView(this, tokens, Strings.tournament_won_purple);
+		((TournamentView) mainPanel).setLastMove(colourView);
+		colourView.setVisible(true);	
 	}
 
 	@Override
 	public void displayChooseToken(JSONObject server_response) {
 		ArrayList<String> tokens = parser.getTokensFromSnapshot(server_response);
-		PickColourView colourView = new PickColourView(this, tokens);
+		PickColourView colourView = new PickColourView(this, tokens, Strings.choose_token);
 		colourView.setVisible(true);
 	}
 

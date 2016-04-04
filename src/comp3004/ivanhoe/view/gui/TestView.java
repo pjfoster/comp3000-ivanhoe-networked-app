@@ -24,6 +24,7 @@ import comp3004.ivanhoe.model.Tournament;
 import comp3004.ivanhoe.server.MockServer;
 import comp3004.ivanhoe.util.ClientRequestBuilder;
 import comp3004.ivanhoe.util.ServerResponseBuilder;
+import comp3004.ivanhoe.util.Strings;
 import comp3004.ivanhoe.view.MockViewFactory;
 
 public class TestView {
@@ -123,7 +124,7 @@ public class TestView {
 		colours.add("blue");
 		colours.add("green");
 		colours.add("red");
-		PickColourView colourView = new PickColourView(view, colours);
+		PickColourView colourView = new PickColourView(view, colours, Strings.choose_color);
 		colourView.setVisible(true);
 		
 	}

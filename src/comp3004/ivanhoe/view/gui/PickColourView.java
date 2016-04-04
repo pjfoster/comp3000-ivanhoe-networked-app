@@ -34,7 +34,7 @@ public class PickColourView extends JFrame implements ActionListener, SelectionV
 	JButton submitButton;
 	ButtonGroup btnGroup;
 	
-	public PickColourView(GUIView masterView, ArrayList<String> tokenColours) {
+	public PickColourView(GUIView masterView, ArrayList<String> tokenColours, String message) {
 		super("Pick a Colour");
 		this.setSize(600, 200);
 		this.setResizable(false);
@@ -50,7 +50,7 @@ public class PickColourView extends JFrame implements ActionListener, SelectionV
 		mainView.setLayout(new BoxLayout(mainView, BoxLayout.Y_AXIS));
 		this.add(mainView);
 		
-		headerLabel = new JLabel("Pick one of the following colours:");
+		headerLabel = new JLabel(message);
 				
 		JPanel colourSelector = new JPanel();
 		colourSelector.setLayout(new GridLayout(2, tokenColours.size()));

@@ -8,7 +8,6 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -33,13 +32,16 @@ public class TournamentView extends JPanel {
 	JLabel tournamentColor;
 	JPanel handComposite;
 	JScrollPane cardsPane;
-	JPanel statsComposite;
 	
 	JScrollPane playersScrollPane;
 	JPanel playersComposite;
 	HashMap<Integer, PlayerDisplay> playerDisplays;
+	
+	// elements of stats composite
+	JPanel statsComposite;
 	JLabel highestDisplayTotal;
 	JLabel currentTurn;
+	JLabel announcement;
 
 	ArrayList<String> currentHand;
 	JFrame lastMove;
@@ -57,7 +59,7 @@ public class TournamentView extends JPanel {
 		
 		header = createHeader(parser.getColor(snapshot));
 		handComposite = createHandComposite(getPlayerHand(snapshot));
-		statsComposite = createStats("We dunno yet", parser.getHighestDisplay(snapshot));
+		statsComposite = createStats("", parser.getHighestDisplay(snapshot));
 		playersScrollPane = createPlayersComposite(snapshot);
 
 		GridBagConstraints constraints = new GridBagConstraints();
@@ -135,15 +137,17 @@ public class TournamentView extends JPanel {
 
 	private JPanel createStats(String currentTurn, String highestDisplayTotal) {
 		JPanel statsPanel = new JPanel();
-		//statsPanel.setBorder(BorderFactory.createLineBorder(Color.black));
+		statsPanel.setBorder(BorderFactory.createLineBorder(Color.black));
 		statsPanel.setLayout(new BoxLayout(statsPanel, BoxLayout.Y_AXIS));
 		statsPanel.setOpaque(false);
 		
 		this.highestDisplayTotal = new JLabel("HIGHEST DISPLAY: " + highestDisplayTotal);
 		this.currentTurn = new JLabel("CURRENT TURN: " + currentTurn);
+		this.announcement = new JLabel("Test");
 		
 		statsPanel.add(this.highestDisplayTotal);
 		statsPanel.add(this.currentTurn);
+		statsPanel.add(this.announcement);
 		return statsPanel;
 	}
 
@@ -229,7 +233,7 @@ public class TournamentView extends JPanel {
 	 */
 	public void updateView(JSONObject snapshot) {
 		updateHeader(parser.getColor(snapshot));
-		updateStats(null, parser.getHighestDisplay(snapshot));
+		updateStats(null, parser.getHighestDisplay(snapshot), null);
 		
 		for (Object p: parser.getPlayerList(snapshot)) {
 			if (parser.getPlayerId(p).intValue() == masterView.getId()) {
@@ -261,12 +265,15 @@ public class TournamentView extends JPanel {
 		}
 	}
 	
-	public void updateStats(String username, String highestScore) {
+	public void updateStats(String username, String highestScore, String announcement) {
 		if (username != null) {
 			currentTurn.setText("CURRENT TURN: " + username);
 		}
 		if (highestScore != null) {
 			highestDisplayTotal.setText("HIGHEST DISPLAY: " + highestScore);
+		}
+		if (announcement != null) {
+			this.announcement.setText(announcement);
 		}
 	}
 	
