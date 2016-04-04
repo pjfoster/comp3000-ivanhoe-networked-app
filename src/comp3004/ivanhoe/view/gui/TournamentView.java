@@ -315,4 +315,9 @@ public class TournamentView extends JPanel {
 		turnView.setVisible(true);
 	}
 	
+	public void displaySelectOpponent() {
+		PickOpponentView oppView = new PickOpponentView(masterView, playerDisplays.values());
+		oppView.setVisible(true);
+	}
+	
 }

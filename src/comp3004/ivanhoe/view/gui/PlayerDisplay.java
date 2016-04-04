@@ -1,21 +1,15 @@
 package comp3004.ivanhoe.view.gui;
 
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.util.ArrayList;
-import java.util.List;
 
-import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
-
-import org.apache.commons.lang3.StringUtils;
 
 import comp3004.ivanhoe.util.ClientParser;
 
@@ -25,6 +19,7 @@ public class PlayerDisplay extends JPanel {
 
 	private int userId;
 	private String username; 
+	private JLabel icon;
 	private ClientParser parser = new ClientParser();
 	private ArrayList<String> cards;
 	private ArrayList<String> tokens;
@@ -43,6 +38,7 @@ public class PlayerDisplay extends JPanel {
 		
 		this.userId = parser.getPlayerId(player).intValue();
 		this.username = parser.getPlayerName(player);
+		this.icon = imageIcon;
 		this.cards = parser.getPlayerDisplay(player);
 		this.tokens = parser.getPlayerTokens(player);
 		this.displayTotal = parser.getPlayerDisplayTotal(player);
@@ -57,6 +53,8 @@ public class PlayerDisplay extends JPanel {
 	}
 	
 	public int getUserId() { return userId; }
+	public String getUserName() { return username; }
+	public JLabel getIcon() { return icon; }
 	
 	/**
 	 * Create the userComposite, which displays a player's username and an icon

@@ -90,7 +90,7 @@ public class TestView {
 		ServerResponseBuilder responseBuilder = new ServerResponseBuilder();
 		JSONObject snapshot = responseBuilder.buildUpdateView(tournament);
 		
-		TournamentView testPanel = new TournamentView(view, snapshot);
+		/*TournamentView testPanel = new TournamentView(view, snapshot);
 		testFrame.add(testPanel);
 		testFrame.setVisible(true);
 		
@@ -115,7 +115,16 @@ public class TestView {
 		testPanel.updateView(snapshot);
 		
 		TurnView turnView = new TurnView(view, newCards, null);
-		turnView.setVisible(true);
+		turnView.setVisible(true);*/
+		
+		ArrayList<String> colours = new ArrayList<String>();
+		colours.add("purple");
+		colours.add("yellow");
+		colours.add("blue");
+		colours.add("green");
+		colours.add("red");
+		PickColourView colourView = new PickColourView(view, colours);
+		colourView.setVisible(true);
 		
 	}
 

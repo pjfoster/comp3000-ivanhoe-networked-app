@@ -1,6 +1,5 @@
 package comp3004.ivanhoe.view.gui;
 
-import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -33,6 +32,7 @@ public class GUIView extends JFrame implements View {
 		this.client = client;
 		
 		this.setSize(800, 600);
+		this.setResizable(false);
 		this.setLayout(new FlowLayout());
 		
 	    this.addWindowListener(new WindowAdapter() {
@@ -141,8 +141,14 @@ public class GUIView extends JFrame implements View {
 
 	@Override
 	public void displayChooseColor() {
-		// TODO Auto-generated method stub
-		
+		ArrayList<String> tokens = new ArrayList<String>();
+		tokens.add("red");
+		tokens.add("blue");
+		tokens.add("green");
+		tokens.add("yellow");
+		tokens.add("purple");
+		PickColourView colourView = new PickColourView(this, tokens);
+		colourView.setVisible(true);	
 	}
 
 	@Override
@@ -196,8 +202,9 @@ public class GUIView extends JFrame implements View {
 
 	@Override
 	public void displayChooseToken(JSONObject server_response) {
-		// TODO Auto-generated method stub
-		
+		ArrayList<String> tokens = parser.getTokensFromSnapshot(server_response);
+		PickColourView colourView = new PickColourView(this, tokens);
+		colourView.setVisible(true);
 	}
 
 }

@@ -89,11 +89,11 @@ public class ClientRequestBuilder {
 	 * Pick an opponent; typically someone against whom to play an action card
 	 * @return
 	 */
-	public static JSONObject buildSelectOpponent(String opponentUsername)
+	public static JSONObject buildSelectOpponent(String opponentId)
 	{ 
 		HashMap<String, String> requestMap = new HashMap<String, String>();
 		requestMap.put("request_type", "select_opponent"); 
-		requestMap.put("opponent_username", opponentUsername); 
+		requestMap.put("opponent_id", opponentId); 
 		return new JSONObject(requestMap); 
 	}
 	

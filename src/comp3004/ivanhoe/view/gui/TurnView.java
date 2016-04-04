@@ -1,13 +1,17 @@
 package comp3004.ivanhoe.view.gui;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -42,8 +46,15 @@ public class TurnView extends JFrame implements ActionListener {
 	public TurnView(GUIView masterView, ArrayList<String> cards, String newCard) {
 		super("It's Your Turn!");
 		this.setSize(600, 300);
+		this.setResizable(false);
 		this.masterView = masterView;
 		this.cardsLookup = new HashMap<JCheckBoxMenuItem, String>();
+		
+		this.addWindowListener(new WindowAdapter() {
+	         public void windowClosing(WindowEvent windowEvent){
+		        System.exit(0);
+	         }        
+	     });   
 		
 		JPanel mainView = new JPanel();
 		mainView.setLayout(new BoxLayout(mainView, BoxLayout.Y_AXIS));
@@ -53,9 +64,17 @@ public class TurnView extends JFrame implements ActionListener {
 		
 		JPanel cardSelector = new JPanel();
 		cardSelector.setLayout(new FlowLayout());
+		
+		cards.add(newCard);
 		for (String card: cards) {
 			ImageIcon cardIcon = ImageHandler.loadCardIcon(card);
-			JCheckBoxMenuItem checkBox = new JCheckBoxMenuItem(cardIcon);
+			JCheckBoxMenuItem checkBox;
+			if (card == newCard) {
+				checkBox = new JCheckBoxMenuItem("NEW", cardIcon);
+				checkBox.setBorder(BorderFactory.createLineBorder(Color.RED));
+			} else {
+				checkBox = new JCheckBoxMenuItem(cardIcon);
+			}
 			checkBox.setOpaque(false);
 			cardSelector.add(checkBox);
 			cardsLookup.put(checkBox, card);
