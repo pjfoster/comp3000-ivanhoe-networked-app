@@ -1,10 +1,6 @@
 package comp3004.ivanhoe.view;
 
-import java.util.ArrayList;
-
 import org.json.simple.JSONObject;
-
-import comp3004.ivanhoe.client.AppClient;
 
 public interface View {
 	

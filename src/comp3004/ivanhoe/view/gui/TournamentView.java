@@ -27,7 +27,6 @@ public class TournamentView extends JPanel {
 	private String[] icons = new String[] {"blueknight", "greenknight", "orangeknight", "yellowknight", "blackknight"};
 	
 	GUIView masterView;
-	ClientParser parser;
 	JPanel header;
 	JLabel tournamentColor;
 	JPanel handComposite;
@@ -56,9 +55,9 @@ public class TournamentView extends JPanel {
 		
 		this.setLayout(new GridBagLayout());
 		
-		header = createHeader(parser.getColor(snapshot));
+		header = createHeader(ClientParser.getColor(snapshot));
 		handComposite = createHandComposite(getPlayerHand(snapshot));
-		statsComposite = createStats("", parser.getHighestDisplay(snapshot));
+		statsComposite = createStats("", ClientParser.getHighestDisplay(snapshot));
 		playersScrollPane = createPlayersComposite(snapshot);
 
 		GridBagConstraints constraints = new GridBagConstraints();
@@ -202,7 +201,7 @@ public class TournamentView extends JPanel {
 		playersComposite.setOpaque(false);
 		
 		int x = 0;
-		for (Object player: parser.getPlayerList(snapshot)) {
+		for (Object player: ClientParser.getPlayerList(snapshot)) {
 			//if (isPlayer(player)) continue;
 			PlayerDisplay newDisplay = new PlayerDisplay(player, ImageHandler.loadImage(icons[x]));
 			++x;
@@ -222,7 +221,7 @@ public class TournamentView extends JPanel {
 	}
 
 	public boolean isPlayer(Object player) {
-		if (parser.getPlayerId(player).intValue() == masterView.getId()) return true;
+		if (ClientParser.getPlayerId(player).intValue() == masterView.getId()) return true;
 		return false;
 	}
 	
@@ -231,18 +230,18 @@ public class TournamentView extends JPanel {
 	 * @param snapshot
 	 */
 	public void updateView(JSONObject snapshot) {
-		updateHeader(parser.getColor(snapshot));
-		updateStats(null, parser.getHighestDisplay(snapshot), null);
+		updateHeader(ClientParser.getColor(snapshot));
+		updateStats(null, ClientParser.getHighestDisplay(snapshot), null);
 		
-		for (Object p: parser.getPlayerList(snapshot)) {
-			if (parser.getPlayerId(p).intValue() == masterView.getId()) {
-				System.out.println("Updating hand of : " + parser.getPlayerName(p));
-				updateHand(parser.getPlayerHand(p));
+		for (Object p: ClientParser.getPlayerList(snapshot)) {
+			if (ClientParser.getPlayerId(p).intValue() == masterView.getId()) {
+				System.out.println("Updating hand of : " + ClientParser.getPlayerName(p));
+				updateHand(ClientParser.getPlayerHand(p));
 				break;
 			}
 		}
 		
-		updatePlayersComposite(parser.getPlayerList(snapshot));
+		updatePlayersComposite(ClientParser.getPlayerList(snapshot));
 	}
 	
 	public void updateHeader(String tokenColor) {
@@ -305,17 +304,17 @@ public class TournamentView extends JPanel {
 	public void updatePlayersComposite(ArrayList<Object> players) {
 		System.out.println("Updating players composite!");
 		for (Object player : players) {
-			int playerId = parser.getPlayerId(player).intValue();
+			int playerId = ClientParser.getPlayerId(player).intValue();
 			//if (playerId == masterView.getId()) continue;
 			playerDisplays.get(playerId).updateDisplay(player);
 		}
 	}
 	
 	public ArrayList<String> getPlayerHand(JSONObject snapshot) {
-		for (Object player: parser.getPlayerList(snapshot)) {
-			if (parser.getPlayerId(player).intValue() == masterView.getId()) {
-				this.currentHand = parser.getPlayerHand(player);
-				return parser.getPlayerHand(player);
+		for (Object player: ClientParser.getPlayerList(snapshot)) {
+			if (ClientParser.getPlayerId(player).intValue() == masterView.getId()) {
+				this.currentHand = ClientParser.getPlayerHand(player);
+				return ClientParser.getPlayerHand(player);
 			}
 		}
 		return null;

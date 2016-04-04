@@ -3,15 +3,12 @@ package comp3004.ivanhoe.util;
 import java.util.ArrayList;
 
 import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
 
 import comp3004.ivanhoe.model.Card;
 import comp3004.ivanhoe.model.Token;
 import comp3004.ivanhoe.model.Tournament;
 
 public abstract class ServerParser {
-
-	private static JSONParser parser = new JSONParser();
 	
 	public static String getParam(JSONObject request, String param) {
 		if (request.get(param) != null) {
@@ -47,7 +44,6 @@ public abstract class ServerParser {
 		return (ArrayList<String>)request.get("cards");
 	}
 	
-	@SuppressWarnings("unchecked")
 	public static ArrayList<String> getCardCode(JSONObject request) {
 		ArrayList<String> cards = new ArrayList<String>();
 		String cardCode = (String)request.get("card_code");

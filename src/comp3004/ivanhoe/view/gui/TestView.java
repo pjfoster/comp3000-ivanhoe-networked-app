@@ -3,26 +3,18 @@ package comp3004.ivanhoe.view.gui;
 import java.awt.FlowLayout;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 
 import org.json.simple.JSONObject;
 
 import comp3004.ivanhoe.client.AppClient;
-import comp3004.ivanhoe.controller.MockController;
-import comp3004.ivanhoe.model.ActionCard;
-import comp3004.ivanhoe.model.Card;
 import comp3004.ivanhoe.model.ColourCard;
 import comp3004.ivanhoe.model.Player;
-import comp3004.ivanhoe.model.SupporterCard;
 import comp3004.ivanhoe.model.Token;
 import comp3004.ivanhoe.model.Tournament;
-import comp3004.ivanhoe.server.MockServer;
-import comp3004.ivanhoe.util.RequestBuilder;
 import comp3004.ivanhoe.util.ResponseBuilder;
 import comp3004.ivanhoe.util.Strings;
 import comp3004.ivanhoe.view.MockViewFactory;

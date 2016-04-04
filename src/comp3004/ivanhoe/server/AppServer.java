@@ -170,7 +170,7 @@ public class AppServer implements Runnable {
 				clients.put(serverThread.getID(), serverThread);
 				this.clientCount++;
 				
-				connectionResponse = responseBuilder.buildConnectionAccepted();
+				connectionResponse = ResponseBuilder.buildConnectionAccepted();
 				serverThread.send(connectionResponse.toJSONString());
 				
 				logger.info(String.format("Client:%s:%d: port connected", 
@@ -184,7 +184,7 @@ public class AppServer implements Runnable {
 			
 			try {
 				BufferedWriter streamOut = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
-				connectionResponse = responseBuilder.buildConnectionRejected();
+				connectionResponse = ResponseBuilder.buildConnectionRejected();
 				streamOut.write(connectionResponse.toJSONString() + "\n");
 				streamOut.flush();
 			} catch (IOException e) {

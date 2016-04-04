@@ -20,7 +20,6 @@ import comp3004.ivanhoe.model.Token;
 import comp3004.ivanhoe.model.Tournament;
 import comp3004.ivanhoe.server.MockServer;
 import comp3004.ivanhoe.util.RequestBuilder;
-import comp3004.ivanhoe.util.ResponseBuilder;
 
 public class WithdrawTest {
 

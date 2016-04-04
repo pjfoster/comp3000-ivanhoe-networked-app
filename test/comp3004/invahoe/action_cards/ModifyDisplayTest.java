@@ -1,6 +1,9 @@
 package comp3004.invahoe.action_cards;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,7 +23,6 @@ import comp3004.ivanhoe.model.Token;
 import comp3004.ivanhoe.model.Tournament;
 import comp3004.ivanhoe.server.MockServer;
 import comp3004.ivanhoe.util.RequestBuilder;
-import comp3004.ivanhoe.util.ResponseBuilder;
 
 // TODO: test with opponents who have withdrawn, test with card not in hand
 // TODO: test with single card in opponent display

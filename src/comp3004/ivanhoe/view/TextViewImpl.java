@@ -19,14 +19,12 @@ import comp3004.ivanhoe.util.RequestBuilder;
 public class TextViewImpl implements View, Runnable {
 
 	AppClient client;
-	RequestBuilder requestBuilder;
 	ClientParser parser;
 	BufferedReader console;
 	boolean running = false;
 	
-	public TextViewImpl (AppClient client, RequestBuilder requestBuilder) {
+	public TextViewImpl (AppClient client) {
 		this.client = client;
-		this.requestBuilder = requestBuilder;
 		
 		console = new BufferedReader(new InputStreamReader(System.in));
 	}
@@ -153,7 +151,7 @@ public class TextViewImpl implements View, Runnable {
 				}
 				
 				else if (text.contains("choose_color")) { // ex: choose_color red
-					JSONObject request = requestBuilder.buildChooseToken(text.split(" ")[1]);
+					JSONObject request = RequestBuilder.buildChooseToken(text.split(" ")[1]);
 					client.handleClientRequest(request);
 				}
 				
@@ -164,14 +162,14 @@ public class TextViewImpl implements View, Runnable {
 					JSONObject request = null;
 					
 					if (move.equals("withdraw")) {
-						request = requestBuilder.buildWithdrawMove();
+						request = RequestBuilder.buildWithdrawMove();
 					}
 					else {
 						if (movesList.length <= 2) {
-							request = requestBuilder.buildCardMove(move);
+							request = RequestBuilder.buildCardMove(move);
 						}
 						else {
-							request = requestBuilder.buildMultipleCardsMove(movesList);
+							request = RequestBuilder.buildMultipleCardsMove(movesList);
 						}
 					}
 					

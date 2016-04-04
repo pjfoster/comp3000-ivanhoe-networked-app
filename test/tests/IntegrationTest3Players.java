@@ -19,9 +19,8 @@ import comp3004.ivanhoe.model.Card;
 import comp3004.ivanhoe.model.Player;
 import comp3004.ivanhoe.model.Token;
 import comp3004.ivanhoe.server.MockServer;
-import comp3004.ivanhoe.util.RequestBuilder;
 import comp3004.ivanhoe.util.Config;
-import comp3004.ivanhoe.util.ResponseBuilder;
+import comp3004.ivanhoe.util.RequestBuilder;
 import comp3004.ivanhoe.view.MockViewFactory;
 import comp3004.ivanhoe.view.ViewFactory;
 

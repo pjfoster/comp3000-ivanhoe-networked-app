@@ -15,8 +15,8 @@ import comp3004.ivanhoe.model.SupporterCard;
 import comp3004.ivanhoe.model.Token;
 import comp3004.ivanhoe.model.Tournament;
 import comp3004.ivanhoe.server.AppServer;
-import comp3004.ivanhoe.util.ServerParser;
 import comp3004.ivanhoe.util.ResponseBuilder;
+import comp3004.ivanhoe.util.ServerParser;
 
 public class IvanhoeController {
 
@@ -35,8 +35,6 @@ public class IvanhoeController {
 	protected int maxPlayers;
 	protected HashMap<Integer, Player> players;
 	protected ArrayList<Integer> playerTurns;
-	protected ResponseBuilder responseBuilder;
-	protected ServerParser parser;
 	protected AppServer server;
 	protected Random rnd = new Random();
 
@@ -86,7 +84,7 @@ public class IvanhoeController {
 		if (players.size() == maxPlayers) {
 			startGame();
 		} else {
-			JSONObject waitingForPlayers = responseBuilder.buildWaiting();
+			JSONObject waitingForPlayers = ResponseBuilder.buildWaiting();
 			server.sendToClient(playerId, waitingForPlayers);
 		}
 
@@ -103,11 +101,11 @@ public class IvanhoeController {
 
 		tournament = new Tournament(players, Token.UNDECIDED);
 
-		JSONObject startGameMessage = responseBuilder.buildStartGame(
+		JSONObject startGameMessage = ResponseBuilder.buildStartGame(
 				tournament, getCurrentTurnId());
 		server.broadcast(startGameMessage);
 		
-		JSONObject indicateTurn = responseBuilder.buildIndicateTurn(getCurrentTurnPlayer().getName());
+		JSONObject indicateTurn = ResponseBuilder.buildIndicateTurn(getCurrentTurnPlayer().getName());
 		server.broadcast(indicateTurn);
 	}
 
@@ -117,7 +115,7 @@ public class IvanhoeController {
 		// check if it's the player's turn
 		if (getCurrentTurnId() != id) { invalidMove(); return; }
 
-		String requestType = parser.getRequestType(playerMove);
+		String requestType = ServerParser.getRequestType(playerMove);
 		if (requestType == null) { invalidMove(); return; }
 
 		switch (state) {
@@ -238,15 +236,15 @@ public class IvanhoeController {
 	 */
 	private boolean handleFirstCardMove(JSONObject playerMove) {
 
-		ArrayList<Card> cards = getCardsInHand(parser.getCardCode(playerMove));
+		ArrayList<Card> cards = getCardsInHand(ServerParser.getCardCode(playerMove));
 		if (cards == null || cards.size() != 1) return false;
 
 		Card card = cards.get(0);
 
 		// if the first card played is a Supporter Card, prompt the user to choose a color
 		if (card instanceof SupporterCard) {
-			lastPlayed = parser.getCardCode(playerMove);
-			JSONObject chooseColor = responseBuilder
+			lastPlayed = ServerParser.getCardCode(playerMove);
+			JSONObject chooseColor = ResponseBuilder
 					.buildChooseColor();
 			server.sendToClient(getCurrentTurnId(), chooseColor);
 			return true;
@@ -269,7 +267,7 @@ public class IvanhoeController {
 	}
 
 	private boolean handlePlayCard(JSONObject playerMove) {
-		if (playCard(parser.getCardCode(playerMove))) {
+		if (playCard(ServerParser.getCardCode(playerMove))) {
 			//finishTurn();
 			return true;
 		} else {
@@ -278,7 +276,7 @@ public class IvanhoeController {
 	}
 
 	private boolean handlePlayMultipleCards(JSONObject playerMove) {
-		if (playMultipleCards(parser.getCardCodes(playerMove))) {
+		if (playMultipleCards(ServerParser.getCardCodes(playerMove))) {
 			finishTurn();
 			return true;
 		} else {
@@ -287,7 +285,7 @@ public class IvanhoeController {
 	}
 
 	private boolean handleWithdrawWithToken(JSONObject playerMove) {
-		Token token = parser.getToken(playerMove);
+		Token token = ServerParser.getToken(playerMove);
 		if (!withdraw(token)) {
 			return false;
 		} 
@@ -326,11 +324,11 @@ public class IvanhoeController {
 			return;
 		}
 
-		JSONObject tournamentWon = responseBuilder
+		JSONObject tournamentWon = ResponseBuilder
 				.buildTournamentOverWin(tournament.getToken().toString());
 		server.sendToClient(getCurrentTurnId(), tournamentWon);
 
-		JSONObject tournamentLoss = responseBuilder
+		JSONObject tournamentLoss = ResponseBuilder
 				.buildTournamentOverLoss(winner.getName());
 		for (int key : players.keySet()) {
 			if (key != getCurrentTurnId()) {
@@ -347,10 +345,10 @@ public class IvanhoeController {
 	public void processGameWon() {
 		Player winner = getCurrentTurnPlayer();
 
-		JSONObject gameWon = responseBuilder.buildGameOverWin();
+		JSONObject gameWon = ResponseBuilder.buildGameOverWin();
 		server.sendToClient(getCurrentTurnId(), gameWon);
 
-		JSONObject gameLoss = responseBuilder.buildGameOverLoss(winner
+		JSONObject gameLoss = ResponseBuilder.buildGameOverLoss(winner
 				.getName());
 		for (int key : players.keySet()) {
 			if (key != getCurrentTurnId()) {
@@ -634,7 +632,7 @@ public class IvanhoeController {
 			choices.add(Token.BLUE);
 			choices.add(Token.RED);
 			choices.add(Token.YELLOW);
-			JSONObject choose_token = responseBuilder.buildChooseToken(choices);
+			JSONObject choose_token = ResponseBuilder.buildChooseToken(choices);
 			server.sendToClient(getCurrentTurnId(), choose_token);
 			
 			lastPlayed = new ArrayList<String>();
@@ -655,7 +653,7 @@ public class IvanhoeController {
 			if (tournament.getToken() != Token.BLUE) choices.add(Token.BLUE);
 			if (tournament.getToken() != Token.YELLOW) choices.add(Token.RED);
 			if (tournament.getToken() != Token.RED) choices.add(Token.YELLOW);
-			JSONObject choose_token = responseBuilder.buildChooseToken(choices);
+			JSONObject choose_token = ResponseBuilder.buildChooseToken(choices);
 			server.sendToClient(getCurrentTurnId(), choose_token);
 
 			lastPlayed = new ArrayList<String>();
@@ -687,7 +685,7 @@ public class IvanhoeController {
 			lastPlayed = new ArrayList<String>();
 			lastPlayed.add(c.getName());
 			
-			JSONObject selectOpponent = responseBuilder.buildPickOpponent(getCurrentTurnId(), tournament);
+			JSONObject selectOpponent = ResponseBuilder.buildPickOpponent(getCurrentTurnId(), tournament);
 			server.sendToClient(getCurrentTurnId(), selectOpponent);
 			
 			state = WAITING_FOR_OPPONENT_SELECTION;
@@ -833,7 +831,7 @@ public class IvanhoeController {
 	 * Handles the mechanics of withdrawing a player from a tournament
 	 */
 	private void handleWithdraw() {
-		JSONObject announceWithdraw = responseBuilder
+		JSONObject announceWithdraw = ResponseBuilder
 				.buildWithdraw(getCurrentTurnId());
 		server.broadcast(announceWithdraw);
 
@@ -864,11 +862,11 @@ public class IvanhoeController {
 		Card drawnCard = tournament.drawCard();
 		getCurrentTurnPlayer().addHandCard(drawnCard);
 
-		JSONObject newSnapshot = responseBuilder
+		JSONObject newSnapshot = ResponseBuilder
 				.buildUpdateView(tournament);
 		server.broadcast(newSnapshot);
 
-		JSONObject turn = responseBuilder
+		JSONObject turn = ResponseBuilder
 				.buildIndicateTurn(getCurrentTurnPlayer().getName());
 		server.broadcast(turn);
 		/*for (int key : players.keySet()) {
@@ -883,7 +881,7 @@ public class IvanhoeController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		JSONObject playerTurn = responseBuilder.buildStartPlayerTurn(drawnCard);
+		JSONObject playerTurn = ResponseBuilder.buildStartPlayerTurn(drawnCard);
 		server.sendToClient(getCurrentTurnId(), playerTurn);
 	}
 
@@ -892,7 +890,7 @@ public class IvanhoeController {
 	 * should try again)
 	 */
 	public void invalidMove() {
-		JSONObject invalidResponse = responseBuilder.buildInvalidResponse();
+		JSONObject invalidResponse = ResponseBuilder.buildInvalidResponse();
 		server.sendToClient(getCurrentTurnId(), invalidResponse);
 	}
 
@@ -913,7 +911,7 @@ public class IvanhoeController {
 
 		tournament.reset(players);
 
-		JSONObject startGameMessage = responseBuilder.buildStartTournament(
+		JSONObject startGameMessage = ResponseBuilder.buildStartTournament(
 				tournament, getCurrentTurnId());
 		server.broadcast(startGameMessage);
 	}
@@ -929,7 +927,7 @@ public class IvanhoeController {
 		ArrayList<Card> cards = getCardsInHand(lastPlayed);
 		if (cards == null || cards.isEmpty()) return false;
 		
-		Token newColor = parser.getToken(playerMove);
+		Token newColor = ServerParser.getToken(playerMove);
 		if (newColor == Token.GREEN || newColor == Token.PURPLE) { return false; }
 		
 		else if (lastPlayed.get(0).equals("changeweapon")) {
@@ -955,7 +953,7 @@ public class IvanhoeController {
 	protected boolean actionCardPickOpponent(JSONObject playerMove) {
 		
 		// check that a valid opponent was selected
-		Integer opponentId = Integer.parseInt(parser.getOpponentId(playerMove));
+		Integer opponentId = Integer.parseInt(ServerParser.getOpponentId(playerMove));
 		if (opponentId == null) return false;
 		Player opponent = tournament.getPlayers().get(opponentId);
 		if (opponent == null) return false;
@@ -1006,7 +1004,7 @@ public class IvanhoeController {
 		
 		else if (cardName.equals("dodge") || cardName.equals("retreat")) {
 			// select a card in the opponent's display
-			JSONObject pick_card = responseBuilder.buildPickCard(opponent.getDisplay());
+			JSONObject pick_card = ResponseBuilder.buildPickCard(opponent.getDisplay());
 			server.sendToClient(getCurrentTurnId(), pick_card);
 			selectedOpponent = opponent;
 			state = WAITING_FOR_OPPONENT_CARD;
@@ -1017,7 +1015,7 @@ public class IvanhoeController {
 			ArrayList<Card> faceupCards = new ArrayList<Card>(opponent.getDisplay());
 			//faceupCards.addAll() TODO: special cards
 			
-			JSONObject pick_card = responseBuilder.buildPickCard(faceupCards);
+			JSONObject pick_card = ResponseBuilder.buildPickCard(faceupCards);
 			server.sendToClient(getCurrentTurnId(), pick_card);
 			selectedOpponent = opponent;
 			state = WAITING_FOR_OPPONENT_CARD;
@@ -1035,7 +1033,7 @@ public class IvanhoeController {
 	protected boolean actionCardPickCard(JSONObject playerMove) {
 		
 		if (selectedOpponent == null) { return false; }
-		ArrayList<Card> cards = parser.getCard(playerMove, tournament);
+		ArrayList<Card> cards = ServerParser.getCard(playerMove, tournament);
 		
 		String actionCardPlayed = lastPlayed.get(0);
 		ActionCard actionCard = (ActionCard)tournament.getCard(actionCardPlayed).get(0);
@@ -1077,7 +1075,7 @@ public class IvanhoeController {
 		
 		else if (actionCardPlayed.equals("outwit")) {
 			
-			JSONObject pickCard = responseBuilder.buildPickCard(getCurrentTurnPlayer().getDisplay());
+			JSONObject pickCard = ResponseBuilder.buildPickCard(getCurrentTurnPlayer().getDisplay());
 			server.sendToClient(getCurrentTurnId(), pickCard);
 			state = WAITING_FOR_OWN_CARD;
 			lastPlayed.add(selectedCard.toString());
@@ -1101,7 +1099,7 @@ public class IvanhoeController {
 		ActionCard actionCard = (ActionCard)tournament.getCard(actionCardPlayed).get(0);
 
 		// get player card		
-		ArrayList<Card> cards = parser.getCard(playerMove, tournament);
+		ArrayList<Card> cards = ServerParser.getCard(playerMove, tournament);
 		Card playerCard = null;
 		for (Card c: cards) {
 			if (getCurrentTurnPlayer().getDisplay().contains(c)) {

@@ -10,7 +10,6 @@ import comp3004.ivanhoe.model.Player;
 import comp3004.ivanhoe.model.Token;
 import comp3004.ivanhoe.model.Tournament;
 import comp3004.ivanhoe.server.AppServer;
-import comp3004.ivanhoe.util.ResponseBuilder;
 
 /**
  * Extension of controller with testing capabilities. Mostly contains getters and setters

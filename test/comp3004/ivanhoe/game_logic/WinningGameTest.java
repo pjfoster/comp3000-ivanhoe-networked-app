@@ -1,6 +1,7 @@
 package comp3004.ivanhoe.game_logic;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.util.HashMap;
 
@@ -11,7 +12,6 @@ import org.junit.Test;
 import comp3004.ivanhoe.controller.MockController;
 import comp3004.ivanhoe.model.Player;
 import comp3004.ivanhoe.model.Token;
-import comp3004.ivanhoe.util.ResponseBuilder;
 
 public class WinningGameTest {
 
