@@ -20,7 +20,7 @@ import comp3004.ivanhoe.model.Tournament;
 import comp3004.ivanhoe.server.MockServer;
 import comp3004.ivanhoe.util.RequestBuilder;
 
-public class SpecialCardTest {
+public class Type4ActionCardsTest {
 
 	HashMap<Integer, Player> players;
 	Tournament tournament;

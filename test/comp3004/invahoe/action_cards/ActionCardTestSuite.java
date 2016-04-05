@@ -5,9 +5,10 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-   ChangeTournamentColorTest.class,
-   ModifyDisplayTest.class,
-   SpecialCardTest.class
+   Type1ActionCardsTest.class,
+   Type2ActionCardsTest.class,
+   Type3ActionCardsTest.class,
+   Type4ActionCardsTest.class
 })
 
 public class ActionCardTestSuite {   

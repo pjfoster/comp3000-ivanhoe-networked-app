@@ -21,7 +21,7 @@ import comp3004.ivanhoe.model.Tournament;
 import comp3004.ivanhoe.server.MockServer;
 import comp3004.ivanhoe.util.RequestBuilder;
 
-public class ChangeTournamentColorTest {
+public class Type1ActionCardsTest {
 
 	HashMap<Integer, Player> players;
 	Tournament tournament;
