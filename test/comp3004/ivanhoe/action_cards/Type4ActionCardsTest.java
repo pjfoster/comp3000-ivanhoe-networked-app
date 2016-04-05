@@ -1,4 +1,4 @@
-package comp3004.invahoe.action_cards;
+package comp3004.ivanhoe.action_cards;
 
 import static org.junit.Assert.*;
 

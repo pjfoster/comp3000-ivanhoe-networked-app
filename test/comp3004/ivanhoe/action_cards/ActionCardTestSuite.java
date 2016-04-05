@@ -1,4 +1,4 @@
-package comp3004.invahoe.action_cards;
+package comp3004.ivanhoe.action_cards;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
