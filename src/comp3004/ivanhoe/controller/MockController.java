@@ -22,6 +22,7 @@ public class MockController extends IvanhoeController {
 
 	public MockController(AppServer server, int maxPlayers) {
 		super(server, maxPlayers);
+		timeDelayMillis = 0;
 	}
 	
 	public Tournament getTournament() { return tournament; }

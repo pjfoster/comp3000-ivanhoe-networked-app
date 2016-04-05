@@ -88,10 +88,11 @@ public class ModifyDisplayTest {
 		assertEquals(controller.getCurrentTurnPlayer(), alexei);
 		assertEquals(controller.getState(), 7);
 
-		JSONObject opponent = RequestBuilder.buildSelectOpponent("luke");
+		JSONObject opponent = RequestBuilder.buildSelectOpponent("60002");
 		controller.processPlayerMove(60001, opponent);
 
-		assertNotEquals(controller.getCurrentTurnPlayer(), alexei);
+		// check that Alexei can continue to play other cards
+		assertEquals(controller.getCurrentTurnPlayer(), alexei);
 		assertEquals(controller.getState(), 3);
 
 		// check that all purple cards were removed from Luke's display
@@ -121,11 +122,11 @@ public class ModifyDisplayTest {
 		assertEquals(controller.getCurrentTurnPlayer(), alexei);
 		assertEquals(controller.getState(), 7);
 
-		JSONObject selectOpponent = RequestBuilder.buildSelectOpponent("luke");
+		JSONObject selectOpponent = RequestBuilder.buildSelectOpponent("60002");
 		controller.processPlayerMove(60001, selectOpponent);
 
-		// check that Alexei's turn is done
-		assertNotEquals(controller.getCurrentTurnPlayer(), alexei);
+		// check that Alexei can continue to play other cards
+		assertEquals(controller.getCurrentTurnPlayer(), alexei);
 		assertEquals(controller.getState(), 3);
 
 		// check that the displays were changed
@@ -157,7 +158,7 @@ public class ModifyDisplayTest {
 		assertEquals(controller.getCurrentTurnPlayer(), alexei);
 		assertEquals(controller.getState(), 7);
 
-		JSONObject selectOpponent = RequestBuilder.buildSelectOpponent("luke");
+		JSONObject selectOpponent = RequestBuilder.buildSelectOpponent("60002");
 		controller.processPlayerMove(60001, selectOpponent);
 
 		// check that Alexei is now required to pick a card
@@ -167,8 +168,8 @@ public class ModifyDisplayTest {
 		JSONObject pickCard = RequestBuilder.buildPickCard("b5");
 		controller.processPlayerMove(60001, pickCard);
 
-		// check that Alexei's turn is done
-		assertNotEquals(controller.getCurrentTurnPlayer(), alexei);
+		// check that Alexei is free to play other cards
+		assertEquals(controller.getCurrentTurnPlayer(), alexei);
 		assertEquals(controller.getState(), 3);
 
 		// check that the displays were changed
@@ -188,7 +189,7 @@ public class ModifyDisplayTest {
 		cardWrapper.add("dodge");
 		assertTrue(controller.playCard(cardWrapper));
 
-		JSONObject selectOpponent = RequestBuilder.buildSelectOpponent("luke");
+		JSONObject selectOpponent = RequestBuilder.buildSelectOpponent("60002");
 		controller.processPlayerMove(60001, selectOpponent);
 
 		JSONObject pickCard = RequestBuilder.buildPickCard("b5");
@@ -217,7 +218,7 @@ public class ModifyDisplayTest {
 		assertEquals(controller.getCurrentTurnPlayer(), alexei);
 		assertEquals(controller.getState(), 7);
 
-		JSONObject selectOpponent = RequestBuilder.buildSelectOpponent("luke");
+		JSONObject selectOpponent = RequestBuilder.buildSelectOpponent("60002");
 		controller.processPlayerMove(60001, selectOpponent);
 
 		// check that Alexei is now required to pick a card
@@ -227,16 +228,15 @@ public class ModifyDisplayTest {
 		JSONObject pickCard = RequestBuilder.buildPickCard("b5");
 		controller.processPlayerMove(60001, pickCard);
 
-		// check that Alexei's turn is done
-		assertNotEquals(controller.getCurrentTurnPlayer(), alexei);
+		/// check that Alexei can continue to play other cards
+		assertEquals(controller.getCurrentTurnPlayer(), alexei);
 		assertEquals(controller.getState(), 3);
 
 		// check that the displays were changed
 		assertEquals(luke.getDisplay().size(), 2);
 		assertEquals(luke.getDisplayTotal(Token.BLUE), 5);
-		assertEquals(luke.getHand().size(), 2); // one card picked on his turn
-		assertTrue(luke.getHand().get(0).toString().equals("b5") ||
-				   luke.getHand().get(1).toString().equals("b5"));
+		assertEquals(luke.getHand().size(), 1);
+		assertTrue(luke.getHand().get(0).toString().equals("b5"));
 	}
 
 	@Test
@@ -247,7 +247,7 @@ public class ModifyDisplayTest {
 		cardWrapper.add("retreat");
 		assertTrue(controller.playCard(cardWrapper));
 
-		JSONObject selectOpponent = RequestBuilder.buildSelectOpponent("luke");
+		JSONObject selectOpponent = RequestBuilder.buildSelectOpponent("60002");
 		controller.processPlayerMove(60001, selectOpponent);
 
 		JSONObject pickCard = RequestBuilder.buildPickCard("b5");
@@ -279,11 +279,11 @@ public class ModifyDisplayTest {
 		assertEquals(controller.getCurrentTurnPlayer(), alexei);
 		assertEquals(controller.getState(), 7);
 
-		JSONObject selectOpponent = RequestBuilder.buildSelectOpponent("luke");
+		JSONObject selectOpponent = RequestBuilder.buildSelectOpponent("60002");
 		controller.processPlayerMove(60001, selectOpponent);
 
 		// check that Alexei's hand now contains one of Luke's cards
-		assertEquals(luke.getHand().size(), 3); // one card picked when his turn started
+		assertEquals(luke.getHand().size(), 2);
 		assertEquals(alexei.getHand().size(), 1);
 		assertTrue(alexei.getHand().get(0).toString().equals("b5") ||
 				alexei.getHand().get(0).toString().equals("b3") ||
@@ -449,7 +449,7 @@ public class ModifyDisplayTest {
 		assertEquals(controller.getCurrentTurnPlayer(), alexei);
 		assertEquals(controller.getState(), 7);
 
-		JSONObject selectOpponent = RequestBuilder.buildSelectOpponent("luke");
+		JSONObject selectOpponent = RequestBuilder.buildSelectOpponent("60002");
 		controller.processPlayerMove(60001, selectOpponent);
 
 		// check that Alexei is now required to pick an opponent's card
@@ -466,8 +466,8 @@ public class ModifyDisplayTest {
 		pickCard = RequestBuilder.buildPickCard("b2");
 		controller.processPlayerMove(60001, pickCard);
 		
-		// check that Alexei's turn is done
-		assertNotEquals(controller.getCurrentTurnPlayer(), alexei);
+		// check that Alexei can continue to play other cards
+		assertEquals(controller.getCurrentTurnPlayer(), alexei);
 		assertEquals(controller.getState(), 3);
 
 		// check that the displays were changed

@@ -82,8 +82,10 @@ public class StartTournamentTest {
 		JSONObject playR3 = RequestBuilder.buildCardMove(r3.toString());
 		controller.processPlayerMove(60001, playR3);
 		
+		// Ensure that the card has been played and the tournament color
+		// decided, but the player is still free to player other cards
 		assertEquals(controller.getTournament().getToken(), Token.RED);
-		assertEquals(controller.getCurrentTurnId(), 60002); // The turn has been changed
+		assertEquals(controller.getCurrentTurnId(), 60001); // The turn has NOT been changed
 		assertEquals(controller.getState(), 3); // WAITING_FOR_PLAYER_MOVE
 		assertEquals(alexei.getDisplayTotal(Token.RED), 3);
 		
@@ -112,9 +114,11 @@ public class StartTournamentTest {
 		JSONObject chooseColor = RequestBuilder.buildChooseToken("blue");
 		controller.processPlayerMove(60001, chooseColor);
 		
+		// Ensure that the card has been played and the tournament color
+		// decided, but the player is still free to player other cards
 		assertEquals(controller.getTournament().getToken(), Token.BLUE);
 		assertEquals(controller.getState(), 3); // WAITING_FOR_PLAYER_MOVE
-		assertEquals(controller.getCurrentTurnId(), 60002); // The turn has been changed
+		assertEquals(controller.getCurrentTurnId(), 60001); // The turn has NOT been changed
 		assertEquals(alexei.getDisplayTotal(Token.BLUE), 3);
 		
 	}
@@ -152,9 +156,11 @@ public class StartTournamentTest {
 		chooseColor = RequestBuilder.buildChooseToken("yellow");
 		controller.processPlayerMove(60001, chooseColor);
 		
+		// Ensure that the card has been played and the tournament color
+		// decided, but the player is still free to player other cards
 		assertEquals(controller.getTournament().getToken(), Token.YELLOW);
 		assertEquals(controller.getState(), 3); // WAITING_FOR_PLAYER_MOVE
-		assertEquals(controller.getCurrentTurnId(), 60002); // The turn has been changed
+		assertEquals(controller.getCurrentTurnId(), 60001); // The turn has been changed
 		assertEquals(alexei.getDisplayTotal(Token.YELLOW), 3);
 	}
 

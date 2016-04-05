@@ -155,12 +155,12 @@ public class RequestBuilderTest {
 	@Test
 	public void testBuildSelectOpponent() throws ParseException {
 		
-		String testMoveString = RequestBuilder.buildSelectOpponent("Alexei").toJSONString();
+		String testMoveString = RequestBuilder.buildSelectOpponent("60001").toJSONString();
 		JSONObject testMove = (JSONObject)parser.parse(testMoveString);
 		
 		assertEquals(testMove.size(), 2);
 		assertEquals(testMove.get("request_type"), "select_opponent");
-		assertEquals(testMove.get("opponent_username"), "Alexei");
+		assertEquals(testMove.get("opponent_id"), "60001");
 		
 	}
 	

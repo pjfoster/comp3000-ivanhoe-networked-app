@@ -160,8 +160,9 @@ public class ResponseBuilderTest {
 		String testMoveString = ResponseBuilder.buildPickCard(cards, 60001).toJSONString();
 		JSONObject testMove = (JSONObject)parser.parse(testMoveString);
 		
-		assertEquals(testMove.size(), 2);
+		assertEquals(testMove.size(), 3);
 		assertEquals(testMove.get("response_type"), "pick_card");
+		assertEquals(testMove.get("player_id"), "60001");
 		assertNotNull(testMove.get("cards"));
 		
 		ArrayList<String> cardStrings = ClientParser.getCardsFromPickCard(testMove);
@@ -332,7 +333,7 @@ public class ResponseBuilderTest {
 		
 		assertEquals(testMove.size(), 2);
 		assertEquals(testMove.get("response_type"), "withdraw");
-		assertEquals(testMove.get("player_id"), 60002);
+		assertEquals(testMove.get("player_id"), "60002");
 	}
 	
 	@Test

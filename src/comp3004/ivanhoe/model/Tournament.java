@@ -152,17 +152,23 @@ public class Tournament {
 	
 	/**
 	 * This function returns the player with the highest display
+	 * If 2 players have equal displays, the function returns null
 	 * @return
 	 */
 	public Player getPlayerWithHighestDisplay(){
-		Player temp = null;
+		Player chosenPlayer = null;
 		int highestTotal = 0;
+		
 		for (Player p: currentPlayers.values()){
-			if (p.getDisplayTotal(token) > highestTotal)
-				temp = p;
+			if (p.getDisplayTotal(token) > highestTotal) {
+				chosenPlayer = p;
 				highestTotal = p.getDisplayTotal(token);
+			}
+			else if (p.getDisplayTotal(token) == highestTotal) {
+				chosenPlayer = null;
+			}
 		}
-		return temp;
+		return chosenPlayer;
 	}
 	
 	public int getHighestDisplayTotal() {

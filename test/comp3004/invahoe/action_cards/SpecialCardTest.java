@@ -74,7 +74,7 @@ public class SpecialCardTest {
 		assertEquals(alexei.getSpecial().size(), 1);
 		assertEquals(alexei.getSpecial().get(0).getName(), "shield");
 		assertTrue(alexei.hasShield());
-		assertNotEquals(controller.getCurrentTurnPlayer(), alexei);
+		assertEquals(controller.getCurrentTurnPlayer(), alexei);
 		
 		// check that other action cards don't affect Lexi (ex: OUTMANEUVER)
 		alexei.addDisplayCard(new ColourCard("red", 3));
@@ -112,7 +112,7 @@ public class SpecialCardTest {
 		JSONObject opponent = RequestBuilder.buildSelectOpponent("60002");
 		controller.processPlayerMove(60001, opponent);
 
-		assertNotEquals(controller.getCurrentTurnPlayer(), alexei);
+		assertEquals(controller.getCurrentTurnPlayer(), alexei);
 		assertEquals(controller.getState(), 3);
 		
 		// check that Luke now has the stunned card beside his display

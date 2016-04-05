@@ -73,7 +73,7 @@ public class ChangeTournamentColorTest {
 		JSONObject newColor = RequestBuilder.buildChooseToken("blue");
 		assertTrue(controller.testChangeTournamentColor(newColor));
 		
-		assertNotEquals(controller.getCurrentTurnPlayer(), alexei);
+		assertEquals(controller.getCurrentTurnPlayer(), alexei); // alexei can still play other cards
 		assertEquals(tournament.getToken(), Token.BLUE);
 		assertEquals(controller.getState(), 3);
 		
@@ -128,7 +128,7 @@ public class ChangeTournamentColorTest {
 		JSONObject newColor = RequestBuilder.buildChooseToken("blue");
 		assertTrue(controller.testChangeTournamentColor(newColor));
 		
-		assertNotEquals(controller.getCurrentTurnPlayer(), alexei);
+		assertEquals(controller.getCurrentTurnPlayer(), alexei); // alexei can still play other cards
 		assertEquals(tournament.getToken(), Token.BLUE);
 		assertEquals(controller.getState(), 3);
 		
@@ -172,7 +172,7 @@ public class ChangeTournamentColorTest {
 		assertTrue(controller.playCard(cardWrapper));
 		
 		// check that playing the card was successful
-		assertNotEquals(controller.getCurrentTurnPlayer(), alexei);
+		assertEquals(controller.getCurrentTurnPlayer(), alexei); // alexei can still play other cards
 		assertEquals(tournament.getToken(), Token.GREEN);
 		
 		// check that the card wasn't added to the display
