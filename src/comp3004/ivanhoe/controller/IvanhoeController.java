@@ -871,12 +871,10 @@ public class IvanhoeController {
 
 			// remove all supporter cards from displays
 			for (Player p : tournament.getPlayers().values()) {
-				if (p.hasShield())
-					continue;
 				ArrayList<Card> displayCopy = new ArrayList<Card>(
 						p.getDisplay());
 				for (Card card : displayCopy) {
-					if (p.getDisplay().size() <= 1)
+					if (p.getDisplay().size() <= 1 || p.hasShield())
 						break;
 					if (card instanceof SupporterCard) {
 						p.removeDisplayCard(card);
