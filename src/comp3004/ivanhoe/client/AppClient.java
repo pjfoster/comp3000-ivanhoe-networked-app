@@ -143,6 +143,10 @@ public class AppClient implements Runnable {
 				view.displayTurnView((String)server_response.get("drawn_card"));
 			}
 			
+			else if (server_response.get("response_type").equals("continue_turn")) {
+				view.displayTurnView();
+			}
+			
 			else if (server_response.get("response_type").equals("update_view")) {
 				view.displayTournamentView(server_response);
 			}

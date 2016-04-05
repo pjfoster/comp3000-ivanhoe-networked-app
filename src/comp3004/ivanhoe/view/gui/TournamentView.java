@@ -229,17 +229,25 @@ public class TournamentView extends JPanel {
 	 * @param snapshot
 	 */
 	public void updateView(JSONObject snapshot) {
+		System.out.println("Updating view!");
 		updateHeader(ClientParser.getColorFromSnapshot(snapshot));
 		updateStats(null, ClientParser.getHighestDisplayFromSnapshot(snapshot), null);
 		
 		for (Object p: ClientParser.getPlayerList(snapshot)) {
 			if (ClientParser.getPlayerId(p).intValue() == masterView.getId()) {
+				System.out.println("Updating hand!");
 				updateHand(ClientParser.getPlayerHand(p));
 				break;
 			}
 		}
 		
 		updatePlayersComposite(ClientParser.getPlayerList(snapshot));
+		
+		handComposite.revalidate();
+		handComposite.repaint();
+		playersComposite.revalidate();
+		playersComposite.repaint();
+		
 	}
 	
 	public void updateHeader(String tokenColor) {
@@ -276,6 +284,7 @@ public class TournamentView extends JPanel {
 	
 	public void updateHand(ArrayList<String> cards) {
 		
+		System.out.println("Hand: " + cards);
 		currentHand = cards;
 		
 		handComposite.remove(cardsPane);
@@ -319,6 +328,7 @@ public class TournamentView extends JPanel {
 	}
 	
 	public void displayPlayerTurn(String newCard) {
+		if (lastMove != null) lastMove.dispose();
 		TurnView turnView = new TurnView(masterView, currentHand);
 		lastMove = turnView;
 		turnView.setVisible(true);
@@ -326,7 +336,7 @@ public class TournamentView extends JPanel {
 	
 	public void displaySelectOpponent() {
 		PickOpponentWindow oppView = new PickOpponentWindow(masterView, playerDisplays.values());
-		lastMove = oppView;
+		//lastMove = oppView;
 		oppView.setVisible(true);
 	}
 	

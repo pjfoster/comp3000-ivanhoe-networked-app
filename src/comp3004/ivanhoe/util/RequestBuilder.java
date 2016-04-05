@@ -48,6 +48,12 @@ public abstract class RequestBuilder {
 		return new JSONObject(requestMap); 
 	}
 	
+	public static JSONObject buildFinishTurn() {
+		HashMap<String, String> requestMap = new HashMap<String, String>();
+		requestMap.put("request_type", "finish_turn"); 
+		return new JSONObject(requestMap); 
+	}
+	
 	// Legacy
 	public static JSONObject buildMultipleCardsMove(String[] cards) {
 		return null;

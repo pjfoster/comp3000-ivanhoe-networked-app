@@ -120,6 +120,17 @@ public class IvanhoeController {
 		String requestType = ServerParser.getRequestType(playerMove);
 		if (requestType == null) { invalidMove(); return; }
 
+		// check that a player is allowed to finish their turn
+		if (requestType.equals("finish_turn")) {
+			if (tournament.getPlayerWithHighestDisplay() == getCurrentTurnPlayer()) {
+				finishTurn();
+				return;
+			} else {
+				invalidMove();
+				return;
+			}
+		}
+		
 		switch (state) {
 		
 		// handle the first move, where tournament color is undecided
@@ -226,6 +237,7 @@ public class IvanhoeController {
 
 		state = WAITING_FOR_PLAYER_MOVE;
 		//finishTurn();
+		updateView();
 		return true;
 
 	}
@@ -257,6 +269,7 @@ public class IvanhoeController {
 			if (handleColourCard(c)) {
 				state = WAITING_FOR_PLAYER_MOVE;
 				//finishTurn();
+				//updateView();
 				return true;
 			}
 			else {
@@ -271,6 +284,7 @@ public class IvanhoeController {
 	private boolean handlePlayCard(JSONObject playerMove) {
 		if (playCard(ServerParser.getCardCode(playerMove))) {
 			//finishTurn();
+			updateView();
 			return true;
 		} else {
 			return false;
@@ -279,7 +293,8 @@ public class IvanhoeController {
 
 	private boolean handlePlayMultipleCards(JSONObject playerMove) {
 		if (playMultipleCards(ServerParser.getCardCodes(playerMove))) {
-			finishTurn();
+			//finishTurn();
+			updateView();
 			return true;
 		} else {
 			return false;
@@ -579,7 +594,8 @@ public class IvanhoeController {
 
 		// Play the card
 		getCurrentTurnPlayer().playCard(card);
-		finishTurn();
+		//finishTurn();
+		updateView();
 		return true;
 	}
 
@@ -614,7 +630,8 @@ public class IvanhoeController {
 
 		// Play the card
 		getCurrentTurnPlayer().playCard(card);
-		finishTurn();
+		//finishTurn();
+		updateView();
 		return true;
 
 	}
@@ -677,7 +694,8 @@ public class IvanhoeController {
 			getCurrentTurnPlayer().removeHandCard(c);
 			tournament.addToDiscard(c);
 			createActionCardAnnouncement(getCurrentTurnPlayer().getName(), "DROP WEAPON");
-			finishTurn();
+			//finishTurn();
+			updateView();
 			return true;
 			
 		}
@@ -711,7 +729,8 @@ public class IvanhoeController {
 			getCurrentTurnPlayer().removeHandCard(c);
 			tournament.addToDiscard(c);
 			createActionCardAnnouncement(getCurrentTurnPlayer().getName(), "OUTMANEUVER");
-			finishTurn();
+			//finishTurn();
+			updateView();
 			return true;
 		}
 		
@@ -742,7 +761,8 @@ public class IvanhoeController {
 			getCurrentTurnPlayer().removeHandCard(c);
 			tournament.addToDiscard(c);
 			createActionCardAnnouncement(getCurrentTurnPlayer().getName(), "CHARGE");
-			finishTurn();
+			//finishTurn();
+			updateView();
 			return true;
 			
 		}
@@ -774,7 +794,8 @@ public class IvanhoeController {
 			getCurrentTurnPlayer().removeHandCard(c);
 			tournament.addToDiscard(c);
 			createActionCardAnnouncement(getCurrentTurnPlayer().getName(), "COUNTER CHARGE");
-			finishTurn();
+			//finishTurn();
+			updateView();
 			return true;
 		}
 		
@@ -796,7 +817,8 @@ public class IvanhoeController {
 			getCurrentTurnPlayer().removeHandCard(c);
 			tournament.addToDiscard(c);
 			createActionCardAnnouncement(getCurrentTurnPlayer().getName(), "DISGRACE");
-			finishTurn();
+			//finishTurn();
+			updateView();
 			return true;
 		}
 		
@@ -804,7 +826,8 @@ public class IvanhoeController {
 			getCurrentTurnPlayer().removeHandCard(c);
 			getCurrentTurnPlayer().addSpecialCard(c);
 			createActionCardAnnouncement(getCurrentTurnPlayer().getName(), "SHIELD");
-			finishTurn();
+			//finishTurn();
+			updateView();
 			return true;
 		}
 
@@ -872,7 +895,7 @@ public class IvanhoeController {
 	 * sends a message to the player whose turn it now is
 	 */
 	public void finishTurn() {
-
+		
 		if (tournament.getPlayers().size() == 1) {
 			processTournamentWon();
 			return;
@@ -889,11 +912,6 @@ public class IvanhoeController {
 		JSONObject turn = ResponseBuilder
 				.buildIndicateTurn(getCurrentTurnPlayer().getName());
 		server.broadcast(turn);
-		/*for (int key : players.keySet()) {
-			if (key != getCurrentTurnId()) {
-				server.sendToClient(key, turn);
-			}
-		}*/
 		
 		try {
 			Thread.sleep(1000);
@@ -901,8 +919,10 @@ public class IvanhoeController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 		JSONObject playerTurn = ResponseBuilder.buildStartPlayerTurn(drawnCard);
 		server.sendToClient(getCurrentTurnId(), playerTurn);
+
 	}
 
 	/**
@@ -912,6 +932,26 @@ public class IvanhoeController {
 	public void invalidMove() {
 		JSONObject invalidResponse = ResponseBuilder.buildInvalidResponse();
 		server.sendToClient(getCurrentTurnId(), invalidResponse);
+	}
+	
+	public void updateView() {
+		JSONObject newSnapshot = ResponseBuilder.buildUpdateView(tournament);
+		server.broadcast(newSnapshot);
+		
+		JSONObject turn = ResponseBuilder
+				.buildIndicateTurn(getCurrentTurnPlayer().getName());
+		server.broadcast(turn);
+		
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		System.out.println("It's " + getCurrentTurnPlayer().getName() + "'s turn!");
+		JSONObject playerTurn = ResponseBuilder.buildContinueTurn();
+		server.sendToClient(getCurrentTurnId(), playerTurn);
 	}
 
 	/**
@@ -962,7 +1002,8 @@ public class IvanhoeController {
 		getCurrentTurnPlayer().removeHandCard(cards.get(0));
 		tournament.addToDiscard(cards.get(0));
 		state = WAITING_FOR_PLAYER_MOVE;
-		finishTurn();
+		//finishTurn();
+		updateView();
 		
 		return true;
 	}
@@ -997,7 +1038,8 @@ public class IvanhoeController {
 			getCurrentTurnPlayer().removeHandCard(actionCard);
 			lastPlayed = null;
 			createActionCardAnnouncement(getCurrentTurnPlayer().getName(), "BREAK LANCE");
-			finishTurn();
+			//finishTurn();
+			updateView();
 		}
 		
 		else if (cardName.equals("riposte")) {
@@ -1012,7 +1054,8 @@ public class IvanhoeController {
 			getCurrentTurnPlayer().removeHandCard(actionCard);
 			lastPlayed = null;
 			createActionCardAnnouncement(getCurrentTurnPlayer().getName(), "RIPOSTE");
-			finishTurn();
+			//finishTurn();
+			updateView();
 			
 		}
 		
@@ -1026,7 +1069,8 @@ public class IvanhoeController {
 			lastPlayed = null;
 			getCurrentTurnPlayer().removeHandCard(actionCard);
 			createActionCardAnnouncement(getCurrentTurnPlayer().getName(), "KNOCK DOWN");
-			finishTurn();
+			//finishTurn();
+			updateView();
 		}
 		
 		else if (cardName.equals("dodge") || cardName.equals("retreat")) {
@@ -1056,7 +1100,8 @@ public class IvanhoeController {
 			state = WAITING_FOR_PLAYER_MOVE;
 			lastPlayed = null;
 			createActionCardAnnouncement(getCurrentTurnPlayer().getName(), "STUNNED");
-			finishTurn();
+			//finishTurn();
+			updateView();
 
 		}
 		
@@ -1101,7 +1146,8 @@ public class IvanhoeController {
 			getCurrentTurnPlayer().removeHandCard(actionCard);
 			lastPlayed = null;
 			createActionCardAnnouncement(getCurrentTurnPlayer().getName(), "DODGE");
-			finishTurn();
+			//finishTurn();
+			updateView();
 		}
 		
 		else if (actionCardPlayed.equals("retreat")) {
@@ -1111,7 +1157,8 @@ public class IvanhoeController {
 			state = WAITING_FOR_PLAYER_MOVE;
 			lastPlayed = null;
 			createActionCardAnnouncement(getCurrentTurnPlayer().getName(), "RETREAT");
-			finishTurn();
+			//finishTurn();
+			updateView();
 		}
 		
 		else if (actionCardPlayed.equals("outwit")) {
@@ -1171,7 +1218,8 @@ public class IvanhoeController {
 		state = WAITING_FOR_PLAYER_MOVE;
 		lastPlayed = null;
 		createActionCardAnnouncement(getCurrentTurnPlayer().getName(), "OUTWIT");
-		finishTurn();
+		//finishTurn();
+		updateView();
 		return true;
 	}
 	

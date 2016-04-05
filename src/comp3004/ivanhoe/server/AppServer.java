@@ -95,7 +95,8 @@ public class AppServer implements Runnable {
 				else if (client_request.get("request_type").equals("turn_move") ||
 						 client_request.get("request_type").equals("choose_token") ||
 						 client_request.get("request_type").equals("select_opponent") ||
-						 client_request.get("request_type").equals("pick_card")) {
+						 client_request.get("request_type").equals("pick_card") ||
+						 client_request.get("request_type").equals("finish_turn")) {
 					controller.processPlayerMove(id, client_request);
 				}
 				

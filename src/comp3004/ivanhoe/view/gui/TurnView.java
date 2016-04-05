@@ -41,6 +41,7 @@ public class TurnView extends JFrame implements ActionListener, SelectionView {
 	JScrollPane cardScrollPane;
 	JButton submitButton;
 	JButton withdrawButton;
+	JButton finishTurnButton;
 	
 	HashMap<JCheckBoxMenuItem, String> cardsLookup;
 	
@@ -91,10 +92,14 @@ public class TurnView extends JFrame implements ActionListener, SelectionView {
 		withdrawButton = new JButton("Withdraw");
 		withdrawButton.addActionListener(this);
 		
+		finishTurnButton = new JButton("Finish Turn");
+		finishTurnButton.addActionListener(this);
+		
 		mainView.add(headerLabel);
 		mainView.add(cardScrollPane);
 		mainView.add(submitButton);
 		mainView.add(withdrawButton);
+		mainView.add(finishTurnButton);
 		
 	}
 
@@ -124,6 +129,11 @@ public class TurnView extends JFrame implements ActionListener, SelectionView {
 		} else if (e.getSource() == withdrawButton) {
 			JSONObject withdraw = RequestBuilder.buildWithdrawMove();
 			masterView.handleEvent(withdraw);
+			exit();
+			
+		} else if (e.getSource() == finishTurnButton) {
+			JSONObject finishTurn = RequestBuilder.buildFinishTurn();
+			masterView.handleEvent(finishTurn);
 			exit();
 		}
 		

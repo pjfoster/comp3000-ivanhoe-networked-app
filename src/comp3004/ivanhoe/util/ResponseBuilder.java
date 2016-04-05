@@ -128,6 +128,12 @@ public abstract class ResponseBuilder {
 		return new JSONObject(responseMap);
 	}
 	
+	public static JSONObject buildContinueTurn() {
+		HashMap<String, String> responseMap = new HashMap<String, String>();
+		responseMap.put("response_type", "continue_turn");
+		return new JSONObject(responseMap);
+	}
+	
 	public static JSONObject buildIndicateTurn(String playerName) {
 		HashMap<String, String> responseMap = new HashMap<String, String>();
 		responseMap.put("response_type", "indicate_turn");
