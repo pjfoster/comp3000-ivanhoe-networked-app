@@ -54,9 +54,13 @@ public abstract class RequestBuilder {
 		return new JSONObject(requestMap); 
 	}
 	
-	// Legacy
+	// Used for testing purposes
 	public static JSONObject buildMultipleCardsMove(String[] cards) {
-		return null;
+		ArrayList<String> cardsArray = new ArrayList<String>();
+		for (String c: cards) {
+			cardsArray.add(c);
+		}
+		return buildMultipleCardsMove(cardsArray);
 	}
 	
 	@SuppressWarnings("unchecked")

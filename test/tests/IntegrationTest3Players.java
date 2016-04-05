@@ -84,21 +84,9 @@ public class IntegrationTest3Players {
 		// connect all 3 clients
 
 		final int SERVER_PORT = 10020;
-
-		AppClient alexeiClient = new AppClient(viewFactory, Config.DEFAULT_SERVER_ADDRESS, SERVER_PORT);
-		AppClient alexei = Mockito.spy(alexeiClient);
-		alexei.setUsername("Alexei");
-		assertTrue(alexei.connect());
-		
-		AppClient lukeClient = new AppClient(viewFactory, Config.DEFAULT_SERVER_ADDRESS, SERVER_PORT);
-		AppClient luke = Mockito.spy(lukeClient);
-		luke.setUsername("Luke");
-		assertTrue(luke.connect());
-		
-		AppClient jaysonClient = new AppClient(viewFactory, Config.DEFAULT_SERVER_ADDRESS, SERVER_PORT);
-		AppClient jayson = Mockito.spy(jaysonClient);
-		jayson.setUsername("Jayson");
-		assertTrue(jayson.connect());
+		AppClient alexei = ITM.initClient("Alexei", SERVER_PORT);
+		AppClient luke = ITM.initClient("Luke", SERVER_PORT);
+		AppClient jayson = ITM.initClient("Jayson", SERVER_PORT);
 
 		Thread.sleep(WAIT_TIME_MILLIS);
 
@@ -107,9 +95,7 @@ public class IntegrationTest3Players {
 		assertTrue(server.isPlayerRegistered("Jayson"));
 		
 		// Verify the initial state of the game
-		assertEquals(controller.getPlayers().size(), 3);
-		assertEquals(controller.getTournament().getPlayers().size(), 3);
-		assertEquals(controller.getTournament().getToken(), Token.UNDECIDED);
+		ITM.verifyInitialState(controller, 3);
 		
 		int alexeiId = alexei.getID();
 		int lukeId = luke.getID();
@@ -142,51 +128,45 @@ public class IntegrationTest3Players {
 		controller.setPlayerTurns(turnSequence);
 		controller.setTurn(alexeiId);
 		
-					// TURN 1
+			// TURN 1
 		
-		assertEquals(controller.getTournament().getToken(), Token.UNDECIDED);
-		assertEquals(controller.getCurrentTurnId(), alexeiId);
+		ITM.verifyTournament(controller, Token.UNDECIDED, 3, -1, -1);
+		ITM.verifyController(controller, 2, alexeiId);
 		
-		// Alexei plays a yellow card
+		// Alexei plays a yellow card, then finishes her turn
 		JSONObject playCard = RequestBuilder.buildCardMove("y2");
 		alexei.handleClientRequest(playCard);
-		
 		Thread.sleep(WAIT_TIME_MILLIS);
 		
-		assertEquals(controller.getPlayers().get(alexeiId).getDisplay().size(), 1);
-		assertEquals(controller.getPlayers().get(alexeiId).getDisplayTotal(Token.YELLOW), 2);
-		assertEquals(controller.getPlayers().get(alexeiId).getHand().size(), 7);
-		assertEquals(controller.getTournament().getPlayerWithHighestDisplay().getName().toLowerCase(), "alexei");
-		assertEquals(controller.getTournament().getHighestDisplayTotal(), 2);
+		ITM.verifyPlayer(controller, alexeiId, 1, 2, 7, 0);
+		ITM.verifyTournament(controller, Token.YELLOW, 3, alexeiId, 2);
+		ITM.verifyController(controller, 3, alexeiId);
 		
-		assertEquals(controller.getTournament().getToken(), Token.YELLOW);
-		assertEquals(controller.getCurrentTurnId(), lukeId);
+		JSONObject finishTurn = RequestBuilder.buildFinishTurn();
+		alexei.handleClientRequest(finishTurn);
+		Thread.sleep(WAIT_TIME_MILLIS);
 		
-		// Luke tries to play an invalid card
+		ITM.verifyController(controller, 3, lukeId);
+		
+		// Luke tries to play an invalid card, then withdraws
 		playCard = RequestBuilder.buildCardMove("p3");
 		luke.handleClientRequest(playCard);
-		
 		Thread.sleep(WAIT_TIME_MILLIS);
 		
-		Mockito.verify(luke, Mockito.atLeast(1)).handleServerResponse(Mockito.matches(".*invalid_choice.*"));
-		
+		ITM.verifyServerResponse(luke, ".*invalid_choice.*", 1);
 		JSONObject withdraw = RequestBuilder.buildWithdrawMove();
 		luke.handleClientRequest(withdraw);
-		
 		Thread.sleep(WAIT_TIME_MILLIS);
 		
-		assertEquals(controller.getPlayers().get(lukeId).getDisplay().size(), 0);
-		assertEquals(controller.getTournament().getPlayerWithHighestDisplay().getName().toLowerCase(), "alexei");
-		assertEquals(controller.getTournament().getHighestDisplayTotal(), 2);
-		assertEquals(controller.getCurrentTurnId(), jaysonId);
-		assertEquals(controller.getPlayerTurns().size(), 2);
-		assertFalse(controller.getPlayerTurns().contains(lukeId));
+		ITM.verifyPlayer(controller, lukeId, 0, 0, -1, 0);
+		ITM.verifyTournament(controller, null, 2, alexeiId, 2);
+		ITM.verifyController(controller, 3, jaysonId);
 		
 		// jayson plays y4
 		playCard = RequestBuilder.buildCardMove("y4");
 		jayson.handleClientRequest(playCard);
-		
 		Thread.sleep(WAIT_TIME_MILLIS);
+		ITM.finishTurn(jayson);
 		
 		assertEquals(controller.getPlayers().get(jaysonId).getDisplay().size(), 1);
 		assertEquals(controller.getPlayers().get(jaysonId).getDisplayTotal(Token.YELLOW), 4);
@@ -223,8 +203,8 @@ public class IntegrationTest3Players {
 		// jayson plays p3
 		playCard = RequestBuilder.buildCardMove("p3");
 		jayson.handleClientRequest(playCard);
-		
 		Thread.sleep(WAIT_TIME_MILLIS);
+		ITM.finishTurn(jayson);
 		
 		assertEquals(controller.getPlayers().get(jaysonId).getDisplay().size(), 1);
 		assertEquals(controller.getPlayers().get(jaysonId).getDisplayTotal(Token.PURPLE), 3);
@@ -243,11 +223,11 @@ public class IntegrationTest3Players {
 		
 		// luke plays 2 cards
 		int lukeHandSize = controller.getCurrentTurnPlayer().getHand().size();
-		String[] cardsToPlay = {"dummy_value", "p3", "p5"};
+		String[] cardsToPlay = {"p3", "p5"};
 		JSONObject multipleCardsMove = RequestBuilder.buildMultipleCardsMove(cardsToPlay);
 		luke.handleClientRequest(multipleCardsMove);
-		
 		Thread.sleep(WAIT_TIME_MILLIS*2);
+		ITM.finishTurn(luke);
 		
 		System.out.println(controller.getPlayers().get(lukeId).getDisplay());
 		assertEquals(controller.getPlayers().get(lukeId).getDisplay().size(), 2);
@@ -312,8 +292,8 @@ public class IntegrationTest3Players {
 		
 		chooseColor = RequestBuilder.buildChooseToken("green");
 		luke.handleClientRequest(chooseColor);
-		
 		Thread.sleep(WAIT_TIME_MILLIS);
+		ITM.finishTurn(luke);
 		
 		// test rules for GREEN tournament
 		assertEquals(controller.getPlayers().get(lukeId).getDisplay().size(), 1);
@@ -326,9 +306,10 @@ public class IntegrationTest3Players {
 		
 		// jayson plays 2 squires
 		int jaysonHandSize = controller.getCurrentTurnPlayer().getHand().size();
-		String[] jaysonCardsToPlay = {"dummy_value", "s3", "s3"};
+		String[] jaysonCardsToPlay = {"s3", "s3"};
 		multipleCardsMove = RequestBuilder.buildMultipleCardsMove(jaysonCardsToPlay);
 		jayson.handleClientRequest(multipleCardsMove);
+		ITM.finishTurn(jayson);
 		
 		Thread.sleep(WAIT_TIME_MILLIS);
 		
@@ -347,11 +328,11 @@ public class IntegrationTest3Players {
 		assertEquals(controller.getPlayerTurns().size(), 2);
 		
 		// luke plays three green cards
-		String[] lukeCardsToPlay = {"dummy_value", "g1", "g1", "g1"};
+		String[] lukeCardsToPlay = {"g1", "g1", "g1"};
 		multipleCardsMove = RequestBuilder.buildMultipleCardsMove(lukeCardsToPlay);
 		luke.handleClientRequest(multipleCardsMove);
-		
 		Thread.sleep(WAIT_TIME_MILLIS);
+		ITM.finishTurn(luke);
 		
 		assertEquals(controller.getPlayers().get(lukeId).getDisplay().size(), 4);
 		assertEquals(controller.getPlayers().get(lukeId).getDisplayTotal(Token.GREEN), 4);
@@ -380,8 +361,8 @@ public class IntegrationTest3Players {
 		// luke plays r5
 		playCard = RequestBuilder.buildCardMove("r5");
 		luke.handleClientRequest(playCard);
-		
 		Thread.sleep(WAIT_TIME_MILLIS);
+		ITM.finishTurn(luke);
 		
 		assertEquals(controller.getTournament().getToken(), Token.RED);
 		assertEquals(controller.getCurrentTurnId(), jaysonId);
@@ -391,11 +372,11 @@ public class IntegrationTest3Players {
 		assertEquals(controller.getTournament().getHighestDisplayTotal(), 5);
 		
 		// jayson plays r3, m6
-		String[] jaysonCards2 = {"dummy_value", "r3", "m6"};
+		String[] jaysonCards2 = {"r3", "m6"};
 		multipleCardsMove = RequestBuilder.buildMultipleCardsMove(jaysonCards2);
 		jayson.handleClientRequest(multipleCardsMove);
-		
 		Thread.sleep(WAIT_TIME_MILLIS);
+		ITM.finishTurn(jayson);
 		
 		assertEquals(controller.getCurrentTurnId(), alexeiId);
 		assertEquals(controller.getPlayers().get(jaysonId).getDisplay().size(), 2);
@@ -414,6 +395,7 @@ public class IntegrationTest3Players {
 		playCard = RequestBuilder.buildCardMove("m6");
 		luke.handleClientRequest(playCard);
 		Thread.sleep(WAIT_TIME_MILLIS);
+		ITM.finishTurn(luke);
 		
 		assertEquals(controller.getCurrentTurnId(), jaysonId);
 		assertEquals(controller.getPlayers().get(lukeId).getDisplay().size(), 2);
@@ -452,6 +434,7 @@ public class IntegrationTest3Players {
 		playCard = RequestBuilder.buildCardMove("b3");
 		luke.handleClientRequest(playCard);
 		Thread.sleep(WAIT_TIME_MILLIS);
+		ITM.finishTurn(luke);
 		
 		assertEquals(controller.getTournament().getToken(), Token.BLUE);
 		assertEquals(controller.getCurrentTurnId(), jaysonId);
@@ -464,6 +447,7 @@ public class IntegrationTest3Players {
 		playCard = RequestBuilder.buildCardMove("b4");
 		jayson.handleClientRequest(playCard);
 		Thread.sleep(WAIT_TIME_MILLIS);
+		ITM.finishTurn(jayson);
 		
 		assertEquals(controller.getCurrentTurnId(), alexeiId);
 		assertEquals(controller.getPlayers().get(jaysonId).getDisplay().size(), 1);
@@ -475,6 +459,7 @@ public class IntegrationTest3Players {
 		playCard = RequestBuilder.buildCardMove("b5");
 		alexei.handleClientRequest(playCard);
 		Thread.sleep(WAIT_TIME_MILLIS);
+		ITM.finishTurn(alexei);
 		
 		assertEquals(controller.getCurrentTurnId(), lukeId);
 		assertEquals(controller.getPlayers().get(alexeiId).getDisplay().size(), 1);
@@ -486,6 +471,7 @@ public class IntegrationTest3Players {
 		playCard = RequestBuilder.buildCardMove("b5");
 		luke.handleClientRequest(playCard);
 		Thread.sleep(WAIT_TIME_MILLIS);
+		ITM.finishTurn(luke);
 		
 		assertEquals(controller.getCurrentTurnId(), jaysonId);
 		assertEquals(controller.getPlayers().get(lukeId).getDisplay().size(), 2);
