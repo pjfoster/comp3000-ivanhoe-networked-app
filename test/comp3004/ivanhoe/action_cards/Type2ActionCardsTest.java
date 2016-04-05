@@ -100,6 +100,33 @@ public class Type2ActionCardsTest {
 		assertEquals(luke.getDisplayTotal(Token.PURPLE), 6);
 
 	}
+	
+	@Test
+	public void testBreakLanceShielded() {
+
+		ActionCard breaklance = (ActionCard)controller.getCardFromDeck("breaklance");
+		alexei.addHandCard(breaklance);
+		cardWrapper.add("breaklance");
+
+		luke.addDisplayCard(new ColourCard("purple", 3));
+		luke.addDisplayCard(new ColourCard("purple", 5));
+		luke.addDisplayCard(new SupporterCard("maiden", 6));
+		luke.addSpecialCard(new ActionCard("shield"));
+
+		assertTrue(controller.playCard(cardWrapper));
+
+		JSONObject opponent = RequestBuilder.buildSelectOpponent("60002");
+		controller.processPlayerMove(60001, opponent);
+
+		// check that Alexei can continue to play other cards
+		assertEquals(controller.getCurrentTurnPlayer(), alexei);
+		assertEquals(controller.getState(), 3);
+
+		// check that all purple cards were NOT removed from Luke's display
+		assertEquals(luke.getDisplay().size(), 3);
+		assertEquals(luke.getDisplayTotal(Token.PURPLE), 14);
+
+	}
 
 	/**
 	 * Test the RIPOSTE action card. Take the card at the top of a valid opponent's
@@ -134,6 +161,30 @@ public class Type2ActionCardsTest {
 		assertEquals(luke.getDisplayTotal(Token.BLUE), 8);
 		assertEquals(alexei.getDisplay().size(), 1);
 		assertEquals(alexei.getDisplay().get(0).toString(), "s2");
+
+	}
+	
+	@Test
+	public void testRiposteShielded() {
+
+		ActionCard riposte = (ActionCard)controller.getCardFromDeck("riposte");
+		alexei.addHandCard(riposte);
+		cardWrapper.add("riposte");
+		
+		luke.addDisplayCard(new ColourCard("blue", 3));
+		luke.addDisplayCard(new ColourCard("blue", 5));
+		luke.addDisplayCard(new SupporterCard("squire", 2));
+		luke.addSpecialCard(new ActionCard("shield"));
+
+		assertTrue(controller.playCard(cardWrapper));
+
+		JSONObject selectOpponent = RequestBuilder.buildSelectOpponent("60002");
+		controller.processPlayerMove(60001, selectOpponent);
+
+		// check that the displays were NOT changed
+		assertEquals(luke.getDisplay().size(), 3);
+		assertEquals(luke.getDisplayTotal(Token.BLUE), 10);
+		assertEquals(alexei.getDisplay().size(), 0);
 
 	}
 
@@ -200,6 +251,34 @@ public class Type2ActionCardsTest {
 		assertEquals(controller.getState(), 8);
 		assertEquals(tournament.getDiscardPile().size(), 0);
 	}
+	
+	@Test
+	public void testDodgeShielded() {
+
+		ActionCard dodge = (ActionCard)controller.getCardFromDeck("dodge");
+		alexei.addHandCard(dodge);
+		cardWrapper.add("dodge");
+
+		Card b5 = controller.getCardFromDeck("b5");
+		luke.addDisplayCard(new ColourCard("blue", 3));
+		luke.addDisplayCard(b5);
+		luke.addDisplayCard(new SupporterCard("squire", 2));
+		luke.addSpecialCard(new ActionCard("shield"));
+
+		assertTrue(controller.playCard(cardWrapper));
+
+		JSONObject selectOpponent = RequestBuilder.buildSelectOpponent("60002");
+		controller.processPlayerMove(60001, selectOpponent);
+
+		JSONObject pickCard = RequestBuilder.buildPickCard("b5");
+		controller.processPlayerMove(60001, pickCard);
+
+		// check that the displays were NOT changed
+		assertEquals(luke.getDisplay().size(), 3);
+		assertEquals(luke.getDisplayTotal(Token.BLUE), 10);
+		assertEquals(tournament.getDiscardPile().size(), 0);
+
+	}
 
 	@Test
 	public void testRetreat() {
@@ -258,6 +337,32 @@ public class Type2ActionCardsTest {
 		assertEquals(controller.getState(), 8);
 		assertEquals(tournament.getDiscardPile().size(), 0);
 	}
+	
+	@Test
+	public void testRetreatShielded() {
+		ActionCard retreat = (ActionCard)controller.getCardFromDeck("retreat");
+		alexei.addHandCard(retreat);
+		cardWrapper.add("retreat");
+
+		Card b5 = controller.getCardFromDeck("b5");
+		luke.addDisplayCard(new ColourCard("blue", 3));
+		luke.addDisplayCard(b5);
+		luke.addDisplayCard(new SupporterCard("squire", 2));
+		luke.addSpecialCard(new ActionCard("shield"));
+
+		assertTrue(controller.playCard(cardWrapper));
+
+		JSONObject selectOpponent = RequestBuilder.buildSelectOpponent("60002");
+		controller.processPlayerMove(60001, selectOpponent);
+
+		JSONObject pickCard = RequestBuilder.buildPickCard("b5");
+		controller.processPlayerMove(60001, pickCard);
+
+		// check that the displays were NOT changed
+		assertEquals(luke.getDisplay().size(), 3);
+		assertEquals(luke.getDisplayTotal(Token.BLUE), 10);
+		assertEquals(luke.getHand().size(), 0);
+	}
 
 	/**
 	 * Select a random card from a valid opponent's hand and add it to
@@ -290,5 +395,26 @@ public class Type2ActionCardsTest {
 				alexei.getHand().get(0).toString().equals("s2"));
 	}
 
+	@Test
+	public void testKnockDownShielded() {
+		ActionCard knockDown = (ActionCard)controller.getCardFromDeck("knockdown");
+		alexei.addHandCard(knockDown);
+		cardWrapper.add("knockdown");
+
+		luke.addHandCard(new ColourCard("blue", 3));
+		luke.addHandCard(new ColourCard("blue", 5));
+		luke.addHandCard(new SupporterCard("squire", 2));
+		luke.addSpecialCard(new ActionCard("shield"));
+
+		assertTrue(controller.playCard(cardWrapper));
+
+		JSONObject selectOpponent = RequestBuilder.buildSelectOpponent("60002");
+		controller.processPlayerMove(60001, selectOpponent);
+
+		// check that Alexei's hand does NOT contain one of Luke's cards
+		assertEquals(luke.getHand().size(), 3);
+		assertEquals(alexei.getHand().size(), 1);
+		assertEquals(alexei.getHand().get(0).toString(), "knockdown");
+	}
 
 }

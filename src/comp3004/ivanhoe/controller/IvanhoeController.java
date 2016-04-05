@@ -1152,6 +1152,7 @@ public class IvanhoeController {
 		}
 
 		else if (cardName.equals("knockdown")) {
+			if (opponent.hasShield()) return false;
 			// take a random card from the opponent's hand
 			Card c = opponent.getHandRandom();
 			opponent.removeHandCard(c);

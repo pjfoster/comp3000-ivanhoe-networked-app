@@ -8,7 +8,16 @@ public class StartClient {
 	
 	public static void main(String[] argv) {
 		ViewFactory viewFactory = new ViewFactoryImpl();
-		AppClient client = new AppClient(viewFactory, Config.DEFAULT_SERVER_ADDRESS, Config.DEFAULT_SERVER_PORT); 
+		
+		String serverIpAddress;
+		if (argv.length != 0) {
+			serverIpAddress = argv[0];
+		}
+		else {
+			serverIpAddress = Config.DEFAULT_SERVER_ADDRESS;
+		}
+		
+		AppClient client = new AppClient(viewFactory, serverIpAddress, Config.DEFAULT_SERVER_PORT); 
 		//boolean success = client.connect();
 	}
 }
