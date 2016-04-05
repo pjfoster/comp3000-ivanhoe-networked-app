@@ -13,11 +13,11 @@ import java.util.Random;
  */
 public class Player {
 
-	private String name;
-	private HashSet<Token> tokens;
-	private List<Card> hand;
-	private List<Card> special;
-	private List<Card> display;
+	protected String name;
+	protected HashSet<Token> tokens;
+	protected List<Card> hand;
+	protected List<Card> special;
+	protected List<Card> display;
 	
 	/**
 	 * Default for testing
