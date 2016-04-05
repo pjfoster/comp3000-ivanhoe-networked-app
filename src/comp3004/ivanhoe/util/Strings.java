@@ -21,4 +21,7 @@ public class Strings {
 	public static String tournament_loss = "<html>%s won the tournament! A new tournament begins...</html>";
 	public static String tournament_won = "<html>You win the tournament! You get a new token.</html>";
 	public static String tournament_won_purple = "<html>You won a jousting tournament! That means you can select the color of the token you'd like to receive</html>";
+
+	public static String game_over_loss = "<html>The winner is %s. <br><br> Better luck next time.</html>";
+	public static String game_over_win = "<html>Congratulations! You won the game!<br><br>Thank you for playing.</html>";
 }

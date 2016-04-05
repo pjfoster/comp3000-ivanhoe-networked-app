@@ -215,14 +215,22 @@ public class GUIView extends JFrame implements View {
 
 	@Override
 	public void displayGameWonMessage() {
-		// TODO Auto-generated method stub
+		this.remove(mainPanel);
+		mainPanel = new GameWonPanel();
+		this.add(mainPanel);
 		
+		this.repaint();
+		this.revalidate();
 	}
 
 	@Override
 	public void displayGameLossMessage(String winnerName) {
-		// TODO Auto-generated method stub
+		this.remove(mainPanel);
+		mainPanel = new GameLostPanel(winnerName);
+		this.add(mainPanel);
 		
+		this.repaint();
+		this.revalidate();
 	}
 
 	@Override
