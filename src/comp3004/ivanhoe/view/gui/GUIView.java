@@ -73,8 +73,8 @@ public class GUIView extends JFrame implements View {
 
 	@Override
 	public void stop() {
-		// TODO Auto-generated method stub
-		
+		this.setVisible(false);
+		this.dispose();
 	}
 
 	@Override

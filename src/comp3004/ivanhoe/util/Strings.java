@@ -6,7 +6,7 @@ public class Strings {
 	
 	public static String your_turn_to_play = "<html>It's your turn to play!<br>Pick one or more cards</html>";
 	public static String choose_color = "<html>You are playing a supporter card as your first move - which means you can pick the colour of the tournament: </html>";
-	public static String choose_token = "<html>You are withdrawing with a maiden in your display! <br> Choose which of your tokens to forfeit: </html>";
+	public static String choose_token = "<html>Choose a token:</html>";
 	public static String change_tournament_color = "<html>You are changing the colour of the tournament! Please chooe a new colour</html>";
 	
 	public static String action_card_played = "<html>%s played the action card %s</html>";

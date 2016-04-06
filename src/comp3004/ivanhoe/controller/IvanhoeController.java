@@ -118,10 +118,14 @@ public class IvanhoeController {
 		server.broadcast(indicateTurn);
 	}
 
+	/**
+	 * Processes all user moves. Passes them on to other handlers depending
+	 * on game state
+	 * @param id
+	 * @param playerMove
+	 */
 	public void processPlayerMove(int id, JSONObject playerMove) {
 
-		System.out.println("STATE: " + state + " ; CURRENT TURN: "
-				+ getCurrentTurnPlayer().getName());
 		// check if it's the player's turn
 		if (getCurrentTurnId() != id) {
 			invalidMove();
@@ -214,6 +218,7 @@ public class IvanhoeController {
 			}
 			break;
 
+		// result of an action card where player can decide the new tournament color
 		case WAITING_FOR_NEW_TOURNAMENT_COLOR:
 			if (requestType.equals("choose_token")) {
 				if (!actionCardChangeTournamentColor(playerMove)) {
@@ -224,9 +229,11 @@ public class IvanhoeController {
 			}
 			break;
 
+		// waiting for player to select an opponent
 		case WAITING_FOR_OPPONENT_SELECTION:
 			if (requestType.equals("select_opponent")) {
 				if (!actionCardPickOpponent(playerMove)) {
+					state = WAITING_FOR_PLAYER_MOVE;
 					invalidMove();
 				}
 			} else {
@@ -234,9 +241,12 @@ public class IvanhoeController {
 			}
 			break;
 
+			// waiting for a player to select one of their opponent's cards,
+			// typically from an opponent's display
 		case WAITING_FOR_OPPONENT_CARD:
 			if (requestType.equals("pick_card")) {
 				if (!actionCardPickCard(playerMove)) {
+					state = WAITING_FOR_PLAYER_MOVE;
 					invalidMove();
 				}
 			} else {
@@ -244,9 +254,12 @@ public class IvanhoeController {
 			}
 			break;
 
+			// used by the action card OUTWIT, when a player must select a card
+			// from their own display
 		case WAITING_FOR_OWN_CARD:
 			if (requestType.equals("pick_card")) {
 				if (!actionCardOutwit(playerMove)) {
+					state = WAITING_FOR_PLAYER_MOVE;
 					invalidMove();
 				}
 			} else {
@@ -317,6 +330,9 @@ public class IvanhoeController {
 
 		else if (card instanceof ColourCard) {
 			ColourCard c = (ColourCard) card;
+			if (c.getColour().equals("purple") && previousTournament.equals(Token.PURPLE)) {
+				return false;
+			}
 			if (handleColourCard(c)) {
 				state = WAITING_FOR_PLAYER_MOVE;
 				// finishTurn();
@@ -331,19 +347,28 @@ public class IvanhoeController {
 
 	}
 
+	/**
+	 * Handles a typical card move
+	 * @param playerMove
+	 * @return
+	 */
 	private boolean handlePlayCard(JSONObject playerMove) {
 		if (playCard(ServerParser.getCardCode(playerMove))) {
-			// finishTurn();
-			updateView();
+			if (getCurrentTurnPlayer().isStunned()) { finishTurn(); }
+			else { updateView(); }
 			return true;
 		} else {
 			return false;
 		}
 	}
 
+	/**
+	 * Handles the user playing multiple cards at once
+	 * @param playerMove
+	 * @return
+	 */
 	private boolean handlePlayMultipleCards(JSONObject playerMove) {
 		if (playMultipleCards(ServerParser.getCardCodes(playerMove))) {
-			// finishTurn();
 			updateView();
 			return true;
 		} else {
@@ -359,10 +384,15 @@ public class IvanhoeController {
 		return true;
 	}
 
+	/**
+	 * Handles the player selecting the color of token their are going to win
+	 * @param playerMove
+	 * @return
+	 */
 	private boolean handleWinningToken(JSONObject playerMove) {
 		Token token = Token.fromString((String) playerMove.get("token_color"));
 
-		if (token == null) {
+		if (token == null || getCurrentTurnPlayer().getTokens().contains(token)) {
 			return false;
 		}
 
@@ -377,6 +407,10 @@ public class IvanhoeController {
 		return true;
 	}
 
+	/**
+	 * Processes the end of a tournament. Handles messaging players,
+	 * checking if the game was won, and calling resetTournament
+	 */
 	public void processTournamentWon() {
 
 		Player winner = getCurrentTurnPlayer();
@@ -410,6 +444,9 @@ public class IvanhoeController {
 
 	}
 
+	/**
+	 * Processes the end of a game
+	 */
 	public void processGameWon() {
 		Player winner = getCurrentTurnPlayer();
 
@@ -751,7 +788,6 @@ public class IvanhoeController {
 			tournament.addToDiscard(c);
 			createActionCardAnnouncement(getCurrentTurnPlayer().getName(),
 					"DROP WEAPON");
-			// finishTurn();
 			updateView();
 			return true;
 
@@ -1019,10 +1055,10 @@ public class IvanhoeController {
 			e.printStackTrace();
 		}
 
-		System.out.println("It's " + getCurrentTurnPlayer().getName()
-				+ "'s turn!");
-		JSONObject playerTurn = ResponseBuilder.buildContinueTurn();
-		server.sendToClient(getCurrentTurnId(), playerTurn);
+		if (state < WAITING_FOR_NEW_TOURNAMENT_COLOR) {
+			JSONObject playerTurn = ResponseBuilder.buildContinueTurn();
+			server.sendToClient(getCurrentTurnId(), playerTurn);
+		}
 	}
 
 	/**
@@ -1075,7 +1111,7 @@ public class IvanhoeController {
 					"DROP WEAPON");
 		}
 
-		tournament.setToken(Token.BLUE);
+		tournament.setToken(newColor);
 
 		getCurrentTurnPlayer().removeHandCard(cards.get(0));
 		tournament.addToDiscard(cards.get(0));
@@ -1123,6 +1159,7 @@ public class IvanhoeController {
 			}
 			state = WAITING_FOR_PLAYER_MOVE;
 			getCurrentTurnPlayer().removeHandCard(actionCard);
+			tournament.addToDiscard(actionCard);
 			lastPlayed = null;
 			createActionCardAnnouncement(getCurrentTurnPlayer().getName(),
 					"BREAK LANCE");
@@ -1141,6 +1178,7 @@ public class IvanhoeController {
 
 			state = WAITING_FOR_PLAYER_MOVE;
 			getCurrentTurnPlayer().removeHandCard(actionCard);
+			tournament.addToDiscard(actionCard);
 			lastPlayed = null;
 			createActionCardAnnouncement(getCurrentTurnPlayer().getName(),
 					"RIPOSTE");
@@ -1159,6 +1197,7 @@ public class IvanhoeController {
 			state = WAITING_FOR_PLAYER_MOVE;
 			lastPlayed = null;
 			getCurrentTurnPlayer().removeHandCard(actionCard);
+			tournament.addToDiscard(actionCard);
 			createActionCardAnnouncement(getCurrentTurnPlayer().getName(),
 					"KNOCK DOWN");
 			// finishTurn();
@@ -1245,6 +1284,7 @@ public class IvanhoeController {
 
 			state = WAITING_FOR_PLAYER_MOVE;
 			getCurrentTurnPlayer().removeHandCard(actionCard);
+			tournament.addToDiscard(actionCard);
 			lastPlayed = null;
 			createActionCardAnnouncement(getCurrentTurnPlayer().getName(),
 					"DODGE");
@@ -1261,6 +1301,8 @@ public class IvanhoeController {
 			createActionCardAnnouncement(getCurrentTurnPlayer().getName(),
 					"RETREAT");
 			// finishTurn();
+			getCurrentTurnPlayer().removeHandCard(actionCard);
+			tournament.addToDiscard(actionCard);
 			updateView();
 		}
 
@@ -1326,6 +1368,9 @@ public class IvanhoeController {
 
 		state = WAITING_FOR_PLAYER_MOVE;
 		lastPlayed = null;
+		getCurrentTurnPlayer().removeHandCard(actionCard);
+		tournament.addToDiscard(actionCard);
+		updateView();
 		createActionCardAnnouncement(getCurrentTurnPlayer().getName(), "OUTWIT");
 		// finishTurn();
 		updateView();
