@@ -85,6 +85,9 @@ public class Type3ActionCardsTest {
 		assertEquals(jayson.getDisplay().size(), 2);
 		assertTrue(jayson.getDisplay().get(1).toString() != "s3");
 		assertEquals(emma.getDisplay().size(), 1);
+		
+		assertEquals(tournament.getDiscardPile().size(), 3);
+		assertTrue(tournament.getDiscardPile().get(2).toString().equals("outmaneuver"));
 	}
 	
 	/**
@@ -150,6 +153,9 @@ public class Type3ActionCardsTest {
 				assertTrue(c.toString() != "b2");
 			}
 		}
+		
+		assertEquals(tournament.getDiscardPile().size(), 3);
+		assertTrue(tournament.getDiscardPile().get(2).toString().equals("charge"));
 	}
 	
 	@Test
@@ -243,6 +249,11 @@ public class Type3ActionCardsTest {
 				assertTrue(c.toString() != "b5");
 			}
 		}
+		
+		assertEquals(tournament.getDiscardPile().size(), 3);
+		assertTrue(tournament.getDiscardPile().get(0).toString().equals("countercharge") ||
+				   tournament.getDiscardPile().get(1).toString().equals("countercharge") ||
+				   tournament.getDiscardPile().get(2).toString().equals("countercharge"));
 	}
 	
 	@Test
@@ -310,6 +321,9 @@ public class Type3ActionCardsTest {
 				assertFalse(c.toString().charAt(0) == 's' || c.toString().charAt(0) == 'm') ;
 			}
 		}
+		
+		assertEquals(tournament.getDiscardPile().size(), 4);
+		assertTrue(tournament.getDiscardPile().get(3).toString().equals("disgrace"));
 	}
 	
 	@Test
@@ -405,6 +419,9 @@ public class Type3ActionCardsTest {
 		assertEquals(luke.getDisplayTotal(Token.BLUE), 7);
 		assertEquals(alexei.getDisplay().size(), 1);
 		assertEquals(alexei.getDisplayTotal(Token.BLUE), 5);
+		
+		assertEquals(tournament.getDiscardPile().size(), 1);
+		assertTrue(tournament.getDiscardPile().get(0).toString().equals("outwit"));
 		
 	}
 	

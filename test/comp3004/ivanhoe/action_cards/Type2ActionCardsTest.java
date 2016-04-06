@@ -98,6 +98,9 @@ public class Type2ActionCardsTest {
 		// check that all purple cards were removed from Luke's display
 		assertEquals(luke.getDisplay().size(), 1);
 		assertEquals(luke.getDisplayTotal(Token.PURPLE), 6);
+		
+		assertEquals(tournament.getDiscardPile().size(), 1);
+		assertTrue(tournament.getDiscardPile().get(0).toString().equals("breaklance"));
 
 	}
 	
@@ -161,6 +164,9 @@ public class Type2ActionCardsTest {
 		assertEquals(luke.getDisplayTotal(Token.BLUE), 8);
 		assertEquals(alexei.getDisplay().size(), 1);
 		assertEquals(alexei.getDisplay().get(0).toString(), "s2");
+		
+		assertEquals(tournament.getDiscardPile().size(), 1);
+		assertTrue(tournament.getDiscardPile().get(0).toString().equals("riposte"));
 
 	}
 	
@@ -226,8 +232,11 @@ public class Type2ActionCardsTest {
 		// check that the displays were changed
 		assertEquals(luke.getDisplay().size(), 2);
 		assertEquals(luke.getDisplayTotal(Token.BLUE), 5);
-		assertEquals(tournament.getDiscardPile().size(), 1);
-		assertEquals(tournament.getDiscardPile().get(0).toString(), "b5");
+		assertEquals(tournament.getDiscardPile().size(), 2);
+		assertTrue(tournament.getDiscardPile().get(0).toString().equals("b5") ||
+				   tournament.getDiscardPile().get(1).toString().equals("b5"));
+		assertTrue(tournament.getDiscardPile().get(0).toString().equals("dodge") ||
+				   tournament.getDiscardPile().get(1).toString().equals("dodge"));
 
 	}
 
@@ -248,7 +257,6 @@ public class Type2ActionCardsTest {
 
 		// check that it is still Alexei's turn - the move wasn't processed
 		assertEquals(controller.getCurrentTurnPlayer(), alexei);
-		assertEquals(controller.getState(), 8);
 		assertEquals(tournament.getDiscardPile().size(), 0);
 	}
 	
@@ -316,6 +324,9 @@ public class Type2ActionCardsTest {
 		assertEquals(luke.getDisplayTotal(Token.BLUE), 5);
 		assertEquals(luke.getHand().size(), 1);
 		assertTrue(luke.getHand().get(0).toString().equals("b5"));
+		
+		assertEquals(tournament.getDiscardPile().size(), 1);
+		assertTrue(tournament.getDiscardPile().get(0).toString().equals("retreat"));
 	}
 
 	@Test
@@ -334,7 +345,6 @@ public class Type2ActionCardsTest {
 
 		// check that it is still Alexei's turn - the move wasn't processed
 		assertEquals(controller.getCurrentTurnPlayer(), alexei);
-		assertEquals(controller.getState(), 8);
 		assertEquals(tournament.getDiscardPile().size(), 0);
 	}
 	
