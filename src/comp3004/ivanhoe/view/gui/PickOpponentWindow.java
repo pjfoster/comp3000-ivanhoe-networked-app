@@ -41,7 +41,7 @@ public class PickOpponentWindow extends JFrame implements ActionListener, Select
 		
 		this.addWindowListener(new WindowAdapter() {
 	         public void windowClosing(WindowEvent windowEvent){
-		        System.exit(0);
+	        	 windowEvent.getWindow().setVisible(false);
 	         }        
 	     });   
 		

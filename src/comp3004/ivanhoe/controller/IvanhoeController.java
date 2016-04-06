@@ -415,7 +415,8 @@ public class IvanhoeController {
 
 		Player winner = getCurrentTurnPlayer();
 
-		if (tournament.getToken().equals(Token.PURPLE)) {
+		if (tournament.getToken().equals(Token.PURPLE) ||
+		    tournament.getToken().equals(Token.UNDECIDED)) {
 			state = WAITING_FOR_WINNING_TOKEN;
 		} else {
 			winner.addToken(tournament.getToken());

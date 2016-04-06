@@ -45,7 +45,7 @@ public class PickCardWindow extends JFrame implements ActionListener, SelectionV
 
 		this.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent windowEvent){
-				System.exit(0);
+				windowEvent.getWindow().setVisible(false);
 			}        
 		});   
 

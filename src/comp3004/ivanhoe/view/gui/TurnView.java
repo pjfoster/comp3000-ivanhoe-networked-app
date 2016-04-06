@@ -54,7 +54,7 @@ public class TurnView extends JFrame implements ActionListener, SelectionView {
 		
 		this.addWindowListener(new WindowAdapter() {
 	         public void windowClosing(WindowEvent windowEvent){
-		        System.exit(0);
+		        windowEvent.getWindow().setVisible(false);
 	         }        
 	     });   
 		
