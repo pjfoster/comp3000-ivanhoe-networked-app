@@ -17,7 +17,7 @@ import comp3004.ivanhoe.model.Tournament;
 import comp3004.ivanhoe.server.MockServer;
 import comp3004.ivanhoe.util.RequestBuilder;
 
-public class PurpleTournamentTest {
+public class YellowTournamentTest {
 
 	HashMap<Integer, Player> players;
 	Tournament tournament;
@@ -40,13 +40,12 @@ public class PurpleTournamentTest {
 		players.put(60003, jayson);
 		players.put(60004, emma);
 
-		controller = new MockController(new MockServer(), 4);
+		controller = new MockController(new MockServer(), 2);
 		controller.setPlayers(players);
 
 		tournament = new Tournament();
 		tournament.setPlayers(players);
 		controller.setTournament(tournament);
-		controller.setPreviousTournament(Token.GREEN);
 		controller.setState(2);
 
 		cardWrapper = new ArrayList<String>();
@@ -71,16 +70,16 @@ public class PurpleTournamentTest {
 	@Test
 	public void testScenarioA() {
 		
-		alexei.addHandCard(controller.getCardFromDeck("p5"));
+		alexei.addHandCard(controller.getCardFromDeck("y4"));
 		
-		JSONObject playCard = RequestBuilder.buildCardMove("p5");
+		JSONObject playCard = RequestBuilder.buildCardMove("y4");
 		controller.processPlayerMove(60001, playCard);
 		
-		assertEquals(tournament.getToken(), Token.PURPLE);
+		assertEquals(tournament.getToken(), Token.YELLOW);
 		assertEquals(controller.getState(), 3);
 		assertEquals(controller.getCurrentTurnId(), 60001);
 		assertEquals(alexei.getDisplay().size(), 1);
-		assertEquals(alexei.getDisplayTotal(Token.PURPLE), 5);
+		assertEquals(alexei.getDisplayTotal(Token.YELLOW), 4);
 		
 		controller.processPlayerMove(60001, finishTurn);
 		
@@ -93,10 +92,9 @@ public class PurpleTournamentTest {
 		assertEquals(controller.getCurrentTurnId(), 60004);
 		controller.processPlayerMove(60004, withdraw);
 		
-		// alexei is now required to choose the winning token colour
 		assertEquals(controller.getCurrentTurnId(), 60001);
-		assertEquals(alexei.getTokens().size(), 0);
-		assertEquals(controller.getState(), 5);
+		assertEquals(alexei.getTokens().size(), 1);
+		assertTrue(alexei.getTokens().contains(Token.YELLOW));
 			
 	}
 	
@@ -106,28 +104,28 @@ public class PurpleTournamentTest {
 	@Test
 	public void testScenarioB1() {
 		
-		alexei.addHandCard(controller.getCardFromDeck("p3"));
-		JSONObject playCard = RequestBuilder.buildCardMove("p3");
+		alexei.addHandCard(controller.getCardFromDeck("y2"));
+		JSONObject playCard = RequestBuilder.buildCardMove("y2");
 		controller.processPlayerMove(60001, playCard);
 		
-		assertEquals(tournament.getToken(), Token.PURPLE);
+		assertEquals(tournament.getToken(), Token.YELLOW);
 		assertEquals(controller.getState(), 3);
 		assertEquals(controller.getCurrentTurnId(), 60001);
 		assertEquals(alexei.getDisplay().size(), 1);
-		assertEquals(alexei.getDisplayTotal(Token.PURPLE), 3);
+		assertEquals(alexei.getDisplayTotal(Token.YELLOW), 2);
 		
 		controller.processPlayerMove(60001, finishTurn);
 		
 		assertEquals(controller.getCurrentTurnId(), 60002);
 		
-		luke.addHandCard(controller.getCardFromDeck("p5"));
-		playCard = RequestBuilder.buildCardMove("p5");
+		luke.addHandCard(controller.getCardFromDeck("y3"));
+		playCard = RequestBuilder.buildCardMove("y3");
 		controller.processPlayerMove(60002, playCard);
 		
 		assertEquals(controller.getState(), 3);
 		assertEquals(controller.getCurrentTurnId(), 60002);
 		assertEquals(luke.getDisplay().size(), 1);
-		assertEquals(luke.getDisplayTotal(Token.PURPLE), 5);
+		assertEquals(luke.getDisplayTotal(Token.YELLOW), 3);
 		assertEquals(tournament.getPlayerWithHighestDisplay(), luke);
 		controller.processPlayerMove(60002, finishTurn);
 		
@@ -145,30 +143,30 @@ public class PurpleTournamentTest {
 	 * One other player plays several cards
 	 */
 	@Test
-	public void testScenarioB2() {
-		alexei.addHandCard(controller.getCardFromDeck("p3"));
-		JSONObject playCard = RequestBuilder.buildCardMove("p3");
+	public void testScenarioy2() {
+		alexei.addHandCard(controller.getCardFromDeck("y2"));
+		JSONObject playCard = RequestBuilder.buildCardMove("y2");
 		controller.processPlayerMove(60001, playCard);
 		
-		assertEquals(tournament.getToken(), Token.PURPLE);
+		assertEquals(tournament.getToken(), Token.YELLOW);
 		assertEquals(controller.getState(), 3);
 		assertEquals(controller.getCurrentTurnId(), 60001);
 		assertEquals(alexei.getDisplay().size(), 1);
-		assertEquals(alexei.getDisplayTotal(Token.PURPLE), 3);
+		assertEquals(alexei.getDisplayTotal(Token.YELLOW), 2);
 		
 		controller.processPlayerMove(60001, finishTurn);
 		
 		assertEquals(controller.getCurrentTurnId(), 60002);
 		
-		luke.addHandCard(controller.getCardFromDeck("p5"));
-		luke.addHandCard(controller.getCardFromDeck("p3"));
-		playCard = RequestBuilder.buildMultipleCardsMove(new String[] {"p5", "p3"});
+		luke.addHandCard(controller.getCardFromDeck("y4"));
+		luke.addHandCard(controller.getCardFromDeck("y2"));
+		playCard = RequestBuilder.buildMultipleCardsMove(new String[] {"y4", "y2"});
 		controller.processPlayerMove(60002, playCard);
 		
 		assertEquals(controller.getState(), 3);
 		assertEquals(controller.getCurrentTurnId(), 60002);
 		assertEquals(luke.getDisplay().size(), 2);
-		assertEquals(luke.getDisplayTotal(Token.PURPLE), 8);
+		assertEquals(luke.getDisplayTotal(Token.YELLOW), 6);
 		assertEquals(tournament.getPlayerWithHighestDisplay(), luke);
 		controller.processPlayerMove(60002, finishTurn);
 		
@@ -187,41 +185,41 @@ public class PurpleTournamentTest {
 	 */
 	@Test
 	public void testScenarioC1() {
-		alexei.addHandCard(controller.getCardFromDeck("p3"));
-		JSONObject playCard = RequestBuilder.buildCardMove("p3");
+		alexei.addHandCard(controller.getCardFromDeck("y2"));
+		JSONObject playCard = RequestBuilder.buildCardMove("y2");
 		controller.processPlayerMove(60001, playCard);
 		
-		assertEquals(tournament.getToken(), Token.PURPLE);
+		assertEquals(tournament.getToken(), Token.YELLOW);
 		assertEquals(controller.getState(), 3);
 		assertEquals(controller.getCurrentTurnId(), 60001);
 		assertEquals(alexei.getDisplay().size(), 1);
-		assertEquals(alexei.getDisplayTotal(Token.PURPLE), 3);
+		assertEquals(alexei.getDisplayTotal(Token.YELLOW), 2);
 		
 		controller.processPlayerMove(60001, finishTurn);
 		
 		assertEquals(controller.getCurrentTurnId(), 60002);
 		
-		luke.addHandCard(controller.getCardFromDeck("p4"));
-		playCard = RequestBuilder.buildCardMove("p4");
+		luke.addHandCard(controller.getCardFromDeck("y3"));
+		playCard = RequestBuilder.buildCardMove("y3");
 		controller.processPlayerMove(60002, playCard);
 		
 		assertEquals(controller.getState(), 3);
 		assertEquals(controller.getCurrentTurnId(), 60002);
 		assertEquals(luke.getDisplay().size(), 1);
-		assertEquals(luke.getDisplayTotal(Token.PURPLE), 4);
+		assertEquals(luke.getDisplayTotal(Token.YELLOW), 3);
 		assertEquals(tournament.getPlayerWithHighestDisplay(), luke);
 		controller.processPlayerMove(60002, finishTurn);
 		
 		assertEquals(controller.getCurrentTurnId(), 60003);
 		
-		jayson.addHandCard(controller.getCardFromDeck("p5"));
-		playCard = RequestBuilder.buildCardMove("p5");
+		jayson.addHandCard(controller.getCardFromDeck("y4"));
+		playCard = RequestBuilder.buildCardMove("y4");
 		controller.processPlayerMove(60003, playCard);
 		
 		assertEquals(controller.getState(), 3);
 		assertEquals(controller.getCurrentTurnId(), 60003);
 		assertEquals(jayson.getDisplay().size(), 1);
-		assertEquals(jayson.getDisplayTotal(Token.PURPLE), 5);
+		assertEquals(jayson.getDisplayTotal(Token.YELLOW), 4);
 		assertEquals(tournament.getPlayerWithHighestDisplay(), jayson);
 		controller.processPlayerMove(60003, finishTurn);
 		
@@ -237,46 +235,46 @@ public class PurpleTournamentTest {
 	 */
 	@Test
 	public void testScenarioC2() {
-		alexei.addHandCard(controller.getCardFromDeck("p3"));
-		JSONObject playCard = RequestBuilder.buildCardMove("p3");
+		alexei.addHandCard(controller.getCardFromDeck("y2"));
+		JSONObject playCard = RequestBuilder.buildCardMove("y2");
 		controller.processPlayerMove(60001, playCard);
 		
-		assertEquals(tournament.getToken(), Token.PURPLE);
+		assertEquals(tournament.getToken(), Token.YELLOW);
 		assertEquals(controller.getState(), 3);
 		assertEquals(controller.getCurrentTurnId(), 60001);
 		assertEquals(alexei.getDisplay().size(), 1);
-		assertEquals(alexei.getDisplayTotal(Token.PURPLE), 3);
+		assertEquals(alexei.getDisplayTotal(Token.YELLOW), 2);
 		
 		controller.processPlayerMove(60001, finishTurn);
 		
 		//ÊLuke plays multiple cards
 		assertEquals(controller.getCurrentTurnId(), 60002);
 		
-		luke.addHandCard(controller.getCardFromDeck("p5"));
-		luke.addHandCard(controller.getCardFromDeck("p3"));
-		playCard = RequestBuilder.buildMultipleCardsMove(new String[] {"p5", "p3"});
+		luke.addHandCard(controller.getCardFromDeck("y4"));
+		luke.addHandCard(controller.getCardFromDeck("y2"));
+		playCard = RequestBuilder.buildMultipleCardsMove(new String[] {"y4", "y2"});
 		controller.processPlayerMove(60002, playCard);
 		
 		assertEquals(controller.getState(), 3);
 		assertEquals(controller.getCurrentTurnId(), 60002);
 		assertEquals(luke.getDisplay().size(), 2);
-		assertEquals(luke.getDisplayTotal(Token.PURPLE), 8);
+		assertEquals(luke.getDisplayTotal(Token.YELLOW), 6);
 		assertEquals(tournament.getPlayerWithHighestDisplay(), luke);
 		controller.processPlayerMove(60002, finishTurn);
 		
 		// Jayson plays multiple cards
 		assertEquals(controller.getCurrentTurnId(), 60003);
 		
-		jayson.addHandCard(controller.getCardFromDeck("p5"));
-		jayson.addHandCard(controller.getCardFromDeck("p3"));
-		jayson.addHandCard(controller.getCardFromDeck("p5"));
-		playCard = RequestBuilder.buildMultipleCardsMove(new String[] {"p5", "p3", "p5"});
+		jayson.addHandCard(controller.getCardFromDeck("y4"));
+		jayson.addHandCard(controller.getCardFromDeck("y2"));
+		jayson.addHandCard(controller.getCardFromDeck("y4"));
+		playCard = RequestBuilder.buildMultipleCardsMove(new String[] {"y4", "y2", "y4"});
 		controller.processPlayerMove(60003, playCard);
 		
 		assertEquals(controller.getState(), 3);
 		assertEquals(controller.getCurrentTurnId(), 60003);
 		assertEquals(jayson.getDisplay().size(), 3);
-		assertEquals(jayson.getDisplayTotal(Token.PURPLE), 13);
+		assertEquals(jayson.getDisplayTotal(Token.YELLOW), 10);
 		assertEquals(tournament.getPlayerWithHighestDisplay(), jayson);
 		controller.processPlayerMove(60003, finishTurn);
 		
@@ -293,43 +291,43 @@ public class PurpleTournamentTest {
 	 */
 	@Test
 	public void testScenarioD1() {
-		alexei.addHandCard(controller.getCardFromDeck("p3"));
-		JSONObject playCard = RequestBuilder.buildCardMove("p3");
+		alexei.addHandCard(controller.getCardFromDeck("y2"));
+		JSONObject playCard = RequestBuilder.buildCardMove("y2");
 		controller.processPlayerMove(60001, playCard);
 		
-		assertEquals(tournament.getToken(), Token.PURPLE);
+		assertEquals(tournament.getToken(), Token.YELLOW);
 		assertEquals(controller.getState(), 3);
 		assertEquals(controller.getCurrentTurnId(), 60001);
 		assertEquals(alexei.getDisplay().size(), 1);
-		assertEquals(alexei.getDisplayTotal(Token.PURPLE), 3);
+		assertEquals(alexei.getDisplayTotal(Token.YELLOW), 2);
 		
 		controller.processPlayerMove(60001, finishTurn);
 		
 		assertEquals(controller.getCurrentTurnId(), 60002);
 		
 		// Luke plays a card
-		luke.addHandCard(controller.getCardFromDeck("p4"));
-		playCard = RequestBuilder.buildCardMove("p4");
+		luke.addHandCard(controller.getCardFromDeck("y3"));
+		playCard = RequestBuilder.buildCardMove("y3");
 		controller.processPlayerMove(60002, playCard);
 		
 		assertEquals(controller.getState(), 3);
 		assertEquals(controller.getCurrentTurnId(), 60002);
 		assertEquals(luke.getDisplay().size(), 1);
-		assertEquals(luke.getDisplayTotal(Token.PURPLE), 4);
+		assertEquals(luke.getDisplayTotal(Token.YELLOW), 3);
 		assertEquals(tournament.getPlayerWithHighestDisplay(), luke);
 		controller.processPlayerMove(60002, finishTurn);
 		
 		// Jayson plays a card
 		assertEquals(controller.getCurrentTurnId(), 60003);
 		
-		jayson.addHandCard(controller.getCardFromDeck("p5"));
-		playCard = RequestBuilder.buildCardMove("p5");
+		jayson.addHandCard(controller.getCardFromDeck("y4"));
+		playCard = RequestBuilder.buildCardMove("y4");
 		controller.processPlayerMove(60003, playCard);
 		
 		assertEquals(controller.getState(), 3);
 		assertEquals(controller.getCurrentTurnId(), 60003);
 		assertEquals(jayson.getDisplay().size(), 1);
-		assertEquals(jayson.getDisplayTotal(Token.PURPLE), 5);
+		assertEquals(jayson.getDisplayTotal(Token.YELLOW), 4);
 		assertEquals(tournament.getPlayerWithHighestDisplay(), jayson);
 		controller.processPlayerMove(60003, finishTurn);
 		
@@ -343,7 +341,7 @@ public class PurpleTournamentTest {
 		assertEquals(controller.getState(), 3);
 		assertEquals(controller.getCurrentTurnId(), 60004);
 		assertEquals(emma.getDisplay().size(), 1);
-		assertEquals(emma.getDisplayTotal(Token.PURPLE), 6);
+		assertEquals(emma.getDisplayTotal(Token.YELLOW), 6);
 		assertEquals(tournament.getPlayerWithHighestDisplay(), emma);
 		controller.processPlayerMove(60004, finishTurn);
 		
@@ -356,62 +354,62 @@ public class PurpleTournamentTest {
 	 */
 	@Test
 	public void testScenarioD2() {
-		alexei.addHandCard(controller.getCardFromDeck("p3"));
-		JSONObject playCard = RequestBuilder.buildCardMove("p3");
+		alexei.addHandCard(controller.getCardFromDeck("y2"));
+		JSONObject playCard = RequestBuilder.buildCardMove("y2");
 		controller.processPlayerMove(60001, playCard);
 		
-		assertEquals(tournament.getToken(), Token.PURPLE);
+		assertEquals(tournament.getToken(), Token.YELLOW);
 		assertEquals(controller.getState(), 3);
 		assertEquals(controller.getCurrentTurnId(), 60001);
 		assertEquals(alexei.getDisplay().size(), 1);
-		assertEquals(alexei.getDisplayTotal(Token.PURPLE), 3);
+		assertEquals(alexei.getDisplayTotal(Token.YELLOW), 2);
 		
 		controller.processPlayerMove(60001, finishTurn);
 		
 		//ÊLuke plays multiple cards
 		assertEquals(controller.getCurrentTurnId(), 60002);
 		
-		luke.addHandCard(controller.getCardFromDeck("p5"));
-		luke.addHandCard(controller.getCardFromDeck("p3"));
-		playCard = RequestBuilder.buildMultipleCardsMove(new String[] {"p5", "p3"});
+		luke.addHandCard(controller.getCardFromDeck("y4"));
+		luke.addHandCard(controller.getCardFromDeck("y2"));
+		playCard = RequestBuilder.buildMultipleCardsMove(new String[] {"y4", "y2"});
 		controller.processPlayerMove(60002, playCard);
 		
 		assertEquals(controller.getState(), 3);
 		assertEquals(controller.getCurrentTurnId(), 60002);
 		assertEquals(luke.getDisplay().size(), 2);
-		assertEquals(luke.getDisplayTotal(Token.PURPLE), 8);
+		assertEquals(luke.getDisplayTotal(Token.YELLOW), 6);
 		assertEquals(tournament.getPlayerWithHighestDisplay(), luke);
 		controller.processPlayerMove(60002, finishTurn);
 		
 		// Jayson plays multiple cards
 		assertEquals(controller.getCurrentTurnId(), 60003);
 		
-		jayson.addHandCard(controller.getCardFromDeck("p5"));
-		jayson.addHandCard(controller.getCardFromDeck("p3"));
-		jayson.addHandCard(controller.getCardFromDeck("p5"));
-		playCard = RequestBuilder.buildMultipleCardsMove(new String[] {"p5", "p3", "p5"});
+		jayson.addHandCard(controller.getCardFromDeck("y4"));
+		jayson.addHandCard(controller.getCardFromDeck("y2"));
+		jayson.addHandCard(controller.getCardFromDeck("y4"));
+		playCard = RequestBuilder.buildMultipleCardsMove(new String[] {"y4", "y2", "y4"});
 		controller.processPlayerMove(60003, playCard);
 		
 		assertEquals(controller.getState(), 3);
 		assertEquals(controller.getCurrentTurnId(), 60003);
 		assertEquals(jayson.getDisplay().size(), 3);
-		assertEquals(jayson.getDisplayTotal(Token.PURPLE), 13);
+		assertEquals(jayson.getDisplayTotal(Token.YELLOW), 10);
 		assertEquals(tournament.getPlayerWithHighestDisplay(), jayson);
 		controller.processPlayerMove(60003, finishTurn);
 		
 		// Emma withdraws
 		assertEquals(controller.getCurrentTurnId(), 60004);
 		
-		emma.addHandCard(controller.getCardFromDeck("p5"));
-		emma.addHandCard(controller.getCardFromDeck("p5"));
-		emma.addHandCard(controller.getCardFromDeck("p5"));
-		playCard = RequestBuilder.buildMultipleCardsMove(new String[] {"p5", "p5", "p5"});
+		emma.addHandCard(controller.getCardFromDeck("y4"));
+		emma.addHandCard(controller.getCardFromDeck("y4"));
+		emma.addHandCard(controller.getCardFromDeck("y4"));
+		playCard = RequestBuilder.buildMultipleCardsMove(new String[] {"y4", "y4", "y4"});
 		controller.processPlayerMove(60004, playCard);
 		
 		assertEquals(controller.getState(), 3);
 		assertEquals(controller.getCurrentTurnId(), 60004);
 		assertEquals(emma.getDisplay().size(), 3);
-		assertEquals(emma.getDisplayTotal(Token.PURPLE), 15);
+		assertEquals(emma.getDisplayTotal(Token.YELLOW), 12);
 		assertEquals(tournament.getPlayerWithHighestDisplay(), emma);
 		controller.processPlayerMove(60004, finishTurn);
 		
@@ -432,14 +430,14 @@ public class PurpleTournamentTest {
 		assertEquals(controller.getState(), 2);
 		assertEquals(controller.getCurrentTurnId(), 60001);
 		
-		JSONObject chooseToken = RequestBuilder.buildChooseToken("purple");
+		JSONObject chooseToken = RequestBuilder.buildChooseToken("yellow");
 		controller.processPlayerMove(60001, chooseToken);
 		
-		assertEquals(tournament.getToken(), Token.PURPLE);
+		assertEquals(tournament.getToken(), Token.YELLOW);
 		assertEquals(controller.getState(), 3);
 		assertEquals(controller.getCurrentTurnId(), 60001);
 		assertEquals(alexei.getDisplay().size(), 1);
-		assertEquals(alexei.getDisplayTotal(Token.PURPLE), 2);
+		assertEquals(alexei.getDisplayTotal(Token.YELLOW), 2);
 		
 		controller.processPlayerMove(60001, finishTurn);
 		
@@ -453,21 +451,21 @@ public class PurpleTournamentTest {
 		assertEquals(controller.getState(), 3);
 		assertEquals(controller.getCurrentTurnId(), 60002);
 		assertEquals(luke.getDisplay().size(), 1);
-		assertEquals(luke.getDisplayTotal(Token.PURPLE), 3);
+		assertEquals(luke.getDisplayTotal(Token.YELLOW), 3);
 		assertEquals(tournament.getPlayerWithHighestDisplay(), luke);
 		controller.processPlayerMove(60002, finishTurn);
 		
 		// Jayson plays a regular card
 		assertEquals(controller.getCurrentTurnId(), 60003);
 		
-		jayson.addHandCard(controller.getCardFromDeck("p5"));
-		playCard = RequestBuilder.buildCardMove("p5");
+		jayson.addHandCard(controller.getCardFromDeck("y4"));
+		playCard = RequestBuilder.buildCardMove("y4");
 		controller.processPlayerMove(60003, playCard);
 		
 		assertEquals(controller.getState(), 3);
 		assertEquals(controller.getCurrentTurnId(), 60003);
 		assertEquals(jayson.getDisplay().size(), 1);
-		assertEquals(jayson.getDisplayTotal(Token.PURPLE), 5);
+		assertEquals(jayson.getDisplayTotal(Token.YELLOW), 4);
 		assertEquals(tournament.getPlayerWithHighestDisplay(), jayson);
 		controller.processPlayerMove(60003, finishTurn);
 		
@@ -485,15 +483,15 @@ public class PurpleTournamentTest {
 	@Test
 	public void testScenarioE2() {
 
-		alexei.addHandCard(controller.getCardFromDeck("p3"));
-		JSONObject playCard = RequestBuilder.buildCardMove("p3");
+		alexei.addHandCard(controller.getCardFromDeck("y2"));
+		JSONObject playCard = RequestBuilder.buildCardMove("y2");
 		controller.processPlayerMove(60001, playCard);
 		
-		assertEquals(tournament.getToken(), Token.PURPLE);
+		assertEquals(tournament.getToken(), Token.YELLOW);
 		assertEquals(controller.getState(), 3);
 		assertEquals(controller.getCurrentTurnId(), 60001);
 		assertEquals(alexei.getDisplay().size(), 1);
-		assertEquals(alexei.getDisplayTotal(Token.PURPLE), 3);
+		assertEquals(alexei.getDisplayTotal(Token.YELLOW), 2);
 		
 		controller.processPlayerMove(60001, finishTurn);
 		
@@ -507,7 +505,7 @@ public class PurpleTournamentTest {
 		assertEquals(controller.getState(), 3);
 		assertEquals(controller.getCurrentTurnId(), 60002);
 		assertEquals(luke.getDisplay().size(), 1);
-		assertEquals(luke.getDisplayTotal(Token.PURPLE), 6);
+		assertEquals(luke.getDisplayTotal(Token.YELLOW), 6);
 		assertEquals(tournament.getPlayerWithHighestDisplay(), luke);
 		controller.processPlayerMove(60002, finishTurn);
 		
@@ -534,14 +532,14 @@ public class PurpleTournamentTest {
 		assertEquals(controller.getState(), 2);
 		assertEquals(controller.getCurrentTurnId(), 60001);
 		
-		JSONObject chooseToken = RequestBuilder.buildChooseToken("purple");
+		JSONObject chooseToken = RequestBuilder.buildChooseToken("yellow");
 		controller.processPlayerMove(60001, chooseToken);
 		
-		assertEquals(tournament.getToken(), Token.PURPLE);
+		assertEquals(tournament.getToken(), Token.YELLOW);
 		assertEquals(controller.getState(), 3);
 		assertEquals(controller.getCurrentTurnId(), 60001);
 		assertEquals(alexei.getDisplay().size(), 1);
-		assertEquals(alexei.getDisplayTotal(Token.PURPLE), 2);
+		assertEquals(alexei.getDisplayTotal(Token.YELLOW), 2);
 		
 		controller.processPlayerMove(60001, finishTurn);
 		
@@ -558,7 +556,7 @@ public class PurpleTournamentTest {
 		assertEquals(controller.getState(), 3);
 		assertEquals(controller.getCurrentTurnId(), 60002);
 		assertEquals(luke.getDisplay().size(), 2);
-		assertEquals(luke.getDisplayTotal(Token.PURPLE), 5);
+		assertEquals(luke.getDisplayTotal(Token.YELLOW), 5);
 		assertEquals(tournament.getPlayerWithHighestDisplay(), luke);
 		controller.processPlayerMove(60002, finishTurn);
 		
@@ -574,7 +572,7 @@ public class PurpleTournamentTest {
 		assertEquals(controller.getState(), 3);
 		assertEquals(controller.getCurrentTurnId(), 60003);
 		assertEquals(jayson.getDisplay().size(), 3);
-		assertEquals(jayson.getDisplayTotal(Token.PURPLE), 11);
+		assertEquals(jayson.getDisplayTotal(Token.YELLOW), 11);
 		assertEquals(tournament.getPlayerWithHighestDisplay(), jayson);
 		controller.processPlayerMove(60003, finishTurn);
 		
@@ -599,14 +597,14 @@ public class PurpleTournamentTest {
 		assertEquals(controller.getState(), 2);
 		assertEquals(controller.getCurrentTurnId(), 60001);
 		
-		JSONObject chooseToken = RequestBuilder.buildChooseToken("purple");
+		JSONObject chooseToken = RequestBuilder.buildChooseToken("yellow");
 		controller.processPlayerMove(60001, chooseToken);
 		
-		assertEquals(tournament.getToken(), Token.PURPLE);
+		assertEquals(tournament.getToken(), Token.YELLOW);
 		assertEquals(controller.getState(), 3);
 		assertEquals(controller.getCurrentTurnId(), 60001);
 		assertEquals(alexei.getDisplay().size(), 1);
-		assertEquals(alexei.getDisplayTotal(Token.PURPLE), 2);
+		assertEquals(alexei.getDisplayTotal(Token.YELLOW), 2);
 		
 		controller.processPlayerMove(60001, finishTurn);
 		
@@ -623,7 +621,7 @@ public class PurpleTournamentTest {
 		assertEquals(controller.getState(), 3);
 		assertEquals(controller.getCurrentTurnId(), 60002);
 		assertEquals(luke.getDisplay().size(), 2);
-		assertEquals(luke.getDisplayTotal(Token.PURPLE), 5);
+		assertEquals(luke.getDisplayTotal(Token.YELLOW), 5);
 		assertEquals(tournament.getPlayerWithHighestDisplay(), luke);
 		controller.processPlayerMove(60002, finishTurn);
 		
@@ -632,14 +630,14 @@ public class PurpleTournamentTest {
 		
 		jayson.addHandCard(controller.getCardFromDeck("s2"));
 		jayson.addHandCard(controller.getCardFromDeck("s3"));
-		jayson.addHandCard(controller.getCardFromDeck("p3"));
-		playCard = RequestBuilder.buildMultipleCardsMove(new String[] {"s2", "s3", "p3"});
+		jayson.addHandCard(controller.getCardFromDeck("y2"));
+		playCard = RequestBuilder.buildMultipleCardsMove(new String[] {"s2", "s3", "y2"});
 		controller.processPlayerMove(60003, playCard);
 		
 		assertEquals(controller.getState(), 3);
 		assertEquals(controller.getCurrentTurnId(), 60003);
 		assertEquals(jayson.getDisplay().size(), 3);
-		assertEquals(jayson.getDisplayTotal(Token.PURPLE), 8);
+		assertEquals(jayson.getDisplayTotal(Token.YELLOW), 7);
 		assertEquals(tournament.getPlayerWithHighestDisplay(), jayson);
 		controller.processPlayerMove(60003, finishTurn);
 		
@@ -652,14 +650,14 @@ public class PurpleTournamentTest {
 		assertEquals(alexei.getTokens().size(), 0);
 		
 		alexei.addHandCard(controller.getCardFromDeck("m6"));
-		alexei.addHandCard(controller.getCardFromDeck("p5"));
-		playCard = RequestBuilder.buildMultipleCardsMove(new String[] {"m6", "p5"});
+		alexei.addHandCard(controller.getCardFromDeck("y4"));
+		playCard = RequestBuilder.buildMultipleCardsMove(new String[] {"m6", "y4"});
 		controller.processPlayerMove(60001, playCard);
 		
 		assertEquals(controller.getState(), 3);
 		assertEquals(controller.getCurrentTurnId(), 60001);
 		assertEquals(alexei.getDisplay().size(), 3);
-		assertEquals(alexei.getDisplayTotal(Token.PURPLE), 13);
+		assertEquals(alexei.getDisplayTotal(Token.YELLOW), 12);
 		assertEquals(tournament.getPlayerWithHighestDisplay(), alexei);
 		controller.processPlayerMove(60001, finishTurn);
 		
@@ -674,7 +672,7 @@ public class PurpleTournamentTest {
 		assertEquals(controller.getState(), 3);
 		assertEquals(controller.getCurrentTurnId(), 60002);
 		assertEquals(luke.getDisplay().size(), 4);
-		assertEquals(luke.getDisplayTotal(Token.PURPLE), 14);
+		assertEquals(luke.getDisplayTotal(Token.YELLOW), 14);
 		assertEquals(tournament.getPlayerWithHighestDisplay(), luke);
 		controller.processPlayerMove(60002, finishTurn);
 		
@@ -683,14 +681,14 @@ public class PurpleTournamentTest {
 		
 		jayson.addHandCard(controller.getCardFromDeck("s2"));
 		jayson.addHandCard(controller.getCardFromDeck("m6"));
-		jayson.addHandCard(controller.getCardFromDeck("p3"));
-		playCard = RequestBuilder.buildMultipleCardsMove(new String[] {"s2", "m6", "p3"});
+		jayson.addHandCard(controller.getCardFromDeck("y2"));
+		playCard = RequestBuilder.buildMultipleCardsMove(new String[] {"s2", "m6", "y2"});
 		controller.processPlayerMove(60003, playCard);
 		
 		assertEquals(controller.getState(), 3);
 		assertEquals(controller.getCurrentTurnId(), 60003);
 		assertEquals(jayson.getDisplay().size(), 6);
-		assertEquals(jayson.getDisplayTotal(Token.PURPLE), 19);
+		assertEquals(jayson.getDisplayTotal(Token.YELLOW), 17);
 		assertEquals(tournament.getPlayerWithHighestDisplay(), jayson);
 		controller.processPlayerMove(60003, finishTurn);
 		
@@ -703,30 +701,30 @@ public class PurpleTournamentTest {
 	 */
 	@Test
 	public void testScenarioG() {
-		alexei.addHandCard(controller.getCardFromDeck("p3"));
-		JSONObject playCard = RequestBuilder.buildCardMove("p3");
+		alexei.addHandCard(controller.getCardFromDeck("y2"));
+		JSONObject playCard = RequestBuilder.buildCardMove("y2");
 		controller.processPlayerMove(60001, playCard);
 		
-		assertEquals(tournament.getToken(), Token.PURPLE);
+		assertEquals(tournament.getToken(), Token.YELLOW);
 		assertEquals(controller.getState(), 3);
 		assertEquals(controller.getCurrentTurnId(), 60001);
 		assertEquals(alexei.getDisplay().size(), 1);
-		assertEquals(alexei.getDisplayTotal(Token.PURPLE), 3);
+		assertEquals(alexei.getDisplayTotal(Token.YELLOW), 2);
 		
 		controller.processPlayerMove(60001, finishTurn);
 		
 		assertEquals(controller.getCurrentTurnId(), 60002);
 		
 		// Luke tries to play a card that is too small
-		luke.addHandCard(controller.getCardFromDeck("p3"));
-		playCard = RequestBuilder.buildCardMove("p3");
+		luke.addHandCard(controller.getCardFromDeck("y2"));
+		playCard = RequestBuilder.buildCardMove("y2");
 		controller.processPlayerMove(60002, playCard);
 		
 		// check that it wasn't successful
 		assertEquals(controller.getState(), 3);
 		assertEquals(controller.getCurrentTurnId(), 60002);
 		assertEquals(luke.getDisplay().size(), 0);
-		assertEquals(luke.getDisplayTotal(Token.PURPLE), 0);
+		assertEquals(luke.getDisplayTotal(Token.YELLOW), 0);
 		assertEquals(tournament.getPlayerWithHighestDisplay(), alexei);
 		controller.processPlayerMove(60002, finishTurn);
 	}
@@ -736,15 +734,15 @@ public class PurpleTournamentTest {
 	 */
 	@Test
 	public void testScenarioH() {
-		alexei.addHandCard(controller.getCardFromDeck("p3"));
-		JSONObject playCard = RequestBuilder.buildCardMove("p3");
+		alexei.addHandCard(controller.getCardFromDeck("y2"));
+		JSONObject playCard = RequestBuilder.buildCardMove("y2");
 		controller.processPlayerMove(60001, playCard);
 		
-		assertEquals(tournament.getToken(), Token.PURPLE);
+		assertEquals(tournament.getToken(), Token.YELLOW);
 		assertEquals(controller.getState(), 3);
 		assertEquals(controller.getCurrentTurnId(), 60001);
 		assertEquals(alexei.getDisplay().size(), 1);
-		assertEquals(alexei.getDisplayTotal(Token.PURPLE), 3);
+		assertEquals(alexei.getDisplayTotal(Token.YELLOW), 2);
 		
 		controller.processPlayerMove(60001, finishTurn);
 		
@@ -758,7 +756,7 @@ public class PurpleTournamentTest {
 		assertEquals(controller.getState(), 3);
 		assertEquals(controller.getCurrentTurnId(), 60002);
 		assertEquals(luke.getDisplay().size(), 1);
-		assertEquals(luke.getDisplayTotal(Token.PURPLE), 6);
+		assertEquals(luke.getDisplayTotal(Token.YELLOW), 6);
 		assertEquals(tournament.getPlayerWithHighestDisplay(), luke);
 		
 		// Luke tries to play another maiden
@@ -770,7 +768,7 @@ public class PurpleTournamentTest {
 		assertEquals(controller.getState(), 3);
 		assertEquals(controller.getCurrentTurnId(), 60002);
 		assertEquals(luke.getDisplay().size(), 1);
-		assertEquals(luke.getDisplayTotal(Token.PURPLE), 6);
+		assertEquals(luke.getDisplayTotal(Token.YELLOW), 6);
 		assertEquals(tournament.getPlayerWithHighestDisplay(), luke);
 		
 	}
@@ -779,17 +777,17 @@ public class PurpleTournamentTest {
 	 * Tests winning a token
 	 */
 	@Test
-	public void testScenarioJ() {
-		alexei.addHandCard(controller.getCardFromDeck("p5"));
+	public void testScenarioI() {
+		alexei.addHandCard(controller.getCardFromDeck("y4"));
 		
-		JSONObject playCard = RequestBuilder.buildCardMove("p5");
+		JSONObject playCard = RequestBuilder.buildCardMove("y4");
 		controller.processPlayerMove(60001, playCard);
 		
-		assertEquals(tournament.getToken(), Token.PURPLE);
+		assertEquals(tournament.getToken(), Token.YELLOW);
 		assertEquals(controller.getState(), 3);
 		assertEquals(controller.getCurrentTurnId(), 60001);
 		assertEquals(alexei.getDisplay().size(), 1);
-		assertEquals(alexei.getDisplayTotal(Token.PURPLE), 5);
+		assertEquals(alexei.getDisplayTotal(Token.YELLOW), 4);
 		
 		controller.processPlayerMove(60001, finishTurn);
 		
@@ -803,15 +801,8 @@ public class PurpleTournamentTest {
 		controller.processPlayerMove(60004, withdraw);
 		
 		assertEquals(controller.getCurrentTurnId(), 60001);
-		assertEquals(alexei.getTokens().size(), 0);
-		assertEquals(controller.getState(), 5);
-		
-		JSONObject chooseToken = RequestBuilder.buildChooseToken("purple");
-		controller.processPlayerMove(60001, chooseToken);
-		
 		assertEquals(alexei.getTokens().size(), 1);
-		assertTrue(alexei.getTokens().contains(Token.PURPLE));
-		assertEquals(controller.getState(), 2);
+		assertTrue(alexei.getTokens().contains(Token.YELLOW));
 	}
 	
 	/**
@@ -819,9 +810,9 @@ public class PurpleTournamentTest {
 	 */
 	@Test
 	public void testScenarioK() {
-		alexei.addToken(Token.BLUE);
+		alexei.addToken(Token.YELLOW);
 		
-		tournament.setToken(Token.PURPLE);
+		tournament.setToken(Token.YELLOW);
 		controller.setState(3);
 		
 		// alexei plays a maiden
@@ -831,7 +822,7 @@ public class PurpleTournamentTest {
 		
 		assertEquals(controller.getCurrentTurnId(), 60001);
 		assertEquals(alexei.getDisplay().size(), 1);
-		assertEquals(alexei.getDisplayTotal(Token.PURPLE), 6);
+		assertEquals(alexei.getDisplayTotal(Token.YELLOW), 6);
 		assertEquals(tournament.getPlayerWithHighestDisplay(), alexei);
 		
 		// alexei withdraws
@@ -841,7 +832,7 @@ public class PurpleTournamentTest {
 		assertEquals(controller.getState(), 4);
 		assertEquals(controller.getCurrentTurnId(), 60001);
 		
-		JSONObject chooseToken = RequestBuilder.buildChooseToken("blue");
+		JSONObject chooseToken = RequestBuilder.buildChooseToken("yellow");
 		controller.processPlayerMove(60001, chooseToken);
 		
 		assertEquals(controller.getState(), 3);

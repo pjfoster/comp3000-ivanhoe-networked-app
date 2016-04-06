@@ -7,8 +7,8 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses({
    RedTournamentTest.class,
    BlueTournamentTest.class,
-   YellowTournament.class,
-   GreenTournament.class,
+   YellowTournamentTest.class,
+   GreenTournamentTest.class,
    PurpleTournamentTest.class
 })
 
