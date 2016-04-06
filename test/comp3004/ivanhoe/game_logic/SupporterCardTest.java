@@ -12,6 +12,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import comp3004.ivanhoe.controller.MockController;
+import comp3004.ivanhoe.model.Card;
+import comp3004.ivanhoe.model.ColourCard;
 import comp3004.ivanhoe.model.Player;
 import comp3004.ivanhoe.model.SupporterCard;
 import comp3004.ivanhoe.model.Token;
@@ -138,6 +140,27 @@ public class SupporterCardTest {
 		alexei.addHandCard(m6);
 		assertTrue(controller.playCard(m6Wrapper));
 		assertEquals(alexei.getDisplayTotal(tournament.getToken()), 1);
+		
+	}
+	
+	@Test
+	public void testPlayTooSmall() {
+		
+		luke.addDisplayCard(new ColourCard("red", 5));
+		luke.addDisplayCard(new ColourCard("red", 5));
+		
+		tournament.setToken(Token.RED);
+		controller.setTurn(60001);
+		
+		alexei.addHandCard(m6);
+		alexei.addHandCard(s3);
+		
+		assertFalse(controller.playCard(s3Wrapper));
+		assertFalse(controller.playCard(m6Wrapper));
+		
+		m6Wrapper.add("s3");
+		
+		assertFalse(controller.playMultipleCards(m6Wrapper));
 		
 	}
 

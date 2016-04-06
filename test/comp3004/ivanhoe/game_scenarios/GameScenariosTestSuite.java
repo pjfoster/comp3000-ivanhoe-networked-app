@@ -5,11 +5,11 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-   RedTournament.class,
-   BlueTournament.class,
+   RedTournamentTest.class,
+   BlueTournamentTest.class,
    YellowTournament.class,
    GreenTournament.class,
-   PurpleTournament.class
+   PurpleTournamentTest.class
 })
 
 public class GameScenariosTestSuite {   

@@ -971,6 +971,7 @@ public class IvanhoeController {
 	private boolean withdraw(Token token) {
 
 		if (getCurrentTurnPlayer().removeToken(token)) {
+			state = WAITING_FOR_PLAYER_MOVE;
 			handleWithdraw();
 			return true;
 		} else {
