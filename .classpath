@@ -7,6 +7,6 @@
 	<classpathentry kind="lib" path="Referenced Libraries/json-simple-1.1.1.jar"/>
 	<classpathentry kind="lib" path="Referenced Libraries/log4j-1.2.8.jar"/>
 	<classpathentry kind="lib" path="Referenced Libraries/mockito-all-1.9.5.jar"/>
-	<classpathentry kind="lib" path="/Users/PJF/code/Ivanhoe/Referenced Libraries/common-lang3.jar"/>
+	<classpathentry kind="lib" path="Referenced Libraries/common-lang3.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

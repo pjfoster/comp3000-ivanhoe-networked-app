@@ -91,6 +91,28 @@ public class StartTournamentTest {
 		
 	}
 	
+	@Test
+	public void testPlayColorCardPreviousPurple() {
+		
+		tournament.setToken(Token.UNDECIDED);
+		controller.setPreviousTournament(Token.PURPLE);
+		controller.setTurn(60001);
+		controller.setState(2); // WAITING_FOR_TOURNAMENT_COLOR
+		
+		Card p3 = controller.getCardFromDeck("p3");
+		alexei.addHandCard(p3);
+		JSONObject playR3 = RequestBuilder.buildCardMove(p3.toString());
+		controller.processPlayerMove(60001, playR3);
+		
+		// Ensure that the card has been played and the tournament color is NOT
+		// decided, but the player is still free to player other cards
+		assertEquals(controller.getTournament().getToken(), Token.UNDECIDED);
+		assertEquals(controller.getCurrentTurnId(), 60001); // The turn has NOT been changed
+		assertEquals(controller.getState(), 2); // WAITING_FOR_PLAYER_MOVE
+		assertEquals(alexei.getDisplayTotal(Token.RED), 0);
+		
+	}
+	
 	/**
 	 * If a user plays a supporter on the first round, they are
 	 * required to pick the color of the tournament (given that

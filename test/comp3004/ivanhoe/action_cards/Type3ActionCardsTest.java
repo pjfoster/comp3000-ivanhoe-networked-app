@@ -153,6 +153,33 @@ public class Type3ActionCardsTest {
 	}
 	
 	@Test
+	public void testChargeGreenTournament() {
+		
+		ActionCard charge = (ActionCard)controller.getCardFromDeck("charge");
+		alexei.addHandCard(charge);
+		cardWrapper.add("charge");
+
+		tournament.setToken(Token.GREEN);
+		
+		luke.addDisplayCard(new ColourCard("green", 1));
+		luke.addDisplayCard(new ColourCard("green", 1));
+		luke.addDisplayCard(new ColourCard("green", 1));
+
+		jayson.addDisplayCard(new ColourCard("green", 1));
+		jayson.addDisplayCard(new ColourCard("green", 1));
+
+		emma.addDisplayCard(new ColourCard("green", 1));
+
+		assertTrue(controller.playCard(cardWrapper));
+
+		// check that the displays only have 1 card
+		assertEquals(luke.getDisplay().size(), 1);
+		assertEquals(jayson.getDisplay().size(), 1);
+		assertEquals(emma.getDisplay().size(), 1);
+
+	}
+	
+	@Test
 	public void testChargeShielded() {
 		
 		ActionCard charge = (ActionCard)controller.getCardFromDeck("charge");

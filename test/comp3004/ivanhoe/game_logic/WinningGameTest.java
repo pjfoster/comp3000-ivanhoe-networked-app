@@ -69,7 +69,57 @@ public class WinningGameTest {
 		
 		assertTrue(controller.checkGameWon());
 		
+	}
+	
+	@Test
+	public void test3PlayersWin() {
 		
+		players.put(60001, new Player("Alexei"));
+		players.put(60002, new Player("Luke"));
+		players.put(60003, new Player("Emma"));
+		
+		MockController controller = new MockController(null, 2);
+		controller.setPlayers(players);
+		
+		assertFalse(controller.checkGameWon());
+		
+		// Correct number of tokens, but not enough colors
+		controller.givePlayerToken(60001, Token.RED);
+		controller.givePlayerToken(60001, Token.BLUE);
+		controller.givePlayerToken(60001, Token.GREEN);
+		controller.givePlayerToken(60001, Token.PURPLE);
+		
+		assertFalse(controller.checkGameWon());
+		
+		controller.givePlayerToken(60001, Token.YELLOW);
+		
+		assertTrue(controller.checkGameWon());
+		
+	}
+	
+	@Test
+	public void test4PlayersWin() {
+		players.put(60001, new Player("Alexei"));
+		players.put(60002, new Player("Luke"));
+		players.put(60003, new Player("Emma"));
+		players.put(60004, new Player("Jayson"));
+		
+		MockController controller = new MockController(null, 2);
+		controller.setPlayers(players);
+		
+		assertFalse(controller.checkGameWon());
+		
+		// Correct number of tokens, but not enough colors
+		controller.givePlayerToken(60001, Token.RED);
+		controller.givePlayerToken(60001, Token.BLUE);
+		controller.givePlayerToken(60001, Token.GREEN);
+		controller.givePlayerToken(60001, Token.RED);
+		
+		assertFalse(controller.checkGameWon());
+		
+		controller.givePlayerToken(60001, Token.YELLOW);
+		
+		assertTrue(controller.checkGameWon());
 	}
 	
 	@Test

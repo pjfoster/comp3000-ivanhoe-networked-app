@@ -6,7 +6,8 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
    TurnTest.class,
-   FinishTurnTest.class
+   FinishTurnTest.class,
+   EndOfDeckTest.class
 })
 
 public class ControllerTestSuite {   

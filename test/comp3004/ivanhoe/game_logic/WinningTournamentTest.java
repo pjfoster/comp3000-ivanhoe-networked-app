@@ -171,6 +171,45 @@ public class WinningTournamentTest {
 		assertEquals(luke.getTokens().size(), 0);
 	}
 	
+	@Test
+	public void testJoustingTournamentWinRestrictions() {
+		
+		jayson.addToken(Token.BLUE);
+		
+		assertEquals(alexei.getTokens().size(), 0);
+		assertEquals(luke.getTokens().size(), 0);
+		assertEquals(jayson.getTokens().size(), 1);
+		
+		tournament.setToken(Token.PURPLE);
+		assertEquals(tournament.getPlayers().size(), 3);
+		
+		controller.setTurn(60001);
+		controller.withdraw();
+		assertEquals(tournament.getPlayers().size(), 2);
+		
+		controller.setTurn(60002);
+		controller.withdraw();
+		
+		// Check that the tournament has not been reset
+		assertEquals(tournament.getPlayers().size(), 1);
+		assertEquals(controller.getCurrentTurnPlayer(), jayson);
+		assertEquals(controller.getState(), 5); // WAITING_FOR_WINNING_TOKEN
+		assertEquals(controller.getTournament().getToken(), Token.PURPLE);
+		
+		JSONObject chooseColor = RequestBuilder.buildChooseToken("blue");
+		controller.processPlayerMove(60003, chooseColor);
+		
+		// Check that Jayson won and was not given the correct Token
+		// and that he is still required to pick another token
+		assertEquals(controller.getCurrentTurnPlayer(), jayson);
+		assertEquals(controller.getState(), 5);
+		assertEquals(jayson.getTokens().size(), 1);
+		
+		assertTrue(jayson.getTokens().contains(Token.BLUE));
+		assertEquals(alexei.getTokens().size(), 0);
+		assertEquals(luke.getTokens().size(), 0);
+	}
+	
 	/**
 	 * Test that the controller's current tournament is correctly reset; players keep their hands
 	 * but discard their displays
