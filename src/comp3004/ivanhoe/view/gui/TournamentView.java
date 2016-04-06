@@ -314,6 +314,8 @@ public class TournamentView extends JPanel {
 			int playerId = ClientParser.getPlayerId(player).intValue();
 			//if (playerId == masterView.getId()) continue;
 			playerDisplays.get(playerId).updateDisplay(player);
+			playerDisplays.get(playerId).revalidate();
+			playerDisplays.get(playerId).repaint();
 		}
 	}
 	
